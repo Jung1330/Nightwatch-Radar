@@ -1,0 +1,130 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Nightwatch</AssemblyName>
+    <Product>Nightwatch</Product>
+    <Description>Nightwatch</Description>
+    <FileDescription>Nightwatch</FileDescription>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+    <StartupObject>Nightwatch.Program</StartupObject>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>bin\Debug\net8.0-windows\Assets\Nightwatch.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <PackageIcon>NightWatch.ico</PackageIcon>
+    <AssemblyTitle>Nightwatch</AssemblyTitle>
+    <AOSnifferParserDir Condition="Exists('Libs\PhotonPackageParser.dll')">Libs</AOSnifferParserDir>
+    <AOSnifferParserDir Condition="'$(AOSnifferParserDir)' == '' and Exists('..\AOSnifferNET\PhotonPacketParser\PhotonPackageParser.dll')">..\AOSnifferNET\PhotonPacketParser</AOSnifferParserDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Utils\**" />
+    <Compile Remove="Views\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <None Remove="Utils\**" />
+    <None Remove="Views\**" />
+    <Page Remove="Utils\**" />
+    <Page Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Helper\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClickableTransparentOverlay" Version="11.1.0" />
+    <PackageReference Include="Costura.Fody" Version="6.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Fody" Version="6.9.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="SharpPcap" Version="6.3.1" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
+    <PackageReference Include="System.Reactive" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlbionDataHandlersNET8\AlbionDataHandlersNET8.csproj" />
+    <ProjectReference Include="..\BaseUtilsNET8\BaseUtilsNET8.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PhotonPackageParser">
+      <HintPath>$(AOSnifferParserDir)\PhotonPackageParser.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Protocol16">
+      <HintPath>$(AOSnifferParserDir)\Protocol16.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Protocol18">
+      <HintPath>$(AOSnifferParserDir)\Protocol18.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Assets\Helper\Font.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Nightwatch.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Nightwatch.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Resources\AVALONMINIONCHEST.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Administrator\Downloads\Radar\V0.9\Nightwatch\Nightwatch\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net8.0-windows\Assets\Nightwatch.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Administrator\Downloads\Radar\V0.9\Nightwatch\Nightwatch\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+
+</Project>
+
+
