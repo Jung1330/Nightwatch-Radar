@@ -37,8 +37,6 @@ Uygulamanın güncel oyun verileriyle (ikonlar, ID'ler) çalışması için:
 ### Not
 Her oyun sürümü güncellendiğinde güncellenicektir.
 
-+ **For educational purposes. Use at your own risk.**
-
 </td>
 <td width="50%" valign="top">
 
@@ -68,10 +66,9 @@ To ensure the app works with the latest game data (icons, IDs):
 ### Note
 It will be updated every time a new version of the game is released.
 
-+ **For educational purposes. Use at your own risk.**
-
 </td>
 </tr>
 </table>
 
-Sniffer : https://github.com/juzt3/AOSnifferNET
++ Sniffer : https://github.com/juzt3/AOSnifferNET
++ **For educational purposes. Use at your own risk.**
