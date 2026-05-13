@@ -15,7 +15,7 @@
 **Nightwatch**, oyunun belleğine (RAM) müdahale etmeden sadece ağ paketlerini okuyarak çalışan bir yardımcı araçtır.
 
 * **🛡️ Gelişmiş Oyuncu Takibi (ESP):** Yakındaki oyuncuların HP'si, Gerçek Ortalama IP'si ve Tam Ekipman Listesi.
-* **🃏 Detaylı Ekipman Kartları:** En tehlikeli 5 düşmanın ekipmanlarını ikonlarıyla birlikte anlık listeleme.
+* **🃏 Detaylı Ekipman Kartları:** En yakın 5 düşmanın ekipmanlarını ikonlarıyla birlikte anlık listeleme.
 * **⚠️ Tehlike Pusulası:** Yaklaşan düşmanların yönünü gösteren dinamik pusula ve sesli uyarılar.
 * **💎 Kaynak Takibi:** Tier ve Büyü (Enchant) seviyelerine göre gelişmiş filtreleme.
 * **🎁 Bildirim Sistemi:** Mavi, Mor ve Efsanevi sandıklar için anlık Toast bildirimleri.
