@@ -70,5 +70,6 @@ It will be updated every time a new version of the game is released.
 </tr>
 </table>
 
++ Npcap indirmeyi unutmayın. https://npcap.com/#download
 + Sniffer : https://github.com/juzt3/AOSnifferNET
 + **For educational purposes. Use at your own risk.**
