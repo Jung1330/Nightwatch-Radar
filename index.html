@@ -357,44 +357,88 @@
         </div>
     </div>
 
-    <script>
+ <script>
+        // --- DİL SEÇİMİ (Düzeltildi) ---
         function setLang(lang) {
+            // Önce her şeyi gizle
             document.querySelectorAll('.tr, .en').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.' + lang).forEach(el => el.style.display = (el.tagName === 'IMG' ? 'block' : 'inline-block'));
-            document.getElementById('flag-tr').classList.toggle('active', lang === 'tr');
-            document.getElementById('flag-en').classList.toggle('active', lang === 'en');
+            
+            // Seçili olan dilin nesnelerini göster
+            document.querySelectorAll('.' + lang).forEach(el => {
+                // Butonların içindeki yazılar (span) yan yana durmalı, diğer her şey blok (alt alta) olmalı!
+                if(el.tagName === 'SPAN') {
+                    el.style.display = 'inline-block';
+                } else {
+                    el.style.display = 'block'; 
+                }
+            });
+
+            // Bayrakların aktiflik efekti
+            if(lang === 'tr') {
+                document.getElementById('flag-tr').classList.add('active');
+                document.getElementById('flag-en').classList.remove('active');
+            } else {
+                document.getElementById('flag-en').classList.add('active');
+                document.getElementById('flag-tr').classList.remove('active');
+            }
         }
 
+        // --- ANA KATEGORİ DEĞİŞTİRME ---
         function showCategory(id, btn) {
             document.querySelectorAll('.section-content, .tab-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            document.getElementById('sub-tabs-container').classList.toggle('visible', id === 'tabs-cat');
             
-            if(id === 'tabs-cat') showSubTab('res');
-            else document.getElementById(id).classList.add('active');
+            const subTabs = document.getElementById('sub-tabs-container');
+            if(id === 'tabs-cat') {
+                subTabs.classList.add('visible');
+                showSubTab('res'); 
+            } else {
+                subTabs.classList.remove('visible');
+                document.getElementById(id).classList.add('active'); // Overview veya S.S.S açılır
+            }
         }
 
+        // --- ALT SEKME DEĞİŞTİRME ---
         function showSubTab(id) {
             document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+            
+            if (event && event.currentTarget && event.currentTarget.classList.contains('sub-btn')) {
+                event.currentTarget.classList.add('active');
+            } else {
+                document.querySelector(`.sub-btn[onclick*="${id}"]`).classList.add('active');
+            }
+            
             document.getElementById(id).classList.add('active');
-            document.querySelector(`.sub-btn[onclick*="${id}"]`).classList.add('active');
         }
 
-        // Lightbox
+        // --- RESİM BÜYÜTME (LIGHTBOX) ---
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("imgFull");
-        document.addEventListener('click', e => {
+        const closeBtn = document.getElementsByClassName("close-modal")[0];
+
+        document.addEventListener('click', function (e) {
             if (e.target.classList.contains('app-img')) {
                 modal.style.display = "block";
                 modalImg.src = e.target.src;
             }
         });
-        document.querySelector('.close-modal').onclick = () => modal.style.display = "none";
-        window.onclick = e => { if (e.target == modal) modal.style.display = "none"; }
 
-        window.onload = () => setLang('tr');
+        closeBtn.onclick = function() { modal.style.display = "none"; }
+
+        window.onclick = function(event) {
+            if (event.target == modal) { modal.style.display = "none"; }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") { modal.style.display = "none"; }
+        });
+
+        // Sayfa açılışında Türkçe başlasın
+        window.onload = function() {
+            setLang('tr');
+        };
     </script>
 </body>
 </html>
