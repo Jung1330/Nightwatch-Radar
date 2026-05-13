@@ -1,5 +1,192 @@
-<html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightwatch - Albion Online Radar</title>
+    <style>
+        :root {
+            --bg-color: #111320; /* Uygulama ana rengi: 17, 19, 32 */
+            --accent-color: #ff8c00; /* Logodaki Turuncu */
+            --card-bg: #1a1c2d;
+            --text-color: #e0e0e0;
+            --border-color: #2b2d41;
+        }
 
-  TEST
-  
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            color: var(--accent-color);
+            font-size: 3rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .dual-section {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .lang-column {
+            flex: 1;
+            min-width: 300px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .lang-column:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        li::before {
+            content: '⚔️';
+            position: absolute;
+            left: 0;
+        }
+
+        .roadmap {
+            margin-top: 40px;
+            background: #0d0f1a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .roadmap li::before {
+            content: '📌';
+        }
+
+        .contact {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 1.2rem;
+        }
+
+        .discord-btn {
+            background-color: #5865F2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .dual-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>NIGHTWATCH</h1>
+            <p>Albion Online Advanced Radar & Overlay System</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dual-section">
+            <div class="lang-column">
+                <h2>🇹🇷 Özellikler</h2>
+                <ul>
+                    <li><strong>Gelişmiş ESP:</strong> Oyuncu canı, gerçek ortalama IP ve tam ekipman takibi.</li>
+                    <li><strong>Ekipman Kartları:</strong> Yakındaki en tehlikeli 5 düşmanın ikonlu listesi.</li>
+                    <li><strong>Tehlike Pusulası:</strong> Yaklaşan düşmanlar için dinamik yön göstergesi.</li>
+                    <li><strong>Yaratık Radarı:</strong> Boss, Titan ve Aspect'leri anında filtreleme.</li>
+                    <li><strong>Kaynak Takibi:</strong> Tier ve büyü seviyesine göre akıllı filtre.</li>
+                    <li><strong>Sandık Bildirimi:</strong> Değerli sandıklar için anlık ekran uyarıları.</li>
+                </ul>
+
+                <h3>🛠️ Update Helper</h3>
+                <p>Oyun verilerini güncel tutmak için <code>Assets/Helper</code> içindeki aracı çalıştırın. İkonlar ve harita verileri otomatik senkronize edilecektir.</p>
+
+                <div class="roadmap">
+                    <h3>🚀 Yapılacaklar</h3>
+                    <ul>
+                        <li>Kullanıcı HP Gösterimi (Fix)</li>
+                        <li>Zindan Bildirim Geliştirmeleri</li>
+                        <li>Stabilite Güncellemeleri</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lang-column">
+                <h2>🇬🇧 Features</h2>
+                <ul>
+                    <li><strong>Advanced ESP:</strong> Player HP, True Average IP, and full equipment tracking.</li>
+                    <li><strong>Equipment Cards:</strong> Real-time icon display for top 5 nearby threats.</li>
+                    <li><strong>Danger Compass:</strong> Dynamic direction pointer for approaching enemies.</li>
+                    <li><strong>Mob Radar:</strong> Filter Bosses, Titans, and Aspects instantly.</li>
+                    <li><strong>Resource Tracking:</strong> Smart filters based on Tier and Enchantment levels.</li>
+                    <li><strong>Chest Alerts:</strong> Instant toast notifications for high-value chests.</li>
+                </ul>
+
+                <h3>🛠️ Update Helper</h3>
+                <p>Run the tool in <code>Assets/Helper</code> to keep game data updated. Icons and map data will sync automatically.</p>
+
+                <div class="roadmap">
+                    <h3>🚀 Roadmap</h3>
+                    <ul>
+                        <li>User HP Display (Fix)</li>
+                        <li>Dungeon Notification Improvements</li>
+                        <li>Stability Fixes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact">
+            <p>Contact / İletişim</p>
+            <a href="#" class="discord-btn">Discord: Jung1330</a>
+        </div>
+    </div>
+
+</body>
 </html>
