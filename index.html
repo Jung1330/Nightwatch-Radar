@@ -212,10 +212,10 @@
 
     <div class="main-nav">
         <button class="nav-btn active" onclick="showCategory('overview', this)">
-            <span class="tr">Overview (Genel)</span><span class="en">Overview</span>
+            <span class="tr">Genel</span><span class="en">Overview</span>
         </button>
         <button class="nav-btn" onclick="showCategory('tabs-cat', this)">
-            <span class="tr">Tabs (Sekmeler)</span><span class="en">Tabs</span>
+            <span class="tr">Sekmeler</span><span class="en">Tabs</span>
         </button>
     </div>
 
@@ -245,22 +245,27 @@
         <div id="overview" class="section-content active">
             <div class="grid-info">
                 <div>
-                    <h2 class="tr">Uygulama Özellikleri</h2>
-                    <h2 class="en">App Features</h2>
+                    <h2 class="tr">Nightwatch Nedir?</h2>
+                    <h2 class="en">What is Nightwatch?</h2>
+                    
+                    <p class="tr">Nightwatch, Albion Online için geliştirilmiş harici bir ağ paketi okuyucusudur (Packet Sniffer). Oyun dosyalarına veya bilgisayarınızın belleğine (RAM) hiçbir şekilde müdahale etmez. Yalnızca gelen ağ trafiğini analiz ederek çalışır.</p>
+                    <p class="en">Nightwatch is an external network packet sniffer for Albion Online. It operates solely by analyzing incoming network traffic without modifying game files or reading game memory (RAM) in any way.</p>
+
                     <ul class="tr">
-                        <li><strong>Güvenli Mimari:</strong> Belleğe müdahale etmez, %100 harici ağ paketi okuyucusudur.</li>
-                        <li><strong>Gelişmiş ESP:</strong> Oyuncu IP, detaylı ekipman ve can takibi.</li>
-                        <li><strong>Tehlike Pusulası:</strong> Görünmeyen düşmanların yönünü dinamik ok ile gösterir.</li>
+                        <li><strong>%100 Harici Çalışır:</strong> Bellek (RAM) okuma/yazma veya kod enjekte etme işlemi kesinlikle yapmaz.</li>
+                        <li><strong>Bilgi Odaklıdır:</strong> Sunucudan gelen paketleri okuyarak etrafınızdaki oyuncu, yaratık ve kaynak verilerini şeffaf bir arayüzle ekranınıza yansıtır.</li>
+                        <li><strong>Hafif ve Güvenli:</strong> Oyuna doğrudan entegre olmadığı için FPS düşürmez ve sistemi yormadan arka planda çalışır.</li>
                     </ul>
                     <ul class="en">
-                        <li><strong>Safe Architecture:</strong> 100% external packet sniffer, no memory modification.</li>
-                        <li><strong>Advanced ESP:</strong> Track exact player IP, equipment and HP.</li>
-                        <li><strong>Danger Compass:</strong> Shows the direction of off-screen approaching enemies.</li>
+                        <li><strong>100% External:</strong> Does not perform memory (RAM) read/write operations or code injection.</li>
+                        <li><strong>Information Focused:</strong> Reads server packets to display nearby player, mob, and resource data on a transparent overlay.</li>
+                        <li><strong>Lightweight & Safe:</strong> Since it doesn't hook into the game directly, it won't drop your FPS and runs silently in the background.</li>
                     </ul>
                 </div>
                 <div style="text-align: center;">
                     <img src="App/Nightwatch.png" class="app-img" style="width: 200px; opacity: 0.8; filter: drop-shadow(0 0 20px var(--accent));">
                     <p style="font-size: 0.8rem; color: #666; margin-top: 10px;" class="tr">(Büyütmek için logoya tıklayabilirsiniz)</p>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 10px;" class="en">(Click the logo to enlarge)</p>
                 </div>
             </div>
         </div>
