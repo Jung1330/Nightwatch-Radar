@@ -18,7 +18,6 @@
 * **🃏 Detaylı Ekipman Kartları:** En yakın 5 düşmanın ekipmanlarını ikonlarıyla birlikte anlık listeleme.
 * **⚠️ Tehlike Pusulası:** Yaklaşan düşmanların yönünü gösteren dinamik pusula ve sesli uyarılar.
 * **💎 Kaynak Takibi:** Tier ve Büyü (Enchant) seviyelerine göre gelişmiş filtreleme.
-* **🎁 Bildirim Sistemi:** Mavi, Mor ve Efsanevi sandıklar için anlık Toast bildirimleri.
 
 ### 🚀 Roadmap / Yapılacaklar
 - [ ] Kullanıcı HP gösterimi (Fixlenecek)
@@ -41,7 +40,6 @@ Her oyun sürümü güncellendiğinde güncellenicektir.
 * **🃏 Detailed Equipment Cards:** Real-time UI cards showing icons for up to 5 nearby enemies.
 * **⚠️ Danger Compass:** Dynamic compass showing the direction of approaching enemies with sound alerts.
 * **💎 Resource Tracking:** Filter harvestables based on Tier and Enchantment levels.
-* **🎁 Notification System:** Instant toast notifications for Blue, Purple, and Legendary chests.
 
 ### 🚀 Roadmap / To-Do
 - [ ] User HP display (Fix in progress)
