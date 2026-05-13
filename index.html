@@ -3,190 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nightwatch - Albion Online Radar</title>
+    <title>Nightwatch | Albion Online Radar</title>
+    
+    <link rel="icon" type="image/png" href="App/Nightwatch.png">
+    
     <style>
         :root {
-            --bg-color: #111320; /* Uygulama ana rengi: 17, 19, 32 */
-            --accent-color: #ff8c00; /* Logodaki Turuncu */
-            --card-bg: #1a1c2d;
-            --text-color: #e0e0e0;
-            --border-color: #2b2d41;
+            --bg-deep: #111320; /* Uygulama ana rengi: 17, 19, 32 */
+            --accent: #ff8c00; /* Vurgu Turuncusu */
+            --card-bg: rgba(26, 28, 45, 0.8);
+            --text: #e0e0e0;
+            --border: #2b2d41;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-deep);
+            color: var(--text);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        /* --- SOL ÜST DİL SEÇENEĞİ --- */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 8px 12px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
         }
 
+        .lang-btn {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active { opacity: 1; transform: scale(1.2); }
+
+        /* --- HEADER --- */
         header {
             text-align: center;
-            padding: 60px 0;
-            border-bottom: 1px solid var(--border-color);
+            padding: 80px 20px 40px;
+            background: radial-gradient(circle at center, #1a1c2d 0%, var(--bg-deep) 100%);
         }
 
-        header h1 {
-            color: var(--accent-color);
-            font-size: 3rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
-
-        .dual-section {
-            display: flex;
-            gap: 40px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .lang-column {
-            flex: 1;
-            min-width: 300px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
-        }
-
-        .lang-column:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-        }
-
-        h2 {
-            color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
+        /* ANA LOGO */
+        .logo {
+            width: 120px;
+            filter: drop-shadow(0 0 15px var(--accent));
             margin-bottom: 20px;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        h1 { font-size: 3rem; margin: 0; letter-spacing: 4px; color: var(--accent); }
+
+        /* --- ANA KATEGORİ SEKMELERİ --- */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        li {
-            margin-bottom: 15px;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        li::before {
-            content: '⚔️';
-            position: absolute;
-            left: 0;
-        }
-
-        .roadmap {
-            margin-top: 40px;
-            background: #0d0f1a;
-            padding: 20px;
+        .nav-btn {
+            background: none;
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 12px 40px;
             border-radius: 8px;
-        }
-
-        .roadmap li::before {
-            content: '📌';
-        }
-
-        .contact {
-            text-align: center;
-            padding: 40px 0;
+            font-weight: bold;
+            cursor: pointer;
             font-size: 1.2rem;
+            transition: 0.3s;
         }
 
-        .discord-btn {
-            background-color: #5865F2;
-            color: white;
-            padding: 10px 20px;
+        .nav-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255, 140, 0, 0.1); }
+
+        /* --- ALT SEKMELER --- */
+        .sub-tabs {
+            display: none;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .sub-tabs.visible { display: flex; }
+
+        .sub-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: #888;
+            padding: 8px 20px;
             border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        @media (max-width: 768px) {
-            .dual-section {
-                flex-direction: column;
-            }
-        }
+        .sub-btn.active { color: #fff; border-color: var(--accent); background: var(--accent); }
+
+        /* --- İÇERİK ALANI --- */
+        .content-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .section-content { display: none; animation: fadeIn 0.5s; }
+        .section-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+        .app-img { width: 100%; border-radius: 12px; border: 2px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 12px; padding-left: 25px; position: relative; }
+        li::before { content: '⚔️'; position: absolute; left: 0; color: var(--accent); }
+
+        .discord-link { display: inline-block; margin-top: 40px; color: #5865F2; font-weight: bold; text-decoration: none; font-size: 1.2rem; }
+
+        [lang="en"] { display: none; }
     </style>
 </head>
 <body>
 
+    <div class="lang-switcher">
+        <img src="https://flagcdn.com/tr.svg" class="lang-btn active" onclick="setLang('tr')" id="flag-tr" title="Türkçe">
+        <img src="https://flagcdn.com/gb.svg" class="lang-btn" onclick="setLang('en')" id="flag-en" title="English">
+    </div>
+
     <header>
-        <div class="container">
-            <h1>NIGHTWATCH</h1>
-            <p>Albion Online Advanced Radar & Overlay System</p>
-        </div>
+        <img src="App/Nightwatch.png" class="logo" alt="Nightwatch Logo">
+        <h1 class="tr">NIGHTWATCH</h1>
+        <h1 class="en">NIGHTWATCH</h1>
+        <p class="tr">Albion Online Gelişmiş Ağ Tabanlı Radar Sistemi</p>
+        <p class="en">Albion Online Advanced Network-Based Radar System</p>
     </header>
 
-    <div class="container">
-        <div class="dual-section">
-            <div class="lang-column">
-                <h2>🇹🇷 Özellikler</h2>
-                <ul>
-                    <li><strong>Gelişmiş ESP:</strong> Oyuncu canı, gerçek ortalama IP ve tam ekipman takibi.</li>
-                    <li><strong>Ekipman Kartları:</strong> Yakındaki en tehlikeli 5 düşmanın ikonlu listesi.</li>
-                    <li><strong>Tehlike Pusulası:</strong> Yaklaşan düşmanlar için dinamik yön göstergesi.</li>
-                    <li><strong>Yaratık Radarı:</strong> Boss, Titan ve Aspect'leri anında filtreleme.</li>
-                    <li><strong>Kaynak Takibi:</strong> Tier ve büyü seviyesine göre akıllı filtre.</li>
-                    <li><strong>Sandık Bildirimi:</strong> Değerli sandıklar için anlık ekran uyarıları.</li>
-                </ul>
+    <div class="main-nav">
+        <button class="nav-btn active" onclick="showCategory('overview', this)">
+            <span class="tr">Overview (Genel)</span><span class="en">Overview</span>
+        </button>
+        <button class="nav-btn" onclick="showCategory('tabs-cat', this)">
+            <span class="tr">Tabs (Sekmeler)</span><span class="en">Tabs</span>
+        </button>
+    </div>
 
-                <h3>🛠️ Update Helper</h3>
-                <p>Oyun verilerini güncel tutmak için <code>Assets/Helper</code> içindeki aracı çalıştırın. İkonlar ve harita verileri otomatik senkronize edilecektir.</p>
+    <div id="sub-tabs-container" class="sub-tabs">
+        <button class="sub-btn active" onclick="showSubTab('res')">
+            <span class="tr">Kaynaklar</span><span class="en">Resources</span>
+        </button>
+        <button class="sub-btn" onclick="showSubTab('mobs')">
+            <span class="tr">Yaratıklar</span><span class="en">Mobs</span>
+        </button>
+        <button class="sub-btn" onclick="showSubTab('players')">
+            <span class="tr">Oyuncular</span><span class="en">Players</span>
+        </button>
+        <button class="sub-btn" onclick="showSubTab('config')">
+            <span class="tr">Yapılandırma</span><span class="en">Config</span>
+        </button>
+        <button class="sub-btn" onclick="showSubTab('settings')">
+            <span class="tr">Ayarlar</span><span class="en">Settings</span>
+        </button>
+    </div>
 
-                <div class="roadmap">
-                    <h3>🚀 Yapılacaklar</h3>
-                    <ul>
-                        <li>Kullanıcı HP Gösterimi (Fix)</li>
-                        <li>Zindan Bildirim Geliştirmeleri</li>
-                        <li>Stabilite Güncellemeleri</li>
+    <div class="content-container">
+        
+        <div id="overview" class="section-content active">
+            <div class="grid-info">
+                <div>
+                    <h2 class="tr">Uygulama Özellikleri</h2>
+                    <h2 class="en">App Features</h2>
+                    <ul class="tr">
+                        <li><strong>Güvenli Mimari:</strong> Belleğe müdahale etmez, %100 harici ağ paketi okuyucusudur.</li>
+                        <li><strong>Gelişmiş ESP:</strong> Oyuncu IP, detaylı ekipman ve can takibi.</li>
+                        <li><strong>Tehlike Pusulası:</strong> Görünmeyen düşmanların yönünü dinamik ok ile gösterir.</li>
+                    </ul>
+                    <ul class="en">
+                        <li><strong>Safe Architecture:</strong> 100% external packet sniffer, no memory modification.</li>
+                        <li><strong>Advanced ESP:</strong> Track exact player IP, equipment and HP.</li>
+                        <li><strong>Danger Compass:</strong> Shows the direction of off-screen approaching enemies.</li>
                     </ul>
                 </div>
-            </div>
-
-            <div class="lang-column">
-                <h2>🇬🇧 Features</h2>
-                <ul>
-                    <li><strong>Advanced ESP:</strong> Player HP, True Average IP, and full equipment tracking.</li>
-                    <li><strong>Equipment Cards:</strong> Real-time icon display for top 5 nearby threats.</li>
-                    <li><strong>Danger Compass:</strong> Dynamic direction pointer for approaching enemies.</li>
-                    <li><strong>Mob Radar:</strong> Filter Bosses, Titans, and Aspects instantly.</li>
-                    <li><strong>Resource Tracking:</strong> Smart filters based on Tier and Enchantment levels.</li>
-                    <li><strong>Chest Alerts:</strong> Instant toast notifications for high-value chests.</li>
-                </ul>
-
-                <h3>🛠️ Update Helper</h3>
-                <p>Run the tool in <code>Assets/Helper</code> to keep game data updated. Icons and map data will sync automatically.</p>
-
-                <div class="roadmap">
-                    <h3>🚀 Roadmap</h3>
-                    <ul>
-                        <li>User HP Display (Fix)</li>
-                        <li>Dungeon Notification Improvements</li>
-                        <li>Stability Fixes</li>
-                    </ul>
-                </div>
+                <img src="App/TR/genel.png" class="app-img tr" alt="Genel Bakış">
+                <img src="App/EN/genel.png" class="app-img en" alt="Overview">
             </div>
         </div>
 
-        <div class="contact">
-            <p>Contact / İletişim</p>
-            <a href="#" class="discord-btn">Discord: Jung1330</a>
+        <div id="res" class="section-content tab-item">
+            <div class="grid-info">
+                <div>
+                    <h2 class="tr">Resources (Kaynaklar)</h2><h2 class="en">Resources</h2>
+                    <ul class="tr">
+                        <li>Sadece toplamak istediğiniz spesifik kaynak türünü radarda gösterir.</li>
+                        <li>Kaynakların nadirliğini haritada farklı renklerle ayırır (Yeşil=x.1, Mavi=x.2, vs.).</li>
+                        <li>Ekran karmaşasını önlemek için sadece belirlediğiniz Tier aralığındaki kaynakları tarar.</li>
+                    </ul>
+                    <ul class="en">
+                        <li>Displays only the specific resource types you want to gather on the radar.</li>
+                        <li>Highlights resource rarity with distinct map colors (Green=x.1, Blue=x.2, etc.).</li>
+                        <li>Scans only within your chosen Tier range to prevent screen clutter.</li>
+                    </ul>
+                </div>
+                <img src="App/TR/kaynaklar.png" class="app-img tr" alt="Kaynaklar">
+                <img src="App/EN/kaynaklar.png" class="app-img en" alt="Resources">
+            </div>
+        </div>
+
+        <div id="mobs" class="section-content tab-item">
+            <div class="grid-info">
+                <div>
+                    <h2 class="tr">Mobs (Yaratıklar)</h2><h2 class="en">Mobs</h2>
+                    <ul class="tr">
+                        <li>Haritada gizlenen Titan, Aspect ve Dünya Boss'larını anında tespit eder.</li>
+                        <li>Mist haritalarındaki en değerli hedefleri (Crystal Spider, Griffin vb.) bulmanızı sağlar.</li>
+                        <li>Çevrenizde nadir sandıklar (Mavi, Mor, Efsanevi) belirdiğinde animasyonlu bildirim çıkarır.</li>
+                    </ul>
+                    <ul class="en">
+                        <li>Instantly spots hidden Titans, Aspects, and World Bosses on the map.</li>
+                        <li>Helps you find high-value targets (Crystal Spider, Griffin, etc.) in the Mists.</li>
+                        <li>Triggers an animated alert when rare chests (Blue, Purple, Legendary) spawn nearby.</li>
+                    </ul>
+                </div>
+                <img src="App/TR/yaratıklar.png" class="app-img tr" alt="Yaratıklar">
+                <img src="App/EN/yaratıklar.png" class="app-img en" alt="Mobs">
+            </div>
+        </div>
+
+        <div id="players" class="section-content tab-item">
+            <div class="grid-info">
+                <div>
+                    <h2 class="tr">Players (Oyuncular)</h2><h2 class="en">Players</h2>
+                    <ul class="tr">
+                        <li>Çevrenizdeki tüm düşmanların tam zırh bilgilerini oyun içi ikonlarıyla listeler.</li>
+                        <li>Rakiplerin silahlarına göre anında "Net Ortalama IP" değerini gösterir.</li>
+                        <li>Düşmanların HP durumunu ve hangi Guild/Alliance'a üye olduğunu saniyesinde sunar.</li>
+                    </ul>
+                    <ul class="en">
+                        <li>Lists full armor setups of nearby enemies using actual in-game icons.</li>
+                        <li>Calculates and displays the exact "True Average IP" based on opponent gear.</li>
+                        <li>Reveals enemy HP levels and their Guild/Alliance affiliations instantly.</li>
+                    </ul>
+                </div>
+                <img src="App/TR/oyuncular.png" class="app-img tr" alt="Oyuncular">
+                <img src="App/EN/oyuncular.png" class="app-img en" alt="Players">
+            </div>
+        </div>
+
+        <div id="config" class="section-content tab-item">
+            <div class="grid-info">
+                <div>
+                    <h2 class="tr">Config (Yapılandırma)</h2><h2 class="en">Config</h2>
+                    <ul class="tr">
+                        <li>Kendinize özel hazırladığınız radar filtrelerini "Profil" olarak kaydedin.</li>
+                        <li>Farklı oyun tarzları (Gathering, PvP, PvE) için kaydettiğiniz profiller arası tek tıkla geçin.</li>
+                        <li>Tüm yapılandırmalarınız dosya tabanlı olarak güvenle saklanır.</li>
+                    </ul>
+                    <ul class="en">
+                        <li>Save your custom radar filters as dedicated "Profiles".</li>
+                        <li>Switch instantly between profiles tailored for different playstyles (Gathering, PvP, PvE).</li>
+                        <li>All configurations are safely stored locally in your system.</li>
+                    </ul>
+                </div>
+                <img src="App/TR/yapılandırma.png" class="app-img tr" alt="Yapılandırma">
+                <img src="App/EN/yapılandırma.png" class="app-img en" alt="Config">
+            </div>
+        </div>
+
+        <div id="settings" class="section-content tab-item">
+            <div class="grid-info">
+                <div>
+                    <h2 class="tr">Settings (Ayarlar)</h2><h2 class="en">Settings</h2>
+                    <ul class="tr">
+                        <li>Modern ImGui menüsünün renk paletini kendi zevkinize göre özelleştirin.</li>
+                        <li>Mini radar ve oyuncu listesini farenizle ekranın dilediğiniz köşesine sürükleyin.</li>
+                        <li>Görsel pop-up bildirimlerini ve sesli uyarıları açıp kapatın.</li>
+                    </ul>
+                    <ul class="en">
+                        <li>Customize the color palette of the modern ImGui menu to your liking.</li>
+                        <li>Freely drag the mini-radar and player list to any corner of your screen.</li>
+                        <li>Toggle visual pop-up notifications and sound alerts on or off.</li>
+                    </ul>
+                </div>
+                <img src="App/TR/ayarlar.png" class="app-img tr" alt="Ayarlar">
+                <img src="App/EN/ayarlar.png" class="app-img en" alt="Settings">
+            </div>
+        </div>
+
+        <div style="text-align: center; padding-top: 20px;">
+            <a href="#" class="discord-link">💬 Discord: Jung1330</a>
         </div>
     </div>
 
+    <script>
+        function setLang(lang) {
+            document.querySelectorAll('.tr, .en').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.' + lang).forEach(el => {
+                if(el.tagName.toLowerCase() === 'img') {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'block'; 
+                }
+            });
+
+            if(lang === 'tr') {
+                document.getElementById('flag-tr').classList.add('active');
+                document.getElementById('flag-en').classList.remove('active');
+            } else {
+                document.getElementById('flag-en').classList.add('active');
+                document.getElementById('flag-tr').classList.remove('active');
+            }
+        }
+
+        function showCategory(id, btn) {
+            document.querySelectorAll('.section-content, .tab-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const subTabs = document.getElementById('sub-tabs-container');
+            if(id === 'tabs-cat') {
+                subTabs.classList.add('visible');
+                showSubTab('res'); 
+            } else {
+                subTabs.classList.remove('visible');
+                document.getElementById('overview').classList.add('active');
+            }
+        }
+
+        function showSubTab(id) {
+            document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        window.onload = function() {
+            setLang('tr');
+        };
+    </script>
 </body>
 </html>
