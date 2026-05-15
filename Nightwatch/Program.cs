@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
@@ -22,7 +22,7 @@ namespace Nightwatch
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        // Main metodunun EN BAÞINA, her þeyden önce
+        // Main metodunun EN BAÅžINA, her ÅŸeyden Ã¶nce
         [DllImport("SDL3.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern bool SDL_SetHint(string name, string value);
 
@@ -44,7 +44,7 @@ namespace Nightwatch
             ErrorCodeSink.Install();
 
 
-            // Sonra Main içinde ilk satýr olarak:
+            // Sonra Main iÃ§inde ilk satÄ±r olarak:
             TrySetSdlHint("SDL_WINDOW_UTILITY", "0");
             TrySetSdlHint("SDL_HINT_WINDOW_NO_TASKBAR", "0");
             // En basta sadece temel dili Ingilizce veya TR olarak yukle (Login ekrani icin)
@@ -61,7 +61,7 @@ namespace Nightwatch
                 var radar = new AlbionOverlay(manager, isRunningAsAdmin);
 
                 // ========================================================
-                // --- LOGIN KONTROLÜ KALDIRILDI ---
+                // --- LOGIN KONTROLÃœ KALDIRILDI ---
                 // ========================================================
                 radar.OnLoginSuccess = () =>
                 {
@@ -98,7 +98,7 @@ namespace Nightwatch
                         RenkliYaz(Lang.Get("EngineStart"), ConsoleColor.Yellow);
                         var engine = new PacketEngine(parser, manager);
 
-                        // Capture baþlangýcý bloklayýcý olabildiði için UI thread'i kilitlemesin.
+                        // Capture baÅŸlangÄ±cÄ± bloklayÄ±cÄ± olabildiÄŸi iÃ§in UI thread'i kilitlemesin.
                         Task.Run(() =>
                         {
                             try
@@ -179,11 +179,11 @@ namespace Nightwatch
             }
             catch (DllNotFoundException)
             {
-                // SDL yüklenmeden önce hint set edilmek istenirse sessiz geç.
+                // SDL yÃ¼klenmeden Ã¶nce hint set edilmek istenirse sessiz geÃ§.
             }
             catch (EntryPointNotFoundException)
             {
-                // SDL sürümü ilgili hint API'sini desteklemiyorsa sessiz geç.
+                // SDL sÃ¼rÃ¼mÃ¼ ilgili hint API'sini desteklemiyorsa sessiz geÃ§.
             }
         }
 

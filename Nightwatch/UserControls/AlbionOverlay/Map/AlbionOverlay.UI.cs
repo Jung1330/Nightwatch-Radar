@@ -1,4 +1,4 @@
-#region Using Directives
+﻿#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -115,7 +115,7 @@ namespace Nightwatch
             var result = new List<(string mode, float x, float y)>();
             var map = ParsePayloadToMap(payload);
 
-            // Param yollar�
+            // Param yolları
             if (d13 && map.TryGetValue(4, out var p4) && map.TryGetValue(5, out var p5)
                 && TryParseFloatInvariant(p4, out var x45) && TryParseFloatInvariant(p5, out var y45))
             {
@@ -136,7 +136,7 @@ namespace Nightwatch
 
             if (d15)
             {
-                // p1 list [0,1] genelde byte list olabilir; parse stringinden ilk iki byte'� dene
+                // p1 list [0,1] genelde byte list olabilir; parse stringinden ilk iki byte'ı dene
                 float lx = bytes[0];
                 float ly = bytes[1];
                 AddDecodeCandidate(result, "15:list[0,1]", lx, ly);
@@ -220,12 +220,12 @@ namespace Nightwatch
             return result;
         }
 
-        #region UI nin şekilleri vs.
+        #region UI nin ÅŸekilleri vs.
         private void ApplyModernStyle()
         {
             var style = ImGui.GetStyle();
 
-            // K��e Yumu�atmalar�
+            // Köşe Yumuşatmaları
             style.WindowRounding = 12f;
             style.ChildRounding = 10f;
             style.FrameRounding = 8f;
@@ -238,21 +238,21 @@ namespace Nightwatch
             style.FrameBorderSize = 0f;
 
             // ==========================================
-            // 2. ARKA PLAN VE BA�LIK E��TLEMES� (Kusursuz G�r�n�m)
+            // 2. ARKA PLAN VE BAŞLIK EŞİTLEMESİ (Kusursuz Görünüm)
             // ==========================================
-            // Senin verdi�in RGB: 1, 2, 3 (��i ve ba�l��� ayn� renk yap�yoruz ki �izgi olmas�n)
-            Vector4 mainBgColor = new Vector4(1f / 255f, 2f / 255f, 3f / 255f, 0.98f); // 0.98f hafif saydaml�k
+            // Senin verdiğin RGB: 1, 2, 3 (İçi ve başlığı aynı renk yapıyoruz ki çizgi olmasın)
+            Vector4 mainBgColor = new Vector4(1f / 255f, 2f / 255f, 3f / 255f, 0.98f); // 0.98f hafif saydamlık
 
             style.Colors[(int)ImGuiCol.WindowBg] = mainBgColor;
             style.Colors[(int)ImGuiCol.ChildBg] = mainBgColor;
             style.Colors[(int)ImGuiCol.PopupBg] = mainBgColor;
 
-            // BA�LIK �UBU�UNU (TASI BENI YAZAN YER�) G�ZLEYEN S�H�RL� KISIM:
+            // BAŞLIK ÇUBUĞUNU (TASI BENI YAZAN YERİ) GİZLEYEN SİHİRLİ KISIM:
             style.Colors[(int)ImGuiCol.TitleBg] = mainBgColor;
             style.Colors[(int)ImGuiCol.TitleBgActive] = mainBgColor;
             style.Colors[(int)ImGuiCol.TitleBgCollapsed] = mainBgColor;
 
-            // �er�eve (Border) rengini ana renkten �ok hafif daha a��k yap�yoruz ki tatl� bir s�n�r� olsun
+            // Çerçeve (Border) rengini ana renkten çok hafif daha açık yapıyoruz ki tatlı bir sınırı olsun
             style.Colors[(int)ImGuiCol.Border] = new Vector4(35f / 255f, 38f / 255f, 45f / 255f, 1.0f);
 
             // Frame'ler (Kutucuklar, ComboBox'lar, alt planlar)
@@ -261,7 +261,7 @@ namespace Nightwatch
             style.Colors[(int)ImGuiCol.FrameBgActive] = new Vector4(45f / 255f, 49f / 255f, 58f / 255f, 1.0f);
 
             // ==========================================
-            // 3. ANA VURGU RENG� (Accent Color)
+            // 3. ANA VURGU RENGİ (Accent Color)
             // ==========================================
             // Midnight mor vurgu rengi
             Vector4 accentColor = new Vector4(92f / 255f, 40f / 255f, 120f / 255f, 1.0f);
@@ -278,14 +278,14 @@ namespace Nightwatch
             style.Colors[(int)ImGuiCol.HeaderHovered] = new Vector4(accentColor.X, accentColor.Y, accentColor.Z, 0.60f);
             style.Colors[(int)ImGuiCol.HeaderActive] = accentColor;
 
-            // Sekme (Tab) renkleri - Midnight mor (se�ili daha a��k)
+            // Sekme (Tab) renkleri - Midnight mor (seçili daha açık)
             Vector4 tabMidnight = new Vector4(140f / 255f, 85f / 255f, 175f / 255f, 1.0f);
             Vector4 tabMidnightHover = new Vector4(165f / 255f, 110f / 255f, 195f / 255f, 1.0f);
             Vector4 tabMidnightActive = new Vector4(185f / 255f, 130f / 255f, 210f / 255f, 1.0f);
             style.Colors[(int)ImGuiCol.Tab] = tabMidnight;
             style.Colors[(int)ImGuiCol.TabHovered] = tabMidnightHover;
 
-            // ImGuiCol enumunda TabActive yoksa index ile g�venli �ekilde ayarla
+            // ImGuiCol enumunda TabActive yoksa index ile güvenli şekilde ayarla
             int tabActiveIndex = (int)ImGuiCol.TabHovered + 1;
             if (style.Colors.Count > tabActiveIndex)
             {
@@ -313,7 +313,7 @@ namespace Nightwatch
             style.Colors[(int)ImGuiCol.SeparatorActive] = accentActive;
 
             // ==========================================
-            // 4. MET�N RENKLER�
+            // 4. METİN RENKLERİ
             // ==========================================
             style.Colors[(int)ImGuiCol.Text] = new Vector4(0.92f, 0.92f, 0.95f, 1.00f);
             style.Colors[(int)ImGuiCol.TextDisabled] = new Vector4(0.50f, 0.50f, 0.55f, 1.00f);
@@ -348,7 +348,7 @@ namespace Nightwatch
                             ImGui.Indent();
                             if (ImGui.TreeNode(string.Format(Lang.Get("Res_Filter") ?? "{0} Filter", cat)))
                             {
-                                if (ImGui.BeginTable($"TİERR_{cat}", 5, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+                                if (ImGui.BeginTable($"TÄ°ERR_{cat}", 5, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
                                 {
                                     ImGui.TableSetupColumn(Lang.Get("Res_Enchantment") ?? "Enchant"); ImGui.TableSetupColumn("0"); ImGui.TableSetupColumn("1"); ImGui.TableSetupColumn("2"); ImGui.TableSetupColumn("3"); ImGui.TableHeadersRow();
                                     for (int t = 0; t < 8; t++)
@@ -490,7 +490,7 @@ namespace Nightwatch
                     ImGui.InputText(Lang.Get("Config_NameInput") ?? "##Name", ref _configFileNameInput, 32);
                     if (ImGui.Button(Lang.Get("Config_SaveBtn") ?? "Save"))
                     {
-                        // Kutu boş değilse veya sadece boşluklardan oluşmuyorsa kaydet
+                        // Kutu boÅŸ deÄŸilse veya sadece boÅŸluklardan oluÅŸmuyorsa kaydet
                         if (!string.IsNullOrWhiteSpace(_configFileNameInput))
                         {
                             SaveConfig(_configFileNameInput);
@@ -599,22 +599,33 @@ namespace Nightwatch
                     ImGui.Spacing();
                     int prevLangIdx = _selectedLangIndex;
                     ImGui.SetNextItemWidth(200);
-                    ImGui.Combo("##LangSettings", ref _selectedLangIndex, _languages, _languages.Length);
-                    if (_selectedLangIndex != prevLangIdx)
+
+                    if (ImGui.Combo("##LangSettings", ref _selectedLangIndex, _languages, _languages.Length))
                     {
-                        string newLang = _selectedLangIndex == 0 ? "TR" : "EN";
+                        string newLang = _selectedLangIndex switch
+                        {
+                            0 => "TR",
+                            1 => "EN",
+                            2 => "RU",
+                            3 => "ZH",
+                            _ => "TR"
+                        };
+
                         Lang.LoadLanguage(newLang);
                         _lastTabLanguage = null;
+
                         try
                         {
-                            string lp = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "Language.txt");
-                            File.WriteAllText(lp, newLang);
+                            string configDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");
+                            if (!Directory.Exists(configDir)) Directory.CreateDirectory(configDir);
+                            File.WriteAllText(System.IO.Path.Combine(configDir, "lang.txt"), newLang);
                         }
-                        catch (Exception ex)
-                        {
-                            System.Console.WriteLine($"Error Code : 38 | {ex.Message}");
-                        }
+                        catch { }
+
+                        // YENİ: Dil değiştiği an FONTU DA anında değiştir!
+                        ApplyLanguageFont(newLang);
                     }
+
 
                     ImGui.Separator();
                     ImGui.TextColored(new Vector4(1, 0.8f, 0, 1), Lang.Get("Settings_HotkeyTitle") ?? "Hotkeys");
@@ -660,14 +671,109 @@ namespace Nightwatch
                             }
                         }
                     }
-
-
-
                     ImGui.Separator();
+
                     break;
                 #endregion
+                #region Device (Adapter & VPN)
+                case 6:
+                    ImGui.TextColored(new Vector4(1f, 0.5f, 0f, 1f), "Ağ Bağdaştırıcısı Ayarları (VPN & Booster Support)");
+                    ImGui.Separator();
+                    ImGui.Spacing();
 
-                #region Geli�tirme Ara�lar�
+                    ImGui.TextWrapped(Lang.Get("Device_VPN") ?? "Hiçbir ağ kartı bulunamadı!");
+                    ImGui.Spacing();
+
+                    if (!_adaptersLoaded)
+                    {
+                        _availableAdapters = PacketEngine.GetAvailableAdapters();
+                        _adaptersLoaded = true;
+
+                        string saved = File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "last_adapter.txt"))
+                            ? File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "last_adapter.txt")).Trim() : "";
+
+                        int idx = _availableAdapters.IndexOf(saved);
+                        if (idx != -1) _selectedAdapterIndex = idx;
+                    }
+
+                    if (_availableAdapters.Count > 0)
+                    {
+                        ImGui.SetNextItemWidth(400);
+                        if (ImGui.Combo("##NetworkAdapter", ref _selectedAdapterIndex, _availableAdapters.ToArray(), _availableAdapters.Count))
+                        {
+                            PacketEngine.SaveSelectedAdapter(_availableAdapters[_selectedAdapterIndex]);
+                        }
+                    }
+                    else
+                    {
+                        ImGui.TextColored(new Vector4(1f, 0f, 0f, 1f), "Hiçbir ağ kartı bulunamadı! Npcap kurduğunuzdan emin olun.");
+                    }
+
+                    ImGui.Spacing();
+
+                    if (ImGui.Button(Lang.Get("Device_Button1") ?? "Uygulamayı Yeniden Başlat (Restart)", new Vector2(300, 35)))
+                    {
+                        System.Windows.Forms.Application.Restart();
+                        Environment.Exit(0);
+                    }
+
+                    ImGui.Spacing();
+                    ImGui.Separator();
+                    ImGui.Spacing();
+
+                    // ==========================================
+                    // YENİ: AĞ TANILAMA (DIAGNOSTIC) BÖLÜMÜ
+                    // ==========================================
+                    ImGui.TextColored(new Vector4(0f, 1f, 1f, 1f), Lang.Get("Device_Discovery"));
+                    ImGui.TextWrapped(Lang.Get("Device_DiscoveryText") ?? "Hangi adaptörünüzün Albion Online verisi (5055/5056/5057 UDP) aldığını tespit etmek için oyuna girip hareket ederken bu testi başlatın.");
+
+                    if (_isTestingAdapters)
+                    {
+                        // Test sırasında ekran donmasın diye adama "Bekle" yazısı gösteriyoruz
+                        ImGui.TextColored(new Vector4(1f, 1f, 0f, 1f), Lang.Get("Device_Search") ?? "3 Saniye Bekleyiniz.");
+                    }
+                    else
+                    {
+                        if (ImGui.Button(Lang.Get("Device_Button2") ?? "Ağları Test Et (Albion Trafiği Ara)", new Vector2(300, 35)))
+                        {
+                            _isTestingAdapters = true;
+                            _adapterTestResults.Clear();
+
+                            // Arayüz donmasın diye testi arka planda (Task) çalıştırıyoruz
+                            System.Threading.Tasks.Task.Run(() =>
+                            {
+                                _adapterTestResults = PacketEngine.TestAllAdaptersForAlbion();
+                                _isTestingAdapters = false;
+                            });
+                        }
+                    }
+
+                    // Test sonuçları geldiyse ekrana bas
+                    if (_adapterTestResults.Count > 0 && !_isTestingAdapters)
+                    {
+                        ImGui.Spacing();
+                        if (ImGui.BeginChild("AdapterTestResults", new Vector2(0, 200), ImGuiChildFlags.Borders))
+                        {
+                            foreach (var kvp in _adapterTestResults)
+                            {
+                                if (kvp.Value)
+                                {
+                                    // Trafik olan kartı YEŞİL ile kocaman [ YES ] yazarak gösteriyoruz
+                                    ImGui.TextColored(new Vector4(0f, 1f, 0f, 1f), $"[ YES ] 5055/5056/5057 -> {kvp.Key}");
+                                }
+                                else
+                                {
+                                    // Boş kartları GRİ/SÖNÜK şekilde gösteriyoruz
+                                    ImGui.TextColored(new Vector4(0.5f, 0.5f, 0.5f, 1f), $"[ NO  ] 5055/5056/5057 -> {kvp.Key}");
+                                }
+                            }
+                        }
+                        ImGui.EndChild();
+                        ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1f), Lang.Get("Device_Info") ?? "* Lütfen [ YES ] yazan adaptörü yukarıdaki menüden seçip 'Restart' atın.");
+                    }
+                    break;
+                #endregion
+                #region Geliştirme Araçları
                 case 4: // Dev Tools
                     if (ImGui.BeginTabBar("DevToolsTabs"))
                     {
@@ -820,7 +926,7 @@ namespace Nightwatch
                         }
                             #endregion
                         #region Sekme 3 [Mobs DB & Tracking]
-                        // --- 2. SEKME: MOBS (DB VE TAKİP) ---
+                        // --- 2. SEKME: MOBS (DB VE TAKÄ°P) ---
                         if (ImGui.BeginTabItem(Lang.Get("Dev_TabMobs") ?? "Mobs DB"))
                         {
                             if (ImGui.BeginTabBar("MobSubTabs"))
@@ -924,7 +1030,7 @@ namespace Nightwatch
                         }
                         #endregion
                         #region Sekme 4 [PNG]
-                        // --- 3. SEKME: PNG (Özel İkon Yönetimi) ---
+                        // --- 3. SEKME: PNG (Ã–zel Ä°kon YÃ¶netimi) ---
                         if (ImGui.BeginTabItem(Lang.Get("Dev_TabPng") ?? "Icons"))
                         {
                             if (ImGui.BeginTabBar("PngSubTabs"))
@@ -943,14 +1049,14 @@ namespace Nightwatch
                                             string upName = x.Value.Name.ToUpperInvariant();
                                             bool isBoss = upName.Contains("BOSS") || upName.Contains("ASPECT") || upName.Contains("TITAN") || upName.Contains("GUARDIAN") || upName.Contains("OLD_WHITE");
 
-                                            // Arama kutusu doluyken t�m veritaban�nda ara (boss k�s�t� kald�r�l�r)
+                                            // Arama kutusu doluyken tüm veritabanında ara (boss kısıtı kaldırılır)
                                             if (!string.IsNullOrEmpty(_crownSearchQuery))
                                             {
                                                 bool matchesSearch = x.Value.Name.Contains(_crownSearchQuery, StringComparison.OrdinalIgnoreCase) || x.Key.ToString().Contains(_crownSearchQuery);
                                                 return matchesSearch;
                                             }
 
-                                            // Arama bo�ken eski davran��: yaln�zca boss benzeri kay�tlar
+                                            // Arama boşken eski davranış: yalnızca boss benzeri kayıtlar
                                             return isBoss;
                                         }).ToList();
                                         _lastCrownSearchQuery = _crownSearchQuery;
@@ -1318,7 +1424,7 @@ namespace Nightwatch
                             {
                                 if (_pointerScannerCandidates.Count == 0)
                                 {
-                                    ImGui.TextDisabled("Hen�z aday yok.");
+                                    ImGui.TextDisabled("Henüz aday yok.");
                                 }
                                 else
                                 {
@@ -1397,7 +1503,7 @@ namespace Nightwatch
                         if (ImGui.BeginTabItem(Lang.Get("Dev_TabConsole") ?? "Console"))
                         {
                             ImGui.Spacing();
-                            // --- OTOMAT�K TARAMA T�K� ---
+                            // --- OTOMATİK TARAMA TİKİ ---
                             ImGui.Checkbox("RAW Search", ref AlbionOverlay._autoRawDump);
 
 
@@ -1413,19 +1519,19 @@ namespace Nightwatch
                                     lock (_dataLock)
                                     {
                                         /*
-                                        // 1. Moblar� Yazd�r
+                                        // 1. Mobları Yazdır
                                         foreach (var m in _mobBuffer)
                                         {
                                             AddUIConsoleLog($"[Mob] ID: {m.TypeId} | Name: {m.Name} | X:{m.CurrentLerpedX:F1} Y:{m.CurrentLerpedY:F1}");
                                         }
-                                        // 2. Oyuncular� Yazd�r
+                                        // 2. Oyuncuları Yazdır
                                         foreach (var p in _playersBuffer)
                                         {
                                             AddUIConsoleLog($"[Player] ID: {p.Id} | Name: {p.Name} | X:{p.CurrentLerpedX:F1} Y:{p.CurrentLerpedY:F1}");
                                         }
                                         */
 
-                                        // 1. Kendini Yazd�r (Self)
+                                        // 1. Kendini Yazdır (Self)
                                         var self = _gameStateManager?.GetPlayer();
                                         if (self != null)
                                         {
@@ -1435,7 +1541,7 @@ namespace Nightwatch
                                                 $"PX:{self.PositionX:F1} PY:{self.PositionY:F1}");
                                         }
 
-                                        // 2. Di�er oyuncular� yazd�r (ilk 20, mesafe ile)
+                                        // 2. Diğer oyuncuları yazdır (ilk 20, mesafe ile)
                                         int playerDumpLimit = 20;
                                         int playerTotal = _playersBuffer.Count;
                                         AddUIConsoleLog($"[Players] Total: {playerTotal}");
@@ -1465,7 +1571,7 @@ namespace Nightwatch
 
 
                             ImGui.Spacing(); ImGui.Separator(); ImGui.Spacing();
-                            // 3. KONSOLU SADECE 1 KERE ��Z
+                            // 3. KONSOLU SADECE 1 KERE ÇİZ
                             UIConsole.DrawConsoleWindow();
 
                             ImGui.EndTabItem();
@@ -1955,7 +2061,7 @@ namespace Nightwatch
                                         ImGui.TextColored(new Vector4(1f, 0.9f, 0.3f, 1f), $"Toplam Kayit: {entries.Count}");
                                         ImGui.Separator();
 
-                                        // En yeni en altta kalacak �ekilde s�rala
+                                        // En yeni en altta kalacak şekilde sırala
                                         foreach (var entry in entries)
                                         {
                                             ImGui.TextColored(new Vector4(0.55f, 0.95f, 0.55f, 1f), $"[{entry.time:HH:mm:ss}] {entry.eventName} (Code: {entry.eventCode})");
@@ -1971,7 +2077,7 @@ namespace Nightwatch
                         }
                         #endregion
 
-                        // YANLI�LIKLA S�L�NEN KOD BURASI: Sekme �ubu�unu (TabBar) kapat�yoruz!
+                        // YANLIŞLIKLA SİLİNEN KOD BURASI: Sekme çubuğunu (TabBar) kapatıyoruz!
                         ImGui.EndTabBar();
 
                     }
@@ -2019,10 +2125,10 @@ namespace Nightwatch
         #region Show Hide Button Settings
         private int GetPressedKey()
         {
-            // Tüm sanal tuş kodlarını tara (Mouse butonları hariç genelde 0x08'den başlar)
+            // TÃ¼m sanal tuÅŸ kodlarÄ±nÄ± tara (Mouse butonlarÄ± hariÃ§ genelde 0x08'den baÅŸlar)
             for (int i = 0x08; i <= 0xFF; i++)
             {
-                // Mevcut toggle tuşunu algılamaması için kontrol (opsiyonel) veya direkt algıla
+                // Mevcut toggle tuÅŸunu algÄ±lamamasÄ± iÃ§in kontrol (opsiyonel) veya direkt algÄ±la
                 if ((GetAsyncKeyState(i) & 0x8000) != 0)
                 {
                     return i;
@@ -2033,7 +2139,7 @@ namespace Nightwatch
 
         private string GetKeyName(int key)
         {
-            // Basit bir eşleştirme (Daha fazlası eklenebilir)
+            // Basit bir eÅŸleÅŸtirme (Daha fazlasÄ± eklenebilir)
             if (key >= 0x70 && key <= 0x87) return "F" + (key - 0x6F); // F1-F24
             if (key == 0x1B) return "ESC";
             if (key == 0x2D) return "INSERT";

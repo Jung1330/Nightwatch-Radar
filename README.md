@@ -15,9 +15,16 @@
 **Nightwatch**, oyunun belleğine (RAM) müdahale etmeden sadece ağ paketlerini okuyarak çalışan bir yardımcı araçtır.
 
 * **🛡️ Gelişmiş Oyuncu Takibi (ESP):** Yakındaki oyuncuların HP'si, Gerçek Ortalama IP'si ve Tam Ekipman Listesi.
-* **🃏 Detaylı Ekipman Kartları:** En yakın 5 düşmanın ekipmanlarını ikonlarıyla birlikte anlık listeleme.
+* **🃏 Detaylı Ekipman Kartları:** En tehlikeli 5 düşmanın ekipmanlarını ikonlarıyla birlikte anlık listeleme.
 * **⚠️ Tehlike Pusulası:** Yaklaşan düşmanların yönünü gösteren dinamik pusula ve sesli uyarılar.
 * **💎 Kaynak Takibi:** Tier ve Büyü (Enchant) seviyelerine göre gelişmiş filtreleme.
+* **🎁 Bildirim Sistemi:** Mavi, Mor ve Efsanevi sandıklar için anlık Toast bildirimleri.
+
+### 🛠️ Update Helper Kullanımı (Kendiniz Kullanmaya Çalışmayın)
+Uygulamanın güncel oyun verileriyle (ikonlar, ID'ler) çalışması için:
+1. `Assets/Helper` klasöründeki Update Helper bileşenini çalıştırın.
+2. Eksik olan eşya ikonlarının ve harita verilerinin indirilmesini bekleyin.
+3. İşlem tamamlandığında radar, en güncel oyun sürümüne otomatik olarak senkronize olacaktır.
 
 ### 🚀 Roadmap / Yapılacaklar
 - [ ] Kullanıcı HP gösterimi (Fixlenecek)
@@ -40,6 +47,13 @@ Her oyun sürümü güncellendiğinde güncellenicektir.
 * **🃏 Detailed Equipment Cards:** Real-time UI cards showing icons for up to 5 nearby enemies.
 * **⚠️ Danger Compass:** Dynamic compass showing the direction of approaching enemies with sound alerts.
 * **💎 Resource Tracking:** Filter harvestables based on Tier and Enchantment levels.
+* **🎁 Notification System:** Instant toast notifications for Blue, Purple, and Legendary chests.
+
+### 🛠️ How to use Update Helper(Don't use by yourself)
+To ensure the app works with the latest game data (icons, IDs):
+1. Run the Update Helper component located in the `Assets/Helper` folder.
+2. Wait for the missing item icons and map data to be downloaded.
+3. Once finished, the radar will automatically sync with the latest game version.
 
 ### 🚀 Roadmap / To-Do
 - [ ] User HP display (Fix in progress)
@@ -55,7 +69,3 @@ It will be updated every time a new version of the game is released.
 </td>
 </tr>
 </table>
-
-+ Npcap indirmeyi unutmayın. https://npcap.com/#download
-+ Sniffer : https://github.com/juzt3/AOSnifferNET
-+ **For educational purposes. Use at your own risk.**

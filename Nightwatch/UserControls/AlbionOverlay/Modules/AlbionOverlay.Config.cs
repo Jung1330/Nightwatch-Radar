@@ -1,4 +1,4 @@
-#region Using Directives
+﻿#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,7 +53,7 @@ namespace Nightwatch
                 {
                     LastMapIDConfig = _gameStateManager.CurrentMapId ?? "0000",
 
-                    Language = _selectedLangIndex == 0 ? "TR" : "EN",
+                    Language = _selectedLangIndex switch { 0 => "TR", 1 => "EN", 2 => "RU", 3 => "ZH", _ => "TR" },
 
                     ShowMapBackground = _showMapBackground,
                     MapOpacity = _mapOpacity,
@@ -156,7 +156,7 @@ namespace Nightwatch
                 var cfg = JsonConvert.DeserializeObject<RadarConfig>(json);
                 if (cfg == null) return;
 
-                // YENİ EKLENDİ (CrownBlacklist Yükleme)
+                // YENÄ° EKLENDÄ° (CrownBlacklist YÃ¼kleme)
                 if (cfg.CrownBlacklist != null) _crownBlacklist = new List<int>(cfg.CrownBlacklist);
 
                 _showMapBackground = cfg.ShowMapBackground;
@@ -169,12 +169,18 @@ namespace Nightwatch
                 _showMobNames = cfg.ShowMobNames; _debugConsoleLog = cfg.DebugConsoleLog; _showWatermark = cfg.ShowWatermark; _watermarkMoveable = cfg.WatermarkMoveable; _watermarkX = cfg.WatermarkX; _watermarkY = cfg.WatermarkY;
                 _detachRadar = cfg.DetachRadar; _radarMoveable = cfg.RadarMoveable; _radarWinX = cfg.RadarWinX; _radarWinY = cfg.RadarWinY; _radarSize = cfg.RadarSize; _zoom = cfg.Zoom; _globalIconSize = cfg.GlobalIconSize;
                 _renderDistance = cfg.RenderDistance; _invertX = cfg.InvertX; _invertY = cfg.InvertY; _swapXY = cfg.SwapXY;
-                _radarRotation = cfg.RadarRotation; // RadarRotation artık yükleniyor
+                _radarRotation = cfg.RadarRotation; // RadarRotation artÄ±k yÃ¼kleniyor
+
                 if (!string.IsNullOrEmpty(cfg.Language))
                 {
                     Lang.LoadLanguage(cfg.Language);
-                    // UI combo'su da senkronize edilmeli
-                    _selectedLangIndex = cfg.Language.Equals("EN", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+                    _selectedLangIndex = cfg.Language.ToUpper() switch
+                    {
+                        "EN" => 1,
+                        "RU" => 2,
+                        "ZH" => 3,
+                        _ => 0
+                    };
                 }
                 _showPlayerList = cfg.ShowPlayerList; _playerListMoveable = cfg.PlayerListMoveable; _playerListX = cfg.PlayerListX; _playerListY = cfg.PlayerListY;
                 _showItemIds = cfg.ShowItemIds; _showChestIds = cfg.ShowChestIds; _enableLogging = cfg.EnableLogging; _enableSoundAlerts = cfg.EnableSoundAlerts; _selectedTheme = cfg.SelectedTheme;
@@ -203,7 +209,7 @@ namespace Nightwatch
                 _trackerLaserEndOffsetY = cfg.TrackerLaserEndOffsetY;
                 if (cfg.ToggleKey != 0) _toggleKey = cfg.ToggleKey;
 
-                // RADAR POZİSYONUNU ZORLA
+                // RADAR POZÄ°SYONUNU ZORLA
                 _shouldUpdateRadarPos = true;
 
                 if (cfg.CustomPriorityMobs != null) _customPriorityMobs = new HashSet<int>(cfg.CustomPriorityMobs);
@@ -238,7 +244,7 @@ namespace Nightwatch
         }
 
 
-        // DestroyIcon satırını tamamen kaldırdık, çünkü ikon bellekte kalmalı!
+        // DestroyIcon satÄ±rÄ±nÄ± tamamen kaldÄ±rdÄ±k, Ã§Ã¼nkÃ¼ ikon bellekte kalmalÄ±!
         private void SetApplicationWindowIcon()
         {
             try
@@ -252,11 +258,11 @@ namespace Nightwatch
                     if (hwnd == IntPtr.Zero)
                         hwnd = FindWindow(null, "Nightwatch Overlay");
 
-                    // Eski ikonları serbest bırak (bellek sızıntısını önler)
+                    // Eski ikonlarÄ± serbest bÄ±rak (bellek sÄ±zÄ±ntÄ±sÄ±nÄ± Ã¶nler)
                     if (_hIconBig != IntPtr.Zero) { DestroyIcon(_hIconBig); _hIconBig = IntPtr.Zero; }
                     if (_hIconSmall != IntPtr.Zero) { DestroyIcon(_hIconSmall); _hIconSmall = IntPtr.Zero; }
 
-                    // Windows Görev Çubuğu (Taskbar) için uygun boyutları (32x32 ve 16x16) zorluyoruz
+                    // Windows GÃ¶rev Ã‡ubuÄŸu (Taskbar) iÃ§in uygun boyutlarÄ± (32x32 ve 16x16) zorluyoruz
                     _hIconBig = LoadImage(IntPtr.Zero, iconPath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
                     _hIconSmall = LoadImage(IntPtr.Zero, iconPath, IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
 
@@ -286,10 +292,10 @@ namespace Nightwatch
             return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(clean.ToLowerInvariant()).Trim();
         }
 
-        private HarvestableCategory ParseCategoryFromString(string type) { if (string.IsNullOrEmpty(type)) return HarvestableCategory.None; string t = type.ToUpperInvariant(); if (t.Contains("AVALON") || t.Contains("DRONE")) { if (t.Contains("WOOD")) return HarvestableCategory.Log; if (t.Contains("ROCK")) return HarvestableCategory.Rock; if (t.Contains("HIDE")) return HarvestableCategory.Hide; if (t.Contains("FIBER")) return HarvestableCategory.Fiber; if (t.Contains("ORE")) return HarvestableCategory.Ore; return HarvestableCategory.None; /* Bilinmeyen Avalon/Drone türü — Ore yerine None döndür */ } if (t.Contains("LOG") || t.Contains("WOOD")) return HarvestableCategory.Log; if (t.Contains("ROCK") || t.Contains("STONE")) return HarvestableCategory.Rock; if (t.Contains("FIBER") || t.Contains("COTTON")) return HarvestableCategory.Fiber; if (t.Contains("HIDE") || t.Contains("SKIN")) return HarvestableCategory.Hide; if (t.Contains("ORE")) return HarvestableCategory.Ore; return HarvestableCategory.None; }
+        private HarvestableCategory ParseCategoryFromString(string type) { if (string.IsNullOrEmpty(type)) return HarvestableCategory.None; string t = type.ToUpperInvariant(); if (t.Contains("AVALON") || t.Contains("DRONE")) { if (t.Contains("WOOD")) return HarvestableCategory.Log; if (t.Contains("ROCK")) return HarvestableCategory.Rock; if (t.Contains("HIDE")) return HarvestableCategory.Hide; if (t.Contains("FIBER")) return HarvestableCategory.Fiber; if (t.Contains("ORE")) return HarvestableCategory.Ore; return HarvestableCategory.None; /* Bilinmeyen Avalon/Drone tÃ¼rÃ¼ â€” Ore yerine None dÃ¶ndÃ¼r */ } if (t.Contains("LOG") || t.Contains("WOOD")) return HarvestableCategory.Log; if (t.Contains("ROCK") || t.Contains("STONE")) return HarvestableCategory.Rock; if (t.Contains("FIBER") || t.Contains("COTTON")) return HarvestableCategory.Fiber; if (t.Contains("HIDE") || t.Contains("SKIN")) return HarvestableCategory.Hide; if (t.Contains("ORE")) return HarvestableCategory.Ore; return HarvestableCategory.None; }
         private HarvestableCategory GetCategoryFromTypeId(int type)
         {
-            // Albion Online Kaynak ID'leri (G�ncellenmi� Kesin Aral�klar)
+            // Albion Online Kaynak ID'leri (Güncellenmiş Kesin Aralıklar)
             if (type >= 0 && type <= 5) return HarvestableCategory.Log;
             if (type >= 6 && type <= 10) return HarvestableCategory.Rock;
             if (type >= 11 && type <= 15) return HarvestableCategory.Fiber;
@@ -308,7 +314,7 @@ namespace Nightwatch
         }
         private void FixLayoutWait()
         {
-            // Tüm monitörleri kapsayan sanal ekran boyutunu alıyoruz
+            // TÃ¼m monitÃ¶rleri kapsayan sanal ekran boyutunu alÄ±yoruz
             int left = GetSystemMetrics(SM_XVIRTUALSCREEN);
             int top = GetSystemMetrics(SM_YVIRTUALSCREEN);
             int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
@@ -357,9 +363,9 @@ namespace Nightwatch
             }
         }
 
-        #region Key Güvenliği — AES �zifreleme/Çözme
-        // Makineye özgü entropi: HWID yerine sabit bir uygulama anahtarı.
-        // Gerçek bir ürün için DPAPI (ProtectedData) tercih edilir.
+        #region Key GÃ¼venliÄŸi â€” AES Åzifreleme/Ã‡Ã¶zme
+        // Makineye Ã¶zgÃ¼ entropi: HWID yerine sabit bir uygulama anahtarÄ±.
+        // GerÃ§ek bir Ã¼rÃ¼n iÃ§in DPAPI (ProtectedData) tercih edilir.
         private static readonly byte[] _aesKey = new byte[]
         {
             0x4E, 0x69, 0x67, 0x68, 0x74, 0x77, 0x61, 0x74,
@@ -376,7 +382,7 @@ namespace Nightwatch
             using var enc = aes.CreateEncryptor();
             byte[] data = System.Text.Encoding.UTF8.GetBytes(plainText);
             byte[] encrypted = enc.TransformFinalBlock(data, 0, data.Length);
-            // IV + şifreli veri birleşik olarak Base64'e çevrilir
+            // IV + ÅŸifreli veri birleÅŸik olarak Base64'e Ã§evrilir
             byte[] combined = new byte[aes.IV.Length + encrypted.Length];
             Buffer.BlockCopy(aes.IV, 0, combined, 0, aes.IV.Length);
             Buffer.BlockCopy(encrypted, 0, combined, aes.IV.Length, encrypted.Length);

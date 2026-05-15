@@ -91,9 +91,6 @@
     <Content Update="Assets\Helper\Font.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="Assets\Nightwatch.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="Assets\Nightwatch.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -114,15 +111,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="bin\Debug\net8.0-windows\Assets\Nightwatch.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="C:\Users\Administrator\Downloads\Radar\V0.9\Nightwatch\Nightwatch\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Handlers\" />
   </ItemGroup>
 
 </Project>

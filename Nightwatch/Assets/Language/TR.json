@@ -34,6 +34,7 @@
   "Tab_Config": "Config",
   "Tab_Settings": "Ayarlar",
   "Tab_DevTools": "Dev Tools",
+  "Tab_Device": "Adaptör",
 
   "Res_Title": "Kaynak Görünümü",
   "Res_ShowIcons": "Kaynak İkonlarını Göster",
@@ -244,6 +245,17 @@
   "App_System_Exit": "Çıkış",
 
   "AutoLogin": "Oto Giriş Başarılı",
+
+
+  "Device_VPN": "VPN, ExitLag veya Leigod gibi hızlandırıcılar kullanıyorsanız, radarın trafiği okuyabilmesi için aşağıdaki listeden sanal ağ kartınızı seçmeniz gerekir.",
+  "Device_Info_Text1": "Ağ Ayarları",
+  "Device_Discovery": "Adaptör Testi",
+  "Device_DiscoveryText": "Hangi adaptörünüzün Albion Online verisi (5055/5056/5057 UDP) aldığını tespit etmek için oyuna girip hareket ederken bu testi başlatın.",
+  "Device_Search": "Tüm adaptörler dinleniyor, lütfen 3 saniye bekleyin...",
+  "Device_Info": "* Lütfen [ YES ] yazan adaptörü yukarıdaki menüden seçip 'Restart' atın.",
+  "Device_Button1": "Uygulamayı Yeniden Başlat (Restart)",
+  "Device_Button2": "Ağları Test Et (Albion Trafiği Ara)",
+
 
   "Login_LicenseLabel": "Lisans Anahtarı:",
   "Login_LanguageLabel": "Dil:",

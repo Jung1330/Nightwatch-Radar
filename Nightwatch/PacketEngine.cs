@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -120,7 +120,7 @@ namespace Nightwatch
         }
     }
 
-    // --- GÜNCELLENMÝÞ HANDLER ---
+    // --- GÃœNCELLENMÄ°Åž HANDLER ---
     public class InternalMapHandler : IEventHandler
     {
         private readonly Action<string> _onRealMapChanged;
@@ -148,7 +148,7 @@ namespace Nightwatch
             if (string.Equals(_lastMapKey, mapKey, StringComparison.OrdinalIgnoreCase))
                 return;
 
-            // Çok kýsa aralýkta gelen çakýþýk cevaplarý filtrele
+            // Ã‡ok kÄ±sa aralÄ±kta gelen Ã§akÄ±ÅŸÄ±k cevaplarÄ± filtrele
             if (_lastMapChangeAt != DateTime.MinValue && (now - _lastMapChangeAt).TotalMilliseconds < 500)
                 return;
 
@@ -160,7 +160,7 @@ namespace Nightwatch
 
         private static string ResolveMapKey(Dictionary<byte, object> parameters)
         {
-            // Güncel gözleme göre map/cluster bilgisi bu alanlarda gelebiliyor.
+            // GÃ¼ncel gÃ¶zleme gÃ¶re map/cluster bilgisi bu alanlarda gelebiliyor.
             byte[] candidateKeys = { 8, 61, 67 };
             foreach (var key in candidateKeys)
             {
@@ -187,7 +187,7 @@ namespace Nightwatch
         private readonly BlockingCollection<byte[]> _packetQueue = new BlockingCollection<byte[]>();
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        // --- Port kontrol için flag ---
+        // --- Port kontrol iÃ§in flag ---
         private bool _port5056Detected = false;
         private int _targetUdpPort = 5056;
         private int _lastAppliedTargetPort = -1;
@@ -209,7 +209,7 @@ namespace Nightwatch
 
             _albionDataParser.RegisterEventHandler(mapHandler);
 
-            // Ýþçiyi baþlat
+            // Ä°ÅŸÃ§iyi baÅŸlat
             Task.Factory.StartNew(ProcessQueue, _cancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
@@ -259,11 +259,11 @@ namespace Nightwatch
             }
         }
 
-        // --- YENÝ EKLENEN: KUYRUK TEMÝZLEME FONKSÝYONU ---
+        // --- YENÄ° EKLENEN: KUYRUK TEMÄ°ZLEME FONKSÄ°YONU ---
 
         private void PurgeQueue()
         {
-            // Sýrada bekleyen (iþlenmemiþ) tüm paketleri boþalt
+            // SÄ±rada bekleyen (iÅŸlenmemiÅŸ) tÃ¼m paketleri boÅŸalt
             int dropped = 0;
             while (_packetQueue.TryTake(out _))
             {
@@ -294,33 +294,33 @@ namespace Nightwatch
             }
         }
 
-        // --- YENÝ: ADAPTÖR KARÞILAÞTIRMA ---
+        // --- YENÄ°: ADAPTÃ–R KARÅžILAÅžTIRMA ---
         private void UpdateAdapterIfChanged(ICaptureDevice selectedDevice, string adapterMemPath)
         {
             try
             {
                 string currentDescription = selectedDevice.Description;
 
-                // Önceki adaptör bilgisini oku
+                // Ã–nceki adaptÃ¶r bilgisini oku
                 string savedAdapterDesc = "";
                 if (File.Exists(adapterMemPath))
                 {
                     savedAdapterDesc = File.ReadAllText(adapterMemPath).Trim();
                 }
 
-                // Eðer farklýysa, güncelle
+                // EÄŸer farklÄ±ysa, gÃ¼ncelle
                 if (savedAdapterDesc != currentDescription)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? Adaptör deðiþtirildi!");
-                    Console.WriteLine($"    Eski: {(string.IsNullOrEmpty(savedAdapterDesc) ? "Kayýt yok" : savedAdapterDesc)}");
+                    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? AdaptÃ¶r deÄŸiÅŸtirildi!");
+                    Console.WriteLine($"    Eski: {(string.IsNullOrEmpty(savedAdapterDesc) ? "KayÄ±t yok" : savedAdapterDesc)}");
                     Console.WriteLine($"    Yeni: {currentDescription}");
                     Console.ResetColor();
 
                     File.WriteAllText(adapterMemPath, currentDescription);
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? last_adapter.txt güncellendi!");
+                    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? last_adapter.txt gÃ¼ncellendi!");
                     Console.ResetColor();
                 }
             }
@@ -328,12 +328,12 @@ namespace Nightwatch
             {
                 Console.WriteLine($"Error Code : 16 | {ex.Message}");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? Adaptör güncelleme hatasý: {ex.Message}");
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? AdaptÃ¶r gÃ¼ncelleme hatasÄ±: {ex.Message}");
                 Console.ResetColor();
             }
         }
 
-        // --- YENÝ: UDP PORT KONTROLÜ ---
+        // --- YENÄ°: UDP PORT KONTROLÃœ ---
         private bool ValidatePort(ICaptureDevice device, int port, int timeoutSeconds = 10)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -361,8 +361,8 @@ namespace Nightwatch
                                 _port5056Detected = true;
 
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? Port {port} aktif! Albion trafiði algýlandý!");
-                                Console.WriteLine($"    Kaynak Port: {packet.SourcePort} › Hedef Port: {packet.DestinationPort}");
+                                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? Port {port} aktif! Albion trafiÄŸi algÄ±landÄ±!");
+                                Console.WriteLine($"    Kaynak Port: {packet.SourcePort} â€º Hedef Port: {packet.DestinationPort}");
                                 Console.ResetColor();
 
                                 success = true;
@@ -388,18 +388,18 @@ namespace Nightwatch
                     Thread.Sleep(500);
                     elapsed += 500;
                     int remainingSeconds = Math.Max(0, timeoutSeconds - (elapsed / 1000));
-                    Console.Write($"\r[{DateTime.Now:HH:mm:ss}] ? Bekleniyor... ({remainingSeconds}s kaldý)");
+                    Console.Write($"\r[{DateTime.Now:HH:mm:ss}] ? Bekleniyor... ({remainingSeconds}s kaldÄ±)");
                 }
 
-                Console.WriteLine(); // Yeni satýr
+                Console.WriteLine(); // Yeni satÄ±r
 
                 if (!_port5056Detected)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? UYARI: Port {port}'dan paket gelmedi!");
-                    Console.WriteLine("   Lütfen kontrol et:");
-                    Console.WriteLine("   1. Albion Online çalýþýyor mu?");
-                    Console.WriteLine("   2. Doðru adaptörü seçtin mi?");
+                    Console.WriteLine("   LÃ¼tfen kontrol et:");
+                    Console.WriteLine("   1. Albion Online Ã§alÄ±ÅŸÄ±yor mu?");
+                    Console.WriteLine("   2. DoÄŸru adaptÃ¶rÃ¼ seÃ§tin mi?");
                     Console.WriteLine($"   3. Firewall port {port}'u engelliyor mu?");
                     Console.ResetColor();
 
@@ -410,7 +410,7 @@ namespace Nightwatch
             {
                 Console.WriteLine($"Error Code : 18 | {ex.Message}");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? Port kontrol hatasý: {ex.Message}");
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? Port kontrol hatasÄ±: {ex.Message}");
                 Console.ResetColor();
                 success = false;
             }
@@ -438,7 +438,7 @@ namespace Nightwatch
         private int DiscoverAlbionPort(ICaptureDevice device, int timeoutSeconds = 12)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ?? Tüm UDP portlarý taranýyor (auto discover)...");
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ?? TÃ¼m UDP portlarÄ± taranÄ±yor (auto discover)...");
             Console.ResetColor();
 
             var scoreByPort = new ConcurrentDictionary<int, int>();
@@ -449,7 +449,7 @@ namespace Nightwatch
             int bestPort = 0;
             string adapterName = device?.Description ?? device?.Name ?? "Adapter";
 
-            // KeÅŸiften önce önceki kalýntý istatistikleri temizleyelim ki canlý sayaç net görünsün.
+            // KeÃ…Å¸iften Ã¶nce Ã¶nceki kalÄ±ntÄ± istatistikleri temizleyelim ki canlÄ± sayaÃ§ net gÃ¶rÃ¼nsÃ¼n.
             UdpPortInspector.Clear();
 
             try
@@ -473,7 +473,7 @@ namespace Nightwatch
                         var payload = packet.PayloadData;
                         if (payload == null || payload.Length < 12) return;
 
-                        // Photon parse'e düþmeden önce hafif bir eleme
+                        // Photon parse'e dÃ¼ÅŸmeden Ã¶nce hafif bir eleme
                         byte cmdCount = payload.Length > 3 ? payload[3] : (byte)0;
                         if (cmdCount == 0 || cmdCount > 64) return;
 
@@ -489,7 +489,7 @@ namespace Nightwatch
                         }
                         catch
                         {
-                            // parse baþarýsýzsa skor vermiyoruz
+                            // parse baÅŸarÄ±sÄ±zsa skor vermiyoruz
                         }
                     }
                     catch
@@ -543,49 +543,87 @@ namespace Nightwatch
             return bestPort;
         }
 
+        // --- PacketEngine.cs iÃ§indeki Start() metodunu bununla deÄŸiÅŸtirin ---
         public void Start()
         {
             CaptureDeviceList.Instance.Refresh();
             var devices = CaptureDeviceList.Instance;
             if (devices.Count == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(Lang.Get("Err_NoAdapter"));
-                Console.ResetColor();
+                UIConsole.Log(Lang.Get("Err_NoAdapter"), LogLevel.Error);
                 return;
             }
 
-            string[] virtualKeywords =
-            {
-                "loopback", "npcap", "vmware", "hyper-v", "vbox", "tap", "wan miniport", "wsl", "pseudo"
-            };
+            // Config/last_adapter.txt dosyasÄ±ndan kayÄ±tlÄ± adaptÃ¶rÃ¼ oku
+            string configDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");
+            string adapterMemPath = Path.Combine(configDir, "last_adapter.txt");
+            string savedAdapter = File.Exists(adapterMemPath) ? File.ReadAllText(adapterMemPath).Trim() : "";
 
+            string[] virtualKeywords = { "loopback", "npcap", "vmware", "hyper-v", "vbox", "tap", "wan miniport", "wsl", "pseudo" };
             int opened = 0;
-            foreach (var dev in devices)
-            {
-                try
-                {
-                    string desc = (dev.Description ?? string.Empty).ToLowerInvariant();
-                    if (virtualKeywords.Any(k => desc.Contains(k)))
-                        continue;
+            bool customAdapterOpened = false;
 
-                    dev.OnPacketArrival += PacketHandler;
-                    dev.Open(DeviceModes.Promiscuous, 1);
-                    dev.Filter = "udp";
-                    dev.StartCapture();
-                    _openedDevices.Add(dev);
-                    if (_device == null) _device = dev;
-                    opened++;
-                }
-                catch (Exception ex)
+            // 1. EÄŸer kullanÄ±cÄ± ayarlardan Ã¶zel bir adaptÃ¶r seÃ§miÅŸse SADECE ONU dinle
+            if (!string.IsNullOrEmpty(savedAdapter))
+            {
+                foreach (var dev in devices)
                 {
-                    Console.WriteLine($"Error Code : 22 | {ex.Message}");
+                    if (dev.Description == savedAdapter)
+                    {
+                        try
+                        {
+                            dev.OnPacketArrival += PacketHandler;
+                            dev.Open(DeviceModes.Promiscuous, 1);
+                            dev.Filter = "udp";
+                            dev.StartCapture();
+                            _openedDevices.Add(dev);
+                            if (_device == null) _device = dev;
+                            opened++;
+                            customAdapterOpened = true;
+                            UIConsole.Log($"[Device] KayÄ±tlÄ± Ã¶zel adaptÃ¶r aktif: {dev.Description}", LogLevel.Info);
+                            break;
+                        }
+                        catch (Exception ex) { UIConsole.Log($"AdaptÃ¶r aÃ§Ä±lamadÄ±: {ex.Message}", LogLevel.Error); }
+                    }
                 }
             }
 
-            Console.ForegroundColor = opened > 0 ? ConsoleColor.Green : ConsoleColor.Red;
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] AOSniffer-style capture aktif. Açýlan adaptör: {opened}");
-            Console.ResetColor();
+            // 2. Ã–zel adaptÃ¶r yoksa veya hata verdiyse eski otomatik tarama sistemini Ã§alÄ±ÅŸtÄ±r
+            if (!customAdapterOpened)
+            {
+                foreach (var dev in devices)
+                {
+                    string desc = (dev.Description ?? "").ToLowerInvariant();
+                    if (virtualKeywords.Any(k => desc.Contains(k))) continue;
+
+                    try
+                    {
+                        dev.OnPacketArrival += PacketHandler;
+                        dev.Open(DeviceModes.Promiscuous, 1);
+                        dev.Filter = "udp";
+                        dev.StartCapture();
+                        _openedDevices.Add(dev);
+                        if (_device == null) _device = dev;
+                        opened++;
+                    }
+                    catch { }
+                }
+            }
+            UIConsole.Log($"PacketEngine aktif. Dinlenen adaptÃ¶r sayÄ±sÄ±: {opened}", LogLevel.Info);
+        }
+
+        // --- SÄ±nÄ±fÄ±n iÃ§ine (Start'Ä±n altÄ±na) bu yardÄ±mcÄ±larÄ± ekle ---
+        public static List<string> GetAvailableAdapters()
+        {
+            CaptureDeviceList.Instance.Refresh();
+            return CaptureDeviceList.Instance.Select(d => d.Description).ToList();
+        }
+
+        public static void SaveSelectedAdapter(string desc)
+        {
+            string configDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");
+            if (!Directory.Exists(configDir)) Directory.CreateDirectory(configDir);
+            File.WriteAllText(Path.Combine(configDir, "last_adapter.txt"), desc);
         }
         private void PacketHandler(object sender, PacketCapture e)
         {
@@ -616,6 +654,67 @@ namespace Nightwatch
             {
                 Console.WriteLine($"Error Code : 23 | {ex.Message}");
             }
+        }
+
+        // --- AÄž TANILAMA ARACI (HANGÄ° KARTTAN VERÄ° AKIYOR BULMA) ---
+        public static Dictionary<string, bool> TestAllAdaptersForAlbion()
+        {
+            var results = new Dictionary<string, bool>();
+            try
+            {
+                CaptureDeviceList.Instance.Refresh();
+                var devices = CaptureDeviceList.Instance;
+
+                var lockObj = new object();
+                var openedDevices = new List<ICaptureDevice>();
+
+                foreach (var dev in devices)
+                {
+                    string devName = dev.Description ?? dev.Name;
+                    results[devName] = false; // VarsayÄ±lan olarak hepsine NO veriyoruz
+
+                    try
+                    {
+                        dev.Open(DeviceModes.Promiscuous, 1);
+                        // Sadece Albion'un kullandÄ±ÄŸÄ± portlarÄ± filtrele
+                        dev.Filter = "udp port 5056 or udp port 5057 or udp port 5055";
+
+                        PacketArrivalEventHandler handler = (sender, e) =>
+                        {
+                            lock (lockObj)
+                            {
+                                var d = (ICaptureDevice)sender;
+                                results[d.Description ?? d.Name] = true; // Albion paketi geldiyse YES yap
+                            }
+                        };
+
+                        dev.OnPacketArrival += handler;
+                        dev.StartCapture();
+                        openedDevices.Add(dev);
+                    }
+                    catch { } // Desteklenmeyen (bozuk) sanal kartlar hata verirse umursama
+                }
+
+                // 3 Saniye boyunca kullanÄ±cÄ±dan hareket etmesini bekle ve paketleri topla
+                Thread.Sleep(3000);
+
+                // Ä°ÅŸlem bitince tÃ¼m ajanlarÄ± geri Ã§ek ve kartlarÄ± kapat
+                foreach (var dev in openedDevices)
+                {
+                    try
+                    {
+                        dev.StopCapture();
+                        dev.Close();
+                    }
+                    catch { }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Test HatasÄ±: {ex.Message}");
+            }
+
+            return results;
         }
 
         public void Stop()

@@ -1,4 +1,4 @@
-#region Using Directives
+ï»¿#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,13 +61,14 @@ namespace Nightwatch
                 _tabs[3] = Lang.Get("Tab_Config") ?? "Config";
                 _tabs[4] = Lang.Get("Tab_DevTools") ?? "Dev Tools";
                 _tabs[5] = Lang.Get("Tab_Settings") ?? "Settings";
+                _tabs[6] = Lang.Get("Tab_Device") ?? "Device"; // YENÄ° EKLENDÄ°
                 _lastTabLanguage = currentLang;
             }
 
             if (!_isSizeFixed) FixLayoutWait();
             if (!_isIconSet) { SetApplicationWindowIcon(); _isIconSet = true; }
 
-            // Oyun verilerini güncelle
+            // Oyun verilerini gÃ¼ncelle
             _gameStateManager.Update();
             string currentMapId = _gameStateManager.CurrentMapId ?? "";
 
@@ -85,7 +86,7 @@ namespace Nightwatch
 
                     _announcedChests.Clear();
 
-                    // --- HARÝTA TEMÝZLEME (GHOST MOB FIX) ---
+                    // --- HARÄ°TA TEMÄ°ZLEME (GHOST MOB FIX) ---
                     _playerTrails.Clear();
                     _prevPlayerPos.Clear();
                 }
@@ -102,7 +103,7 @@ namespace Nightwatch
 
             var mainPlayer = _gameStateManager.GetPlayer();
 
-            // --- SMOOTH PLAYER POSITION (lazer çizgisini akýcý yapar) ---
+            // --- SMOOTH PLAYER POSITION (lazer Ã§izgisini akÄ±cÄ± yapar) ---
             if (mainPlayer != null)
             {
                 if (!_smoothPlayerInitialized)
@@ -119,7 +120,7 @@ namespace Nightwatch
                 mainPlayer.CurrentLerpedY = _smoothPlayerY;
             }
 
-            // --- SMOOTH ENTITY POSITIONS (mob/kaynak lazer Ã§izgilerini akÄ±cÄ± yapar) ---
+            // --- SMOOTH ENTITY POSITIONS (mob/kaynak lazer ÃƒÂ§izgilerini akÃ„Â±cÃ„Â± yapar) ---
             {
                 float dtEnt = Math.Min(ImGui.GetIO().DeltaTime, 0.1f);
                 float lerpTEnt = 1f - (float)Math.Exp(-18f * dtEnt);
@@ -140,7 +141,7 @@ namespace Nightwatch
                 }
             }
 
-            // KÄ±sayol Dinleyicileri
+            // KÃ„Â±sayol Dinleyicileri
             if (!_isChangingHotkey && !_isChangingMuteHotkey)
             {
                 bool currentKeyState = (GetAsyncKeyState(_toggleKey) & 0x8000) != 0;
@@ -201,7 +202,7 @@ namespace Nightwatch
                     _lastBeepTime = DateTime.Now;
                 }
             }
-            // Toast: Yeni düþman görüldüðünde bildirim ekle
+            // Toast: Yeni dÃ¼ÅŸman gÃ¶rÃ¼ldÃ¼ÄŸÃ¼nde bildirim ekle
             if (enemyCount > _lastEnemyCount)
             {
                 int newOnes = enemyCount - _lastEnemyCount;
@@ -263,7 +264,7 @@ namespace Nightwatch
                 ImGui.PopStyleVar(2);
             }
 
-            // --- TOAST BÝLDÝRÝMLER ---
+            // --- TOAST BÄ°LDÄ°RÄ°MLER ---
             {
                 const float toastW = 260f, toastH = 30f, spacing = 5f, duration = 3.0f;
                 _toasts.RemoveAll(t => (DateTime.Now - t.time).TotalSeconds > duration);
@@ -368,7 +369,7 @@ namespace Nightwatch
 
                 if (ImGui.Begin(windowTitle, flags))
                 {
-                    if (_playerListMoveable) { ImGui.TextColored(new Vector4(0.18f, 0.52f, 0.92f, 1f), Lang.Get("UI_MoveMode") ?? "Taþýma Modu Aktif"); var pos = ImGui.GetWindowPos(); _playerListX = pos.X; _playerListY = pos.Y; }
+                    if (_playerListMoveable) { ImGui.TextColored(new Vector4(0.18f, 0.52f, 0.92f, 1f), Lang.Get("UI_MoveMode") ?? "TaÅŸÄ±ma Modu Aktif"); var pos = ImGui.GetWindowPos(); _playerListX = pos.X; _playerListY = pos.Y; }
 
                     lock (_dataLock)
                     {
@@ -494,7 +495,7 @@ namespace Nightwatch
                 ImGui.PopStyleVar(2);
             }
 
-            // 2b. EKÝPMAN KARTLARI
+            // 2b. EKÄ°PMAN KARTLARI
             if (_showEquipmentCards && mainPlayer != null)
             {
                 int maxSlots = Math.Clamp(_equipmentCardsMaxSlots, 1, _equipCardSlots.Length);
@@ -764,10 +765,10 @@ namespace Nightwatch
                     var winPos = ImGui.GetWindowPos();
                     if (_radarMoveable)
                     {
-                        // Temamýza uygun þýk mavi renk çerçeve ve metin
+                        // TemamÄ±za uygun ÅŸÄ±k mavi renk Ã§erÃ§eve ve metin
                         uint accentBlue = ImGui.ColorConvertFloat4ToU32(new Vector4(0.18f, 0.52f, 0.92f, 1f));
-                        ImGui.GetWindowDrawList().AddRect(winPos, winPos + ImGui.GetWindowSize(), accentBlue, 12f, ImDrawFlags.None, 2f); // 12f köþe yumuþatmasý eklendi
-                        ImGui.TextColored(new Vector4(0.18f, 0.52f, 0.92f, 1f), Lang.Get("UI_MoveRadar") ?? "Radarý Taþý");
+                        ImGui.GetWindowDrawList().AddRect(winPos, winPos + ImGui.GetWindowSize(), accentBlue, 12f, ImDrawFlags.None, 2f); // 12f kÃ¶ÅŸe yumuÅŸatmasÄ± eklendi
+                        ImGui.TextColored(new Vector4(0.18f, 0.52f, 0.92f, 1f), Lang.Get("UI_MoveRadar") ?? "RadarÄ± TaÅŸÄ±");
                     }
                     if (mainPlayer != null)
                         DrawRadar(ImGui.GetWindowDrawList(), winPos, ImGui.GetWindowSize(), mainPlayer);
@@ -781,7 +782,7 @@ namespace Nightwatch
             }
 
             // ========================================================
-            // --- ?? DUNGEON TOAST (GARANTÝ ÇÖZÜM) ---
+            // --- ?? DUNGEON TOAST (GARANTÄ° Ã‡Ã–ZÃœM) ---
             // ========================================================
             if (!string.IsNullOrEmpty(DungeonChestMessage))
             {
@@ -806,8 +807,8 @@ namespace Nightwatch
                 {
                     float sidebarWidth = 180f;
 
-                    // ARKA PLAN RENGÝNÝ BOZAN SABÝT KOD BURADAN KALDIRILDI!
-                    // Artýk kusursuz bir þekilde 23,26,33 temanla uyumlu olacak.
+                    // ARKA PLAN RENGÄ°NÄ° BOZAN SABÄ°T KOD BURADAN KALDIRILDI!
+                    // ArtÄ±k kusursuz bir ÅŸekilde 23,26,33 temanla uyumlu olacak.
                     ImGui.BeginChild("Sidebar", new Vector2(sidebarWidth, 0), ImGuiChildFlags.Borders, ImGuiWindowFlags.NoScrollbar);
                     {
                         ImGui.Spacing();
@@ -829,9 +830,9 @@ namespace Nightwatch
 
                         ImGui.Spacing(); ImGui.Separator(); ImGui.Spacing();
 
-                        for (int i = 0; i < 5; i++)
+                      for (int i = 0; i < 7; i++)
                         {
-                            if (i == 5) continue;
+                            if (i == 5) continue; // Settings'i aÅŸaÄŸÄ±da Ã§izdirdiÄŸin iÃ§in atlÄ±yoruz
 
                             bool isActive = (_activeTab == i);
 
@@ -854,7 +855,6 @@ namespace Nightwatch
                             var dl = ImGui.GetWindowDrawList();
                             if (isActive || isHovered)
                             {
-                                // ARTIK TEMA RENGÝNÝ KULLANIYOR! (Eskiden hardcoded turuncu/maviydi)
                                 Vector4 col = isActive
                                     ? ImGui.GetStyle().Colors[(int)ImGuiCol.ButtonActive]
                                     : ImGui.GetStyle().Colors[(int)ImGuiCol.ButtonHovered];
@@ -875,9 +875,9 @@ namespace Nightwatch
                                     2 => Nightwatch.Properties.Resources.PlayersPNG,
                                     3 => Nightwatch.Properties.Resources.ConfigPNG,
                                     4 => Nightwatch.Properties.Resources.DevToolsPNG,
+                                    6 => Nightwatch.Properties.Resources.SettingsPNG, // Device iÃ§in Settings Ä°konu kullanÄ±yoruz
                                     _ => null
                                 })
-
                                 {
                                     if (currentIcon != null) iconPath = GetResourceToTemp(currentIcon, tabName);
                                 }
@@ -902,7 +902,7 @@ namespace Nightwatch
                             ImGui.Dummy(new Vector2(0, 10f));
                         }
 
-                        // SETTINGS ÝKONU (Ayarlar)
+                        // SETTINGS Ä°KONU (Ayarlar)
                         ImGui.SetCursorPosY(ImGui.GetWindowHeight() - 55f);
                         ImGui.Separator();
                         ImGui.Spacing();
@@ -931,7 +931,7 @@ namespace Nightwatch
                         var dl2 = ImGui.GetWindowDrawList();
                         if (isSetActive || isSetHovered)
                         {
-                            // TEMA RENGÝ
+                            // TEMA RENGÄ°
                             Vector4 setCol = isSetActive
                                 ? ImGui.GetStyle().Colors[(int)ImGuiCol.ButtonActive]
                                 : ImGui.GetStyle().Colors[(int)ImGuiCol.ButtonHovered];
@@ -1000,8 +1000,8 @@ namespace Nightwatch
                         }
                         ImGui.EndChild(); ImGui.Separator();
 
-                        // ALT KISMI GÝTTÝ HATASI BURADAN ÇÖZÜLDÜ!
-                        // (0, -40) yazýyordu, 40 pixel kýrpýp atýyordu. (0, 0) yaparak tam doldurduk.
+                        // ALT KISMI GÄ°TTÄ° HATASI BURADAN Ã‡Ã–ZÃœLDÃœ!
+                        // (0, -40) yazÄ±yordu, 40 pixel kÄ±rpÄ±p atÄ±yordu. (0, 0) yaparak tam doldurduk.
                         ImGui.BeginChild("TabContent", new Vector2(0, 0), ImGuiChildFlags.None, ImGuiWindowFlags.None);
                         {
                             RenderActiveTab();
@@ -1012,7 +1012,7 @@ namespace Nightwatch
                 }
                 ImGui.End();
             }
-        } // Render metodunun bitiþ süslü parantezi
+        } // Render metodunun bitiÅŸ sÃ¼slÃ¼ parantezi
 
         private static Player ClonePlayerForCard(Player p)
         {
