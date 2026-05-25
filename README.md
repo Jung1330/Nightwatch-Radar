@@ -25,7 +25,7 @@
 
 <br/>
 
-<img src="https://github.com/user-attachments/assets/389a9f52-7c57-40f0-9972-ced23a3b7f2b" alt="Nightwatch Preview" width="100%" />
+<img width="1169" height="567" alt="image" src="https://github.com/user-attachments/assets/9e85a914-9d49-4783-929b-c30273c16e25" />
 
 <br/>
 
