@@ -622,6 +622,26 @@ section {
 .download-req a:hover { text-decoration: underline; }
 .download-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
+/* ── CHANGELOG STYLES ── */
+#changelog .changelog-meta {
+  color: var(--gold);
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+#changelog pre.console {
+  background: #071017;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 8px;
+  color: #7CFC00;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  overflow: auto;
+  max-height: 420px;
+  line-height: 1.5;
+}
+
 /* ── NOTICE BOX ── */
 .notice {
   background: rgba(92,40,120,0.12);
@@ -743,7 +763,7 @@ footer {
         <div class="stat-label" data-i18n="stat_ops">Operasyon Kodu</div>
       </div>
       <div>
-        <div class="stat-num">v1</div>
+        <div class="stat-num">v1.2</div>
         <div class="stat-label" data-i18n="stat_version">Güncel Sürüm</div>
       </div>
     </div>
@@ -1036,6 +1056,20 @@ footer {
 </section>
 
 <!-- DOWNLOAD -->
+<!-- CHANGELOG -->
+<section id="changelog">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-i18n="changelog_label">Changelog</div>
+      <h2 class="section-title" data-i18n="changelog_title">Changelog</h2>
+      <div class="changelog-meta" data-i18n="changelog_meta">v2.1 — 2026-05-25</div>
+    </div>
+    <div class="reveal" style="margin-top:1rem;">
+      <pre class="console" data-i18n="changelog_console"></pre>
+    </div>
+  </div>
+</section>
+
 <section id="download" class="download-section">
   <div class="container">
     <div class="reveal">
@@ -1133,7 +1167,7 @@ const i18n = {
     dl_version:'Sürüm 2 — Windows x64', dl_req:'Gereksinim:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8 Runtime',
     btn_dl_gh:'GitHub\'dan İndir', btn_dl_npcap:'Npcap İndir',
     dl_notice_title:'⚠️ Sorumluluk Reddi:', dl_notice_desc:' Nightwatch, Albion Online\'ın resmi bir aracı değildir. Kullanım kendi sorumluluğunuzdadır. Discord: Jung1330',
-    footer_sub:'Albion Online Network Radar — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+    changelog_label:'Güncelleme Notları', changelog_title:'Yenilikler', changelog_meta:'v2.1 — 2026-05-25', changelog_html:'<h3>Yenilikler</h3><ul><li>Radarın titreme sorunu giderildi.</li><li>İzleyicilerde sadece kaynak ikonunu gösterme seçeneği eklendi (Resource/Show Resource Label).</li><li>Radar adlarına Rusça ve Çince eklendi.</li><li>Oyuncu sayısı arttığında uyarının çalışmama sorunu giderildi.</li><li>Uygulamaya “Güncellendi” kelimesi eklendi (Her seferinde GitHub\'a bakmanız gerekmez.).</li></ul><div class="notice"><strong>⚠️ Bilinen Sorunlar</strong><p>Elemental sorunu çözülmedi.<br><em>(Bazen yanlış tier gösterebilir. Örn: Radar 5.2 Ore Elemental gösterir, oyun 4.2 gösterebilir.)</em></p></div><div class="notice"><strong>Sonraki Güncellemede Neler Gelecek</strong><ul><li>Dil dosyaları düzenlenecek.</li></ul></div><div class="notice"><strong>İpucu:</strong> Bir hata görürseniz lütfen bildirin. Discord: Jung1330</div>', changelog_console:'Yenilikler:\n+ Radarın titreme sorunu giderildi.\n+ İzleyicilerde sadece kaynak ikonunu gösterme seçeneği eklendi (Resource/Show Resource Label).\n+ Radar adlarına Rusça ve Çince eklendi.\n+ Oyuncu sayısı arttığında uyarının çalışmama sorunu giderildi.\n+ Uygulamaya “Güncellendi” kelimesi eklendi (Her seferinde GitHub\'a bakmanız gerekmez.)\n\n⚠️ Bilinen Sorunlar\n- Elemental sorunu çözülmedi.\n  (Bazen yanlış tier gösterebilir. Örn: Radar 5.2 Ore Elemental gösterir, oyun 4.2 gösterebilir.)\n\nSonraki Güncellemede Neler Gelecek\n- Dil dosyaları düzenlenecek.\n\nİpucu: Bir hata görürseniz lütfen bildirin.\nDiscord: Jung1330', footer_sub:'Albion Online Network Radar — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
   },
   en: {
     nav_features:'Features', nav_screens:'Screenshots', nav_install:'Installation', nav_faq:'FAQ', nav_download:'Download',
@@ -1183,6 +1217,7 @@ const i18n = {
     dl_version:'Version 2 — Windows x64', dl_req:'Requirements:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8 Runtime',
     btn_dl_gh:'Download from GitHub', btn_dl_npcap:'Download Npcap',
     dl_notice_title:'⚠️ Disclaimer:', dl_notice_desc:' Nightwatch is not an official Albion Online tool. Use at your own risk. Discord: Jung1330',
+    changelog_label:'Changelog', changelog_title:"What's New", changelog_meta:'v2.1 — 2026-05-25', changelog_html:'<h3>What\'s New:</h3><ul><li>Fixed the radar flickering issue.</li><li>Added the option to display only the resource icon on trackers (Resource/Show Resource Label).</li><li>Added Russian and Chinese radar names.</li><li>Fixed the issue where the warning didn\'t work when the number of players increased.</li><li>The word “Updated” has been added to the app (You don\'t need to check GitHub every time.)</li></ul><div class="notice"><strong>⚠️ Known Issues</strong><p>The Elemental issue has not been resolved.<br><em>(It may sometimes display the wrong tier. Ex: The radar shows 5.2 Ore Elemental, but the game may display 4.2 Ore Elemental.)</em></p></div><div class="notice"><strong>What\'s Coming in the Next Update</strong><ul><li>The language files will be edited.</li></ul></div><div class="notice"><strong>If you find any bug, please report them.<br>Discord : Jung1330</strong></div>', changelog_console:'What\'s New:\n+ Fixed the radar flickering issue.\n+ Added the option to display only the resource icon on trackers (Resource/Show Resource Label).\n+ Added Russian and Chinese radar names.\n+ Fixed the issue where the warning didn\'t work when the number of players increased.\n+ The word “Updated” has been added to the app (You don\'t need to check GitHub every time.)\n\n⚠️ Known Issues\n- The Elemental issue has not been resolved.\n  (It may sometimes display the wrong tier. Ex: The radar shows 5.2 Ore Elemental, but the game may display 4.2 Ore Elemental.)\n\nWhat\'s Coming in the Next Update\n- The language files will be edited.\n\nTIP: If you find any bug, please report them.\nDiscord: Jung1330',
     footer_sub:'Albion Online Network Radar — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
   },
   ru: {
@@ -1233,7 +1268,7 @@ const i18n = {
     dl_version:'Версия 2 — Windows x64', dl_req:'Требования:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8 Runtime',
     btn_dl_gh:'Скачать с GitHub', btn_dl_npcap:'Скачать Npcap',
     dl_notice_title:'⚠️ Отказ от ответственности:', dl_notice_desc:' Nightwatch не является официальным инструментом Albion Online. Используйте на свой риск. Discord: Jung1330',
-    footer_sub:'Сетевой Радар для Albion Online — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+    changelog_label:'Журнал изменений', changelog_title:'Что нового', changelog_meta:'v2.1 — 2026-05-25', changelog_html:'<h3>Что нового</h3><ul><li>Исправлена проблема мерцания радара.</li><li>Добавлена опция отображать только иконку ресурса в трекерах (Resource/Show Resource Label).</li><li>Добавлены русские и китайские названия радара.</li><li>Исправлена ошибка, когда предупреждение не работало при увеличении числа игроков.</li><li>В приложение добавлено слово «Updated» (Вам не нужно каждый раз проверять GitHub.).</li></ul><div class="notice"><strong>⚠️ Известные проблемы</strong><p>Проблема с Элементалами не решена.<br><em>(Иногда может показывать неправильный уровень. Например: радар показывает 5.2 Ore Elemental, а в игре может быть 4.2.)</em></p></div><div class="notice"><strong>Что будет в следующем обновлении</strong><ul><li>Файлы локализации будут отредактированы.</li></ul></div><div class="notice"><strong>Совет:</strong> Если вы нашли баг — пожалуйста, сообщите. Discord: Jung1330</div>', changelog_console:'Что нового:\n+ Исправлена проблема мерцания радара.\n+ Добавлена опция отображать только иконку ресурса в трекерах (Resource/Show Resource Label).\n+ Добавлены русские и китайские названия радара.\n+ Исправлена ошибка, когда предупреждение не работало при увеличении числа игроков.\n+ В приложении добавлено слово \'Updated\' (Вам не нужно каждый раз проверять GitHub.)\n\n⚠️ Известные проблемы\n- Проблема с Элементалами не решена.\n  (Иногда может показывать неправильный уровень. Например: радар показывает 5.2 Ore Elemental, а в игре может быть 4.2.)\n\nЧто будет в следующем обновлении\n- Файлы локализации будут отредактированы.\n\nСовет: Если вы нашли баг — пожалуйста, сообщите.\nDiscord: Jung1330', footer_sub:'Сетевой Радар для Albion Online — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
   },
   zh: {
     nav_features:'功能', nav_screens:'截图', nav_install:'安装', nav_faq:'常见问题', nav_download:'下载',
@@ -1283,7 +1318,7 @@ const i18n = {
     dl_version:'版本 2 — Windows x64', dl_req:'需求:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8运行时',
     btn_dl_gh:'从GitHub下载', btn_dl_npcap:'下载Npcap',
     dl_notice_title:'⚠️ 免责声明:', dl_notice_desc:' Nightwatch不是Albion Online的官方工具。使用风险自负。Discord: Jung1330',
-    footer_sub:'Albion Online 网络雷达 — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+    changelog_label:'更新日志', changelog_title:'更新内容', changelog_meta:'v2.1 — 2026-05-25', changelog_html:'<h3>更新内容</h3><ul><li>修复了雷达闪烁问题。</li><li>在追踪器中添加了仅显示资源图标的选项（Resource/Show Resource Label）。</li><li>添加了俄语和中文的雷达名称。</li><li>修复了玩家数量增加时警告不生效的问题。</li><li>应用中已添加“Updated”字样（您无需每次都查看 GitHub。）</li></ul><div class="notice"><strong>⚠️ 已知问题</strong><p>元素生物问题尚未解决。<br><em>（有时可能显示错误的等级。例如：雷达显示 5.2 矿石元素，但游戏可能显示 4.2。）</em></p></div><div class="notice"><strong>下一个更新将包括</strong><ul><li>将编辑语言文件。</li></ul></div><div class="notice"><strong>小提示：</strong>如果您发现任何错误，请反馈。Discord：Jung1330</div>', changelog_console:'更新内容:\n+ 修复了雷达闪烁问题。\n+ 在追踪器中添加了仅显示资源图标的选项（Resource/Show Resource Label）。\n+ 添加了俄语和中文的雷达名称。\n+ 修复了玩家数量增加时警告不生效的问题。\n+ 应用中已添加“Updated”字样（您无需每次都查看 GitHub。）\n\n⚠️ 已知问题\n- 元素生物问题尚未解决。\n  （有时可能显示错误的等级。例如：雷达显示 5.2 矿石元素，但游戏可能显示 4.2。）\n\n下一个更新将包括\n- 将编辑语言文件。\n\n小提示：如果您发现任何错误，请反馈。\nDiscord：Jung1330', footer_sub:'Albion Online 网络雷达 — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
   }
 };
 
