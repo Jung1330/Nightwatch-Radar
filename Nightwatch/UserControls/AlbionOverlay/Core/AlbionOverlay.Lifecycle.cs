@@ -75,7 +75,7 @@ namespace Nightwatch
 
         protected override unsafe System.Threading.Tasks.Task PostInitialized()
         {
-            string startupLang = "TR"; // Varsayılan
+            string startupLang = "EN"; // Varsayılan
 
             // --- KALICI DİL YÜKLEME ---
             try

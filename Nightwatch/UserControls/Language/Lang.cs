@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,12 +11,13 @@ namespace Nightwatch.UserControls.Language
     public static class Lang
     {
         private static Dictionary<string, string> _texts = new Dictionary<string, string>();
-        public static string CurrentLang { get; private set; } = "TR";
-        public static string CurrentLanguage { get; private set; } = "TR";
+        public static string CurrentLang { get; private set; } = "EN";
+        public static string CurrentLanguage { get; private set; } = "EN";
 
         public static void LoadLanguage(string langCode)
         {
             CurrentLang = langCode;
+            CurrentLanguage = langCode;
             string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Language");
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
@@ -26,14 +27,10 @@ namespace Nightwatch.UserControls.Language
             {
                 try
                 {
-                    string json = File.ReadAllText(path);
+
+                    string json = File.ReadAllText(path, Encoding.UTF8);
                     _texts = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new Dictionary<string, string>();
 
-                    /*     Console.ForegroundColor = ConsoleColor.DarkGray;
-                         Console.Write($"[{DateTime.Now:HH:mm:ss}] ");
-                         Console.ForegroundColor = ConsoleColor.Green;
-                         Console.WriteLine($"[+] Dil Paketi Yuklendi: {langCode}");
-                         Console.ResetColor();*/
                 }
                 catch (Exception ex)
                 {
@@ -43,23 +40,23 @@ namespace Nightwatch.UserControls.Language
             }
             else
             {
-                // Dosya yoksa Ýngilizce (EN) veya Türkçe (TR) için örnek bir dosya oluþtur (Geliþtirici dostu!)
+                // Dosya yoksa Ä°ngilizce (EN) veya TÃ¼rkÃ§e (TR) iÃ§in Ã¶rnek bir dosya oluÅŸtur (GeliÅŸtirici dostu!)
                 /*CreateTemplate(path);*/
             }
         }
 
-        // KODUN ÝÇÝNDE METÝNLERÝ ÇAÐIRACAÐIMIZ SÝHÝRLÝ FONKSÝYON
+        // KODUN Ä°Ã‡Ä°NDE METÄ°NLERÄ° Ã‡AÄžIRACAÄžIMIZ SÄ°HÄ°RLÄ° FONKSÄ°YON
         public static string Get(string key)
         {
             if (_texts.TryGetValue(key, out string value)) return value;
-            return key; // Eðer json içinde çeviriyi bulamazsa, key'in kendisini yazsýn ki eksiði görelim
+            return key; // EÄŸer json iÃ§inde Ã§eviriyi bulamazsa, key'in kendisini yazsÄ±n ki eksiÄŸi gÃ¶relim
         }
 
         /* private static void CreateTemplate(string path)
          {
              var template = new Dictionary<string, string>
              {
-                 { "Console_AdminError", "[!] Yönetici olarak çalýþtýrýn." },
+                 { "Console_AdminError", "[!] YÃ¶netici olarak Ã§alÄ±ÅŸtÄ±rÄ±n." },
                  { "Menu_Settings", "Ayarlar" },
                  { "Menu_Resources", "Kaynaklar" },
                  { "Menu_Language", "Dil / Language" }

@@ -1,4 +1,5 @@
-using AlbionDataHandlers.Entities;
+﻿using AlbionDataHandlers.Entities;
+using AlbionDataHandlers.Mappers;
 using Nightwatch.Entities;
 
 namespace Nightwatch.Mappers;
@@ -17,7 +18,35 @@ public static class MobsMapper
     {
         if (mob == null) return null;
 
-        // Create and populate a RadarEntity object based on the Mob properties.  
+        // Veritabanındaki (JSON) statik bilgiyi al
+        var staticInfo = MobMapper.Instance.GetMobInfo(mob.TypeId);
+
+        // --- SARSILMAZ TIER BULMA ALGORİTMASI ---
+        int actualTier = 0;
+
+        // 1. Önce oyunun verdiği isme bak ("T4_MOB_CRITTER_ROCK_ROADS" gibi bir şey geliyorsa direkt 4'tür)
+        if (!string.IsNullOrEmpty(mob.Name))
+        {
+            // İsimden tier çıkarma (Örn: "T4_" -> 4)
+            var match = System.Text.RegularExpressions.Regex.Match(mob.Name, @"T(\d+)_");
+            if (match.Success && int.TryParse(match.Groups[1].Value, out int nameTier))
+            {
+                actualTier = nameTier;
+            }
+        }
+
+        // 2. İsimde yoksa, statik veritabanına (mobs.json) bak
+        if (actualTier == 0 && staticInfo != null)
+        {
+            actualTier = (int)staticInfo.Tier;
+        }
+
+        // 3. O da yoksa, son çare oyunun pakette gönderdiği NetworkTier'a bak (ki bu MIST'lerde yalan söyleyebiliyor)
+        if (actualTier == 0 && mob.NetworkTier > 0)
+        {
+            actualTier = mob.NetworkTier;
+        }
+
         var entity = new RadarEntity
         {
             Id = mob.Id,
@@ -28,6 +57,7 @@ public static class MobsMapper
             ImageUrl = GetImageUrl(mob),
             EnchantmentLevel = mob.EnchantmentLevel,
             Type = AlbionDataHandlers.Enums.EntityTypes.Mob,
+            Tier = actualTier // Artık asla yanılmayacak!
         };
 
         return entity;

@@ -11,13 +11,13 @@ using System.Text.RegularExpressions;
 using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Handlers;
 using AlbionDataHandlers.Utils;
+using AlbionDataHandlers.Mappers;
 using ClickableTransparentOverlay;
 using ImGuiNET;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nightwatch.Managers;
 using Nightwatch.UserControls.Language;
-using AlbionDataHandlers.Handlers;
 #endregion
 
 namespace Nightwatch
@@ -332,6 +332,7 @@ namespace Nightwatch
                     ImGui.Checkbox(Lang.Get("Res_ShowIcons") ?? "Show Icons", ref _showResourceIcons);
                     ImGui.Checkbox(Lang.Get("Res_ShowOnMap") ?? "Show on Map", ref _showResources);
                     ImGui.Checkbox(Lang.Get("Res_TrackerOnly") ?? "Tracker only (hide radar dots)", ref _resourceTrackerOnlyMode);
+                    ImGui.Checkbox(Lang.Get("Res_Label") ?? "Show Resource Labels", ref _showResourceLabels);
                     ImGui.SliderFloat(Lang.Get("Res_IconSize") ?? "Icon Size", ref _globalIconSize, 10, 80);
 
                     ImGui.Separator();
@@ -342,7 +343,8 @@ namespace Nightwatch
                         if (!_resourceMasterToggles.ContainsKey(cat)) _resourceMasterToggles[cat] = true;
                         if (!_resourceFilters.ContainsKey(cat)) { var m = new bool[8, 4]; for (int i = 0; i < 8; i++) for (int j = 0; j < 4; j++) m[i, j] = true; _resourceFilters[cat] = m; }
                         bool on = _resourceMasterToggles[cat];
-                        if (ImGui.Checkbox(cat.ToString(), ref on)) _resourceMasterToggles[cat] = on;
+                        string displayCatName = Lang.Get(cat.ToString()) != cat.ToString() ? Lang.Get(cat.ToString()) : cat.ToString();
+                        if (ImGui.Checkbox(displayCatName, ref on)) _resourceMasterToggles[cat] = on;
                         if (on)
                         {
                             ImGui.Indent();
@@ -600,30 +602,19 @@ namespace Nightwatch
                     int prevLangIdx = _selectedLangIndex;
                     ImGui.SetNextItemWidth(200);
 
+
                     if (ImGui.Combo("##LangSettings", ref _selectedLangIndex, _languages, _languages.Length))
                     {
-                        string newLang = _selectedLangIndex switch
-                        {
-                            0 => "TR",
-                            1 => "EN",
-                            2 => "RU",
-                            3 => "ZH",
-                            _ => "TR"
-                        };
+                        string newLang = _selectedLangIndex switch { 0 => "TR", 1 => "EN", 2 => "RU", 3 => "ZH", _ => "TR" };
 
                         Lang.LoadLanguage(newLang);
-                        _lastTabLanguage = null;
-
-                        try
-                        {
-                            string configDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");
-                            if (!Directory.Exists(configDir)) Directory.CreateDirectory(configDir);
-                            File.WriteAllText(System.IO.Path.Combine(configDir, "lang.txt"), newLang);
-                        }
-                        catch { }
-
-                        // YENİ: Dil değiştiği an FONTU DA anında değiştir!
                         ApplyLanguageFont(newLang);
+
+
+                        MobMapper.Instance.Reload($"Assets/Helper/mobs_{newLang}.min.json");
+                        CheckAndLoadDatabase();  // Artık bu tek başına yeterli
+
+                        _lastTabLanguage = null;
                     }
 
 
@@ -1030,7 +1021,7 @@ namespace Nightwatch
                         }
                         #endregion
                         #region Sekme 4 [PNG]
-                        // --- 3. SEKME: PNG (Ã–zel Ä°kon YÃ¶netimi) ---
+                        // --- 3. SEKME: PNG (Özel İkon Yönetimi) ---
                         if (ImGui.BeginTabItem(Lang.Get("Dev_TabPng") ?? "Icons"))
                         {
                             if (ImGui.BeginTabBar("PngSubTabs"))
@@ -1040,52 +1031,90 @@ namespace Nightwatch
                                     ImGui.InputText(Lang.Get("Dev_CrownSearch") ?? "Search", ref _crownSearchQuery, 64);
                                     ImGui.Spacing();
 
-                                    ImGui.BeginChild("CrownListChild", new Vector2(0, 0), ImGuiChildFlags.Borders);
-                                    bool crownRefreshNeeded = _crownSearchQuery != _lastCrownSearchQuery;
-                                    if (crownRefreshNeeded || _cachedCrownResults == null)
+                                    // EKRANI İKİYE BÖLÜYORUZ (SÜTUN SİSTEMİ)
+                                    ImGui.Columns(2, "CrownSplitUI", true);
+
+                                    // ==========================================
+                                    // SOL SÜTUN: TAÇLI MOBLAR (Crowned)
+                                    // ==========================================
+                                    ImGui.TextColored(new Vector4(1f, 0.8f, 0f, 1f), "Taçlı Moblar (Crowned)");
+                                    ImGui.Separator();
+                                    if (ImGui.BeginChild("CrownedListChild", new Vector2(0, 0), ImGuiChildFlags.None))
                                     {
-                                        _cachedCrownResults = _mobDatabase.Where(x =>
+                                        var crownedMobs = _mobDatabase.Where(x =>
                                         {
                                             string upName = x.Value.Name.ToUpperInvariant();
                                             bool isBoss = upName.Contains("BOSS") || upName.Contains("ASPECT") || upName.Contains("TITAN") || upName.Contains("GUARDIAN") || upName.Contains("OLD_WHITE");
 
-                                            // Arama kutusu doluyken tüm veritabanında ara (boss kısıtı kaldırılır)
+                                            // Boss ise veya Whitelist'teyse VE Blacklist'te DEĞİLSE taçlıdır
+                                            bool hasCrown = (isBoss || _crownWhitelist.Contains(x.Key)) && !_crownBlacklist.Contains(x.Key);
+
                                             if (!string.IsNullOrEmpty(_crownSearchQuery))
                                             {
-                                                bool matchesSearch = x.Value.Name.Contains(_crownSearchQuery, StringComparison.OrdinalIgnoreCase) || x.Key.ToString().Contains(_crownSearchQuery);
-                                                return matchesSearch;
+                                                return hasCrown && (x.Value.Name.Contains(_crownSearchQuery, StringComparison.OrdinalIgnoreCase) || x.Key.ToString().Contains(_crownSearchQuery));
                                             }
-
-                                            // Arama boşken eski davranış: yalnızca boss benzeri kayıtlar
-                                            return isBoss;
+                                            return hasCrown;
                                         }).ToList();
-                                        _lastCrownSearchQuery = _crownSearchQuery;
-                                    }
-                                    var autoCrowns = _cachedCrownResults;
 
-                                    if (autoCrowns.Count == 0) ImGui.Text(Lang.Get("Dev_CrownEmpty") ?? "Empty");
-
-                                    foreach (var m in autoCrowns)
-                                    {
-                                        ImGui.Text($"[{m.Key}] {m.Value.Name}");
-                                        ImGui.SameLine(ImGui.GetWindowWidth() - 110);
-
-                                        bool isBlacklisted = _crownBlacklist.Contains(m.Key);
-                                        if (isBlacklisted)
+                                        foreach (var m in crownedMobs)
                                         {
-                                            ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0f, 0.67f, 0f, 1f));
-                                            if (ImGui.SmallButton($"{Lang.Get("Dev_CrownGive") ?? "Give"}##{m.Key}")) _crownBlacklist.Remove(m.Key);
-                                            ImGui.PopStyleColor();
-                                        }
-                                        else
-                                        {
-                                            ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.67f, 0f, 0f, 1f));
-                                            if (ImGui.SmallButton($"{Lang.Get("Dev_CrownRemove") ?? "Remove"}##{m.Key}")) _crownBlacklist.Add(m.Key);
+                                            ImGui.Text($"[{m.Key}] {m.Value.Name}");
+                                            ImGui.SameLine(ImGui.GetWindowWidth() - 75);
+
+                                            ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.8f, 0.2f, 0.2f, 1f));
+                                            if (ImGui.SmallButton($"{Lang.Get("Dev_CrownRemove") ?? "Tacı Sil"}##rem{m.Key}"))
+                                            {
+                                                _crownBlacklist.Add(m.Key);
+                                                _crownWhitelist.Remove(m.Key);
+                                            }
                                             ImGui.PopStyleColor();
                                         }
                                     }
-
                                     ImGui.EndChild();
+
+                                    ImGui.NextColumn();
+
+                                    // ==========================================
+                                    // SAĞ SÜTUN: NORMAL MOBLAR (No Crown)
+                                    // ==========================================
+                                    ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1f), "Normal Moblar");
+                                    ImGui.Separator();
+                                    if (ImGui.BeginChild("NormalListChild", new Vector2(0, 0), ImGuiChildFlags.None))
+                                    {
+                                        var normalMobs = _mobDatabase.Where(x =>
+                                        {
+                                            string upName = x.Value.Name.ToUpperInvariant();
+                                            bool isBoss = upName.Contains("BOSS") || upName.Contains("ASPECT") || upName.Contains("TITAN") || upName.Contains("GUARDIAN") || upName.Contains("OLD_WHITE");
+
+                                            bool hasCrown = (isBoss || _crownWhitelist.Contains(x.Key)) && !_crownBlacklist.Contains(x.Key);
+
+                                            if (!string.IsNullOrEmpty(_crownSearchQuery))
+                                            {
+                                                return !hasCrown && (x.Value.Name.Contains(_crownSearchQuery, StringComparison.OrdinalIgnoreCase) || x.Key.ToString().Contains(_crownSearchQuery));
+                                            }
+                                            return !hasCrown;
+                                        }).ToList();
+
+                                        // Kasmaması için 150 limit koydum, arama yapınca hepsi gelir
+                                        foreach (var m in normalMobs.Take(150))
+                                        {
+                                            ImGui.Text($"[{m.Key}] {m.Value.Name}");
+                                            ImGui.SameLine(ImGui.GetWindowWidth() - 75);
+
+                                            ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.2f, 0.8f, 0.2f, 1f));
+                                            if (ImGui.SmallButton($"{Lang.Get("Dev_CrownGive") ?? "Taç Ekle"}##add{m.Key}"))
+                                            {
+                                                _crownWhitelist.Add(m.Key);
+                                                _crownBlacklist.Remove(m.Key);
+                                            }
+                                            ImGui.PopStyleColor();
+                                        }
+                                    }
+                                    ImGui.EndChild();
+
+                                    // Sütunları kapat
+                                    ImGui.Columns(1);
+
                                     ImGui.EndTabItem();
                                 }
                                 ImGui.EndTabBar();
@@ -1099,7 +1128,12 @@ namespace Nightwatch
                         {
                             ImGui.Spacing();
                             ImGui.Checkbox(Lang.Get("Dev_TrackerResources") ?? "Res", ref _trackerEnableResources);
+                            ImGui.SameLine();
+                            ImGui.Checkbox(Lang.Get("Dev_TrackerShowResIcon") ?? "Kaynak İkonunu Göster", ref _trackerShowResourceIcons);
+
                             ImGui.Checkbox(Lang.Get("Dev_TrackerVip") ?? "Vip", ref _trackerEnableVipMobs);
+                            ImGui.SameLine();
+                            ImGui.Checkbox(Lang.Get("Dev_TrackerShowMobIcon") ?? "Mob İkonunu Göster", ref _trackerShowMobIcons);
 
                             ImGui.Separator();
                             ImGui.TextColored(new Vector4(0, 1, 1, 1), Lang.Get("Dev_TrackerListTitle") ?? "Tracker List");
@@ -1446,7 +1480,6 @@ namespace Nightwatch
                             ImGui.EndTabItem();
                         }
                         #endregion
-
                         #region Sekme 9 [Ports]
                         if (ImGui.BeginTabItem("Ports"))
                         {
@@ -1495,7 +1528,6 @@ namespace Nightwatch
                             ImGui.EndTabItem();
                         }
                         #endregion
-
                         #region Sekme 6 [Console]
                         // ========================================================
                         // --- UI CONSOLE (LOGLAR VE RAW DUMP) ---
@@ -1577,9 +1609,6 @@ namespace Nightwatch
                             ImGui.EndTabItem();
                         }
                         #endregion
-
-
-
                         #region Sekme 7 [Parser]
                         if (ImGui.BeginTabItem("Parser"))
                         {
@@ -2077,7 +2106,6 @@ namespace Nightwatch
                         }
                         #endregion
 
-                        // YANLIŞLIKLA SİLİNEN KOD BURASI: Sekme çubuğunu (TabBar) kapatıyoruz!
                         ImGui.EndTabBar();
 
                     }

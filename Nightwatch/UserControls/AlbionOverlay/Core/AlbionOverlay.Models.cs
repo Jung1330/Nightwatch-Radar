@@ -1,4 +1,4 @@
-#region Using Directives
+﻿#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,13 +27,13 @@ namespace Nightwatch
 
     public class RadarConfig
     {
-        // --- YEN� EKLENEN HAR�TA CONFIG AYARLARI ---
+        // --- YENİ EKLENEN HARİTA CONFIG AYARLARI ---
         public bool ShowMapBackground { get; set; } = true;
         public float MapOpacity { get; set; } = 0.8f;
 
         public string LastMapIDConfig { get; set; }
         public int SelectedTheme { get; set; } = 1; // 0=Original, 1=Obsidian
-        public string Language { get; set; } = "TR"; // Varsayılan dil Türkçe
+        public string Language { get; set; } = "EN"; // VarsayÄ±lan dil TÃ¼rkÃ§e
 
         public bool TrackerEnableResources { get; set; } = false;
         public bool TrackerEnableVipMobs { get; set; } = false;
@@ -53,7 +53,7 @@ namespace Nightwatch
         public bool StreamModuleEnabled { get; set; } = false;
 
         public List<int> CrownBlacklist { get; set; } = new List<int>();
-        public int ToggleKey { get; set; } = 0x7B; // Varsayılan F12 (Hex 0x7B)
+        public int ToggleKey { get; set; } = 0x7B; // VarsayÄ±lan F12 (Hex 0x7B)
         public bool ShowResourceIcons { get; set; } = false;
         public bool EnableLogging { get; set; } = false;
         public bool ShowPlayers { get; set; } = true;

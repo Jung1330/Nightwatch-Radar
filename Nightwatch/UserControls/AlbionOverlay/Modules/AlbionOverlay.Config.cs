@@ -245,7 +245,7 @@ namespace Nightwatch
 
 
         // DestroyIcon satÄ±rÄ±nÄ± tamamen kaldÄ±rdÄ±k, Ã§Ã¼nkÃ¼ ikon bellekte kalmalÄ±!
-        private void SetApplicationWindowIcon()
+        private bool SetApplicationWindowIcon()
         {
             try
             {
@@ -254,9 +254,13 @@ namespace Nightwatch
                 string iconPath = File.Exists(nightwatchIconPath) ? nightwatchIconPath : legacyIconPath;
                 if (File.Exists(iconPath))
                 {
-                    IntPtr hwnd = FindWindow(null, "Nightwatch Overlay");
+                    IntPtr hwnd = Process.GetCurrentProcess().MainWindowHandle;
                     if (hwnd == IntPtr.Zero)
                         hwnd = FindWindow(null, "Nightwatch Overlay");
+                    if (hwnd == IntPtr.Zero)
+                        hwnd = FindWindow(null, "Nightwatch");
+                    if (hwnd == IntPtr.Zero)
+                        return false;
 
                     // Eski ikonlarÄ± serbest bÄ±rak (bellek sÄ±zÄ±ntÄ±sÄ±nÄ± Ã¶nler)
                     if (_hIconBig != IntPtr.Zero) { DestroyIcon(_hIconBig); _hIconBig = IntPtr.Zero; }
@@ -268,6 +272,7 @@ namespace Nightwatch
 
                     if (_hIconBig != IntPtr.Zero) SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_BIG, _hIconBig);
                     if (_hIconSmall != IntPtr.Zero) SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_SMALL, _hIconSmall);
+                    return _hIconBig != IntPtr.Zero || _hIconSmall != IntPtr.Zero;
                 }
             }
             catch (Exception ex)
@@ -276,6 +281,7 @@ namespace Nightwatch
                 if (_debugConsoleLog)
                     Log($"[HATA] {ex.Message}", LogLevel.Error);
             }
+            return false;
         }
 
         private int GetItemPower(int id) { if (id <= 0) return 0; if (_itemDatabase.TryGetValue(id, out ItemInfo item)) return item.Power; return 0; }
@@ -304,9 +310,10 @@ namespace Nightwatch
 
             return HarvestableCategory.None;
         }
-        private int ParseTier(string n) { var m = _tierRegex.Match(n); return m.Success ? int.Parse(m.Groups[1].Value) : 0; }
+        private int ParseTier(string n) { if (string.IsNullOrEmpty(n)) return 0; var m = _tierRegex.Match(n); return m.Success ? int.Parse(m.Groups[1].Value) : 0; }
         private int ParseEnchant(string n)
         {
+            if (string.IsNullOrEmpty(n)) return 0;
             var m = _enchantRegex.Match(n);
             if (!m.Success) return 0;
             string val = m.Groups[1].Value.Length > 0 ? m.Groups[1].Value : m.Groups[2].Value;

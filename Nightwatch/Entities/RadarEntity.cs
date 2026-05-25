@@ -1,4 +1,4 @@
-using AlbionDataHandlers.Enums;
+﻿using AlbionDataHandlers.Enums;
 using Nightwatch.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -21,6 +21,7 @@ namespace Nightwatch.Entities
         private int _enchantmentLevel;
         private EntityTypes _type;
 
+        public int Tier { get; set; }
         public int Id { get => _id; set => SetField(ref _id, value); }
         public string Name { get => _name; set => SetField(ref _name, value); }
         public float PositionX { get => _positionX; set => SetField(ref _positionX, value); }

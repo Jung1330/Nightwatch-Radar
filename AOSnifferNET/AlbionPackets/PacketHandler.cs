@@ -1,4 +1,4 @@
-using AOSnifferNET.AlbionObjects.Packets.Events;
+ï»¿using AOSnifferNET.AlbionObjects.Packets.Events;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PhotonPackageParser;
@@ -17,7 +17,7 @@ namespace AOSnifferNET
             UseProtocol18 = true;
             Debug = false;
         }
-        // --- 1. GÜVENLÝK DUVARI: AOSnifferNET ÝÇÝN ÞÝFRE ATLATMA ---
+        // --- 1. GÃœVENLÄ°K DUVARI: AOSnifferNET Ä°Ã‡Ä°N ÅžÄ°FRE ATLATMA ---
         public new void ReceivePacket(byte[] payload)
         {
             if (payload == null || payload.Length < 12)
@@ -25,11 +25,11 @@ namespace AOSnifferNET
 
             try
             {
-                // A) Tamamen Þifreli Paketi Atla
+                // A) Tamamen Åžifreli Paketi Atla
                 byte flags = payload[2];
                 if (flags == 1) return;
 
-                // B) msgType == 131 gizleme operasyonu (DLL çökmesini engeller)
+                // B) msgType == 131 gizleme operasyonu (DLL Ã§Ã¶kmesini engeller)
                 int commandCount = payload[3];
                 int offset = 12;
 
@@ -61,19 +61,19 @@ namespace AOSnifferNET
             if (parameters == null) parameters = new Dictionary<byte, object>();
             if (!parameters.ContainsKey((byte)252)) parameters[(byte)252] = code;
 
-            // --- 2. GÜVENLÝK DUVARI: NaN VE KOORDÝNAT KURTARMA ---
+            // --- 2. GÃœVENLÄ°K DUVARI: NaN VE KOORDÄ°NAT KURTARMA ---
             if (code == 3 && parameters.TryGetValue((byte)1, out var rawObj) && rawObj is byte[] raw && raw.Length >= 17)
             {
                 float x = BitConverter.ToSingle(raw, 9);
                 float y = BitConverter.ToSingle(raw, 13);
 
-                // Þifreli/Sonsuz koordinat varsa iptal et
+                // Åžifreli/Sonsuz koordinat varsa iptal et
                 if (float.IsNaN(x) || float.IsInfinity(x) || float.IsNaN(y) || float.IsInfinity(y) || Math.Abs(x) > 100000f || Math.Abs(y) > 100000f)
                 {
                     return;
                 }
 
-                // AOSnifferNET'in moblarý doðru yerde göstermesi için X ve Y'yi pakete enjekte ediyoruz!
+                // AOSnifferNET'in moblarÄ± doÄŸru yerde gÃ¶stermesi iÃ§in X ve Y'yi pakete enjekte ediyoruz!
                 parameters[(byte)4] = x;
                 parameters[(byte)5] = y;
             }
@@ -904,7 +904,15 @@ namespace AOSnifferNET
             }
             int rarity = int.Parse(parameters[22].ToString());
 
-            var mob = new evNewMob(id, typeId, pos, health, rarity);
+            int enchant = 0;
+            if (parameters.ContainsKey(16))
+                enchant = int.Parse(parameters[16].ToString());
+
+            int tier = 0;
+            if (parameters.ContainsKey(21))
+                tier = int.Parse(parameters[21].ToString());
+
+            var mob = new evNewMob(id, typeId, pos, health, rarity, enchant, tier);
             printEventInfo(mob, EventCodes.NewMob);
         }
 

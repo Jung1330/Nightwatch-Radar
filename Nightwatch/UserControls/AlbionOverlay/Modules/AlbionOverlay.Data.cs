@@ -1,4 +1,4 @@
-#region Using Directives
+﻿#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,7 +25,18 @@ namespace Nightwatch
         #region Database Loaders
         private void LoadItemDatabaseTXT()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Helper", "items.txt");
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string currentLang = Lang.CurrentLanguage ?? "TR";
+            string localizedPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", $"items_{currentLang}.txt");
+            string fallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "items_EN.txt");
+            string secondaryFallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "items_TR.txt");
+
+            string path = File.Exists(localizedPath)
+                ? localizedPath
+                : File.Exists(fallbackPath)
+                    ? fallbackPath
+                    : secondaryFallbackPath;
+
             if (File.Exists(path))
             {
                 try
@@ -34,23 +45,19 @@ namespace Nightwatch
                     foreach (var line in lines)
                     {
                         if (string.IsNullOrWhiteSpace(line)) continue;
-                        // Format: "ID: InternalName : DisplayName : IP"
-                        // DisplayName i�inde ':' olabilir ("Delivery: Blueprints" gibi)
-                        // Bu y�zden sabit s�tun say�s�na g�venmek yerine son s�tunu IP olarak okuyoruz.
                         var parts = line.Split(':');
-                        // Dumper ��kt�s� genellikle 4 par�a olur (�rn: "1: NAME : Display : ")
                         if (parts.Length >= 3 && int.TryParse(parts[0].Trim(), out int id))
                         {
                             string internalName = parts[1].Trim();
 
-                            // Son par�a genelde IP veya bo�luktur
+                            // Son parça genelde IP veya boşluktur
                             string lastPart = parts[parts.Length - 1].Trim();
                             int exactIp = 0;
 
-                            // Dumper'�n att��� bo�luklar� ve gereksiz iki noktalar� yok say
+                            // Dumper'ın attığı boşlukları ve gereksiz iki noktaları yok say
                             if (!string.IsNullOrWhiteSpace(lastPart)) int.TryParse(lastPart, out exactIp);
 
-                            // Display Name: 2. indeksten ba�lay�p sondan bir �ncekine kadar (IP olsun veya olmas�n dumper her zaman sona ':' koyar)
+                            // Display Name: 2. indeksten başlayıp sondan bir öncekine kadar (IP olsun veya olmasın dumper her zaman sona ':' koyar)
                             string displayName = "";
                             if (parts.Length >= 4)
                             {
@@ -76,7 +83,7 @@ namespace Nightwatch
                                 if (split.Length > 1) int.TryParse(split[1], out enchant);
                             }
 
-                            // IP dosyada yoksa (0 geldi) tier+enchant form�l�yle hesapla
+                            // IP dosyada yoksa (0 geldi) tier+enchant formülüyle hesapla
                             if (exactIp == 0)
                             {
                                 int baseIp = (tier < 4 ? tier * 100 : 700 + (tier - 4) * 100);
@@ -99,69 +106,63 @@ namespace Nightwatch
         private void CheckAndLoadDatabase()
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string[] possiblePaths = new string[]
-            {
-                System.IO.Path.Combine(baseDir, "Assets", "Helper", "mobs.min.json"),
-                System.IO.Path.Combine(baseDir, "Assets", "mobs.min.json"),
-                System.IO.Path.Combine(baseDir, "mobs.min.json")
-            };
+            // Dil kodunu al (TR, EN, RU, ZH)
+            string currentLang = Lang.CurrentLanguage ?? "EN";
 
-            foreach (var path in possiblePaths)
+            // ÖNEMLİ: Dosya ismini dinamik oluşturuyoruz
+            string targetFileName = $"mobs_{currentLang}.min.json";
+            string path = System.IO.Path.Combine(baseDir, "Assets", "Helper", targetFileName);
+
+            if (File.Exists(path))
             {
-                if (File.Exists(path))
-                {
-                    Log(string.Format(Lang.Get("MobDbLoading"), path), LogLevel.Success);
-                    LoadMobDatabase(path);
-                    return;
-                }
+                Log(string.Format(Lang.Get("MobDbLoading") ?? "[+] Mob Database Yükleniyor: {0}", targetFileName), LogLevel.Success);
+                LoadMobDatabase(path);
             }
-
-            Log(Lang.Get("MobDbNotFound"), LogLevel.Error);
+            else
+            {
+                // Dosya bulunamazsa log at ve varsayılanı dene
+                Log($"[HATA] {targetFileName} bulunamadı, varsayılana dönülüyor...", LogLevel.Warning);
+                string fallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "mobs.min.json");
+                if (File.Exists(fallbackPath)) LoadMobDatabase(fallbackPath);
+            }
         }
 
+        // AlbionOverlay.Data.cs içindeki LoadMobDatabase
         private void LoadMobDatabase(string path)
         {
             try
             {
-                string json = File.ReadAllText(path);
+                string json = File.ReadAllText(path, System.Text.Encoding.UTF8);
                 JArray mobArray = JArray.Parse(json);
-                _mobDatabase.Clear();
-                for (int i = 0; i < mobArray.Count; i++)
+
+                lock (_dataLock)  // ← BUNU EKLE
                 {
-                    JToken item = mobArray[i];
-                    if (item == null) continue;
-                    var info = new MobInfo();
+                    _mobDatabase.Clear();
 
-                    int typeId = i + 15;
-
-                    string rawName = "";
-                    if (item.Type == JTokenType.Object)
+                    for (int i = 0; i < mobArray.Count; i++)
                     {
-                        var obj = (JObject)item;
-                        rawName = obj["n"]?.ToString() ?? obj["u"]?.ToString() ?? "";
-                        if (int.TryParse(obj["t"]?.ToString(), out int t)) info.Tier = t;
-                        if (obj.ContainsKey("l")) { info.IsHarvestable = true; info.HarvestType = obj["l"]?.ToString(); }
-                    }
-                    else { rawName = item.ToString(); }
+                        var item = mobArray[i];
+                        if (item == null) continue;
 
-                    if (info.Tier == 0 && !string.IsNullOrEmpty(rawName)) info.Tier = ParseTier(rawName);
+                        var info = new MobInfo();
+                        int typeId = (item["id"] != null) ? item["id"].Value<int>() : (i + 15);
 
-                    if (!string.IsNullOrEmpty(rawName))
-                    {
-                        info.Name = CleanName(rawName);
-                        if (!_mobDatabase.ContainsKey(typeId))
+                        string rawName = "";
+                        if (item.Type == JTokenType.Object)
                         {
-                            _mobDatabase[typeId] = info;
+                            var obj = (JObject)item;
+                            rawName = obj["n"]?.ToString() ?? obj["u"]?.ToString() ?? "";
+                            if (obj.ContainsKey("t")) info.Tier = obj["t"].Value<int>();
                         }
-                    }
-                }
 
-                BuildLivingResourceTypeMap();
+                        info.Name = CleanName(rawName);
+                        _mobDatabase[typeId] = info;
+                    }
+                }  // ← lock sonu
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine($"Error Code : 64 | {ex.Message}");
-                Log(string.Format(Lang.Get("MobDbJsonError"), ex.Message), LogLevel.Error);
+                Log($"[HATA] Mob DB Yüklenemedi: {ex.Message}", LogLevel.Error);
             }
         }
 
@@ -197,23 +198,23 @@ namespace Nightwatch
                 {
                     _mapSizes.Clear();
                     string json = File.ReadAllText(path);
-                    // Dosya Array [...] değil Object {...} olduğu için JObject kullanıyoruz
+                    // Dosya Array [...] deÄŸil Object {...} olduÄŸu iÃ§in JObject kullanÄ±yoruz
                     JObject zonesObj = JObject.Parse(json);
 
-                    // JObject içindeki her bir özelliği (Key-Value) dönüyoruz
+                    // JObject iÃ§indeki her bir Ã¶zelliÄŸi (Key-Value) dÃ¶nÃ¼yoruz
                     foreach (var property in zonesObj.Properties())
                     {
-                        string id = property.Name; // Anahtar (Key) harita ID'sidir (Örn: "1000")
+                        string id = property.Name; // Anahtar (Key) harita ID'sidir (Ã–rn: "1000")
                         if (string.IsNullOrEmpty(id)) continue;
 
                         JToken item = property.Value;
-                        // JSON içindeki "type" ve "name" alanlarını küçük harfle okumamız gerekiyor
+                        // JSON iÃ§indeki "type" ve "name" alanlarÄ±nÄ± kÃ¼Ã§Ã¼k harfle okumamÄ±z gerekiyor
                         string type = item["type"]?.ToString().ToUpperInvariant() ?? "";
                         string name = item["name"]?.ToString().ToUpperInvariant() ?? "";
 
-                        float size = 825.0f; // Varsayılan Açık Dünya boyutu
+                        float size = 825.0f; // VarsayÄ±lan AÃ§Ä±k DÃ¼nya boyutu
 
-                        // Oyunun kendi veritabanındaki (zones.json) Type/Name değerine göre sınırları belirliyoruz
+                        // Oyunun kendi veritabanÄ±ndaki (zones.json) Type/Name deÄŸerine gÃ¶re sÄ±nÄ±rlarÄ± belirliyoruz
                         if (type.Contains("CITY") || name.Contains("CITY")) size = 800.0f;
                         else if (type.Contains("PORTAL") || name.Contains("PORTAL")) size = 800.0f;
                         else if (type.Contains("ISLAND") || name.Contains("ISLAND")) size = 500.0f;

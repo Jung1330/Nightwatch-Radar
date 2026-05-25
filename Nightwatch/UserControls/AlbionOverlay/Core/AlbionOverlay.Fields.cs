@@ -58,7 +58,7 @@ namespace Nightwatch
         private DateTime _lastPacketParserErrorAt = DateTime.MinValue;
         // Kart slotları: null = boş | int = playerId
         private readonly int?[] _equipCardSlots = new int?[8];
-
+        private List<int> _crownWhitelist = new List<int>();
         // Trackers Color
         private Vector4 _trackerLaserColorMobs = new Vector4(0.0f, 1.0f, 1.0f, 0.9f);
         private Vector4 _trackerLaserColorResources = new Vector4(0.8f, 0.0f, 1.0f, 0.8f);
@@ -123,8 +123,8 @@ namespace Nightwatch
 
         // Themes
         private int _selectedTheme = 1; // 0=Old 1=Main
-
-
+        //Resource Label
+        public bool _showResourceLabels = true;
         //Raw
         private static bool _autoRawDump = false;
         private DateTime _lastAutoRawDumpTime = DateTime.MinValue;
@@ -214,7 +214,7 @@ namespace Nightwatch
         private int _selectedAdapterIndex = 0;
         private bool _adaptersLoaded = false;
 
-        // YENİ: Ağ Tanılama Aracı (Traffic Scanner) Değişkenleri
+        // Ağ Tanılama Aracı (Traffic Scanner) Değişkenleri
         private bool _isTestingAdapters = false;
         private Dictionary<string, bool> _adapterTestResults = new Dictionary<string, bool>();
 
@@ -314,11 +314,6 @@ namespace Nightwatch
         private bool _showItemIds = false;
         private bool _showChestIds = false;
 
-        private float _discordBoxOffsetX = 200f;
-        private float _discordBoxOffsetY = -5f;
-        private float _licenseBoxOffsetX = 8f;
-        private float _licenseBoxOffsetY = -5f;
-
         // Data & Lists
         private Dictionary<int, ItemInfo> _itemDatabase = new Dictionary<int, ItemInfo>();
         private string _lastMapId = "";
@@ -334,6 +329,8 @@ namespace Nightwatch
         private bool _trackerEnableResources = false;
         private bool _trackerEnableVipMobs = false;
         private bool _trackerEnableNormalMobs = false;
+        private bool _trackerShowMobIcons = true;      // Mob lazerinin ucunda ikon
+        private bool _trackerShowResourceIcons = true; // Kaynak lazerinin ucunda ikon
         private HashSet<int> _trackerCustomMobs = new HashSet<int>();
         private string _trackerSearchQuery = "";
         private int _selectedMobIdForTracker = -1;

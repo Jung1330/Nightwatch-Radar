@@ -61,12 +61,12 @@ namespace Nightwatch
                 _tabs[3] = Lang.Get("Tab_Config") ?? "Config";
                 _tabs[4] = Lang.Get("Tab_DevTools") ?? "Dev Tools";
                 _tabs[5] = Lang.Get("Tab_Settings") ?? "Settings";
-                _tabs[6] = Lang.Get("Tab_Device") ?? "Device"; // YENİ EKLENDİ
+                _tabs[6] = Lang.Get("Tab_Device") ?? "Device";
                 _lastTabLanguage = currentLang;
             }
 
             if (!_isSizeFixed) FixLayoutWait();
-            if (!_isIconSet) { SetApplicationWindowIcon(); _isIconSet = true; }
+            if (!_isIconSet) { _isIconSet = SetApplicationWindowIcon(); }
 
             // Oyun verilerini güncelle
             _gameStateManager.Update();
@@ -158,6 +158,7 @@ namespace Nightwatch
                 _lastMuteKeyState = (GetAsyncKeyState(_muteToggleKey) & 0x8000) != 0;
             }
 
+            int previousEnemyCount = _lastEnemyCount;
             int enemyCount = mainPlayer != null ? CalculateEnemyCount(mainPlayer) : 0;
             int bossCount = 0;
             lock (_dataLock)
@@ -178,7 +179,7 @@ namespace Nightwatch
             int resourceCount = CalculateResourceCount();
 
             // Ses Sistemi
-            if (enemyCount > _lastEnemyCount && _enableSoundAlerts)
+            if (enemyCount > previousEnemyCount && _enableSoundAlerts)
             {
                 string safeCheckMapId = _gameStateManager.CurrentMapId ?? "0000";
                 string upperMapId = safeCheckMapId.ToUpperInvariant();
@@ -186,26 +187,33 @@ namespace Nightwatch
 
                 if (!isSafeZone && (DateTime.Now - _lastBeepTime).TotalSeconds >= 2.0)
                 {
-                    System.Threading.Tasks.Task.Run(() =>
+                    try
                     {
-                        try
+                        string soundPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Helper", "alert.wav");
+                        if (System.IO.File.Exists(soundPath))
                         {
-                            string soundPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Helper", "alert.wav");
-                            if (System.IO.File.Exists(soundPath)) { using (var player = new System.Media.SoundPlayer(soundPath)) { player.Play(); } }
-                            else { Console.Beep(800, 200); }
+                            // Asenkron çalar ve bitene kadar dispose olmaz
+                            var player = new System.Media.SoundPlayer(soundPath);
+                            player.Load();
+                            player.Play();
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            System.Console.WriteLine($"Error Code : 54 | {ex.Message}");
+                            Console.Beep(800, 200);
                         }
-                    });
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine($"Error Code : 54 | {ex.Message}");
+                    }
+
                     _lastBeepTime = DateTime.Now;
                 }
             }
             // Toast: Yeni düşman görüldüğünde bildirim ekle
-            if (enemyCount > _lastEnemyCount)
+            if (enemyCount > previousEnemyCount)
             {
-                int newOnes = enemyCount - _lastEnemyCount;
+                int newOnes = enemyCount - previousEnemyCount;
                 string mapId = _gameStateManager.CurrentMapId ?? "0000";
                 string upper = mapId.ToUpperInvariant();
                 bool isSafe = upper.Contains("CITY") || upper.Contains("PORTAL") || upper.Contains("ISLAND") || upper.Contains("HIDEOUT");
@@ -503,7 +511,7 @@ namespace Nightwatch
                 DateTime now = DateTime.Now;
                 const float IconSz = 48f;
                 const float Pad = 6f;
-                const float SlotGap = 10f;
+                const float SlotGap = 3f;
 
                 lock (_dataLock)
                 {
@@ -715,11 +723,14 @@ namespace Nightwatch
                         Vector4 hpCol = new Vector4(1f - hpRatio, hpRatio, 0.15f, 1f);
 
                         ImGui.TextColored(nameCol, ep.Name);
-                        if (hasHealthData)
-                        {
+                        /* if (hasHealthData)
+                         {
+                             ImGui.SameLine(0, 8);
+                             ImGui.TextColored(hpCol, $"HP:{hpCurrent}/{hpMax}");
+                         }*/
+                        if (!string.IsNullOrEmpty(ep.Guild))
                             ImGui.SameLine(0, 8);
-                            ImGui.TextColored(hpCol, $"HP:{hpCurrent}/{hpMax}");
-                        }
+                        ImGui.TextColored(new Vector4(0.6f, 0.6f, 1f, 1), $"[{ep.Guild}]");
                         if (avgIP > 0)
                         {
                             ImGui.SameLine(0, 8);
@@ -732,8 +743,6 @@ namespace Nightwatch
                         ImGui.ProgressBar(hpRatio, new Vector2(hpBarWidth, 5f), hasHealthData ? string.Empty : "N/A");
                         ImGui.PopStyleColor(2);
 
-                        if (!string.IsNullOrEmpty(ep.Guild))
-                            ImGui.TextColored(new Vector4(0.6f, 0.6f, 1f, 1), $"[{ep.Guild}]");
                     }
 
                     ImGui.End();
@@ -971,6 +980,13 @@ namespace Nightwatch
                             ImGui.SetCursorPos(new Vector2(10, 18));
                             ImGui.TextColored(new Vector4(0.5f, 0.5f, 0.5f, 1f), "UI: "); ImGui.SameLine();
                             ImGui.TextColored(new Vector4(1f, 1f, 1f, 1f), _tabs[_activeTab].ToUpperInvariant());
+
+                            // BURASI YENİ: Sürüm bilgisini UI isminin yanına ekliyoruz
+                            ImGui.SameLine(0, 15f); // 15 pixel boşluk bırak
+                            ImGui.TextColored(new Vector4(0.4f, 0.4f, 0.4f, 1f), "|"); // Araya şık bir çizgi
+                            ImGui.SameLine(0, 15f);
+                            // Program sınıfındaki Text ve Color'ı çekip ekrana basıyoruz
+                            ImGui.TextColored(Program.UpdateStatusColor, Program.UpdateStatusText);
 
                             float headerWidth = ImGui.GetWindowWidth();
                             ImGui.SetCursorPos(new Vector2(headerWidth - 75f, 10f));

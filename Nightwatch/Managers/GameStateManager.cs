@@ -1,4 +1,4 @@
-using AlbionDataHandlers.Entities;
+ï»¿using AlbionDataHandlers.Entities;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -8,6 +8,7 @@ namespace Nightwatch.Managers
     public class GameStateManager
     {
         private Player _localPlayer = new Player();
+        private bool _localPlayerLerpedInitialized;
         private List<Mob> _mobs = new List<Mob>();
         private List<Harvestable> _harvestables = new List<Harvestable>();
         private List<Player> _otherPlayers = new List<Player>();
@@ -27,7 +28,7 @@ namespace Nightwatch.Managers
             }
         }
 
-        // --- SÝMÜLATÖR METOTLARI ---
+        // --- SÄ°MÃœLATÃ–R METOTLARI ---
 
         // 1. Fake Mob Ekle
         public void AddDebugMob(int typeId, float x, float y, string name)
@@ -35,7 +36,7 @@ namespace Nightwatch.Managers
             lock (_stateLock)
             {
                 var m = new Mob { Id = -Math.Abs(Guid.NewGuid().GetHashCode()), TypeId = typeId, PositionX = x, PositionY = y, CurrentLerpedX = x, CurrentLerpedY = y, Name = name };
-                _debugMobs.Add(m); // Gerçek listeye deðil, VIP listeye ekle
+                _debugMobs.Add(m); // GerÃ§ek listeye deÄŸil, VIP listeye ekle
             }
         }
 
@@ -45,25 +46,25 @@ namespace Nightwatch.Managers
             lock (_stateLock)
             {
                 var h = new Harvestable { Id = -Math.Abs(Guid.NewGuid().GetHashCode()), Type = typeId, Tier = tier, Count = count, Capacity = capacity, PositionX = x, PositionY = y, CurrentLerpedX = x, CurrentLerpedY = y, EnchantmentLevel = enchant };
-                _debugHarvestables.Add(h); // Gerçek listeye deðil, VIP listeye ekle
+                _debugHarvestables.Add(h); // GerÃ§ek listeye deÄŸil, VIP listeye ekle
             }
         }
 
-        // 3. Ekrana Çizdirirken Ýkisini Birleþtir
+        // 3. Ekrana Ã‡izdirirken Ä°kisini BirleÅŸtir
         public void GetMobs(List<Mob> buffer)
         {
             lock (_stateLock)
             {
-                buffer.AddRange(_mobs);      // Gerçek moblar
-                buffer.AddRange(_debugMobs); // Simülatör moblarý (Ezilmez)
+                buffer.AddRange(_mobs);      // GerÃ§ek moblar
+                buffer.AddRange(_debugMobs); // SimÃ¼latÃ¶r moblarÄ± (Ezilmez)
             }
         }
         public void GetHarvestables(List<Harvestable> buffer)
         {
             lock (_stateLock)
             {
-                buffer.AddRange(_harvestables);      // Gerçek kaynaklar
-                buffer.AddRange(_debugHarvestables); // Simülatör kaynaklarý (Ezilmez)
+                buffer.AddRange(_harvestables);      // GerÃ§ek kaynaklar
+                buffer.AddRange(_debugHarvestables); // SimÃ¼latÃ¶r kaynaklarÄ± (Ezilmez)
             }
         }
 
@@ -77,7 +78,7 @@ namespace Nightwatch.Managers
             }
         }
 
-        // 5. Tüm Simülasyonu Temizle
+        // 5. TÃ¼m SimÃ¼lasyonu Temizle
         public void ClearAllData()
         {
             lock (_stateLock)
@@ -87,9 +88,10 @@ namespace Nightwatch.Managers
                 _otherPlayers.Clear();
                 _debugMobs.Clear();
                 _debugHarvestables.Clear();
+                _localPlayerLerpedInitialized = false;
             }
         }
-        /* Eski yöntem
+        /* Eski yÃ¶ntem
         public void UpdateLocalPlayer(Player p)
         {
             _localPlayer.PositionX = p.PositionX;
@@ -100,8 +102,11 @@ namespace Nightwatch.Managers
 
         public void UpdateLocalPlayer(Player p)
         {
-            lock (_stateLock) // YENÝ: Çakýþmalarý ve ýþýnlanmalarý engeller!
+            lock (_stateLock) // YENÄ°: Ã‡akÄ±ÅŸmalarÄ± ve Ä±ÅŸÄ±nlanmalarÄ± engeller!
             {
+                float prevLerpedX = _localPlayer.CurrentLerpedX;
+                float prevLerpedY = _localPlayer.CurrentLerpedY;
+
                 _localPlayer.Id = p.Id;
                 _localPlayer.Name = p.Name;
                 _localPlayer.Guild = p.Guild;
@@ -112,17 +117,37 @@ namespace Nightwatch.Managers
                 _localPlayer.Equipment = p.Equipment?.ToArray() ?? Array.Empty<int>();
                 _localPlayer.PositionX = p.PositionX;
                 _localPlayer.PositionY = p.PositionY;
-                _localPlayer.CurrentLerpedX = p.PositionX;
-                _localPlayer.CurrentLerpedY = p.PositionY;
+
+                float dx = p.PositionX - prevLerpedX;
+                float dy = p.PositionY - prevLerpedY;
+                if (!_localPlayerLerpedInitialized || (dx * dx + dy * dy) > 900f)
+                {
+                    _localPlayer.CurrentLerpedX = p.PositionX;
+                    _localPlayer.CurrentLerpedY = p.PositionY;
+                    _localPlayerLerpedInitialized = true;
+                }
             }
         }
         public void UpdateOtherPlayers(IEnumerable<Player> players)
         {
             lock (_stateLock)
             {
-                // Listeyi tamamen yenile (Snapshot mantýðý)
+                var prevPlayers = _otherPlayers.ToDictionary(p => p.Id, p => p);
                 _otherPlayers.Clear();
-                _otherPlayers.AddRange(players);
+                foreach (var player in players)
+                {
+                    if (prevPlayers.TryGetValue(player.Id, out var prev))
+                    {
+                        player.CurrentLerpedX = prev.CurrentLerpedX;
+                        player.CurrentLerpedY = prev.CurrentLerpedY;
+                    }
+                    else
+                    {
+                        player.CurrentLerpedX = player.PositionX;
+                        player.CurrentLerpedY = player.PositionY;
+                    }
+                    _otherPlayers.Add(player);
+                }
             }
         }
 
@@ -138,11 +163,20 @@ namespace Nightwatch.Managers
         {
             lock (_stateLock)
             {
+                var prevMobs = _mobs.ToDictionary(m => m.Id, m => m);
                 _mobs.Clear();
                 foreach (var mob in newMobs)
                 {
-                    mob.CurrentLerpedX = mob.PositionX;
-                    mob.CurrentLerpedY = mob.PositionY;
+                    if (prevMobs.TryGetValue(mob.Id, out var prev))
+                    {
+                        mob.CurrentLerpedX = prev.CurrentLerpedX;
+                        mob.CurrentLerpedY = prev.CurrentLerpedY;
+                    }
+                    else
+                    {
+                        mob.CurrentLerpedX = mob.PositionX;
+                        mob.CurrentLerpedY = mob.PositionY;
+                    }
                     _mobs.Add(mob);
                 }
             }
@@ -152,8 +186,22 @@ namespace Nightwatch.Managers
         {
             lock (_stateLock)
             {
+                var prevHarvestables = _harvestables.ToDictionary(h => h.Id, h => h);
                 _harvestables.Clear();
-                _harvestables.AddRange(newHarvestables);
+                foreach (var harvestable in newHarvestables)
+                {
+                    if (prevHarvestables.TryGetValue(harvestable.Id, out var prev))
+                    {
+                        harvestable.CurrentLerpedX = prev.CurrentLerpedX;
+                        harvestable.CurrentLerpedY = prev.CurrentLerpedY;
+                    }
+                    else
+                    {
+                        harvestable.CurrentLerpedX = harvestable.PositionX;
+                        harvestable.CurrentLerpedY = harvestable.PositionY;
+                    }
+                    _harvestables.Add(harvestable);
+                }
             }
         }
 
@@ -166,7 +214,7 @@ namespace Nightwatch.Managers
             }
         }
 
-        // --- FPS DOSTU HIZLI MESAFE HESAPLAMA (KAREKÖK ÝPTAL EDÝLDÝ) ---
+        // --- FPS DOSTU HIZLI MESAFE HESAPLAMA (KAREKÃ–K Ä°PTAL EDÄ°LDÄ°) ---
         private float GetDistanceSquared(float x1, float y1, float x2, float y2)
         {
             float dx = x1 - x2;
@@ -183,15 +231,15 @@ namespace Nightwatch.Managers
                 float px = _localPlayer.PositionX;
                 float py = _localPlayer.PositionY;
 
-                // maxDist 400 ise karesi tam 160.000 yapar! Artýk karekök almadan direkt karesiyle karþýlaþtýracaðýz.
+                // maxDist 400 ise karesi tam 160.000 yapar! ArtÄ±k karekÃ¶k almadan direkt karesiyle karÅŸÄ±laÅŸtÄ±racaÄŸÄ±z.
                 float maxDistSquared = 160000.0f;
 
-                // Gerçek listelerden uzak objeleri sil
+                // GerÃ§ek listelerden uzak objeleri sil
                 PruneMobsByDistance(_mobs, px, py, maxDistSquared);
                 PruneHarvestablesByDistance(_harvestables, px, py, maxDistSquared);
                 PrunePlayersByDistance(_otherPlayers, px, py, maxDistSquared);
 
-                // Simülatör (Sahte) objeleri de çok uzaklaþýrsa sil ki test yaparken ekran þiþmesin
+                // SimÃ¼latÃ¶r (Sahte) objeleri de Ã§ok uzaklaÅŸÄ±rsa sil ki test yaparken ekran ÅŸiÅŸmesin
                 PruneMobsByDistance(_debugMobs, px, py, maxDistSquared);
                 PruneHarvestablesByDistance(_debugHarvestables, px, py, maxDistSquared);
             }
@@ -245,6 +293,28 @@ namespace Nightwatch.Managers
                     MaxHealth = _localPlayer.MaxHealth,
                     Equipment = _localPlayer.Equipment?.ToArray() ?? Array.Empty<int>()
                 };
+            }
+        }
+
+
+        // --- MOB ENCHANT GÃœNCELLEMESÄ° (MobChangeState paketi iÃ§in) ---
+        public void UpdateMobEnchant(int entityId, int enchant)
+        {
+            lock (_stateLock)
+            {
+                // GerÃ§ek moblar iÃ§inde bu ID'yi bul
+                var mob = _mobs.FirstOrDefault(m => m.Id == entityId);
+                if (mob != null)
+                {
+                    mob.EnchantmentLevel = enchant;
+                }
+
+                // SimÃ¼latÃ¶r aÃ§Ä±ksa debug moblarÄ±na da uygula
+                var debugMob = _debugMobs.FirstOrDefault(m => m.Id == entityId);
+                if (debugMob != null)
+                {
+                    debugMob.EnchantmentLevel = enchant;
+                }
             }
         }
 

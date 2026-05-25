@@ -8,6 +8,7 @@ using AlbionDataHandlers.Handlers;
 using AlbionDataHandlers.Handlers.MapHandler;
 using Nightwatch.Managers;
 using Nightwatch.UserControls.Language;
+using System.Net.Http;
 
 namespace Nightwatch
 {
@@ -36,19 +37,25 @@ namespace Nightwatch
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool SetProcessDpiAwarenessContext(int dpiContext);
         private const int DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4;
-
+        public static string UpdateStatusText = "Sürüm Kontrol Ediliyor...";
+        public static System.Numerics.Vector4 UpdateStatusColor = new System.Numerics.Vector4(0.6f, 0.6f, 0.6f, 1f); // Başlangıçta gri
         // --- ANA PROGRAM ---
         [STAThread]
         public static void Main(string[] args)
         {
+
+
+
             ErrorCodeSink.Install();
 
+            // Konsol açılır açılmaz arka planda güncellemeyi kontrol etsin
+            Task.Run(() => CheckForUpdatesAsync());
 
             // Sonra Main içinde ilk satır olarak:
             TrySetSdlHint("SDL_WINDOW_UTILITY", "0");
+
             TrySetSdlHint("SDL_HINT_WINDOW_NO_TASKBAR", "0");
-            // En basta sadece temel dili Ingilizce veya TR olarak yukle (Login ekrani icin)
-            Lang.LoadLanguage("TR");
+            Lang.LoadLanguage("EN");
             bool isRunningAsAdmin = IsAdministrator();
 
             try { SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2); }
@@ -56,13 +63,8 @@ namespace Nightwatch
 
             try
             {
-                // Motoru degil, sadece "Bos" yoneticiyi olustur
                 var manager = new GameStateManager();
                 var radar = new AlbionOverlay(manager, isRunningAsAdmin);
-
-                // ========================================================
-                // --- LOGIN KONTROLÜ KALDIRILDI ---
-                // ========================================================
                 radar.OnLoginSuccess = () =>
                 {
                     try
@@ -125,7 +127,6 @@ namespace Nightwatch
                     catch (Exception ex)
                     {
                         System.Console.WriteLine($"Error Code : 510 | {ex.Message}");
-                        RenkliYaz($"LOGIN START ERROR: {ex.Message}", ConsoleColor.Red);
                     }
                 };
 
@@ -137,6 +138,47 @@ namespace Nightwatch
                 System.Console.WriteLine($"Error Code : 51 | {ex.Message}");
                 RenkliYaz($"FATAL ERROR: {ex.Message}", ConsoleColor.Red);
                 Console.ReadLine();
+            }
+        }
+
+
+        private static async Task CheckForUpdatesAsync()
+        {
+            try
+            {
+                using System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", "Nightwatch-Updater");
+
+                // REPO ADINI VE KULLANICI ADINI KENDİ GITHUB BİLGİLERİNE GÖRE DEĞİŞTİR
+                string url = "https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App/version.txt?t={DateTime.Now.Ticks}";
+
+                string response = await client.GetStringAsync(url);
+                int currentVersion = 2; // Senin belirlediğin şu anki sürüm numarası
+
+                if (int.TryParse(response.Trim(), out int latestVersion))
+                {
+                    if (latestVersion > currentVersion)
+                    {
+                        // UI için Güncelleme Var durumunu ayarla (Kırmızı Renk)
+                        UpdateStatusText = $"[Güncelleme Var]";
+                        UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.3f, 0.3f, 1f);
+                        RenkliYaz($"[BİLDİRİM] Yeni Bir Güncelleme Mevcut! Lütfen GitHub'dan güncelleyin.", ConsoleColor.Cyan);
+                    }
+                    else
+                    {
+                        // UI için Güncel durumunu ayarla (Yeşil Renk)
+                        UpdateStatusText = $"[Güncel]";
+                        UpdateStatusColor = new System.Numerics.Vector4(0.2f, 1.0f, 0.2f, 1f);
+                        RenkliYaz($"[BİLDİRİM] Uygulama Güncel.", ConsoleColor.DarkGray);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // UI için Hata durumunu ayarla (Sarı Renk)
+                UpdateStatusText = "[Sürüm Kontrol Edilemedi]";
+                UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.8f, 0.2f, 1f);
+                RenkliYaz("[UYARI] Sürüm kontrolü yapılamadı (Bağlantı veya Link Hatası).", ConsoleColor.DarkGray);
             }
         }
 

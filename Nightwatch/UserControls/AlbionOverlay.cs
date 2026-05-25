@@ -101,7 +101,7 @@ namespace Nightwatch
             _feyDragonPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "FAIRYDRAGON.png");
             _griffinPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "GRIFFIN.png");
             _veilWeaverPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "VEILWEAVER.png");
-            _aspectBossIconPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "group_0.png");
+            /*_aspectBossIconPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "group_0.png");*/
 
             for (int i = 0; i < 5; i++)
                 _mistImagePaths[i] = System.IO.Path.Combine(baseDir, "Assets", "Resources", $"mist_{i}.png");

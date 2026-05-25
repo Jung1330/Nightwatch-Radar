@@ -13,7 +13,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>Nightwatch.Program</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>bin\Debug\net8.0-windows\Assets\Nightwatch.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Nightwatch.ico</ApplicationIcon>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <PackageIcon>NightWatch.ico</PackageIcon>
     <AssemblyTitle>Nightwatch</AssemblyTitle>
@@ -91,6 +91,9 @@
     <Content Update="Assets\Helper\Font.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Assets\Nightwatch.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\Nightwatch.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -112,6 +115,15 @@
 
   <ItemGroup>
     <None Include="C:\Users\Administrator\Downloads\Radar\V0.9\Nightwatch\Nightwatch\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Nightwatch.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Nightwatch.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

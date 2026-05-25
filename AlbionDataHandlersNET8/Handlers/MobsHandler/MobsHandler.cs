@@ -1,4 +1,4 @@
-using AlbionDataHandlers.Entities;
+﻿using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Enums;
 using AlbionDataHandlers.Utils;
 using System.Reactive.Subjects;
@@ -32,23 +32,29 @@ public class MobsHandler : IEventHandler
                 break;
         }
     }
-
     private void HandleMobChangeState(Dictionary<byte, object> parameters)
     {
-        var id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
-        var enchantmentLevel = EventHandlerUtils.ExtractValue<int>(parameters, 1);
+        // [0] Entity ID
+        if (!parameters.TryGetValue(0, out var idObj)) return;
+        int entityId = GetIntSafe(idObj);
+        if (entityId == 0) return;
+
+        // [1] Enchantment Level (Oyun .2 parlamasını burada gönderiyor)
+        int newEnchantLevel = EventHandlerUtils.ExtractValue<int>(parameters, 1, 0);
 
         lock (_lockObject)
         {
-            var existingMob = _mobs.FirstOrDefault(m => m.Id == id);
-            if (existingMob != null)
+            var mobToUpdate = _mobs.FirstOrDefault(m => m.Id == entityId);
+            if (mobToUpdate != null)
             {
-                existingMob.EnchantmentLevel = enchantmentLevel;
+                // Mobun enchant'ını güncelle (Code: 47 paketinden gelen bilgi)
+                mobToUpdate.EnchantmentLevel = newEnchantLevel;
+
+                // Mobs listesini UI'a gönder (Radar güncellensin)
                 Mobs.OnNext(_mobs);
             }
         }
     }
-
     private void HandleNewMob(Dictionary<byte, object> parameters)
     {
         if (!parameters.TryGetValue(0, out var idObj)) return;
