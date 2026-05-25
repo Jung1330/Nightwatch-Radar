@@ -1,481 +1,1378 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nightwatch | Albion Online Radar</title>
-    
-    <link rel="icon" type="image/png" href="App/Nightwatch.png">
-    
-    <style>
-        :root {
-            --bg-deep: #111320; 
-            --accent: #ff8c00; 
-            --card-bg: rgba(26, 28, 45, 0.8);
-            --text: #e0e0e0;
-            --border: #2b2d41;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nightwatch | Albion Online Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #01020e;
+  --bg2: #04061a;
+  --bg3: #080b22;
+  --accent: #5c2878;
+  --accent2: #7626a0;
+  --gold: #c8a84b;
+  --gold2: #f0d060;
+  --red: #cc2233;
+  --cyan: #00d4ff;
+      --text: #ffffff;
+  --muted: #6a6a88;
+  --muted: #ffffff;
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text);
-            margin: 0; padding: 0;
-            overflow-x: hidden;
-        }
+  --glow: rgba(92,40,120,0.4);
+}
 
-        /* --- DİL SEÇENEKLERİ --- */
-        .lang-switcher {
-            position: fixed;
-            top: 20px; left: 20px;
-            z-index: 1000;
-            display: flex; gap: 10px;
-            background: var(--card-bg);
-            padding: 8px 12px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(5px);
-        }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .lang-btn {
-            cursor: pointer; width: 24px; height: 18px;
-            opacity: 0.5; transition: 0.3s;
-            border-radius: 2px;
-        }
-        .lang-btn.active { opacity: 1; transform: scale(1.2); box-shadow: 0 0 5px var(--accent); }
+html { scroll-behavior: smooth; }
 
-        /* --- HEADER VE ARKA PLAN FOTOĞRAFI --- */
-        header {
-            position: relative;
-            text-align: center;
-            padding: 120px 20px 60px;
-            background: linear-gradient(to bottom, rgba(17, 19, 32, 0.4), var(--bg-deep)), 
-                        url('https://assets.albiononline.com/uploads/media/default/media/523f2fb3403b9752b11744b6ad0ba9097ab9c110.jpeg'); 
-            background-size: cover;
-            background-position: center;
-        }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
 
-        .logo {
-            width: 150px;
-            filter: drop-shadow(0 0 15px var(--accent));
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-            z-index: 2;
-        }
+/* ── PARTICLES ── */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0;
+}
+@keyframes float {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.3; }
+  100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
 
-        h1 { font-size: 3.5rem; margin: 0; letter-spacing: 5px; color: var(--accent); text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+/* ── NAVBAR ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 64px;
+  background: rgba(1,2,14,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(92,40,120,0.3);
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #fff;
+  text-shadow: 0 0 20px var(--accent2);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
 
-        /* --- ANA NAVİGASYON --- */
-        .main-nav {
-            display: flex; justify-content: center;
-            gap: 12px; margin-top: 40px; margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+.lang-switcher { display: flex; gap: 0.5rem; }
+.lang-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.lang-btn.active, .lang-btn:hover {
+  border-color: var(--accent);
+  color: #fff;
+  background: rgba(92,40,120,0.3);
+}
 
-        .nav-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 12px 22px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-        .nav-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255, 140, 0, 0.15); }
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  padding: 6rem 2rem 4rem;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(92,40,120,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,212,255,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(200,168,75,0.06) 0%, transparent 60%);
+  z-index: -1;
+}
 
-        /* --- ALT SEKMELER --- */
-        .sub-tabs {
-            display: none; justify-content: center;
-            gap: 10px; margin-bottom: 40px; flex-wrap: wrap;
-        }
-        .sub-tabs.visible { display: flex; }
+/* Hex grid */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    60deg,
+    transparent 0,
+    transparent 28px,
+    rgba(92,40,120,0.06) 28px,
+    rgba(92,40,120,0.06) 29px
+  ),
+  repeating-linear-gradient(
+    -60deg,
+    transparent 0,
+    transparent 28px,
+    rgba(92,40,120,0.06) 28px,
+    rgba(92,40,120,0.06) 29px
+  ),
+  repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 48px,
+    rgba(92,40,120,0.04) 48px,
+    rgba(92,40,120,0.04) 49px
+  );
+  opacity: 0.7;
+}
 
-        .sub-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: #888;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer; transition: 0.3s;
-        }
-        .sub-btn.active { color: #fff; border-color: var(--accent); background: var(--accent); }
+.hero-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid rgba(92,40,120,0.5);
+  box-shadow: 0 0 40px rgba(92,40,120,0.6), 0 0 80px rgba(92,40,120,0.2);
+  margin-bottom: 2rem;
+  animation: pulse-logo 3s ease-in-out infinite;
+}
+@keyframes pulse-logo {
+  0%, 100% { box-shadow: 0 0 40px rgba(92,40,120,0.6), 0 0 80px rgba(92,40,120,0.2); }
+  50% { box-shadow: 0 0 60px rgba(118,38,160,0.8), 0 0 120px rgba(92,40,120,0.3); }
+}
 
-        /* --- İÇERİK YAPISI --- */
-        .content-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .section-content { display: none; animation: fadeIn 0.5s; }
-        .section-content.active { display: block; }
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: 0 0 60px rgba(92,40,120,0.8);
+  margin-bottom: 1.2rem;
+}
+.hero-title span { color: var(--gold); text-shadow: 0 0 40px rgba(200,168,75,0.6); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
 
-        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; margin-bottom: 40px; }
-        .app-img { width: 100%; border-radius: 12px; border: 2px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: zoom-in; transition: 0.3s; }
-        .app-img:hover { transform: scale(1.02); border-color: var(--accent); }
+.hero-badges {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 6px 16px;
+  border: 1px solid rgba(92,40,120,0.5);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(92,40,120,0.1);
+}
+.badge.green { border-color: rgba(40,180,80,0.5); color: #4ade80; background: rgba(40,180,80,0.08); }
+.badge.gold { border-color: rgba(200,168,75,0.5); color: var(--gold); background: rgba(200,168,75,0.08); }
+.badge.cyan { border-color: rgba(0,212,255,0.4); color: var(--cyan); background: rgba(0,212,255,0.06); }
 
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 12px; padding-left: 25px; position: relative; }
-        li::before { content: '⚔️'; position: absolute; left: 0; color: var(--accent); }
+.hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        .discord-link { display: inline-block; margin-top: 40px; color: #5865F2; font-weight: bold; text-decoration: none; font-size: 1.2rem; transition: 0.3s; }
-        .discord-link:hover { transform: scale(1.05); text-shadow: 0 0 10px rgba(88, 101, 242, 0.8); }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 4px 24px rgba(92,40,120,0.5);
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(92,40,120,0.7); }
+.btn-primary:hover::before { opacity: 1; }
 
-        /* --- MODAL (BÜYÜTÜLMÜŞ RESİM) --- */
-        .modal {
-            display: none; position: fixed; z-index: 2000;
-            padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            margin: auto; display: block; max-width: 90%; max-height: 85vh;
-            border: 2px solid var(--accent); border-radius: 10px; animation: zoom 0.3s;
-        }
-        @keyframes zoom { from {transform:scale(0.8)} to {transform:scale(1)} }
-        .close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; cursor: pointer; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: #fff;
+  background: rgba(92,40,120,0.15);
+}
 
-        /* DİLLERİ GİZLEME SINIFLARI */
-        .tr, .en, .ru, .zh { display: none; }
-    </style>
+/* ── SECTIONS ── */
+section {
+  position: relative;
+  z-index: 2;
+  padding: 6rem 2rem;
+}
+
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.section-title span { color: var(--gold); }
+.section-desc {
+  color: var(--muted);
+  max-width: 600px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+.divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border)); }
+.divider-line.right { background: linear-gradient(90deg, var(--border), transparent); }
+.divider-icon { color: var(--accent); font-size: 1.2rem; }
+
+/* ── FEATURES GRID ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 4rem;
+}
+.feature-card {
+  background: var(--bg2);
+  padding: 2rem 2rem;
+  transition: background 0.3s;
+  cursor: default;
+}
+.feature-card:hover { background: var(--bg3); }
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.feature-card h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.feature-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.feature-tag {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 2px 10px;
+  border: 1px solid rgba(92,40,120,0.4);
+  border-radius: 3px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  font-weight: 600;
+}
+.feature-tag.new { border-color: rgba(40,200,80,0.5); color: #4ade80; }
+.feature-tag.gold { border-color: rgba(200,168,75,0.5); color: var(--gold); }
+
+/* ── SCREENSHOTS ── */
+.screenshots {
+  background: linear-gradient(180deg, transparent 0%, rgba(4,6,26,0.8) 50%, transparent 100%);
+}
+.tab-nav {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 16px;
+  background: var(--bg2);
+  border: none;
+  color: var(--muted);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-right: 1px solid var(--border);
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active, .tab-btn:hover {
+  background: rgba(92,40,120,0.3);
+  color: #fff;
+}
+.tab-content { display: none; }
+.tab-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.5rem; }
+.screenshot-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.screenshot-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(92,40,120,0.6);
+}
+.screenshot-card img {
+  width: 100%;
+  height: 800px;
+  object-fit: cover;
+  display: block;
+  background: var(--bg3);
+}
+.screenshot-card-body {
+  padding: 1rem 1.2rem;
+}
+.screenshot-card-body h4 {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+.screenshot-card-body p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── INSTALL ── */
+.install-section { background: rgba(4,6,26,0.6); }
+.steps {
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 3rem;
+}
+.step {
+  counter-increment: step;
+  background: var(--bg2);
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  gap: 1.5rem;
+  transition: background 0.2s;
+}
+.step:hover { background: var(--bg3); }
+.step-num {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: rgba(92,40,120,0.3);
+  line-height: 1;
+}
+.step-body h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+.step-body p { font-size: 0.88rem; color: var(--muted); }
+.step-pill {
+  padding: 4px 12px;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.pill-req { background: rgba(204,34,51,0.2); color: #f87171; border: 1px solid rgba(204,34,51,0.3); }
+.pill-opt { background: rgba(92,40,120,0.2); color: var(--accent2); border: 1px solid rgba(92,40,120,0.3); }
+
+/* ── FAQ ── */
+.faq-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.faq-item { background: var(--bg2); }
+.faq-q {
+  padding: 1.2rem 1.8rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #ccc;
+  transition: color 0.2s;
+  user-select: none;
+}
+.faq-q:hover { color: #fff; }
+.faq-q .arrow { transition: transform 0.3s; color: var(--accent2); font-size: 0.8rem; }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 1.8rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 1.8rem 1.2rem; }
+.faq-item.open .arrow { transform: rotate(180deg); }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ── DOWNLOAD SECTION ── */
+.download-section {
+  text-align: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(92,40,120,0.15) 0%, transparent 70%);
+}
+.download-box {
+  display: inline-block;
+  background: var(--bg2);
+  border: 1px solid rgba(92,40,120,0.4);
+  border-radius: 12px;
+  padding: 3rem 4rem;
+  margin-top: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.download-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent2), transparent);
+}
+.download-version {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 0.8rem;
+}
+.download-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.download-req {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+.download-req a { color: var(--cyan); text-decoration: none; }
+.download-req a:hover { text-decoration: underline; }
+.download-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── NOTICE BOX ── */
+.notice {
+  background: rgba(92,40,120,0.12);
+  border: 1px solid rgba(92,40,120,0.3);
+  border-left: 3px solid var(--accent2);
+  border-radius: 4px;
+  padding: 1rem 1.4rem;
+  margin-top: 2rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.notice strong { color: #ccc; }
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 2;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.footer-logo span { color: var(--gold); }
+.footer-sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; }
+.footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); font-size: 0.8rem; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold); }
+.footer-copy { font-size: 0.75rem; color: rgba(106,106,136,0.5); }
+
+/* ── LANG VISIBILITY ── */
+.lang-content { display: none; }
+.lang-content.visible { display: block; }
+.lang-grid-content { display: none; }
+.lang-grid-content.visible { display: grid; }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .step { grid-template-columns: 40px 1fr; }
+  .step-pill { display: none; }
+  .download-box { padding: 2rem 1.5rem; }
+  .screenshot-card img { height: 180px; }
+}
+</style>
 </head>
 <body>
 
-    <div id="imageModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="imgFull">
+<div id="particles"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">NIGHT<span>WATCH</span></a>
+  <ul class="nav-links">
+    <li><a href="#features" data-i18n="nav_features">Özellikler</a></li>
+    <li><a href="#screenshots" data-i18n="nav_screens">Ekranlar</a></li>
+    <li><a href="#install" data-i18n="nav_install">Kurulum</a></li>
+    <li><a href="#faq" data-i18n="nav_faq">SSS</a></li>
+    <li><a href="#download" data-i18n="nav_download">İndir</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('tr')">TR</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <img src="App/Nightwatch.png" class="hero-logo" alt="Nightwatch" onerror="this.style.display='none'">
+  <div class="hero-eyebrow" data-i18n="hero_eyebrow">Albion Online — Network Radar</div>
+  <h1 class="hero-title">NIGHT<span>WATCH</span></h1>
+  <p class="hero-sub" data-i18n="hero_sub">Oyunun belleğine dokunmadan, sadece ağ paketlerini okuyarak çalışan gelişmiş bir radar ve overlay sistemi.</p>
+  <div class="hero-badges">
+    <div class="badge green">✓ <span data-i18n="badge_external">Harici Çalışır</span></div>
+    <div class="badge gold">★ <span data-i18n="badge_fps">Sıfır FPS Etkisi</span></div>
+    <div class="badge cyan">⚡ <span data-i18n="badge_realtime">Gerçek Zamanlı</span></div>
+    <div class="badge">🌐 <span data-i18n="badge_multilang">4 Dil</span></div>
+    <div class="badge">🛡️ <span data-i18n="badge_vpn">VPN Desteği</span></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#download" class="btn-primary">⬇ <span data-i18n="btn_download">Hemen İndir</span></a>
+    <a href="#features" class="btn-secondary">↓ <span data-i18n="btn_features">Özellikleri Gör</span></a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label" data-i18n="stat_lang">Dil</div>
+      </div>
+      <div>
+        <div class="stat-num">682+</div>
+        <div class="stat-label" data-i18n="stat_events">Oyun Olayı</div>
+      </div>
+      <div>
+        <div class="stat-num">539+</div>
+        <div class="stat-label" data-i18n="stat_ops">Operasyon Kodu</div>
+      </div>
+      <div>
+        <div class="stat-num">v1</div>
+        <div class="stat-label" data-i18n="stat_version">Güncel Sürüm</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-i18n="sec_features_label">Özellikler</div>
+      <h2 class="section-title" data-i18n="sec_features_title">Tam <span>Savaş Görüşü</span></h2>
+      <p class="section-desc" data-i18n="sec_features_desc">Nightwatch, rakiplerinizi görmenizi sağlayan kapsamlı araçlar sunar. Radar, ESP, kaynak takibi ve daha fazlası.</p>
     </div>
 
-    <div class="lang-switcher">
-        <img src="https://flagcdn.com/tr.svg" class="lang-btn active" onclick="setLang('tr')" id="flag-tr" title="Türkçe">
-        <img src="https://flagcdn.com/gb.svg" class="lang-btn" onclick="setLang('en')" id="flag-en" title="English">
-        <img src="https://flagcdn.com/ru.svg" class="lang-btn" onclick="setLang('ru')" id="flag-ru" title="Русский">
-        <img src="https://flagcdn.com/cn.svg" class="lang-btn" onclick="setLang('zh')" id="flag-zh" title="中文">
+    <div class="features-grid reveal">
+
+      <div class="feature-card">
+        <span class="feature-icon">🛡️</span>
+        <h3 data-i18n="f1_title">Gelişmiş Oyuncu ESP</h3>
+        <p data-i18n="f1_desc">Yakındaki düşmanların gerçek ortalama IP'sini, tam ekipman listesini ve HP durumunu anlık olarak takip edin. Kimin tehlikeli olduğunu anında bilin.</p>
+        <span class="feature-tag gold">ESP</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🃏</span>
+        <h3 data-i18n="f2_title">Ekipman Kartları</h3>
+        <p data-i18n="f2_desc">En tehlikeli 5 düşmanın ekipmanlarını gerçek ikonlarıyla kart olarak ekranda görün. Hafıza sistemi sayesinde kısa süreliğine ayrılan düşmanlar da takip edilir.</p>
+        <span class="feature-tag new">YENİ</span>
+      </div>
+
+      
+
+      <div class="feature-card">
+        <span class="feature-icon">💎</span>
+        <h3 data-i18n="f4_title">Kaynak Takibi</h3>
+        <p data-i18n="f4_desc">Tier ve Büyü seviyesine göre gelişmiş filtreleme. Orijinal oyun ikonları ile kaynakları görselleştirin. Doluluk çubukları ile anlık durum.</p>
+        <span class="feature-tag">RADAR</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🌐</span>
+        <h3 data-i18n="f5_title">VPN & Adaptör Desteği</h3>
+        <p data-i18n="f5_desc">VPN, hızlandırıcı veya farklı ağ kartı kullananlar için gelişmiş Adaptör seçim paneli. Ağ Tanılama Aracı ile hangi kartın Albion trafiği aldığını saniyeler içinde bulun.</p>
+        <span class="feature-tag">NETWORK</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🗺️</span>
+        <h3 data-i18n="f6_title">Harita Arkaplanı</h3>
+        <p data-i18n="f6_desc">Gerçek Albion haritaları radar üzerinde dinamik olarak gösterilir. Şeffaflık ve ölçek ayarları ile tam kontrol. Bölgeye göre otomatik boyutlandırma.</p>
+        <span class="feature-tag gold">PRO</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3 data-i18n="f7_title">Lazer Tracker Sistemi</h3>
+        <p data-i18n="f7_desc">Takip listenizdeki mob ve kaynakları ekranda lazer çizgisiyle işaretleyin. Radar dışındakileri de kaçırmayın. Özelleştirilebilir renk ve kalibrasyon.</p>
+        <span class="feature-tag">TRACKER</span>
+      </div>
+
+      
+
+      <div class="feature-card">
+        <span class="feature-icon">📺</span>
+        <h3 data-i18n="f9_title">OBS Bypass (Streamer Modu)</h3>
+        <p data-i18n="f9_desc">Yayın yaparken radarın OBS veya ekran kaydı yazılımları tarafından görünmesini engelleyen yerleşik Stream Modu.</p>
+        <span class="feature-tag gold">STREAM</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⚙️</span>
+        <h3 data-i18n="f10_title">Config & Profil Sistemi</h3>
+        <p data-i18n="f10_desc">Farklı senaryolar için birden fazla profil kaydedin. Otonom yükleme ile açılışta otomatik config uygulanır.</p>
+        <span class="feature-tag">CONFIG</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔬</span>
+        <h3 data-i18n="f11_title">DevTools & Parser</h3>
+        <p data-i18n="f11_desc">Ham ağ paketi analizi, mob simülatörü, oyuncu decode araçları ve UDP port tarayıcısı. Geliştiriciler için tam şeffaflık.</p>
+        <span class="feature-tag">DEV</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🌍</span>
+        <h3 data-i18n="f12_title">4 Dil Desteği</h3>
+        <p data-i18n="f12_desc">Türkçe, İngilizce, Rusça ve Çince dil desteği. Mob veritabanı ve arayüz dile göre dinamik olarak değişir.</p>
+        <span class="feature-tag">TR / EN / RU / ZH</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="screenshots" class="screenshots">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-i18n="sec_screens_label">Arayüz</div>
+      <h2 class="section-title" data-i18n="sec_screens_title">Sekmeler & <span>Ekranlar</span></h2>
     </div>
 
-    <header>
-        <img src="App/Nightwatch.png" class="logo">
-        <h1>NIGHTWATCH</h1>
-        <p class="tr">Albion Online Gelişmiş Ağ Tabanlı Radar Sistemi</p>
-        <p class="en">Albion Online Advanced Network-Based Radar System</p>
-        <p class="ru">Улучшенная сетевая радарная система для Albion Online</p>
-        <p class="zh">Albion Online 高级网络雷达系统</p>
-    </header>
+    <div class="reveal" style="margin-top: 2rem;">
+      <div class="tab-nav" id="screenshotTabs">
+        <button class="tab-btn active" onclick="switchTab('resources')" data-i18n="tab_res">Kaynaklar</button>
+        <button class="tab-btn" onclick="switchTab('mobs')" data-i18n="tab_mobs">Mobs/Mist</button>
+        <button class="tab-btn" onclick="switchTab('players')" data-i18n="tab_players">Oyuncular</button>
+        <button class="tab-btn" onclick="switchTab('device')" data-i18n="tab_device">Adaptör</button>
+        <button class="tab-btn" onclick="switchTab('config')" data-i18n="tab_config">Config</button>
+        <button class="tab-btn" onclick="switchTab('devtools')" data-i18n="tab_dev">DevTools</button>
+        <button class="tab-btn" onclick="switchTab('settings')" data-i18n="tab_settings">Ayarlar</button>
+      </div>
 
-    <div class="main-nav">
-        <button class="nav-btn active" onclick="showCategory('overview', this)">
-            <span class="tr">Genel Bakış</span><span class="en">Overview</span><span class="ru">Обзор</span><span class="zh">概览</span>
-        </button>
-        <button class="nav-btn" onclick="showCategory('tabs-cat', this)">
-            <span class="tr">Özellikler</span><span class="en">Features</span><span class="ru">Функции</span><span class="zh">特性</span>
-        </button>
-        <button class="nav-btn" onclick="showCategory('details-cat', this)">
-            <span class="tr">Detaylar</span><span class="en">Details</span><span class="ru">Детали</span><span class="zh">详情</span>
-        </button>
-        <button class="nav-btn" onclick="showCategory('install-cat', this)">
-            <span class="tr">Kurulum</span><span class="en">Installation</span><span class="ru">Установка</span><span class="zh">安装</span>
-        </button>
-        <button class="nav-btn" onclick="showCategory('sss-cat', this)">
-            <span class="tr">S.S.S</span><span class="en">FAQ</span><span class="ru">ЧАВО</span><span class="zh">常见问题</span>
-        </button>
+      <div id="tab-resources" class="tab-content active">
+        <div class="screenshot-card">
+          <img src="App/TR/1.png" alt="Kaynaklar TR" id="img-res-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_res_title">Kaynak Takibi</h4>
+            <p data-i18n="sc_res_desc">Tier ve enchant bazlı filtreleme, orijinal ikonlar, doluluk çubukları.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-mobs" class="tab-content">
+        <div class="screenshot-card">
+          <img src="App/TR/2.png" alt="Mobs" id="img-mobs-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_mobs_title">Mobs & Mist</h4>
+            <p data-i18n="sc_mobs_desc">Özel yaratıklar, sisler ve kara liste yönetimi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-players" class="tab-content">
+        <div class="screenshot-card">
+          <img src="App/TR/3.png" alt="Oyuncular" id="img-players-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_players_title">Oyuncu Takibi</h4>
+            <p data-i18n="sc_players_desc">Düşman IP'leri, ekipman ve whitelist yönetimi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-device" class="tab-content">
+        <div class="screenshot-card">
+          <img src="App/TR/7.png" alt="Device" id="img-device-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_device_title">Ağ Adaptörü</h4>
+            <p data-i18n="sc_device_desc">VPN/hızlandırıcı kullanıcıları için akıllı adaptör seçimi ve tanılama.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-config" class="tab-content">
+        <div class="screenshot-card">
+          <img src="App/TR/4.png" alt="Config" id="img-config-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_config_title">Config & Profiller</h4>
+            <p data-i18n="sc_config_desc">Profillerinizi kaydedin ve tek tıkla yükleyin.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-devtools" class="tab-content">
+        <div class="screenshot-card">
+          <img src="App/TR/5.png" alt="DevTools" id="img-dev-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_dev_title">DevTools & Parser</h4>
+            <p data-i18n="sc_dev_desc">Ham paket analizi, simülatör ve port tarayıcısı.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-settings" class="tab-content">
+        <div class="screenshot-card">
+          <img src="App/TR/6.png" alt="Settings" id="img-settings-tr">
+          <div class="screenshot-card-body">
+            <h4 data-i18n="sc_settings_title">Ayarlar</h4>
+            <p data-i18n="sc_settings_desc">Kısayollar, zoom, harita ayarları, OBS bypass ve tema seçimi.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" class="install-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-i18n="sec_install_label">Başlangıç</div>
+      <h2 class="section-title" data-i18n="sec_install_title">Kurulum <span>Adımları</span></h2>
+      <p class="section-desc" data-i18n="sec_install_desc">3 basit adımda Nightwatch'ı çalıştırın.</p>
     </div>
 
-    <div id="sub-tabs-container" class="sub-tabs">
-        <button class="sub-btn active" onclick="showSubTab('res')">
-            <span class="tr">Kaynaklar</span><span class="en">Resources</span><span class="ru">Ресурсы</span><span class="zh">资源</span>
-        </button>
-        <button class="sub-btn" onclick="showSubTab('mobs')">
-            <span class="tr">Mobs/Mist</span><span class="en">Mobs/Mist</span><span class="ru">Мобы/Мгла</span><span class="zh">怪物/迷雾</span>
-        </button>
-        <button class="sub-btn" onclick="showSubTab('players')">
-            <span class="tr">Oyuncular</span><span class="en">Players</span><span class="ru">Игроки</span><span class="zh">玩家</span>
-        </button>
-        <button class="sub-btn" onclick="showSubTab('device-tab')">
-            <span class="tr">Adaptör</span><span class="en">Device</span><span class="ru">Адаптер</span><span class="zh">设备</span>
-        </button>
-        <button class="sub-btn" onclick="showSubTab('config')">
-            <span class="tr">Config</span><span class="en">Config</span><span class="ru">Конфиг</span><span class="zh">配置</span>
-        </button>
-        <button class="sub-btn" onclick="showSubTab('devtools')">
-            <span class="tr">DevTools</span><span class="en">DevTools</span><span class="ru">Инструменты</span><span class="zh">开发者工具</span>
-        </button>
-        <button class="sub-btn" onclick="showSubTab('settings')">
-            <span class="tr">Ayarlar</span><span class="en">Settings</span><span class="ru">Настройки</span><span class="zh">设置</span>
-        </button>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4 data-i18n="step1_title">Npcap Sürücüsünü İndirin</h4>
+          <p data-i18n="step1_desc">Ağ paketlerini okuyabilmek için <a href="https://npcap.com/#download" target="_blank" style="color:var(--cyan)">npcap.com</a> adresinden Npcap sürücüsünü indirin ve kurun.</p>
+        </div>
+        <span class="step-pill pill-req" data-i18n="pill_req">Zorunlu</span>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4 data-i18n="step2_title">Nightwatch'ı Yönetici Olarak Çalıştırın</h4>
+          <p data-i18n="step2_desc">Nightwatch.exe dosyasına sağ tıklayın ve "Yönetici olarak çalıştır" seçeneğini seçin. Ağ paketlerine erişim için gereklidir.</p>
+        </div>
+        <span class="step-pill pill-req" data-i18n="pill_req">Zorunlu</span>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4 data-i18n="step3_title">Ağ Kartını Seçin & Yeniden Başlatın</h4>
+          <p data-i18n="step3_desc">Device sekmesinden aktif internet ağ kartınızı (veya VPN sanal kartınızı) seçin ve programı yeniden başlatın.</p>
+        </div>
+        <span class="step-pill pill-opt" data-i18n="pill_vpn">VPN Kullanıcıları</span>
+      </div>
     </div>
 
-    <div class="content-container">
-        
-        <div id="overview" class="section-content active">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Nightwatch Nedir?</h2><h2 class="en">What is Nightwatch?</h2><h2 class="ru">Что такое Nightwatch?</h2><h2 class="zh">什么是 Nightwatch？</h2>
-                    
-                    <p class="tr">Nightwatch, Albion Online için geliştirilmiş harici bir ağ paketi okuyucusudur (Packet Sniffer). Oyun dosyalarına veya belleğine müdahale etmez, sadece gelen trafiği analiz eder.</p>
-                    <p class="en">Nightwatch is an external packet sniffer for Albion Online. It analyzes network traffic without modifying game files or RAM memory.</p>
-                    <p class="ru">Nightwatch — это внешний сниффер пакетов для Albion Online. Он анализирует сетевой трафик без изменения файлов игры или оперативной памяти.</p>
-                    <p class="zh">Nightwatch 是 Albion Online 的外部封包嗅探器。它分析网络流量而不修改游戏文件或 RAM 内存。</p>
-                    
-                    <ul class="tr">
-                        <li><strong>Harici Çalışır:</strong> Bellek okuma veya kod enjekte etme yapmaz.</li>
-                        <li><strong>Hafif:</strong> FPS düşürmez, arka planda sessizce çalışır.</li>
-                    </ul>
-                    <ul class="en">
-                        <li><strong>Purely External:</strong> No memory reading or code injection.</li>
-                        <li><strong>Lightweight:</strong> Zero FPS impact, runs silently.</li>
-                    </ul>
-                    <ul class="ru">
-                        <li><strong>Полностью внешний:</strong> Не читает память и не внедряет код.</li>
-                        <li><strong>Легкий:</strong> Не снижает FPS, работает тихо в фоновом режиме.</li>
-                    </ul>
-                    <ul class="zh">
-                        <li><strong>完全外部：</strong> 不读取内存或注入代码。</li>
-                        <li><strong>轻量级：</strong> 零 FPS 影响，后台静默运行。</li>
-                    </ul>
-                </div>
-                <img src="App/Nightwatch.png" style="width: 150px; margin: auto; filter: drop-shadow(0 0 10px var(--accent));">
-            </div>
-        </div>
+    <div class="notice reveal" style="margin-top:2rem">
+      <strong data-i18n="notice_title">💡 İpucu:</strong>
+      <span data-i18n="notice_desc"> VPN veya hızlandırıcı kullanıyorsanız, Device sekmesindeki "Ağları Test Et" butonuna basarak hangi adaptörün Albion trafiği aldığını otomatik tespit edebilirsiniz.</span>
+    </div>
+  </div>
+</section>
 
-        <div id="details-cat" class="section-content">
-            <h2 class="tr">Uygulama Detayları ve Arayüz</h2><h2 class="en">Application Details & UI</h2><h2 class="ru">Детали приложения и интерфейс</h2><h2 class="zh">应用程序详情与界面</h2>
-            <div class="grid-info">
-                <div>
-                    <h3 class="tr">Gelişmiş Haritalama</h3><h3 class="en">Advanced Mapping</h3><h3 class="ru">Продвинутая картография</h3><h3 class="zh">高级地图</h3>
-                    <p class="tr">Yüksek çözünürlüklü radar görünümü ile çevrenizdeki her şeyi anlık olarak analiz edin.</p>
-                    <p class="en">Analyze everything around you instantly with a high-resolution radar view.</p>
-                    <p class="ru">Мгновенно анализируйте всё вокруг с помощью радара высокого разрешения.</p>
-                    <p class="zh">使用高分辨率雷达视图即时分析您周围的一切。</p>
-                </div>
-                <img src="App/TR/Detail1.png" class="app-img tr">
-                <img src="App/EN/Detail1.png" class="app-img en">
-                <img src="App/RU/Detail1.png" class="app-img ru">
-                <img src="App/ZH/Detail1.png" class="app-img zh">
-            </div>
-            <div class="grid-info">
-                <img src="App/TR/Detail2.png" class="app-img tr">
-                <img src="App/EN/Detail2.png" class="app-img en">
-                <img src="App/RU/Detail2.png" class="app-img ru">
-                <img src="App/ZH/Detail2.png" class="app-img zh">
-                <div>
-                    <h3 class="tr">Hızlı Erişim Menüsü</h3><h3 class="en">Quick Access Menu</h3><h3 class="ru">Меню быстрого доступа</h3><h3 class="zh">快速访问菜单</h3>
-                    <p class="tr">Oyun sırasında ayarlarınızı değiştirmek için optimize edilmiş Sidebar tasarımı.</p>
-                    <p class="en">Optimized Sidebar design to change your settings during gameplay.</p>
-                    <p class="ru">Оптимизированный дизайн боковой панели для изменения настроек во время игры.</p>
-                    <p class="zh">优化的侧边栏设计，可在游戏过程中更改设置。</p>
-                </div>
-            </div>
-        </div>
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title" data-i18n="sec_faq_title">Sıkça <span>Sorulan Sorular</span></h2>
+    </div>
+    <div class="faq-list reveal">
 
-        <div id="install-cat" class="section-content">
-            <h2 class="tr">Kurulum Adımları</h2><h2 class="en">Installation Steps</h2><h2 class="ru">Инструкция по установке</h2><h2 class="zh">安装步骤</h2>
-            <div style="background: var(--card-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--border);">
-                <ol class="tr">
-                    <li>Öncelikle Npcap sürücüsünü bilgisayarınıza indirin ve kurun.</li>
-                    <li>Nightwatch uygulamasını <strong>Yönetici Olarak</strong> çalıştırın.</li>
-                    <li>Device sekmesinden aktif internet ağ kartınızı (veya VPN sanal kartınızı) seçip programı yeniden başlatın.</li>
-                </ol>
-                <ol class="en">
-                    <li>First, download and install the Npcap driver on your PC.</li>
-                    <li>Run the Nightwatch application as <strong>Administrator</strong>.</li>
-                    <li>Select your active network card (or VPN virtual adapter) from the Device tab and restart the program.</li>
-                </ol>
-                <ol class="ru">
-                    <li>Сначала скачайте и установите драйвер Npcap на ваш ПК.</li>
-                    <li>Запустите приложение Nightwatch от имени <strong>Администратора</strong>.</li>
-                    <li>Выберите активную сетевую карту (или виртуальный адаптер VPN) во вкладке Device и перезапустите программу.</li>
-                </ol>
-                <ol class="zh">
-                    <li>首先，在您的电脑上下载并安装 Npcap 驱动程序。</li>
-                    <li>以<strong>管理员</strong>身份运行 Nightwatch 应用程序。</li>
-                    <li>从“设备”选项卡中选择您正在使用的网卡（或 VPN 虚拟适配器）并重新启动程序。</li>
-                </ol>
-            </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq1_q">Nightwatch güvenli mi? Ban yer miyim?</span>
+          <span class="arrow">▼</span>
         </div>
+        <div class="faq-a" data-i18n="faq1_a">Nightwatch tamamen harici bir araçtır. Oyunun belleğine, dosyalarına veya kayıt defterine müdahale etmez. Sadece ağ trafiğini pasif olarak okur. Herhangi bir anti-cheat sistemi ağ paketleri okuma işlemini algılamamaktadır. Ancak her türlü yazılım kullanımı kendi sorumluluğunuzdadır.</div>
+      </div>
 
-        <div id="res" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Kaynak Takibi</h2><h2 class="en">Resource Tracking</h2><h2 class="ru">Отслеживание ресурсов</h2><h2 class="zh">资源追踪</h2>
-                    <p class="tr">Orijinal ikonlarla tüm kaynakları görün ve filtreleyin.</p>
-                    <p class="en">View and filter all resources using original game icons.</p>
-                    <p class="ru">Просматривайте и фильтруйте все ресурсы, используя оригинальные иконки.</p>
-                    <p class="zh">使用原始游戏图标查看和过滤所有资源。</p>
-                </div>
-                <img src="App/TR/1.png" class="app-img tr">
-                <img src="App/EN/1.png" class="app-img en">
-                <img src="App/RU/1.png" class="app-img ru">
-                <img src="App/ZH/1.png" class="app-img zh">
-            </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq2_q">VPN veya oyun hızlandırıcı kullanıyorum, çalışır mı?</span>
+          <span class="arrow">▼</span>
         </div>
+        <div class="faq-a" data-i18n="faq2_a">Evet, çalışır. Device sekmesindeki "Ağları Test Et" butonuna basın. Albion trafiğini yakalayan adaptörü [YES] olarak göreceksiniz. O adaptörü seçip programı yeniden başlatın.</div>
+      </div>
 
-        <div id="mobs" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Mobs / Mist</h2><h2 class="en">Mobs / Mist</h2><h2 class="ru">Мобы / Мгла</h2><h2 class="zh">怪物 / 迷雾</h2>
-                    <p class="tr">Özel yaratıkları ve sisleri kaçırmayın. İstemediğiniz mobları gizleyin.</p>
-                    <p class="en">Never miss special mobs and Mists. Hide unwanted creatures.</p>
-                    <p class="ru">Никогда не пропускайте особых мобов и Мглу. Скрывайте ненужных существ.</p>
-                    <p class="zh">永远不要错过特殊的怪物和迷雾。隐藏不需要的生物。</p>
-                </div>
-                <img src="App/TR/2.png" class="app-img tr">
-                <img src="App/EN/2.png" class="app-img en">
-                <img src="App/RU/2.png" class="app-img ru">
-                <img src="App/ZH/2.png" class="app-img zh">
-            </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq3_q">Radar hiçbir şey göstermiyor, neden?</span>
+          <span class="arrow">▼</span>
         </div>
+        <div class="faq-a" data-i18n="faq3_a">1) Npcap kurulu olduğundan emin olun. 2) Programı yönetici olarak çalıştırın. 3) Device sekmesinden doğru ağ kartını seçin ve programı yeniden başlatın. 4) Albion Online'a girin ve haritada hareket edin — veriler otomatik yüklenecektir.</div>
+      </div>
 
-        <div id="players" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Oyuncular</h2><h2 class="en">Players</h2><h2 class="ru">Игроки</h2><h2 class="zh">玩家</h2>
-                    <p class="tr">Düşman isimleri, mesafeleri ve IP güçlerini anlık olarak takip edin.</p>
-                    <p class="en">Instantly track enemy names, distances, and IP powers.</p>
-                    <p class="ru">Мгновенно отслеживайте имена врагов, дистанцию и силу IP.</p>
-                    <p class="zh">实时追踪敌人的名字、距离和 IP 强度。</p>
-                </div>
-                <img src="App/TR/3.png" class="app-img tr">
-                <img src="App/EN/3.png" class="app-img en">
-                <img src="App/RU/3.png" class="app-img ru">
-                <img src="App/ZH/3.png" class="app-img zh">
-            </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq4_q">Oyun güncellenince radar bozulur mu?</span>
+          <span class="arrow">▼</span>
         </div>
+        <div class="faq-a" data-i18n="faq4_a">Albion Online büyük güncelleme yaptığında Photon protokolü veya paket yapıları değişebilir. Bu durumda Nightwatch yeni sürüm yayınlar. GitHub sayfasını takip etmeniz önerilir.</div>
+      </div>
 
-        <div id="device-tab" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Ağ Adaptörü Ayarları</h2><h2 class="en">Network Device Settings</h2><h2 class="ru">Настройки сетевого адаптера</h2><h2 class="zh">网络适配器设置</h2>
-                    <p class="tr">VPN veya hızlandırıcı kullanıyorsanız, doğru internet kartını seçmek için bu paneli kullanın. Ağ Tanılama Aracı ile veri akışını test edin.</p>
-                    <p class="en">Use this panel to select the correct network card if using VPN or boosters. Test traffic with the Diagnostic tool.</p>
-                    <p class="ru">Используйте эту панель для выбора правильной сетевой карты, если вы используете VPN. Тестируйте трафик с помощью инструмента диагностики.</p>
-                    <p class="zh">如果使用 VPN 或加速器，请使用此面板选择正确的网卡。使用诊断工具测试流量。</p>
-                </div>
-                <img src="App/TR/7.png" class="app-img tr">
-                <img src="App/EN/7.png" class="app-img en">
-                <img src="App/RU/7.png" class="app-img ru">
-                <img src="App/ZH/7.png" class="app-img zh">
-            </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq5_q">FPS düşüyor mu?</span>
+          <span class="arrow">▼</span>
         </div>
+        <div class="faq-a" data-i18n="faq5_a">Hayır. Nightwatch ayrı bir işlem olarak çalışır ve oyunun render pipeline'ına hiç dokunmaz. CPU kullanımı minimumdur.</div>
+      </div>
 
-        <div id="config" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Config</h2><h2 class="en">Config</h2><h2 class="ru">Конфиг</h2><h2 class="zh">配置</h2>
-                    <p class="tr">Profillerinizi kaydedin ve dilediğiniz zaman tek tıkla yükleyin.</p>
-                    <p class="en">Create, save, and load your custom profiles with a single click.</p>
-                    <p class="ru">Создавайте, сохраняйте и загружайте свои профили одним щелчком мыши.</p>
-                    <p class="zh">一键创建、保存和加载您的自定义配置文件。</p>
-                </div>
-                <img src="App/TR/4.png" class="app-img tr">
-                <img src="App/EN/4.png" class="app-img en">
-                <img src="App/RU/4.png" class="app-img ru">
-                <img src="App/ZH/4.png" class="app-img zh">
-            </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq6_q">OBS'de radar görünüyor, nasıl gizlerim?</span>
+          <span class="arrow">▼</span>
         </div>
+        <div class="faq-a" data-i18n="faq6_a">Ayarlar sekmesinden "OBS Bypass (Streamer Modu)" seçeneğini açın. Bu, Windows'un ekran yakalama mekanizmasını kullanarak radarı OBS ve benzeri yazılımlardan gizler.</div>
+      </div>
 
-        <div id="devtools" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">DevTools</h2><h2 class="en">DevTools</h2><h2 class="ru">Инструменты</h2><h2 class="zh">开发者工具</h2>
-                    <p class="tr">Simülasyon ve veri analizi araçları ile radarın sınırlarını test edin.</p>
-                    <p class="en">Test the limits of the radar with simulation and data analysis tools.</p>
-                    <p class="ru">Проверьте возможности радара с помощью инструментов симуляции и анализа данных.</p>
-                    <p class="zh">使用模拟和数据分析工具测试雷达的极限。</p>
-                </div>
-                <img src="App/TR/5.png" class="app-img tr">
-                <img src="App/EN/5.png" class="app-img en">
-                <img src="App/RU/5.png" class="app-img ru">
-                <img src="App/ZH/5.png" class="app-img zh">
-            </div>
-        </div>
+    </div>
+  </div>
+</section>
 
-        <div id="settings" class="section-content tab-item">
-            <div class="grid-info">
-                <div>
-                    <h2 class="tr">Ayarlar</h2><h2 class="en">Settings</h2><h2 class="ru">Настройки</h2><h2 class="zh">设置</h2>
-                    <p class="tr">Kısayollar, boyutlandırma seçenekleri ve OBS koruması (Streamer Modu).</p>
-                    <p class="en">Hotkeys, sizing options, and OBS protection (Streamer Mode).</p>
-                    <p class="ru">Горячие клавиши, параметры изменения размера и защита OBS (Режим стримера).</p>
-                    <p class="zh">快捷键、调整大小选项和 OBS 保护（主播模式）。</p>
-                </div>
-                <img src="App/TR/6.png" class="app-img tr">
-                <img src="App/EN/6.png" class="app-img en">
-                <img src="App/RU/6.png" class="app-img ru">
-                <img src="App/ZH/6.png" class="app-img zh">
-            </div>
-        </div>
-
-        <div id="sss-cat" class="section-content">
-            <h2 class="tr">Sıkça Sorulan Sorular</h2><h2 class="en">Frequently Asked Questions</h2><h2 class="ru">ЧАВО (FAQ)</h2><h2 class="zh">常见问题 (FAQ)</h2>
-            <div style="background: var(--card-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--border);">
-                <p class="tr">Bu bölüm yakında güncellenecektir.</p>
-                <p class="en">This section will be updated soon.</p>
-                <p class="ru">Этот раздел будет обновлен в ближайшее время.</p>
-                <p class="zh">该章节即将更新。</p>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 50px;">
-            <a href="#" class="discord-link">💬 Discord: Jung1330</a>
-        </div>
+<!-- DOWNLOAD -->
+<section id="download" class="download-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-i18n="sec_dl_label">Ücretsiz</div>
+      <h2 class="section-title" data-i18n="sec_dl_title">İndir & <span>Başla</span></h2>
     </div>
 
-    <script>
-        function setLang(lang) {
-            document.querySelectorAll('.tr, .en, .ru, .zh').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.' + lang).forEach(el => {
-                if(el.tagName === 'SPAN' || el.tagName === 'A') el.style.display = 'inline-block';
-                else if(el.tagName === 'IMG') el.style.display = 'block';
-                else el.style.display = 'block'; 
-            });
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('flag-' + lang).classList.add('active');
-        }
+    <div class="download-box reveal">
+      <div class="download-version" data-i18n="dl_version">Sürüm 2 — Windows x64</div>
+      <div class="download-title">Nightwatch.exe</div>
+      <div class="download-req">
+        <span data-i18n="dl_req">Gereksinim:</span>
+        <a href="https://npcap.com/#download" target="_blank">Npcap</a> &nbsp;|&nbsp;
+        <span data-i18n="dl_os">Windows 10/11 x64</span> &nbsp;|&nbsp;
+        <span data-i18n="dl_net">.NET 8 Runtime</span>
+      </div>
+      <div class="download-btns">
+        <a href="https://github.com/Jung1330/Nightwatch-Radar/releases/latest" target="_blank" class="btn-primary">
+          ⬇ <span data-i18n="btn_dl_gh">GitHub'dan İndir</span>
+        </a>
+        <a href="https://npcap.com/#download" target="_blank" class="btn-secondary">
+          🔗 <span data-i18n="btn_dl_npcap">Npcap İndir</span>
+        </a>
+      </div>
+    </div>
 
-        function showCategory(id, btn) {
-            document.querySelectorAll('.section-content, .tab-item').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const subTabs = document.getElementById('sub-tabs-container');
-            if(id === 'tabs-cat') {
-                subTabs.classList.add('visible');
-                showSubTab('res');
-            } else {
-                subTabs.classList.remove('visible');
-                document.getElementById(id).classList.add('active');
-            }
-        }
+    <div class="notice reveal" style="max-width:600px; margin: 2rem auto 0;">
+      <strong data-i18n="dl_notice_title">⚠️ Sorumluluk Reddi:</strong>
+      <span data-i18n="dl_notice_desc"> Nightwatch, Albion Online'ın resmi bir aracı değildir. Kullanım kendi sorumluluğunuzdadır. Discord: Jung1330</span>
+    </div>
+  </div>
+</section>
 
-        function showSubTab(id) {
-            document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if (event && event.currentTarget && event.currentTarget.classList.contains('sub-btn')) {
-                event.currentTarget.classList.add('active');
-            } else {
-                const targetBtn = document.querySelector(`.sub-btn[onclick*="${id}"]`);
-                if(targetBtn) targetBtn.classList.add('active');
-            }
-        }
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NIGHT<span>WATCH</span></div>
+  <p class="footer-sub" data-i18n="footer_sub">Albion Online Network Radar — by Jung1330</p>
+  <div class="footer-links">
+    <a href="https://github.com/Jung1330/Nightwatch-Radar" target="_blank">GitHub</a>
+    <a href="#features" data-i18n="nav_features">Özellikler</a>
+    <a href="#install" data-i18n="nav_install">Kurulum</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <p class="footer-copy" data-i18n="footer_copy">© 2026 Jung1330 — MIT License</p>
+</footer>
 
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("imgFull");
-        const closeBtn = document.getElementsByClassName("close-modal")[0];
-        document.addEventListener('click', function (e) {
-            if (e.target.classList.contains('app-img')) {
-                modal.style.display = "block";
-                modalImg.src = e.target.src;
-            }
-        });
-        closeBtn.onclick = function() { modal.style.display = "none"; }
-        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
-        
-        window.onload = function() { setLang('tr'); };
-    </script>
+<script>
+// ── I18N DATA ──
+const i18n = {
+  tr: {
+    nav_features:'Özellikler', nav_screens:'Ekranlar', nav_install:'Kurulum', nav_faq:'SSS', nav_download:'İndir',
+    hero_eyebrow:'Albion Online — Network Radar',
+    hero_sub:'Oyunun belleğine dokunmadan, sadece ağ paketlerini okuyarak çalışan gelişmiş bir radar ve overlay sistemi.',
+    badge_external:'Harici Çalışır', badge_fps:'Sıfır FPS Etkisi', badge_realtime:'Gerçek Zamanlı', badge_multilang:'4 Dil', badge_vpn:'VPN Desteği',
+    btn_download:'Hemen İndir', btn_features:'Özellikleri Gör',
+    stat_lang:'Dil', stat_events:'Oyun Olayı', stat_ops:'Operasyon Kodu', stat_version:'Güncel Sürüm',
+    sec_features_label:'Özellikler', sec_features_title:'Tam <span>Savaş Görüşü</span>',
+    sec_features_desc:'Nightwatch, rakiplerinizi görmenizi sağlayan kapsamlı araçlar sunar. Radar, ESP, kaynak takibi ve daha fazlası.',
+    f1_title:'Gelişmiş Oyuncu ESP', f1_desc:'Yakındaki düşmanların gerçek ortalama IP\'sini, tam ekipman listesini ve HP durumunu anlık olarak takip edin.',
+    f2_title:'Ekipman Kartları', f2_desc:'En tehlikeli 5 düşmanın ekipmanlarını gerçek ikonlarıyla kart olarak ekranda görün. Hafıza sistemi sayesinde kısa süreliğine ayrılan düşmanlar da takip edilir.',
+    // f3 (Danger Compass) removed
+    f4_title:'Kaynak Takibi', f4_desc:'Tier ve Büyü seviyesine göre gelişmiş filtreleme. Orijinal oyun ikonları ile kaynakları görselleştirin.',
+    f5_title:'VPN & Adaptör Desteği', f5_desc:'VPN, hızlandırıcı veya farklı ağ kartı kullananlar için gelişmiş adaptör seçim paneli. Ağ Tanılama Aracı ile veri akışını saniyeler içinde bulun.',
+    f6_title:'Harita Arkaplanı', f6_desc:'Gerçek Albion haritaları radar üzerinde dinamik olarak gösterilir. Şeffaflık ve ölçek ayarları ile tam kontrol.',
+    f7_title:'Lazer Tracker Sistemi', f7_desc:'Takip listenizdeki mob ve kaynakları ekranda lazer çizgisiyle işaretleyin. Özelleştirilebilir renk ve kalibrasyon.',
+    // f8 (Player Trails & Waypoint) removed
+    f9_title:'OBS Bypass (Streamer Modu)', f9_desc:'Yayın yaparken radarın OBS veya ekran kaydı yazılımları tarafından görünmesini engelleyen yerleşik Stream Modu.',
+    f10_title:'Config & Profil Sistemi', f10_desc:'Farklı senaryolar için birden fazla profil kaydedin. Açılışta otomatik config uygulanır.',
+    f11_title:'DevTools & Parser', f11_desc:'Ham ağ paketi analizi, mob simülatörü, oyuncu decode araçları ve UDP port tarayıcısı.',
+    f12_title:'4 Dil Desteği', f12_desc:'Türkçe, İngilizce, Rusça ve Çince dil desteği. Mob veritabanı ve arayüz dile göre dinamik olarak değişir.',
+    sec_screens_label:'Arayüz', sec_screens_title:'Sekmeler & <span>Ekranlar</span>',
+    tab_res:'Kaynaklar', tab_mobs:'Mobs/Mist', tab_players:'Oyuncular', tab_device:'Adaptör', tab_config:'Config', tab_dev:'DevTools', tab_settings:'Ayarlar',
+    sc_res_title:'Kaynak Takibi', sc_res_desc:'Tier ve enchant bazlı filtreleme, orijinal ikonlar, doluluk çubukları.',
+    sc_mobs_title:'Mobs & Mist', sc_mobs_desc:'Özel yaratıklar, sisleri ve kara liste yönetimi.',
+    sc_players_title:'Oyuncu Takibi', sc_players_desc:'Düşman IP\'leri, ekipman ve whitelist yönetimi.',
+    sc_device_title:'Ağ Adaptörü', sc_device_desc:'VPN/hızlandırıcı kullanıcıları için akıllı adaptör seçimi ve tanılama.',
+    sc_config_title:'Config & Profiller', sc_config_desc:'Profillerinizi kaydedin ve tek tıkla yükleyin.',
+    sc_dev_title:'DevTools & Parser', sc_dev_desc:'Ham paket analizi, simülatör ve port tarayıcısı.',
+    sc_settings_title:'Ayarlar', sc_settings_desc:'Kısayollar, zoom, harita ayarları, OBS bypass ve tema seçimi.',
+    sec_install_label:'Başlangıç', sec_install_title:'Kurulum <span>Adımları</span>',
+    sec_install_desc:'3 basit adımda Nightwatch\'ı çalıştırın.',
+    step1_title:'Npcap Sürücüsünü İndirin', step1_desc:'Ağ paketlerini okuyabilmek için <a href="https://npcap.com/#download" target="_blank" style="color:var(--cyan)">npcap.com</a> adresinden Npcap sürücüsünü indirin ve kurun.',
+    step2_title:'Nightwatch\'ı Yönetici Olarak Çalıştırın', step2_desc:'Nightwatch.exe dosyasına sağ tıklayın ve "Yönetici olarak çalıştır" seçeneğini seçin.',
+    step3_title:'Ağ Kartını Seçin & Yeniden Başlatın', step3_desc:'Device sekmesinden aktif internet ağ kartınızı (veya VPN sanal kartınızı) seçin ve programı yeniden başlatın.',
+    pill_req:'Zorunlu', pill_vpn:'VPN Kullanıcıları',
+    notice_title:'💡 İpucu:', notice_desc:' VPN veya hızlandırıcı kullanıyorsanız, Device sekmesindeki "Ağları Test Et" butonuna basarak hangi adaptörün Albion trafiği aldığını otomatik tespit edebilirsiniz.',
+    sec_faq_title:'Sıkça <span>Sorulan Sorular</span>',
+    faq1_q:'Nightwatch güvenli mi? Ban yer miyim?', faq1_a:'Nightwatch tamamen harici bir araçtır. Oyunun belleğine, dosyalarına veya kayıt defterine müdahale etmez. Sadece ağ trafiğini pasif olarak okur. Ancak her türlü yazılım kullanımı kendi sorumluluğunuzdadır.',
+    faq2_q:'VPN veya oyun hızlandırıcı kullanıyorum, çalışır mı?', faq2_a:'Evet, çalışır. Device sekmesindeki "Ağları Test Et" butonuna basın. Albion trafiğini yakalayan adaptörü [YES] olarak göreceksiniz. O adaptörü seçip programı yeniden başlatın.',
+    faq3_q:'Radar hiçbir şey göstermiyor, neden?', faq3_a:'1) Npcap kurulu olduğundan emin olun. 2) Programı yönetici olarak çalıştırın. 3) Device sekmesinden doğru ağ kartını seçin ve yeniden başlatın. 4) Albion\'a girin ve haritada hareket edin.',
+    faq4_q:'Oyun güncellenince radar bozulur mu?', faq4_a:'Albion Online büyük güncelleme yaptığında paket yapıları değişebilir. Bu durumda Nightwatch yeni sürüm yayınlar. GitHub sayfasını takip edin.',
+    faq5_q:'FPS düşüyor mu?', faq5_a:'Hayır. Nightwatch ayrı bir işlem olarak çalışır ve oyunun render pipeline\'ına hiç dokunmaz.',
+    faq6_q:'OBS\'de radar görünüyor, nasıl gizlerim?', faq6_a:'Ayarlar sekmesinden "OBS Bypass (Streamer Modu)" seçeneğini açın. Bu, radarı OBS ve benzeri yazılımlardan gizler.',
+    sec_dl_label:'Ücretsiz', sec_dl_title:'İndir & <span>Başla</span>',
+    dl_version:'Sürüm 2 — Windows x64', dl_req:'Gereksinim:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8 Runtime',
+    btn_dl_gh:'GitHub\'dan İndir', btn_dl_npcap:'Npcap İndir',
+    dl_notice_title:'⚠️ Sorumluluk Reddi:', dl_notice_desc:' Nightwatch, Albion Online\'ın resmi bir aracı değildir. Kullanım kendi sorumluluğunuzdadır. Discord: Jung1330',
+    footer_sub:'Albion Online Network Radar — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+  },
+  en: {
+    nav_features:'Features', nav_screens:'Screenshots', nav_install:'Installation', nav_faq:'FAQ', nav_download:'Download',
+    hero_eyebrow:'Albion Online — Network Radar',
+    hero_sub:'An advanced radar and overlay system that works by reading only network packets without touching game memory.',
+    badge_external:'Purely External', badge_fps:'Zero FPS Impact', badge_realtime:'Real-Time', badge_multilang:'4 Languages', badge_vpn:'VPN Support',
+    btn_download:'Download Now', btn_features:'See Features',
+    stat_lang:'Languages', stat_events:'Game Events', stat_ops:'Operation Codes', stat_version:'Current Version',
+    sec_features_label:'Features', sec_features_title:'Full <span>Battle Vision</span>',
+    sec_features_desc:'Nightwatch provides comprehensive tools to see your enemies. Radar, ESP, resource tracking and more.',
+    f1_title:'Advanced Player ESP', f1_desc:'Instantly track nearby enemies\' real average IP, full equipment list, and HP status.',
+    f2_title:'Equipment Cards', f2_desc:'See up to 5 enemies\' equipment as cards with real icons on screen. Memory system keeps tracking briefly absent enemies.',
+    // f3 (Danger Compass) removed
+    f4_title:'Resource Tracking', f4_desc:'Advanced filtering by Tier and Enchantment level. Visualize resources with original game icons.',
+    f5_title:'VPN & Adapter Support', f5_desc:'Advanced adapter selection panel for VPN and accelerator users. Find the right adapter in seconds with the Diagnostic Tool.',
+    f6_title:'Map Background', f6_desc:'Real Albion maps displayed dynamically on the radar. Full control with opacity and scale settings.',
+    f7_title:'Laser Tracker System', f7_desc:'Mark tracked mobs and resources with laser lines on screen. Customizable color and calibration.',
+    // f8 (Player Trails & Waypoint) removed
+    f9_title:'OBS Bypass (Streamer Mode)', f9_desc:'Built-in Stream Mode that prevents the radar from being captured by OBS or screen recording software.',
+    f10_title:'Config & Profile System', f10_desc:'Save multiple profiles for different scenarios. Auto-load config on startup.',
+    f11_title:'DevTools & Parser', f11_desc:'Raw network packet analysis, mob simulator, player decode tools and UDP port scanner.',
+    f12_title:'4 Language Support', f12_desc:'Turkish, English, Russian and Chinese language support. Mob database and UI change dynamically per language.',
+    sec_screens_label:'Interface', sec_screens_title:'Tabs & <span>Screenshots</span>',
+    tab_res:'Resources', tab_mobs:'Mobs/Mist', tab_players:'Players', tab_device:'Device', tab_config:'Config', tab_dev:'DevTools', tab_settings:'Settings',
+    sc_res_title:'Resource Tracking', sc_res_desc:'Tier and enchant based filtering, original icons, fill bars.',
+    sc_mobs_title:'Mobs & Mist', sc_mobs_desc:'Special creatures, mists and blacklist management.',
+    sc_players_title:'Player Tracking', sc_players_desc:'Enemy IP, equipment and whitelist management.',
+    sc_device_title:'Network Adapter', sc_device_desc:'Smart adapter selection and diagnostics for VPN/accelerator users.',
+    sc_config_title:'Config & Profiles', sc_config_desc:'Save your profiles and load with one click.',
+    sc_dev_title:'DevTools & Parser', sc_dev_desc:'Raw packet analysis, simulator and port scanner.',
+    sc_settings_title:'Settings', sc_settings_desc:'Hotkeys, zoom, map settings, OBS bypass and theme selection.',
+    sec_install_label:'Getting Started', sec_install_title:'Installation <span>Steps</span>',
+    sec_install_desc:'Get Nightwatch running in 3 simple steps.',
+    step1_title:'Download Npcap Driver', step1_desc:'Download and install the Npcap driver from <a href="https://npcap.com/#download" target="_blank" style="color:var(--cyan)">npcap.com</a> to read network packets.',
+    step2_title:'Run Nightwatch as Administrator', step2_desc:'Right-click Nightwatch.exe and select "Run as administrator". Required for network packet access.',
+    step3_title:'Select Network Card & Restart', step3_desc:'Select your active network card (or VPN virtual adapter) from the Device tab and restart the program.',
+    pill_req:'Required', pill_vpn:'VPN Users',
+    notice_title:'💡 Tip:', notice_desc:' If using VPN or accelerator, click the "Test Networks" button in the Device tab to automatically detect which adapter is receiving Albion traffic.',
+    sec_faq_title:'Frequently <span>Asked Questions</span>',
+    faq1_q:'Is Nightwatch safe? Will I get banned?', faq1_a:'Nightwatch is completely external. It does not interfere with the game\'s memory, files or registry. It only passively reads network traffic. However, use of any software is at your own risk.',
+    faq2_q:'I use VPN or a game accelerator, will it work?', faq2_a:'Yes, it works. Click "Test Networks" in the Device tab. You\'ll see the adapter capturing Albion traffic marked as [YES]. Select that adapter and restart.',
+    faq3_q:'The radar shows nothing, why?', faq3_a:'1) Make sure Npcap is installed. 2) Run the program as administrator. 3) Select the correct network card from Device tab and restart. 4) Enter Albion Online and move on the map.',
+    faq4_q:'Will the radar break after a game update?', faq4_a:'When Albion Online releases a major update, packet structures may change. Nightwatch will release an update accordingly. Follow the GitHub page.',
+    faq5_q:'Does it cause FPS drops?', faq5_a:'No. Nightwatch runs as a separate process and never touches the game\'s render pipeline.',
+    faq6_q:'The radar is visible in OBS, how do I hide it?', faq6_a:'Enable "OBS Bypass (Streamer Mode)" in the Settings tab. This hides the radar from OBS and similar software.',
+    sec_dl_label:'Free', sec_dl_title:'Download & <span>Start</span>',
+    dl_version:'Version 2 — Windows x64', dl_req:'Requirements:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8 Runtime',
+    btn_dl_gh:'Download from GitHub', btn_dl_npcap:'Download Npcap',
+    dl_notice_title:'⚠️ Disclaimer:', dl_notice_desc:' Nightwatch is not an official Albion Online tool. Use at your own risk. Discord: Jung1330',
+    footer_sub:'Albion Online Network Radar — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+  },
+  ru: {
+    nav_features:'Функции', nav_screens:'Скриншоты', nav_install:'Установка', nav_faq:'ЧАВО', nav_download:'Скачать',
+    hero_eyebrow:'Albion Online — Сетевой Радар',
+    hero_sub:'Продвинутая система радара, работающая только через чтение сетевых пакетов без доступа к памяти игры.',
+    badge_external:'Полностью внешний', badge_fps:'Ноль FPS', badge_realtime:'В реальном времени', badge_multilang:'4 языка', badge_vpn:'Поддержка VPN',
+    btn_download:'Скачать', btn_features:'Смотреть функции',
+    stat_lang:'Языки', stat_events:'Игровых событий', stat_ops:'Кодов операций', stat_version:'Текущая версия',
+    sec_features_label:'Функции', sec_features_title:'Полный <span>Обзор боя</span>',
+    sec_features_desc:'Nightwatch предоставляет комплексные инструменты для наблюдения за противниками.',
+    f1_title:'Расширенный ESP игроков', f1_desc:'Мгновенно отслеживайте реальный средний IP ближайших врагов, полный список снаряжения и HP.',
+    f2_title:'Карточки снаряжения', f2_desc:'Смотрите снаряжение 5 ближайших врагов в виде карточек с иконками. Система памяти отслеживает временно ушедших врагов.',
+    // f3 (Danger Compass) removed
+    f4_title:'Отслеживание ресурсов', f4_desc:'Расширенная фильтрация по уровню и зачарованию. Иконки из оригинальной игры.',
+    f5_title:'VPN и поддержка адаптеров', f5_desc:'Панель выбора адаптера для пользователей VPN. Найдите нужный адаптер за секунды.',
+    f6_title:'Фон карты', f6_desc:'Реальные карты Albion отображаются динамически на радаре. Настройка прозрачности и масштаба.',
+    f7_title:'Лазерный трекер', f7_desc:'Отмечайте мобов и ресурсы лазерными линиями на экране.',
+    // f8 (Player Trails & Waypoint) removed
+    f9_title:'Обход OBS (Режим стримера)', f9_desc:'Встроенный режим стримера, скрывающий радар от OBS.',
+    f10_title:'Система конфигов и профилей', f10_desc:'Сохраняйте профили для разных сценариев. Автозагрузка конфига при запуске.',
+    f11_title:'DevTools и парсер', f11_desc:'Анализ сырых пакетов, симулятор мобов, инструменты декодирования и сканер UDP.',
+    f12_title:'4 языка', f12_desc:'Поддержка турецкого, английского, русского и китайского. База мобов меняется по языку.',
+    sec_screens_label:'Интерфейс', sec_screens_title:'Вкладки & <span>Скриншоты</span>',
+    tab_res:'Ресурсы', tab_mobs:'Мобы/Мгла', tab_players:'Игроки', tab_device:'Адаптер', tab_config:'Конфиг', tab_dev:'DevTools', tab_settings:'Настройки',
+    sc_res_title:'Отслеживание ресурсов', sc_res_desc:'Фильтрация по уровню и зачарованию, иконки.',
+    sc_mobs_title:'Мобы & Мгла', sc_mobs_desc:'Особые существа и управление чёрным списком.',
+    sc_players_title:'Отслеживание игроков', sc_players_desc:'IP врагов, снаряжение и белый список.',
+    sc_device_title:'Сетевой адаптер', sc_device_desc:'Выбор адаптера и диагностика для пользователей VPN.',
+    sc_config_title:'Конфиг & Профили', sc_config_desc:'Сохраняйте профили и загружайте одним кликом.',
+    sc_dev_title:'DevTools & Парсер', sc_dev_desc:'Анализ пакетов, симулятор и сканер портов.',
+    sc_settings_title:'Настройки', sc_settings_desc:'Горячие клавиши, зум, настройки карты и режим стримера.',
+    sec_install_label:'Начало', sec_install_title:'Шаги <span>Установки</span>',
+    sec_install_desc:'Запустите Nightwatch за 3 простых шага.',
+    step1_title:'Установите драйвер Npcap', step1_desc:'Скачайте и установите Npcap с <a href="https://npcap.com/#download" target="_blank" style="color:var(--cyan)">npcap.com</a>.',
+    step2_title:'Запустите от имени администратора', step2_desc:'Щёлкните правой кнопкой мыши на Nightwatch.exe и выберите "Запуск от имени администратора".',
+    step3_title:'Выберите сетевую карту & перезапустите', step3_desc:'Выберите активную сетевую карту (или VPN-адаптер) во вкладке Device и перезапустите программу.',
+    pill_req:'Обязательно', pill_vpn:'VPN пользователи',
+    notice_title:'💡 Совет:', notice_desc:' Если вы используете VPN, нажмите "Тест сетей" во вкладке Device для автоматического обнаружения нужного адаптера.',
+    sec_faq_title:'Часто <span>Задаваемые Вопросы</span>',
+    faq1_q:'Безопасен ли Nightwatch? Забанят ли меня?', faq1_a:'Nightwatch полностью внешний. Он не взаимодействует с памятью, файлами или реестром игры. Однако использование любого ПО на ваш риск.',
+    faq2_q:'Использую VPN — работает?', faq2_a:'Да. Нажмите "Тест сетей" во вкладке Device. Адаптер с трафиком Albion будет помечен [YES]. Выберите его и перезапустите.',
+    faq3_q:'Радар ничего не показывает — почему?', faq3_a:'1) Убедитесь что Npcap установлен. 2) Запустите от администратора. 3) Выберите нужный адаптер. 4) Войдите в Albion и подвигайтесь.',
+    faq4_q:'Сломается ли радар после обновления игры?', faq4_a:'При крупных обновлениях Nightwatch выпустит обновление. Следите за GitHub.',
+    faq5_q:'Падает ли FPS?', faq5_a:'Нет. Nightwatch работает в отдельном процессе и не трогает рендер игры.',
+    faq6_q:'Радар виден в OBS — как скрыть?', faq6_a:'Включите "OBS Bypass (Режим стримера)" во вкладке Настройки.',
+    sec_dl_label:'Бесплатно', sec_dl_title:'Скачать & <span>Начать</span>',
+    dl_version:'Версия 2 — Windows x64', dl_req:'Требования:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8 Runtime',
+    btn_dl_gh:'Скачать с GitHub', btn_dl_npcap:'Скачать Npcap',
+    dl_notice_title:'⚠️ Отказ от ответственности:', dl_notice_desc:' Nightwatch не является официальным инструментом Albion Online. Используйте на свой риск. Discord: Jung1330',
+    footer_sub:'Сетевой Радар для Albion Online — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+  },
+  zh: {
+    nav_features:'功能', nav_screens:'截图', nav_install:'安装', nav_faq:'常见问题', nav_download:'下载',
+    hero_eyebrow:'Albion Online — 网络雷达',
+    hero_sub:'一个仅通过读取网络数据包而无需接触游戏内存的高级雷达与叠加系统。',
+    badge_external:'完全外部', badge_fps:'零FPS影响', badge_realtime:'实时', badge_multilang:'4种语言', badge_vpn:'VPN支持',
+    btn_download:'立即下载', btn_features:'查看功能',
+    stat_lang:'语言', stat_events:'游戏事件', stat_ops:'操作代码', stat_version:'当前版本',
+    sec_features_label:'功能', sec_features_title:'完整 <span>战斗视野</span>',
+    sec_features_desc:'Nightwatch 提供全面的工具来监视您的敌人。雷达、ESP、资源追踪等。',
+    f1_title:'高级玩家ESP', f1_desc:'实时追踪附近敌人的真实平均IP、完整装备列表和HP状态。',
+    f2_title:'装备卡片', f2_desc:'在屏幕上以卡片形式显示最多5个敌人的装备图标。记忆系统持续追踪短暂离开的敌人。',
+    // f3 (Danger Compass) removed
+    f4_title:'资源追踪', f4_desc:'按等级和附魔级别进行高级过滤。使用原始游戏图标可视化资源。',
+    f5_title:'VPN和适配器支持', f5_desc:'为VPN用户提供高级适配器选择面板。使用诊断工具在几秒内找到正确的适配器。',
+    f6_title:'地图背景', f6_desc:'真实Albion地图在雷达上动态显示。通过透明度和缩放设置完全控制。',
+    f7_title:'激光追踪系统', f7_desc:'用激光线在屏幕上标记被追踪的怪物和资源。可自定义颜色和校准。',
+    // f8 (Player Trails & Waypoint) removed
+    f9_title:'OBS绕过（主播模式）', f9_desc:'内置流模式，防止雷达被OBS或屏幕录制软件捕获。',
+    f10_title:'配置和配置文件系统', f10_desc:'为不同场景保存多个配置文件。启动时自动加载。',
+    f11_title:'开发工具和解析器', f11_desc:'原始网络数据包分析、怪物模拟器、玩家解码工具和UDP端口扫描器。',
+    f12_title:'4种语言支持', f12_desc:'支持土耳其语、英语、俄语和中文。怪物数据库和界面按语言动态变化。',
+    sec_screens_label:'界面', sec_screens_title:'标签页 & <span>截图</span>',
+    tab_res:'资源', tab_mobs:'怪物/迷雾', tab_players:'玩家', tab_device:'设备', tab_config:'配置', tab_dev:'开发工具', tab_settings:'设置',
+    sc_res_title:'资源追踪', sc_res_desc:'基于等级和附魔的过滤，原始图标，填充条。',
+    sc_mobs_title:'怪物和迷雾', sc_mobs_desc:'特殊生物、迷雾和黑名单管理。',
+    sc_players_title:'玩家追踪', sc_players_desc:'敌人IP、装备和白名单管理。',
+    sc_device_title:'网络适配器', sc_device_desc:'VPN用户的智能适配器选择和诊断。',
+    sc_config_title:'配置和配置文件', sc_config_desc:'保存配置文件，一键加载。',
+    sc_dev_title:'开发工具和解析器', sc_dev_desc:'原始数据包分析、模拟器和端口扫描器。',
+    sc_settings_title:'设置', sc_settings_desc:'快捷键、缩放、地图设置、OBS绕过和主题选择。',
+    sec_install_label:'开始', sec_install_title:'安装 <span>步骤</span>',
+    sec_install_desc:'3个简单步骤运行Nightwatch。',
+    step1_title:'下载Npcap驱动程序', step1_desc:'从 <a href="https://npcap.com/#download" target="_blank" style="color:var(--cyan)">npcap.com</a> 下载并安装Npcap驱动程序。',
+    step2_title:'以管理员身份运行Nightwatch', step2_desc:'右键点击Nightwatch.exe，选择"以管理员身份运行"。',
+    step3_title:'选择网卡并重启', step3_desc:'从设备标签页选择活动网卡（或VPN虚拟适配器）并重启程序。',
+    pill_req:'必需', pill_vpn:'VPN用户',
+    notice_title:'💡 提示:', notice_desc:' 如果使用VPN，请在设备标签页点击"测试网络"按钮自动检测接收Albion流量的适配器。',
+    sec_faq_title:'常见 <span>问题</span>',
+    faq1_q:'Nightwatch安全吗？会被封号吗？', faq1_a:'Nightwatch完全外部。它不干涉游戏内存、文件或注册表。仅被动读取网络流量。但使用任何软件均需自行承担风险。',
+    faq2_q:'我使用VPN，能工作吗？', faq2_a:'是的。在设备标签页点击"测试网络"。捕获Albion流量的适配器将标记为[YES]。选择它并重启。',
+    faq3_q:'雷达什么都不显示，为什么？', faq3_a:'1) 确保Npcap已安装。2) 以管理员身份运行。3) 在设备标签页选择正确网卡并重启。4) 进入Albion Online并在地图上移动。',
+    faq4_q:'游戏更新后雷达会损坏吗？', faq4_a:'当Albion Online进行重大更新时，Nightwatch将发布更新。请关注GitHub页面。',
+    faq5_q:'会导致FPS下降吗？', faq5_a:'不会。Nightwatch作为独立进程运行，从不接触游戏的渲染管线。',
+    faq6_q:'雷达在OBS中可见，如何隐藏？', faq6_a:'在设置标签页启用"OBS绕过（主播模式）"。',
+    sec_dl_label:'免费', sec_dl_title:'下载 & <span>开始</span>',
+    dl_version:'版本 2 — Windows x64', dl_req:'需求:', dl_os:'Windows 10/11 x64', dl_net:'.NET 8运行时',
+    btn_dl_gh:'从GitHub下载', btn_dl_npcap:'下载Npcap',
+    dl_notice_title:'⚠️ 免责声明:', dl_notice_desc:' Nightwatch不是Albion Online的官方工具。使用风险自负。Discord: Jung1330',
+    footer_sub:'Albion Online 网络雷达 — by Jung1330', footer_copy:'© 2026 Jung1330 — MIT License'
+  }
+};
+
+// Screenshot images per language
+const screenshotLangMap = { tr:'TR', en:'EN', ru:'RU', zh:'ZH' };
+const screenshotNums = { resources:'1', mobs:'2', players:'3', device:'7', config:'4', devtools:'5', settings:'6' };
+const imgMapping = {
+  resources: 'img-res-tr', mobs: 'img-mobs-tr', players: 'img-players-tr',
+  device: 'img-device-tr', config: 'img-config-tr', devtools: 'img-dev-tr', settings: 'img-settings-tr'
+};
+
+let currentLang = 'tr';
+let currentTab = 'resources';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => { if (b.textContent.trim().toLowerCase() === lang || (lang==='zh' && b.textContent.includes('中'))) b.classList.add('active'); });
+
+  const data = i18n[lang];
+  if (!data) return;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (data[key] !== undefined) el.innerHTML = data[key];
+  });
+
+  // Update screenshot images for current tab
+  updateScreenshotImage(currentTab, lang);
+}
+
+function updateScreenshotImage(tabName, lang) {
+  const id = imgMapping[tabName];
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  const langCode = screenshotLangMap[lang] || 'EN';
+  const num = screenshotNums[tabName] || '1';
+  el.src = `App/${langCode}/${num}.png`;
+}
+
+function switchTab(name) {
+  currentTab = name;
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const tab = document.getElementById('tab-' + name);
+  if (tab) tab.classList.add('active');
+  event.currentTarget.classList.add('active');
+  updateScreenshotImage(name, currentLang);
+}
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+
+// Particles
+function createParticles() {
+  const container = document.getElementById('particles');
+  const colors = ['92,40,120','118,38,160','200,168,75','0,212,255'];
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 1;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      background:rgba(${color},0.6);
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Remove empty feature cards left after removals
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.feature-card').forEach(function(el) {
+    if (!el.querySelector('h3') && !el.querySelector('p')) el.remove();
+  });
+});
+</script>
 </body>
 </html>
