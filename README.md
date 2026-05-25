@@ -55,3 +55,6 @@ It will be updated every time a new version of the game is released.
 </td>
 </tr>
 </table>
+
+Don't forget the install https://npcap.com/#download
+<img width="958" height="227" alt="image" src="https://github.com/user-attachments/assets/389a9f52-7c57-40f0-9972-ced23a3b7f2b" />
