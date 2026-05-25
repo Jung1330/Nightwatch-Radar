@@ -181,10 +181,7 @@ Raw network packet analysis, mob simulator, player decode tools and UDP port sca
 **🇹🇷 Yapılacaklar**
 
 - [ ] Kullanıcı HP gösterimi düzeltmesi
-- [ ] Zindan ve Sandık bildirimleri geliştirmesi
 - [ ] Stabilite iyileştirmeleri
-- [ ] Daha fazla harita desteği
-- [ ] Otomatik güncelleme sistemi
 
 **✅ Tamamlananlar**
 - [x] Ekipman Kartları sistemi
@@ -204,10 +201,7 @@ Raw network packet analysis, mob simulator, player decode tools and UDP port sca
 **🇬🇧 To-Do**
 
 - [ ] User HP display fix
-- [ ] Dungeon and Chest notifications improvement
 - [ ] Stability fixes
-- [ ] More map support
-- [ ] Auto-update system
 
 **✅ Completed**
 - [x] Equipment Cards system
