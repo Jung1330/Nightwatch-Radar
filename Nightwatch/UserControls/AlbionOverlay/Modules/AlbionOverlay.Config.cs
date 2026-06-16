@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -119,6 +119,7 @@ namespace Nightwatch
                     ShowDangerCompass = _showDangerCompass,
                     ShowEquipmentCards = _showEquipmentCards,
                     ResourceTrackerOnlyMode = _resourceTrackerOnlyMode,
+                    ResourceShowOnlyEnchanted = _resourceShowOnlyEnchanted,
                     EquipmentCardsMoveable = _equipmentCardsMoveable,
                     EquipmentCardsX = _equipmentCardsX,
                     EquipmentCardsY = _equipmentCardsY,
@@ -186,6 +187,7 @@ namespace Nightwatch
                 _showItemIds = cfg.ShowItemIds; _showChestIds = cfg.ShowChestIds; _enableLogging = cfg.EnableLogging; _enableSoundAlerts = cfg.EnableSoundAlerts; _selectedTheme = cfg.SelectedTheme;
                 _streamModuleEnabled = cfg.StreamModuleEnabled; _showDangerCompass = cfg.ShowDangerCompass; _showEquipmentCards = cfg.ShowEquipmentCards;
                 _resourceTrackerOnlyMode = cfg.ResourceTrackerOnlyMode;
+                _resourceShowOnlyEnchanted = cfg.ResourceShowOnlyEnchanted;
                 _equipmentCardsMoveable = cfg.EquipmentCardsMoveable;
                 _equipmentCardsX = cfg.EquipmentCardsX;
                 _equipmentCardsY = cfg.EquipmentCardsY;

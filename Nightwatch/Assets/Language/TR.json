@@ -1,4 +1,4 @@
-﻿{
+{
     "SysLoading": "[Dev] Sistem bileşenleri yükleniyor...",
     "HandlersOK": "[+] Handler'lar kayıt edildi.",
     "EventsOK": "[+] Event bağlantıları kuruldu.",
@@ -18,6 +18,11 @@
     "Tab_Players": "Oyuncular",
     "Tab_Config": "Config",
     "Tab_Settings": "Ayarlar",
+    "Log": "Odun",
+    "Ore": "Cevher",
+    "Rock": "Taş",
+    "Hide": "Deri",
+    "Fiber": "Pamuk",
     "Tab_DevTools": "Dev Tools",
     "Tab_Device": "Adaptör",
     "Res_Title": "Kaynak Görünümü",

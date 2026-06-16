@@ -62,7 +62,7 @@ public class MobMapper
                         var item = mobArray[i];
                         if (item is JsonObject obj)
                         {
-                            int typeId = obj.ContainsKey("id") ? obj["id"]!.GetValue<int>() : (i + 15);
+                            int typeId = obj.ContainsKey("id") ? obj["id"]!.GetValue<int>() : (i + 16);
                             int mobTier = obj.ContainsKey("t") ? obj["t"]!.GetValue<int>() : 1;
 
                             // Safe cast: tier'in valid TierLevels value'su olduğunu kontrol et

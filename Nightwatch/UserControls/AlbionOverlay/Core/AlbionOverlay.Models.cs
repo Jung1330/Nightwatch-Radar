@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -82,6 +82,7 @@ namespace Nightwatch
         public bool ShowDangerCompass { get; set; } = true;
         public bool ShowEquipmentCards { get; set; } = true;
         public bool ResourceTrackerOnlyMode { get; set; } = false;
+        public bool ResourceShowOnlyEnchanted { get; set; } = false;
         public bool EquipmentCardsMoveable { get; set; } = false;
         public float EquipmentCardsX { get; set; } = -1f;
         public float EquipmentCardsY { get; set; } = 12f;

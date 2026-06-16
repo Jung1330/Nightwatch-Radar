@@ -153,7 +153,7 @@ namespace Nightwatch
                 string url = $"https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App/version.txt?t={DateTime.Now.Ticks}";
 
                 string response = await client.GetStringAsync(url);
-                int currentVersion = 3; // Senin belirlediğin şu anki sürüm numarası
+                int currentVersion = 4; // Senin belirlediğin şu anki sürüm numarası
 
                 if (int.TryParse(response.Trim(), out int latestVersion))
                 {

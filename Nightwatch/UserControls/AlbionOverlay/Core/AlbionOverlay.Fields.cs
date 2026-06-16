@@ -45,6 +45,7 @@ namespace Nightwatch
         // Ekipman kartı özelliği açık/kapalı
         private bool _showEquipmentCards = true;
         private bool _resourceTrackerOnlyMode = false;
+        private bool _resourceShowOnlyEnchanted = false;
         private bool _equipmentCardsMoveable = false;
         private float _equipmentCardsX = -1f;
         private float _equipmentCardsY = 12f;
@@ -268,7 +269,7 @@ namespace Nightwatch
         private bool _showPlayerName = true;
         private bool _showPlayerCount = true;
         private bool _showMobNames = true;
-        private int _developer = 1;  // Developer tabs: 0 = hidden, 1 = visible
+        private int _developer = 0;  // Developer tabs: 0 = hidden, 1 = visible
         private bool _debugConsoleLog = false;
         private bool _debugMobs = false;
         private bool _debugStaticResources = false;

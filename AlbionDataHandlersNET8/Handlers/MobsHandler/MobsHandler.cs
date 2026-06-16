@@ -1,4 +1,4 @@
-﻿using AlbionDataHandlers.Entities;
+using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Enums;
 using AlbionDataHandlers.Utils;
 using System.Reactive.Subjects;
@@ -82,7 +82,26 @@ public class MobsHandler : IEventHandler
                       ?? EventHandlerUtils.ExtractValue<string>(parameters, 31);
         int enchantmentLevel = EventHandlerUtils.ExtractValue<int>(parameters, 33, 0);
         int rarity = EventHandlerUtils.ExtractValue<int>(parameters, 34, 0);
-
+/*
+        try
+        {
+            if (enchantmentLevel > 0 || networkTier >= 4)
+            {
+                string log = $"[{System.DateTime.Now}] [NewMob] TypeId={typeId}, Name={name}, Enchant={enchantmentLevel}, NetworkTier={networkTier}\n";
+                foreach (var kv in parameters)
+                {
+                    string valStr = kv.Value?.ToString() ?? "null";
+                    if (kv.Value is IList list)
+                    {
+                        valStr = "[ " + string.Join(", ", list.Cast<object>()) + " ]";
+                    }
+                    log += $"{kv.Key} : {valStr}\n";
+                }
+                // System.IO.File.AppendAllText("raw_resources.txt", log + "------------------\n");
+            }
+        }
+        catch { }
+*/
         var mob = new Mob
         {
             Id = id,

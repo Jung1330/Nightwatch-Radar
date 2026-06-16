@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -388,7 +388,7 @@ namespace Nightwatch
                         else if ((GetMobCategory(displayName, info?.Tier ?? 0) == "Crystals") || (upperName.Contains("SPIDER") && upperName.Contains("CRYSTAL"))) specificIcon = _spiderImagePath;
                         else if (m.TypeId >= 908 && m.TypeId <= 923) specificIcon = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources", "AVALONMINIONCHEST.png");
 
-
+/*
                         if (m.TypeId >= 540 && m.TypeId <= 670)
                         {
                             File.AppendAllText("debug_radar.txt",
@@ -396,7 +396,7 @@ namespace Nightwatch
                                 $"inMap={_livingResourceTypeMap.ContainsKey(m.TypeId)} | " +
                                 $"isExplicit={m.Type == MobTypes.LivingHarvestable || m.Type == MobTypes.LivingSkinnable}\n");
                         }
-
+*/
 
 
                         var typeInfo = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
@@ -454,6 +454,7 @@ namespace Nightwatch
                         }
                         // -----------------------------------------------------------------------
 
+/*
                         // BURAYA EKLE
                         if (m.TypeId >= 660 && m.TypeId <= 665)
                         {
@@ -463,7 +464,7 @@ namespace Nightwatch
                                 $"typeInfoTier={typeInfo?.Tier} | typeInfoLootTier={typeInfo?.LootTier} | " +
                                 $"infoTier={info?.Tier} | Name={m.Name} | displayName={displayName}\n");
                         }
-
+*/
                         // TAKÄ°P LÄ°STESÄ° VEYA Ã–ZEL TRACKER LÄ°STESÄ°
                         bool isPriority = _customPriorityMobs.Contains(m.TypeId);
                         bool isTrackerCustom = _trackerCustomMobs.Contains(m.TypeId);
@@ -568,11 +569,11 @@ namespace Nightwatch
                                 // 3. Eğer olur da gizli isimden bulamazsa, standart yöntemlerle bulmaya çalış
                                 if (tier == 0)
                                 {
-                                    // Eski 'info' yerine artık kendi 'typeInfo'muzu kullanıyoruz (LootTier da burada!)
-                                    if (typeInfo != null && typeInfo.LootTier > 0) tier = typeInfo.LootTier;
+                                    // Oyunun anlık yolladığı NetworkTier her zaman en güncel ve doğru olanıdır (Örn: T5 Mob ama T4 Deri verir)
+                                    if (m.NetworkTier > 0 && m.NetworkTier <= 8) tier = m.NetworkTier;
+                                    else if (typeInfo != null && typeInfo.LootTier > 0) tier = typeInfo.LootTier;
                                     else if (resolvedLivingTier > 0) tier = resolvedLivingTier;
                                     else if (typeInfo != null && (int)typeInfo.Tier > 0) tier = (int)typeInfo.Tier;
-                                    else if (m.NetworkTier > 0 && m.NetworkTier <= 8) tier = m.NetworkTier;
                                     else tier = ParseTier(displayName);
                                 }
 
@@ -597,6 +598,9 @@ namespace Nightwatch
                                 {
                                     int enchant = ParseEnchant(m.Name);
                                     if (enchant <= 0) enchant = m.EnchantmentLevel;
+
+                                    if (_resourceShowOnlyEnchanted && enchant <= 0) continue;
+
                                     int tierIndex = Math.Max(0, Math.Min(tier - 1, 7)); int enchantIndex = Math.Min(enchant, 3);
                                     if (_resourceFilters[mobCategory][tierIndex, enchantIndex])
                                     {
@@ -612,7 +616,7 @@ namespace Nightwatch
                                         string imgPath = GetResourceImagePath(mobCategory, tier, enchant);
                                         bool iconExists = !string.IsNullOrEmpty(imgPath) && IsImageExistsCached(imgPath);
 
-                                        // DEBUG: Elemental render kontrolü
+                                     /*   // DEBUG: Elemental render kontrolü
                                         if (displayName.Contains("Elemental"))
                                         {
                                             File.AppendAllText("debug_elemental.txt",
@@ -621,7 +625,7 @@ namespace Nightwatch
                                                 $"imgPath={imgPath} | iconExists={iconExists} | " +
                                                 $"isLiving={isLivingResource} | isPriority={isPriority} | isTracker={isTrackerCustom}\n");
                                         }
-
+                                    */
                                         // 2. AYRIM: Düz kaynakların lazeri yeşil/sarı iken, yürüyen canavarların lazerini KIRMIZI (Düşman) yapıyoruz!
                                         uint resLaserCol = ImGui.ColorConvertFloat4ToU32(_trackerLaserColorResources);
 
@@ -743,6 +747,9 @@ namespace Nightwatch
                             var cat = GetCategoryFromTypeId(h.Type);
                             int tier = h.Tier;
                             int enchant = h.EnchantmentLevel;
+
+                            if (_resourceShowOnlyEnchanted && enchant <= 0) continue;
+
                             uint tCol = GetTierEnchantColor(tier, enchant);
                             uint resLaserCol = ImGui.ColorConvertFloat4ToU32(_trackerLaserColorResources); // Tracker lazerini ekledik
                             // -------------------------------------------------------------

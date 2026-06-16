@@ -33,19 +33,19 @@ namespace AlbionDataHandlers.Handlers
             {
                 HandleLeave(parameters);
             }
-            // --- EKLENEN KISIM: KAYNAK BÝTÝÞ EVENTÝ (45) ---
+            // --- EKLENEN KISIM: KAYNAK BÄ°TÄ°Åž EVENTÄ° (45) ---
             else if (eventCode == (EventCodes)45)
             {
                 HandleHarvestableFinished(parameters);
             }
         }
 
-        // --- YENÝ METOT: BÝTEN KAYNAÐI SÝLME ---
+        // --- YENÄ° METOT: BÄ°TEN KAYNAÄžI SÄ°LME ---
         private void HandleHarvestableFinished(Dictionary<byte, object> parameters)
         {
             try
             {
-                // Parametre 0 genellikle biten kaynaðýn ID'sidir
+                // Parametre 0 genellikle biten kaynaÄŸÄ±n ID'sidir
                 if (parameters.TryGetValue(0, out object idObj))
                 {
                     long rawId = Convert.ToInt64(idObj);
@@ -71,7 +71,26 @@ namespace AlbionDataHandlers.Handlers
 
             byte size = EventHandlerUtils.ExtractValue<byte>(parameters, 10);
             byte enchant = EventHandlerUtils.ExtractValue<byte>(parameters, 11);
-
+/*
+            try
+            {
+                if (enchant > 0 || tier >= 4)
+                {
+                    string log = $"[{System.DateTime.Now}] [NewHarvestable] Type={type}, Tier={tier}, Enchant={enchant}\n";
+                    foreach (var kv in parameters)
+                    {
+                        string valStr = kv.Value?.ToString() ?? "null";
+                        if (kv.Value is System.Collections.IList list)
+                        {
+                            valStr = "[ " + string.Join(", ", System.Linq.Enumerable.Cast<object>(list)) + " ]";
+                        }
+                        log += $"{kv.Key} : {valStr}\n";
+                    }
+                   // System.IO.File.AppendAllText("raw_resources.txt", log + "------------------\n");
+                }
+            }
+            catch { }
+*/
             AddOrUpdateHarvestable(id, type, tier, posX, posY, size, enchant);
         }
 
@@ -140,9 +159,9 @@ namespace AlbionDataHandlers.Handlers
             long rawId = EventHandlerUtils.ExtractValue<long>(parameters, 0);
             int id = unchecked((int)rawId);
 
-            // --- DÜZELTME BURADA ---
-            // Oyun, kaynak 0 olduðunda paketin içine boyut (1) parametresini koymaz.
-            // Bu yüzden eðer parametre yoksa, kaynaðýn bittiðini anlýyor ve 0 kabul ediyoruz.
+            // --- DÃœZELTME BURADA ---
+            // Oyun, kaynak 0 olduÄŸunda paketin iÃ§ine boyut (1) parametresini koymaz.
+            // Bu yÃ¼zden eÄŸer parametre yoksa, kaynaÄŸÄ±n bittiÄŸini anlÄ±yor ve 0 kabul ediyoruz.
             int newSize = 0;
             if (parameters.TryGetValue(1, out object sizeObj))
             {
@@ -156,7 +175,7 @@ namespace AlbionDataHandlers.Handlers
                 {
                     if (newSize <= 0)
                     {
-                        // Ýçi tamamen boþaldýðý an, radarda kalabalýk yapmasýn diye siliyoruz
+                        // Ä°Ã§i tamamen boÅŸaldÄ±ÄŸÄ± an, radarda kalabalÄ±k yapmasÄ±n diye siliyoruz
                         _harvestableList.Remove(existing);
                     }
                     else
@@ -285,5 +304,7 @@ namespace AlbionDataHandlers.Handlers
         }
     }
 }
+
+
 
 

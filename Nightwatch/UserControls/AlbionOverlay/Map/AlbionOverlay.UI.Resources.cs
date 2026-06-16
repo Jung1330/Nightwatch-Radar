@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -27,6 +27,7 @@ namespace Nightwatch
                     ImGui.Checkbox(Lang.Get("Res_ShowIcons") ?? "Show Icons", ref _showResourceIcons);
                     ImGui.Checkbox(Lang.Get("Res_ShowOnMap") ?? "Show on Map", ref _showResources);
                     ImGui.Checkbox(Lang.Get("Res_TrackerOnly") ?? "Tracker only (hide radar dots)", ref _resourceTrackerOnlyMode);
+                    ImGui.Checkbox(Lang.Get("Res_EnchantedOnly") ?? "Sadece Efsunlu (.1, .2, .3, .4) Olanları Göster", ref _resourceShowOnlyEnchanted);
                     ImGui.Checkbox(Lang.Get("Res_Label") ?? "Show Resource Labels", ref _showResourceLabels);
                     ImGui.SliderFloat(Lang.Get("Res_IconSize") ?? "Icon Size", ref _globalIconSize, 10, 80);
 
