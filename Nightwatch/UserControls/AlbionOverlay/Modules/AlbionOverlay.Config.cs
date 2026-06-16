@@ -44,7 +44,7 @@ namespace Nightwatch
                 string safeName = SanitizeConfigName(name);
                 if (string.IsNullOrWhiteSpace(safeName))
                 {
-                    Log("[HATA] Gecersiz config adi.", LogLevel.Error);
+                    Log(Lang.Get("Error_InvalidConfig") ?? "[HATA] Gecersiz config adi.", LogLevel.Error);
                     return;
                 }
 
@@ -139,7 +139,7 @@ namespace Nightwatch
             catch (Exception ex)
             {
                 System.Console.WriteLine($"Error Code : 56 | {ex.Message}");
-                Log($"[HATA] {ex.Message}", LogLevel.Error);
+                Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
             }
         }
 
@@ -239,7 +239,7 @@ namespace Nightwatch
             catch (Exception ex)
             {
                 System.Console.WriteLine($"Error Code : 57 | {ex.Message}");
-                Log($"[HATA] {ex.Message}", LogLevel.Error);
+                Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
             }
         }
 
@@ -279,7 +279,7 @@ namespace Nightwatch
             {
                 System.Console.WriteLine($"Error Code : 58 | {ex.Message}");
                 if (_debugConsoleLog)
-                    Log($"[HATA] {ex.Message}", LogLevel.Error);
+                    Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
             }
             return false;
         }
@@ -310,6 +310,13 @@ namespace Nightwatch
 
             return HarvestableCategory.None;
         }
+
+        /// <summary>TypeID'nin harvestable kategoriye ait olup olmadığını kontrol eder.</summary>
+        private bool IsHarvestableTypeId(int typeId)
+        {
+            // Harvestable TypeID aralıkları: Log(0-5), Rock(6-10), Fiber(11-15), Hide(16-22), Ore(23-27)
+            return typeId >= 0 && typeId <= 27;
+        }
         private int ParseTier(string n) { if (string.IsNullOrEmpty(n)) return 0; var m = _tierRegex.Match(n); return m.Success ? int.Parse(m.Groups[1].Value) : 0; }
         private int ParseEnchant(string n)
         {
@@ -339,7 +346,7 @@ namespace Nightwatch
                 catch (Exception ex)
                 {
                     System.Console.WriteLine($"Error Code : 59 | {ex.Message}");
-                    Log($"[HATA] {ex.Message}", LogLevel.Error);
+                    Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
                 }
                 _isSizeFixed = true;
             }
@@ -366,7 +373,7 @@ namespace Nightwatch
             catch (Exception ex)
             {
                 System.Console.WriteLine($"Error Code : 61 | {ex.Message}");
-                Log($"[HATA] {ex.Message}", LogLevel.Error);
+                Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
             }
         }
 
@@ -417,7 +424,7 @@ namespace Nightwatch
             catch (Exception ex)
             {
                 System.Console.WriteLine($"Error Code : 62 | {ex.Message}");
-                Log($"[HATA] {ex.Message}", LogLevel.Error);
+                Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
             }
         }
         #endregion

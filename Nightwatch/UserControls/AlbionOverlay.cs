@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Handlers;
+using AlbionDataHandlers.Mappers;
 using ClickableTransparentOverlay;
 using ImGuiNET;
 using Newtonsoft.Json;
@@ -68,7 +69,24 @@ namespace Nightwatch
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             _whitelistPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "whitelist.txt");
 
+            // KALICI DİL YÜKLEME - Veritabanları Yüklenmeden Önce Dili Oku!
+            try
+            {
+                string langPath = System.IO.Path.Combine(baseDir, "Config", "lang.txt");
+                if (File.Exists(langPath))
+                {
+                    string startupLang = File.ReadAllText(langPath).Trim().ToUpper();
+                    Lang.LoadLanguage(startupLang);
+                }
+            }
+            catch (Exception ex) { Log($"[HATA] Dil yüklenemedi: {ex.Message}", LogLevel.Error); }
+
             LoadWhitelist();
+            
+            // MobMapper'ı ve diğer veritabanlarını başlat
+            string initLang = Lang.CurrentLanguage ?? "EN";
+            MobMapper.Instance.Reload($"Assets/Helper/mobs_{initLang}.min.json");
+            
             CheckAndLoadDatabase();
             LoadZonesDatabase();
             LoadItemDatabaseTXT();
@@ -101,7 +119,7 @@ namespace Nightwatch
             _feyDragonPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "FAIRYDRAGON.png");
             _griffinPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "GRIFFIN.png");
             _veilWeaverPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "VEILWEAVER.png");
-            /*_aspectBossIconPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "group_0.png");*/
+            _aspectBossIconPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "group_0.png");
 
             for (int i = 0; i < 5; i++)
                 _mistImagePaths[i] = System.IO.Path.Combine(baseDir, "Assets", "Resources", $"mist_{i}.png");
@@ -131,7 +149,7 @@ namespace Nightwatch
             catch (Exception ex)
             {
                 System.Console.WriteLine($"Error Code : 53 | {ex.Message}");
-                Log($"[HATA] {ex.Message}", LogLevel.Error);
+                Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
             }
             LoadConfig(configToLoad);
             Log(string.Format(Lang.Get("ConfigLoaded"), configToLoad), LogLevel.Success);

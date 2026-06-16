@@ -9,6 +9,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using AlbionDataHandlers.Entities;
+using AlbionDataHandlers.Enums;
 using AlbionDataHandlers.Handlers;
 using ClickableTransparentOverlay;
 using ImGuiNET;
@@ -246,7 +247,7 @@ namespace Nightwatch
                         catch (Exception ex)
                         {
                             System.Console.WriteLine($"Error Code : 55 | {ex.Message}");
-                            Log($"[HATA] {ex.Message}", LogLevel.Error);
+                            Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
                         }
                     }
                 }
@@ -273,7 +274,7 @@ namespace Nightwatch
             // --- MESAFE HALKALARI (50m / 100m / 150m) ---
             {
                 float[] ringDistances = { 50f, 100f, 150f };
-                uint ringCol  = 0x22FFFFFF; // %13 opak beyaz çizgi
+                uint ringCol = 0x22FFFFFF; // %13 opak beyaz çizgi
                 uint ringText = 0x55FFFFFF; // %33 opak beyaz etiket
                 foreach (float rw in ringDistances)
                 {
@@ -386,12 +387,91 @@ namespace Nightwatch
                         else if (isAspectOrWorldBoss && IsImageExistsCached(_aspectBossIconPath)) specificIcon = _aspectBossIconPath;
                         else if ((GetMobCategory(displayName, info?.Tier ?? 0) == "Crystals") || (upperName.Contains("SPIDER") && upperName.Contains("CRYSTAL"))) specificIcon = _spiderImagePath;
                         else if (m.TypeId >= 908 && m.TypeId <= 923) specificIcon = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources", "AVALONMINIONCHEST.png");
- 
+
+
+                        if (m.TypeId >= 540 && m.TypeId <= 670)
+                        {
+                            File.AppendAllText("debug_radar.txt",
+                                $"[RADAR] TypeId={m.TypeId} | m.Type={m.Type} | Name={m.Name} | " +
+                                $"inMap={_livingResourceTypeMap.ContainsKey(m.TypeId)} | " +
+                                $"isExplicit={m.Type == MobTypes.LivingHarvestable || m.Type == MobTypes.LivingSkinnable}\n");
+                        }
+
+
+
+                        var typeInfo = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
+                        HarvestableCategory mobCategory = HarvestableCategory.None;
+                        int resolvedLivingTier = 0;
+                        bool isLivingResource = false;
+
+                        // --- isLivingResource TESPİTİ: specificIcon'dan BAĞIMSIZ her zaman çalışır ---
+                        // (Eski kodda specificIcon doluysa bu blok atlanıyordu, harvestable'lar mob olarak çiziliyordu)
+                        {
+                            bool isExplicitLivingType = m.Type == MobTypes.LivingHarvestable || m.Type == MobTypes.LivingSkinnable;
+                            if (isExplicitLivingType)
+                            {
+                                string livingNameSource = typeInfo?.UniqueName ?? typeInfo?.Name ?? m.Name ?? displayName;
+                                mobCategory = ParseCategoryFromString(livingNameSource);
+                                if (mobCategory == HarvestableCategory.None)
+                                    mobCategory = ParseCategoryFromString(displayName);
+
+                                if (mobCategory != HarvestableCategory.None)
+                                {
+                                    resolvedLivingTier = typeInfo?.LootTier ?? (int)(typeInfo?.Tier ?? 0);
+                                    if (resolvedLivingTier <= 0)
+                                        resolvedLivingTier = ParseTier(livingNameSource);
+                                }
+
+                                isLivingResource = mobCategory != HarvestableCategory.None;
+                            }
+
+                            if (!isLivingResource)
+                            {
+                                if (_livingResourceTypeMap.TryGetValue(m.TypeId, out var livingMap))
+                                {
+                                    mobCategory = livingMap.category;
+                                    resolvedLivingTier = livingMap.tier;
+                                }
+                                else if (info?.IsHarvestable == true && !string.IsNullOrEmpty(info.HarvestType))
+                                {
+                                    mobCategory = ParseCategoryFromString(info.HarvestType);
+                                    resolvedLivingTier = info.Tier;
+                                }
+                                else
+                                {
+                                    string livingNameSource = typeInfo?.UniqueName ?? typeInfo?.Name ?? m.Name ?? displayName;
+                                    mobCategory = ParseCategoryFromString(livingNameSource);
+                                    if (mobCategory != HarvestableCategory.None)
+                                    {
+                                        resolvedLivingTier = info?.Tier ?? typeInfo?.LootTier ?? (int)(typeInfo?.Tier ?? 0);
+                                        if (resolvedLivingTier <= 0)
+                                            resolvedLivingTier = ParseTier(livingNameSource);
+                                    }
+                                }
+
+                                isLivingResource = (mobCategory != HarvestableCategory.None);
+                            }
+                        }
+                        // -----------------------------------------------------------------------
+
+                        // BURAYA EKLE
+                        if (m.TypeId >= 660 && m.TypeId <= 665)
+                        {
+                            File.AppendAllText("debug_radar2.txt",
+                                $"TypeId={m.TypeId} | isLiving={isLivingResource} | category={mobCategory} | " +
+                                $"resolvedLivingTier={resolvedLivingTier} | NetworkTier={m.NetworkTier} | " +
+                                $"typeInfoTier={typeInfo?.Tier} | typeInfoLootTier={typeInfo?.LootTier} | " +
+                                $"infoTier={info?.Tier} | Name={m.Name} | displayName={displayName}\n");
+                        }
+
                         // TAKÄ°P LÄ°STESÄ° VEYA Ã–ZEL TRACKER LÄ°STESÄ°
                         bool isPriority = _customPriorityMobs.Contains(m.TypeId);
                         bool isTrackerCustom = _trackerCustomMobs.Contains(m.TypeId);
 
-                        if ((isPriority || isTrackerCustom) && _showEnemyMobs)
+                        // Harvestable TypeID'ler priority/tracker mobs'ta crown göstermemeli
+                        bool isHarvestableTypeId = IsHarvestableTypeId(m.TypeId);
+
+                        if ((isPriority || isTrackerCustom) && _showEnemyMobs && !isLivingResource && !isHarvestableTypeId)
                         {
                             string iconToUse = !string.IsNullOrEmpty(specificIcon) ? specificIcon : _crownImagePath;
                             bool doEdgeClamp = _trackerEnableVipMobs && (isTrackerCustom || isPriority);
@@ -406,37 +486,6 @@ namespace Nightwatch
 
                             DrawImageOrDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, iconToUse, COL_SPECIAL, displayName, radiusLimit, _globalIconSize + 10, doEdgeClamp, mobLaserCol, showOffScreenArrow: true, showTrackerIcon: _trackerShowMobIcons);
                             continue;
-                        }
-
-                        var typeInfo = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
-                        HarvestableCategory mobCategory = HarvestableCategory.None;
-                        int resolvedLivingTier = 0;
-                        bool isLivingResource = false;
-
-                        if (string.IsNullOrEmpty(specificIcon)) // <-- ÖNEMLİ KISIM BURASI
-                        {
-                            if (_livingResourceTypeMap.TryGetValue(m.TypeId, out var livingMap))
-                            {
-                                mobCategory = livingMap.category;
-                                resolvedLivingTier = livingMap.tier;
-                            }
-                            else if (info?.IsHarvestable == true && !string.IsNullOrEmpty(info.HarvestType))
-                            {
-                                mobCategory = ParseCategoryFromString(info.HarvestType);
-                                resolvedLivingTier = info.Tier;
-                            }
-                            else
-                            {
-                                string livingNameSource = typeInfo?.UniqueName ?? typeInfo?.Name ?? m.Name ?? displayName;
-                                mobCategory = ParseCategoryFromString(livingNameSource);
-                                if (mobCategory != HarvestableCategory.None)
-                                {
-                                    resolvedLivingTier = info?.Tier ?? typeInfo?.LootTier ?? (int)(typeInfo?.Tier ?? 0);
-                                    if (resolvedLivingTier <= 0)
-                                        resolvedLivingTier = ParseTier(livingNameSource);
-                                }
-                            }
-                            isLivingResource = (mobCategory != HarvestableCategory.None);
                         }
 
                         if (_debugMobs) { DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFFFFFFFF, $"[{m.TypeId}] {displayName}", radiusLimit); continue; }
@@ -523,13 +572,26 @@ namespace Nightwatch
                                     if (typeInfo != null && typeInfo.LootTier > 0) tier = typeInfo.LootTier;
                                     else if (resolvedLivingTier > 0) tier = resolvedLivingTier;
                                     else if (typeInfo != null && (int)typeInfo.Tier > 0) tier = (int)typeInfo.Tier;
-                                    else if (m.NetworkTier > 0) tier = m.NetworkTier;
+                                    else if (m.NetworkTier > 0 && m.NetworkTier <= 8) tier = m.NetworkTier;
                                     else tier = ParseTier(displayName);
+                                }
+
+                                if (tier <= 0 || tier > 8)
+                                {
+                                    int parsedTier = ParseTier(m.Name);
+                                    if (parsedTier <= 0) parsedTier = ParseTier(typeInfo?.UniqueName);
+                                    if (parsedTier <= 0) parsedTier = ParseTier(typeInfo?.Name);
+                                    if (parsedTier <= 0) parsedTier = ParseTier(displayName);
+
+                                    if (parsedTier > 0 && parsedTier <= 8)
+                                        tier = parsedTier;
                                 }
                                 // ==============================================================
 
                                 if (tier <= 0)
                                     tier = 1;
+                                else if (tier > 8)
+                                    tier = 8;
 
                                 if (tier >= 1)
                                 {
@@ -542,13 +604,23 @@ namespace Nightwatch
                                         string translatedName = Lang.Get(mobCategory.ToString());
                                         string resName = translatedName != mobCategory.ToString() ? translatedName : (_resourceMobNames.TryGetValue(mobCategory, out var n) ? n : mobCategory.ToString());
 
-                                        // 1. AYRIM: İsmin başına koca bir [MOB] (veya [CANLI]) etiketi ekliyoruz ki düz maden sanıp üstüne koşma!
+                                        // Canlı kaynak etiketini normal kaynak formatında göster (Ore/Fiber vb.)
                                         string label = (enchant > 0) ? $"T{tier}.{enchant} {resName}" : $"T{tier} {resName}";
 
                                         // YENİ: ELEMENTAL İKONUNU VE RENGİNİ BULMA
                                         uint tCol = GetTierEnchantColor(tier, enchant);
                                         string imgPath = GetResourceImagePath(mobCategory, tier, enchant);
                                         bool iconExists = !string.IsNullOrEmpty(imgPath) && IsImageExistsCached(imgPath);
+
+                                        // DEBUG: Elemental render kontrolü
+                                        if (displayName.Contains("Elemental"))
+                                        {
+                                            File.AppendAllText("debug_elemental.txt",
+                                                $"TypeId={m.TypeId} | name={displayName} | " +
+                                                $"cat={mobCategory} | tier={tier} | enchant={enchant} | " +
+                                                $"imgPath={imgPath} | iconExists={iconExists} | " +
+                                                $"isLiving={isLivingResource} | isPriority={isPriority} | isTracker={isTrackerCustom}\n");
+                                        }
 
                                         // 2. AYRIM: Düz kaynakların lazeri yeşil/sarı iken, yürüyen canavarların lazerini KIRMIZI (Düşman) yapıyoruz!
                                         uint resLaserCol = ImGui.ColorConvertFloat4ToU32(_trackerLaserColorResources);
@@ -600,6 +672,20 @@ namespace Nightwatch
                                 continue;
                             }
 
+                            // Living resources'a taç uygulanmasın (Titanium Elemental vb.)
+                            if (isLivingResource)
+                            {
+                                if (_showResources && _resourceMasterToggles[mobCategory])
+                                {
+                                    // Resource toggle açıksa resource olarak göstermek istiyoruz, taç yapma
+                                    continue;
+                                }
+                                // Resource toggle kapalıysa kırmızı nokta olarak göster ama taç yapma
+                                if (_showNormalMobs)
+                                    DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, COL_RED, displayName, radiusLimit, false, 3.0f, _trackerEnableNormalMobs, 0xCC4466FF);
+                                continue;
+                            }
+
                             bool isBigBoss = upperName.Contains("BOSS") || upperName.Contains("ASPECT") || upperName.Contains("TITAN") || upperName.Contains("GUARDIAN") || upperName.Contains("OLD_WHITE");
 
                             // --- YENÄ° KURAL: EÄŸer otomatik taÃ§ takÄ±lacaksa ama listede yasaklÄ±ysa, tacÄ± Ã§Ä±kar ---
@@ -624,8 +710,10 @@ namespace Nightwatch
                                     DrawImageOrDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, bossIcon, COL_GOLD, label, radiusLimit, bossSize, _trackerEnableVipMobs, bossLaser, showOffScreenArrow: true, showTrackerIcon: _trackerShowMobIcons);
                                 }
                             }
-                            else { if (_showNormalMobs)
-                                    DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, COL_RED, label, radiusLimit, false, 3.0f, _trackerEnableNormalMobs, 0xCC4466FF); 
+                            else
+                            {
+                                if (_showNormalMobs)
+                                    DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, COL_RED, label, radiusLimit, false, 3.0f, _trackerEnableNormalMobs, 0xCC4466FF);
                             }
                         }
 
@@ -887,7 +975,7 @@ namespace Nightwatch
                 catch (Exception ex)
                 {
                     System.Console.WriteLine($"Error Code : 36 | {ex.Message}");
-                    if (_debugConsoleLog) Log($"[HATA] İkon Çizilemedi: {ex.Message}", LogLevel.Warning);
+                    if (_debugConsoleLog) Log(string.Format(Lang.Get("Error_IconDraw") ?? "[HATA] İkon Çizilemedi: {0}", ex.Message), LogLevel.Warning);
                     iconDrawn = false;
                 }
             }
@@ -931,7 +1019,7 @@ namespace Nightwatch
                 catch (Exception ex)
                 {
                     System.Console.WriteLine($"Error Code : 37 | {ex.Message}");
-                    if (_debugConsoleLog) Log($"[HATA] Mist ikonu Çizilemedi: {ex.Message}", LogLevel.Warning);
+                    if (_debugConsoleLog) Log(string.Format(Lang.Get("Error_MistIconDraw") ?? "[HATA] Mist ikonu Çizilemedi: {0}", ex.Message), LogLevel.Warning);
                     iconDrawn = false;
                 }
             }
@@ -993,10 +1081,10 @@ namespace Nightwatch
 
                 if (laserVec.LengthSquared() > 0.0001f)
                 {
-                    Vector2 laserNorm      = Vector2.Normalize(laserVec);
-                    Vector2 targetOnScreen  = screenCenter + laserVec + new Vector2(_trackerLaserEndOffsetX, _trackerLaserEndOffsetY);
-                    var fgDrawList         = ImGui.GetForegroundDrawList();
-                    uint finalLaserCol     = laserCol == 0 ? 0xAA0000FF : laserCol;
+                    Vector2 laserNorm = Vector2.Normalize(laserVec);
+                    Vector2 targetOnScreen = screenCenter + laserVec + new Vector2(_trackerLaserEndOffsetX, _trackerLaserEndOffsetY);
+                    var fgDrawList = ImGui.GetForegroundDrawList();
+                    uint finalLaserCol = laserCol == 0 ? 0xAA0000FF : laserCol;
                     DrawCompassIndicator(fgDrawList, screenCenter, laserNorm, targetOnScreen, finalLaserCol, lbl, _cachedPrimaryScreenW, _cachedPrimaryScreenH, trackerIcon, trackerIconSize);
                 }
             }
@@ -1032,9 +1120,9 @@ namespace Nightwatch
         private void DrawOffScreenArrow(ImDrawListPtr dl, Vector2 center, float radius, Vector2 normalizedDir, uint color, string lbl = "")
         {
             const float arrowSize = 6f;
-            Vector2 tip   = center + normalizedDir * (radius - 2f);
-            Vector2 perp  = new Vector2(-normalizedDir.Y, normalizedDir.X);
-            Vector2 left  = tip - normalizedDir * (arrowSize * 1.8f) + perp * arrowSize;
+            Vector2 tip = center + normalizedDir * (radius - 2f);
+            Vector2 perp = new Vector2(-normalizedDir.Y, normalizedDir.X);
+            Vector2 left = tip - normalizedDir * (arrowSize * 1.8f) + perp * arrowSize;
             Vector2 right = tip - normalizedDir * (arrowSize * 1.8f) - perp * arrowSize;
             dl.AddTriangleFilled(tip, left, right, color);
             dl.AddTriangle(tip, left, right, 0xBB000000, 1.2f);
@@ -1140,5 +1228,3 @@ namespace Nightwatch
 
     }
 }
-
-

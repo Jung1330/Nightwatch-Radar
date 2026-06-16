@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -64,7 +64,6 @@ namespace Nightwatch
         private Vector4 _trackerLaserColorResources = new Vector4(0.8f, 0.0f, 1.0f, 0.8f);
         private float _trackerScreenOffsetX = 0f;
         private float _trackerScreenOffsetY = -96f; // VarsayÄ±lan olarak biraz yukarÄ± aldÄ±k
-        private float _trackerStartGap = 0; // Karakterin iÃ§inden geÃ§memesi iÃ§in boÅŸluk
         private float _trackerScaleX = 7.0f;          // Piksel/birim â€” DÃ¼nya X ekseni (saÄŸ/sol)
         private float _trackerScaleY = 7.0f;          // Piksel/birim â€” DÃ¼nya Y ekseni (ileri/geri)
         private float _trackerAngleOffset = 0f;       // AÃ§Ä± ince ayarÄ± (derece, -45 â†’ +45)
@@ -106,8 +105,6 @@ namespace Nightwatch
         //TaÃ§ Blacklist
         private List<int> _crownBlacklist = new List<int>();
         private string _crownSearchQuery = "";
-        private List<System.Collections.Generic.KeyValuePair<int, MobInfo>> _cachedCrownResults = null;
-        private string _lastCrownSearchQuery = null;
 
         // Simulator Variables
         private int _simMobId = 15;
@@ -118,8 +115,6 @@ namespace Nightwatch
         private int _simResEnchant = 0;    // Enchant (0,1,2,3)
         private int _simResCount = 5;
         private int _simResCap = 5;
-        private float _simX = 5.0f;
-        private float _simY = 5.0f;
 
         // Themes
         private int _selectedTheme = 1; // 0=Old 1=Main
@@ -169,11 +164,11 @@ namespace Nightwatch
         private string _parserSnapshotBPayload = "";
         private string _parserSnapshotALabel = "A: (bos)";
         private string _parserSnapshotBLabel = "B: (bos)";
-        private string _parserByteDecodeStatus = "";
         private bool _parserOnlyNearby = true;
         private string _parserExportStatus = "";
         private string _parserActiveProfile = "Custom";
         private readonly Dictionary<int, string> _parserMobNameOverrides = new();
+        private readonly List<(int off, int ia, int ib)> _parserByteDecodeResults = new();
         private int _parserMobRenameTargetId = -1;
         private string _parserMobRenameInput = "";
 
@@ -273,9 +268,9 @@ namespace Nightwatch
         private bool _showPlayerName = true;
         private bool _showPlayerCount = true;
         private bool _showMobNames = true;
+        private int _developer = 1;  // Developer tabs: 0 = hidden, 1 = visible
         private bool _debugConsoleLog = false;
         private bool _debugMobs = false;
-        private bool _debugLivingResources = false;
         private bool _debugStaticResources = false;
         private bool _enableLogging = false;
 
@@ -337,11 +332,9 @@ namespace Nightwatch
 
 
         private string _mobSearchQuery = "";
-        private int _selectedMobIdForAdd = -1;
         private string _blacklistSearchQuery = "";
         private int _selectedMobIdForBlacklist = -1;
         private string _trackedListFilter = "";
-        private string _trackerListFilter = "";
 
 
         private string _whitelistInput = "";
@@ -350,12 +343,12 @@ namespace Nightwatch
 
         // Assets
         private string _crownImagePath;
+        private string _aspectBossIconPath;
         private string _spiderImagePath;
         private string[] _mistImagePaths = new string[5];
         private string _feyDragonPath;
         private string _griffinPath;
         private string _veilWeaverPath;
-        private string _aspectBossIconPath;
 
         private Dictionary<int, MobInfo> _mobDatabase = new();
         private Dictionary<HarvestableCategory, bool> _resourceMasterToggles = new();
@@ -364,7 +357,6 @@ namespace Nightwatch
         private static readonly Regex _tierRegex = new Regex(@"T(\d+)_", RegexOptions.Compiled);
         private static readonly Regex _enchantRegex = new Regex(@"LEVEL(\d+)|@(\d+)", RegexOptions.Compiled);
         private int _resourceTruthMode = 0; // 0=Name First, 1=Network First, 2=Metadata First
-        private long _lastDebugTime = 0;
         private int _lastEnemyCount = 0;
         private DateTime _enemyCountLastUpdated = DateTime.MinValue;
         private float _enemyCountHoldSeconds = 1.5f;

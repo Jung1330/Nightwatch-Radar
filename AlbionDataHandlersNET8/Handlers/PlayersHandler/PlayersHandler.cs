@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using AlbionDataHandlers.Enums;
 using AlbionDataHandlers.Entities;
@@ -17,7 +17,7 @@ namespace AlbionDataHandlers.Handlers
         private static readonly bool AllowEventBasedLocalFallback = false;
 
         // --- PLAYER MOVE DECODE TEST SWITCHES (runtime) ---
-        // DevTools > Player Decode sekmesinden aç/kapat yapýlýr.
+        // DevTools > Player Decode sekmesinden aÃ§/kapat yapÄ±lÄ±r.
         public static bool DecodePath01_Int1e7_1_9 { get; set; } = false;
         public static bool DecodePath02_Int1e6_1_9 { get; set; } = false;
         public static bool DecodePath03_Int1e5_1_9 { get; set; } = false;
@@ -48,7 +48,7 @@ namespace AlbionDataHandlers.Handlers
         private static readonly TimeSpan LeaveGracePeriod = TimeSpan.FromMilliseconds(1200);
         private static readonly TimeSpan HealthGracePeriod = TimeSpan.FromMilliseconds(1500);
 
-        // EFSANE GERÝ DÖNDÜ: KUSURSUZ ORIGIN VE SPAWN MERKEZLERÝ
+        // EFSANE GERÄ° DÃ–NDÃœ: KUSURSUZ ORIGIN VE SPAWN MERKEZLERÄ°
         private readonly Dictionary<int, (float x, float y)> _spawnWorldById = new Dictionary<int, (float x, float y)>();
         private readonly Dictionary<int, (float ox, float oy)> _originById = new Dictionary<int, (float ox, float oy)>();
         private readonly object _syncLock = new object();
@@ -165,8 +165,8 @@ namespace AlbionDataHandlers.Handlers
                 if (!parameters.TryGetValue(0, out var idObj)) return;
                 int id = Convert.ToInt32(idObj);
 
-                // Radar ekranýnda kendi ID'ni buradan bul
-                Debug.WriteLine($"[MOVE EVENT] ID={id}");
+             /*   // Radar ekranÄ±nda kendi ID'ni buradan bul
+                Debug.WriteLine($"[MOVE EVENT] ID={id}");*/
 
                 bool hasRaw = TryGetMoveRaw(parameters, 1, out var rawX, out var rawY)
                     || TryGetMoveRaw(parameters, 3, out rawX, out rawY);
@@ -238,7 +238,7 @@ namespace AlbionDataHandlers.Handlers
                     _spawnWorldById.Remove(id);
                     _originById.Remove(id);
 
-                    // Open world Leave paketleri dalgalý gelebiliyor. Anlýk silme yerine grace period uygula.
+                    // Open world Leave paketleri dalgalÄ± gelebiliyor. AnlÄ±k silme yerine grace period uygula.
                     _pendingLeaveById[id] = DateTime.UtcNow;
                 }
             }
@@ -448,8 +448,8 @@ namespace AlbionDataHandlers.Handlers
 
         private static bool IsLikelyPlayerId(int id)
         {
-            // Tutorial/þehirde oyuncu idleri genelde küçük, mob idleri daha yüksek kümelerde.
-            // Çok sert filtrelemiyoruz; sadece bariz negatif/0 ve aþýrý büyük deðerleri eliyoruz.
+            // Tutorial/ÅŸehirde oyuncu idleri genelde kÃ¼Ã§Ã¼k, mob idleri daha yÃ¼ksek kÃ¼melerde.
+            // Ã‡ok sert filtrelemiyoruz; sadece bariz negatif/0 ve aÅŸÄ±rÄ± bÃ¼yÃ¼k deÄŸerleri eliyoruz.
             return id > 0 && id < 1_000_000;
         }
 
@@ -482,7 +482,7 @@ namespace AlbionDataHandlers.Handlers
             {
                 int localId = LocalPlayerId > 0 ? LocalPlayerId : _localEntityId;
 
-                // Öncelik: ham payload decode (en güncel decode path'leri kullanýr)
+                // Ã–ncelik: ham payload decode (en gÃ¼ncel decode path'leri kullanÄ±r)
                 if (TryGetMoveRaw(parameters, 1, out var rx, out var ry) ||
                     TryGetMoveRaw(parameters, 3, out rx, out ry))
                 {
@@ -490,7 +490,7 @@ namespace AlbionDataHandlers.Handlers
                     return;
                 }
 
-                // Fallback: düz float/list payload (bazý paket varyantlarý)
+                // Fallback: dÃ¼z float/list payload (bazÄ± paket varyantlarÄ±)
                 if (TryGetLocalXYFromRequest(parameters, 1, out float x1, out float y1))
                 {
                     LocalPlayerPosition?.Invoke(new Player { Id = localId, PositionX = x1, PositionY = y1, CurrentLerpedX = x1, CurrentLerpedY = y1 });
@@ -538,8 +538,8 @@ namespace AlbionDataHandlers.Handlers
             if (localId <= 0)
                 return true;
 
-            // Move request paketlerinin çoðunda id (param[0]) bulunmayabilir.
-            // Request zaten local client tarafýndan üretildiði için id yoksa local kabul ediyoruz.
+            // Move request paketlerinin Ã§oÄŸunda id (param[0]) bulunmayabilir.
+            // Request zaten local client tarafÄ±ndan Ã¼retildiÄŸi iÃ§in id yoksa local kabul ediyoruz.
             if (!parameters.TryGetValue(0, out var idObj))
                 return true;
 
@@ -553,7 +553,7 @@ namespace AlbionDataHandlers.Handlers
             {
                 if (!parameters.TryGetValue(1, out var p1)) return;
 
-                // Parser'dan direkt ham move payload (AOSniffer mantýðý)
+                // Parser'dan direkt ham move payload (AOSniffer mantÄ±ÄŸÄ±)
                 if (p1 is byte[] raw && raw.Length >= 17)
                 {
                     float fx = BitConverter.ToSingle(raw, 9);
@@ -669,11 +669,11 @@ namespace AlbionDataHandlers.Handlers
             int weight = 0;
             int code = (int)eventCode;
 
-            // Local oyuncuda sýk görülen aksiyon/event kodlarý
+            // Local oyuncuda sÄ±k gÃ¶rÃ¼len aksiyon/event kodlarÄ±
             if (code == 19 || code == 211 || code == 353 || code == 357 || code == 358 || code == 359)
                 weight += 4;
 
-            // 0 ve 1 ayný id ise (örn: CastSpell) güçlü self sinyali
+            // 0 ve 1 aynÄ± id ise (Ã¶rn: CastSpell) gÃ¼Ã§lÃ¼ self sinyali
             if (parameters.TryGetValue(1, out var p1))
             {
                 int id1 = GetIntSafe(p1);

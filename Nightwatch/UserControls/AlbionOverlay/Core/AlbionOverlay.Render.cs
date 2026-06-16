@@ -63,6 +63,9 @@ namespace Nightwatch
                 _tabs[5] = Lang.Get("Tab_Settings") ?? "Settings";
                 _tabs[6] = Lang.Get("Tab_Device") ?? "Device";
                 _lastTabLanguage = currentLang;
+
+               /* ImGui.ClearIniSettings(); // UI'ın o anki bozuk konumunu/ayarlarını sıfırla
+                return; // Dili değiştirdiğin an o karede çizimi bırak, bir sonraki karede temiz çizsin*/
             }
 
             if (!_isSizeFixed) FixLayoutWait();
@@ -772,6 +775,14 @@ namespace Nightwatch
                 if (ImGui.Begin("MiniRadarWidget", radarFlags))
                 {
                     var winPos = ImGui.GetWindowPos();
+
+                    // Radar taşındığında yeni pozisyonu kaydet
+                    if (_radarMoveable)
+                    {
+                        _radarWinX = winPos.X;
+                        _radarWinY = winPos.Y;
+                    }
+
                     if (_radarMoveable)
                     {
                         // Temamıza uygun şık mavi renk çerçeve ve metin

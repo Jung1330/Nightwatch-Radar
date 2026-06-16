@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,10 +26,10 @@ namespace Nightwatch
         private void LoadItemDatabaseTXT()
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string currentLang = Lang.CurrentLanguage ?? "TR";
+            string currentLang = Lang.CurrentLanguage ?? "EN";
             string localizedPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", $"items_{currentLang}.txt");
             string fallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "items_EN.txt");
-            string secondaryFallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "items_TR.txt");
+            string secondaryFallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "items_EN.txt");
 
             string path = File.Exists(localizedPath)
                 ? localizedPath
@@ -98,7 +98,7 @@ namespace Nightwatch
                 catch (Exception ex)
                 {
                     System.Console.WriteLine($"Error Code : 63 | {ex.Message}");
-                    Log($"[HATA] {ex.Message}", LogLevel.Error);
+                    Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
                 }
             }
         }
@@ -121,8 +121,8 @@ namespace Nightwatch
             else
             {
                 // Dosya bulunamazsa log at ve varsayılanı dene
-                Log($"[HATA] {targetFileName} bulunamadı, varsayılana dönülüyor...", LogLevel.Warning);
-                string fallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "mobs.min.json");
+                Log(string.Format(Lang.Get("Error_FileNotFoundDefault") ?? "[HATA] {0} bulunamadı, varsayılana dönülüyor...", targetFileName), LogLevel.Warning);
+                string fallbackPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "mobs_EN.min.json");
                 if (File.Exists(fallbackPath)) LoadMobDatabase(fallbackPath);
             }
         }
@@ -145,24 +145,60 @@ namespace Nightwatch
                         if (item == null) continue;
 
                         var info = new MobInfo();
-                        int typeId = (item["id"] != null) ? item["id"].Value<int>() : (i + 15);
+                        int typeId = i + 15;
 
                         string rawName = "";
+                        string uniqueName = "";
                         if (item.Type == JTokenType.Object)
                         {
                             var obj = (JObject)item;
-                            rawName = obj["n"]?.ToString() ?? obj["u"]?.ToString() ?? "";
+                            string localizedName = obj["n"]?.ToString() ?? "";
+                            uniqueName = obj["u"]?.ToString() ?? "";
+                            rawName = !string.IsNullOrEmpty(localizedName) ? localizedName : uniqueName;
                             if (obj.ContainsKey("t")) info.Tier = obj["t"].Value<int>();
+
+                            // Eski JSON formati: "l" field (backward compat)
+                            if (obj.ContainsKey("l"))
+                            {
+                                info.IsHarvestable = true;
+                                info.HarvestType = obj["l"]?.ToString();
+                            }
+
+                            // Yeni JSON formati: "h" ve "ht" fieldlari
+                            if (obj.TryGetValue("h", out var harvestableToken))
+                            {
+                                info.IsHarvestable = harvestableToken.Type switch
+                                {
+                                    JTokenType.Boolean => harvestableToken.Value<bool>(),
+                                    JTokenType.Integer => harvestableToken.Value<int>() != 0,
+                                    _ => info.IsHarvestable
+                                };
+                            }
+
+                            if (obj.TryGetValue("ht", out var harvestTypeToken))
+                                info.HarvestType = harvestTypeToken?.ToString();
+                            else if (obj.TryGetValue("harvestType", out var harvestTypeAltToken))
+                                info.HarvestType = harvestTypeAltToken?.ToString();
                         }
 
                         info.Name = CleanName(rawName);
+                        if (string.IsNullOrEmpty(info.HarvestType) && !string.IsNullOrEmpty(uniqueName))
+                            info.HarvestType = uniqueName;
                         _mobDatabase[typeId] = info;
                     }
-                }  // ← lock sonu
+                } 
+
+                BuildLivingResourceTypeMap(); // ← _livingResourceTypeMap'i doldur
             }
             catch (Exception ex)
             {
-                Log($"[HATA] Mob DB Yüklenemedi: {ex.Message}", LogLevel.Error);
+                Log(string.Format(Lang.Get("Error_MobDbLoad") ?? "[HATA] Mob DB Yüklenemedi: {0}", ex.Message), LogLevel.Error);
+
+
+                Debug.WriteLine($"[DB ERROR] {ex.Message}");
+                Debug.WriteLine($"[DB ERROR STACK] {ex.StackTrace}");
+                Log(string.Format(Lang.Get("Error_MobDbLoad") ?? "[HATA] Mob DB Yüklenemedi: {0}", ex.Message), LogLevel.Error);
+
             }
         }
 
@@ -173,8 +209,16 @@ namespace Nightwatch
             foreach (var kv in _mobDatabase)
             {
                 var info = kv.Value;
-                if (info == null || !info.IsHarvestable) continue;
+                if (info == null) continue;
+                if (!info.IsHarvestable && string.IsNullOrEmpty(info.HarvestType) && string.IsNullOrEmpty(info.Name))
+                    continue;
 
+                /// Tüm Mobları Gör
+                
+                /*
+                Debug.WriteLine($"[LRM] TypeId={kv.Key} | IsHarvestable={info.IsHarvestable} | HarvestType={info.HarvestType} | Name={info.Name}");
+
+                */
                 var category = ParseCategoryFromString(info.HarvestType);
                 if (category == HarvestableCategory.None)
                     category = ParseCategoryFromString(info.Name);
@@ -236,5 +280,3 @@ namespace Nightwatch
 
     }
 }
-
-

@@ -1,4 +1,4 @@
-﻿#region Using Directives
+#region Using Directives
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -95,7 +95,7 @@ namespace Nightwatch
                     };
                 }
             }
-            catch { }
+            catch (Exception ex) { UIConsole.Log($"[HATA] Lang Init: {ex.Message}", LogLevel.Error); }
 
             // Açılışta okunan dile uygun FONT'u ve karakter setini yükle!
             ApplyLanguageFont(startupLang);

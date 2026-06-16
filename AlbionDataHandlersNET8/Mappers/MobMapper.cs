@@ -1,5 +1,6 @@
-﻿using AlbionDataHandlers.Entities;
+using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Enums;
+
 using System.Text.Json.Nodes;
 
 namespace AlbionDataHandlers.Mappers;
@@ -7,7 +8,25 @@ namespace AlbionDataHandlers.Mappers;
 public class MobMapper
 {
     private static MobMapper? _instance;
-    public static MobMapper Instance => _instance ??= new MobMapper("Assets/Helper/mobs.min.json");
+    public static MobMapper Instance => _instance ??= new MobMapper(GetDefaultLanguagePath());
+
+    // Sistem dilini kullanarak doğru JSON dosyasını seç
+    private static string GetDefaultLanguagePath()
+    {
+        // Sistem dilini al (kısaltması)
+        string cultureName = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpperInvariant();
+
+        // Desteklenen diller: TR, EN, RU, ZH
+        string lang = cultureName switch
+        {
+            "TR" => "TR",
+            "RU" => "RU",
+            "ZH" => "ZH",
+            _ => "EN"  // Varsayılan: İngilizce
+        };
+
+        return $"Assets/Helper/mobs_{lang}.min.json";
+    }
 
     private Dictionary<int, MobTypeInfo> TypeMap { get; set; } = new Dictionary<int, MobTypeInfo>();
 
@@ -46,11 +65,17 @@ public class MobMapper
                             int typeId = obj.ContainsKey("id") ? obj["id"]!.GetValue<int>() : (i + 15);
                             int mobTier = obj.ContainsKey("t") ? obj["t"]!.GetValue<int>() : 1;
 
+                            // Safe cast: tier'in valid TierLevels value'su olduğunu kontrol et
+                            if (!Enum.IsDefined(typeof(TierLevels), mobTier))
+                                mobTier = 1; // Invalid tier ise default 1
+
                             var mobTypeInfo = new MobTypeInfo
                             {
                                 TypeId = typeId,
                                 Name = obj["n"]?.GetValue<string>() ?? "",
-                                UniqueName = obj["u"]?.GetValue<string>() ?? ""
+                                UniqueName = obj["u"]?.GetValue<string>() ?? "",
+                                Tier = (TierLevels)mobTier,
+                                LootTier = obj.ContainsKey("lt") ? obj["lt"]!.GetValue<int>() : 0
                             };
                             TypeMap[typeId] = mobTypeInfo;
                         }

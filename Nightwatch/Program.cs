@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
@@ -150,24 +150,24 @@ namespace Nightwatch
                 client.DefaultRequestHeaders.Add("User-Agent", "Nightwatch-Updater");
 
                 // REPO ADINI VE KULLANICI ADINI KENDİ GITHUB BİLGİLERİNE GÖRE DEĞİŞTİR
-                string url = "https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App/version.txt?t={DateTime.Now.Ticks}";
+                string url = $"https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App/version.txt?t={DateTime.Now.Ticks}";
 
                 string response = await client.GetStringAsync(url);
-                int currentVersion = 2; // Senin belirlediğin şu anki sürüm numarası
+                int currentVersion = 3; // Senin belirlediğin şu anki sürüm numarası
 
                 if (int.TryParse(response.Trim(), out int latestVersion))
                 {
                     if (latestVersion > currentVersion)
                     {
                         // UI için Güncelleme Var durumunu ayarla (Kırmızı Renk)
-                        UpdateStatusText = $"[Güncelleme Var]";
+                        UpdateStatusText = Lang.Get("UpdateAvailable");
                         UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.3f, 0.3f, 1f);
                         RenkliYaz($"[BİLDİRİM] Yeni Bir Güncelleme Mevcut! Lütfen GitHub'dan güncelleyin.", ConsoleColor.Cyan);
                     }
                     else
                     {
                         // UI için Güncel durumunu ayarla (Yeşil Renk)
-                        UpdateStatusText = $"[Güncel]";
+                        UpdateStatusText = Lang.Get("Updated");
                         UpdateStatusColor = new System.Numerics.Vector4(0.2f, 1.0f, 0.2f, 1f);
                         RenkliYaz($"[BİLDİRİM] Uygulama Güncel.", ConsoleColor.DarkGray);
                     }
