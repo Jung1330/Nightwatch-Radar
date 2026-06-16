@@ -11,7 +11,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Windows%2010%2F11-blue?style=flat-square" />
   <img src="https://img.shields.io/badge/.NET-8.0-purple?style=flat-square" />
-  <img src="https://img.shields.io/badge/Version-1.2-gold?style=flat-square" />
+  <img src="https://img.shields.io/badge/Version-1.3-gold?style=flat-square" />
   <img src="https://img.shields.io/badge/Languages-TR%20%7C%20EN%20%7C%20RU%20%7C%20ZH-green?style=flat-square" />
   <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square" />
 </p>
