@@ -2,7 +2,7 @@ What's the Changes:
 + Some of Translation Mistakes solved,
 + Language save system became automated,
 
-⚠️ Bug Test
+Bug Test :
 - The Elemental issue has not been resolved.
   (It may sometimes display the wrong tier. Ex: The radar shows 5.2 Ore Elemental, but the game may display 4.2 Ore Elemental.)
 
