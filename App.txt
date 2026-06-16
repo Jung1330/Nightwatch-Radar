@@ -1,16 +1,11 @@
 What's New:
-+ Fixed the radar flickering issue.
-+ Added the option to display only the resource icon on trackers (Resource/Show Resource Label).
-+ Added Russian and Chinese radar names.
-+ Fixed the issue where the warning didn't work when the number of players increased.
-+ The word “Updated” has been added to the app (You don't need to check GitHub every time.)
++ Some of Translation Mistakes solved,
 
-⚠️ Known Issues
+⚠️ Bug Test
 - The Elemental issue has not been resolved.
   (It may sometimes display the wrong tier. Ex: The radar shows 5.2 Ore Elemental, but the game may display 4.2 Ore Elemental.)
 
-What's Coming in the Next Update
-- The language files will be edited.
+Future Check :
++ Guild Members problem
 
-TIP: If you find any bug, please report them.
-Discord: Jung1330
+TIP: If you find any bug, please report them on Github Issues.
