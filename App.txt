@@ -2,6 +2,7 @@ Version Check [V1.4] :
 + Some of Translation Mistakes solved,
 + Language save system became automated,
 + Resources was showing wrong tier,it fixed
++ Logs icon problem solved
 
 Future Check :
 + Guild Members problem
