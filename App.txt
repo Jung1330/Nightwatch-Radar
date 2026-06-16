@@ -1,5 +1,6 @@
-What's New:
+What's the Changes:
 + Some of Translation Mistakes solved,
++ Language save system became automated,
 
 ⚠️ Bug Test
 - The Elemental issue has not been resolved.
