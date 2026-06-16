@@ -1,10 +1,7 @@
-What's the Changes [V1.3] :
+What's the Changes [V1.4] :
 + Some of Translation Mistakes solved,
 + Language save system became automated,
-
-Bug Test :
-- The Elemental issue has not been resolved.
-  (It may sometimes display the wrong tier. Ex: The radar shows 5.2 Ore Elemental, but the game may display 4.2 Ore Elemental.)
++ Resources was showing wrong tier,it fixed
 
 Future Check :
 + Guild Members problem
