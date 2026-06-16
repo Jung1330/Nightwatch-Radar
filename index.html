@@ -841,24 +841,328 @@
     }
 
     /* ── CHANGELOG STYLES ── */
+    #changelog {
+      background: linear-gradient(180deg, transparent 0%, rgba(0, 20, 10, 0.3) 50%, transparent 100%);
+    }
+
     #changelog .changelog-meta {
       color: var(--gold);
       font-weight: 700;
       margin-top: 0.6rem;
     }
 
-    #changelog pre.console {
-      background: #071017;
-      border: 1px solid var(--border);
-      padding: 1rem;
-      border-radius: 8px;
-      color: #7CFC00;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.95rem;
-      white-space: pre-wrap;
-      overflow: auto;
-      max-height: 420px;
-      line-height: 1.5;
+    .terminal-window {
+      background: #0a0e14;
+      border: 1px solid rgba(124, 252, 0, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 2rem;
+      position: relative;
+      box-shadow:
+        0 0 30px rgba(124, 252, 0, 0.05),
+        0 0 60px rgba(92, 40, 120, 0.08),
+        inset 0 0 80px rgba(0, 0, 0, 0.5);
+      animation: terminal-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes terminal-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 30px rgba(124, 252, 0, 0.05), 0 0 60px rgba(92, 40, 120, 0.08), inset 0 0 80px rgba(0, 0, 0, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(124, 252, 0, 0.1), 0 0 80px rgba(92, 40, 120, 0.12), inset 0 0 80px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: linear-gradient(180deg, #151b23, #0d1117);
+      border-bottom: 1px solid rgba(124, 252, 0, 0.1);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-dots span:nth-child(1) {
+      background: #ff5f57;
+      box-shadow: 0 0 6px rgba(255, 95, 87, 0.5);
+    }
+
+    .terminal-dots span:nth-child(2) {
+      background: #ffbd2e;
+      box-shadow: 0 0 6px rgba(255, 189, 46, 0.5);
+    }
+
+    .terminal-dots span:nth-child(3) {
+      background: #28c840;
+      box-shadow: 0 0 6px rgba(40, 200, 64, 0.5);
+    }
+
+    .terminal-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: rgba(124, 252, 0, 0.5);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .terminal-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem;
+      color: #28c840;
+    }
+
+    .terminal-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #28c840;
+      box-shadow: 0 0 8px #28c840;
+      animation: status-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes status-blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      position: relative;
+      min-height: 200px;
+    }
+
+    /* Scanline overlay */
+    .terminal-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(124, 252, 0, 0.008) 2px,
+          rgba(124, 252, 0, 0.008) 4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* CRT flicker */
+    .terminal-body::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(124, 252, 0, 0.01);
+      animation: crt-flicker 0.1s infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes crt-flicker {
+      0% {
+        opacity: 0.02;
+      }
+
+      50% {
+        opacity: 0.04;
+      }
+
+      100% {
+        opacity: 0.02;
+      }
+    }
+
+    .terminal-prompt {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: rgba(124, 252, 0, 0.4);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .terminal-prompt .path {
+      color: #5c9eff;
+    }
+
+    .terminal-prompt .cmd {
+      color: rgba(124, 252, 0, 0.7);
+    }
+
+    .changelog-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cl-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 0.5rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(124, 252, 0, 0.85);
+      opacity: 0;
+      transform: translateX(-10px);
+      animation: cl-entry-in 0.4s ease forwards;
+    }
+
+    .cl-entry:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .cl-entry:nth-child(2) {
+      animation-delay: 0.25s;
+    }
+
+    .cl-entry:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    .cl-entry:nth-child(4) {
+      animation-delay: 0.55s;
+    }
+
+    .cl-entry:nth-child(5) {
+      animation-delay: 0.7s;
+    }
+
+    .cl-entry:nth-child(6) {
+      animation-delay: 0.85s;
+    }
+
+    .cl-entry:nth-child(7) {
+      animation-delay: 1.0s;
+    }
+
+    .cl-entry:nth-child(8) {
+      animation-delay: 1.15s;
+    }
+
+    @keyframes cl-entry-in {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .cl-icon {
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .cl-icon.add {
+      color: #4ade80;
+    }
+
+    .cl-icon.fix {
+      color: #fbbf24;
+    }
+
+    .cl-icon.warn {
+      color: #f87171;
+    }
+
+    .cl-icon.info {
+      color: #60a5fa;
+    }
+
+    .cl-icon.tip {
+      color: var(--cyan);
+    }
+
+    .cl-text {
+      flex: 1;
+    }
+
+    .cl-divider {
+      border: none;
+      border-top: 1px solid rgba(124, 252, 0, 0.08);
+      margin: 0.6rem 0;
+    }
+
+    .cl-section-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: rgba(124, 252, 0, 0.35);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.5rem 0 0.3rem;
+      border-bottom: 1px dashed rgba(124, 252, 0, 0.08);
+      margin-bottom: 0.3rem;
+    }
+
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: rgba(124, 252, 0, 0.7);
+      margin-left: 4px;
+      animation: cursor-blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes cursor-blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .terminal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: linear-gradient(180deg, #0d1117, #151b23);
+      border-top: 1px solid rgba(124, 252, 0, 0.08);
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      color: rgba(124, 252, 0, 0.3);
+    }
+
+    .terminal-footer .ver-badge {
+      padding: 2px 8px;
+      background: rgba(124, 252, 0, 0.08);
+      border: 1px solid rgba(124, 252, 0, 0.15);
+      border-radius: 3px;
+      color: rgba(124, 252, 0, 0.6);
     }
 
     /* ── NOTICE BOX ── */
@@ -987,11 +1291,437 @@
         height: 180px;
       }
     }
+
+    /* ══════════════════════════════════════════════════ */
+    /* ══  PREMIUM ENHANCEMENTS                       ══ */
+    /* ══════════════════════════════════════════════════ */
+
+    /* ── SCROLL PROGRESS BAR ── */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--gold), var(--cyan));
+      z-index: 999;
+      width: 0%;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 10px var(--accent2), 0 0 20px rgba(200, 168, 75, 0.3);
+    }
+
+    /* ── NAV SCROLL EFFECT ── */
+    nav.scrolled {
+      background: rgba(1, 2, 14, 0.97);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(92, 40, 120, 0.4);
+      height: 56px;
+    }
+
+    nav {
+      transition: all 0.3s ease;
+    }
+
+    /* ── HERO TITLE SHIMMER ── */
+    .hero-title span {
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold2) 30%, #fff 50%, var(--gold2) 70%, var(--gold) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gold-shimmer 4s linear infinite;
+    }
+
+    @keyframes gold-shimmer {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    /* ── HERO EYEBROW TYPING REVEAL ── */
+    .hero-eyebrow {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--accent2);
+      animation: typing 3s steps(35) 0.5s forwards, blink-caret 0.7s step-end 8;
+      width: 0;
+      max-width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+        border-right-color: transparent;
+      }
+    }
+
+    @keyframes blink-caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    /* ── BADGE HOVER GLOW ── */
+    .badge {
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .badge:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 4px 15px rgba(92, 40, 120, 0.3);
+    }
+
+    .badge.green:hover {
+      box-shadow: 0 4px 15px rgba(40, 180, 80, 0.3);
+    }
+
+    .badge.gold:hover {
+      box-shadow: 0 4px 15px rgba(200, 168, 75, 0.3);
+    }
+
+    .badge.cyan:hover {
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    }
+
+    /* ── STATS GLOW & COUNTER ── */
+    .stat-num {
+      text-shadow: 0 0 20px rgba(200, 168, 75, 0.4), 0 0 40px rgba(200, 168, 75, 0.15);
+      transition: all 0.3s;
+    }
+
+    .stats-grid>div {
+      transition: transform 0.3s;
+    }
+
+    .stats-grid>div:hover {
+      transform: translateY(-4px);
+    }
+
+    .stats-grid>div:hover .stat-num {
+      text-shadow: 0 0 30px rgba(200, 168, 75, 0.7), 0 0 60px rgba(200, 168, 75, 0.3);
+    }
+
+    /* ── FEATURE CARD ENHANCED ── */
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(92, 40, 120, 0.15) 0%, transparent 60%);
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .feature-card:hover::after {
+      opacity: 1;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Feature icon float */
+    .feature-icon {
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: translateY(-4px) scale(1.15);
+    }
+
+    /* Feature tag glow on hover */
+    .feature-tag {
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover .feature-tag {
+      box-shadow: 0 0 8px rgba(92, 40, 120, 0.4);
+    }
+
+    .feature-card:hover .feature-tag.new {
+      box-shadow: 0 0 8px rgba(40, 200, 80, 0.4);
+    }
+
+    .feature-card:hover .feature-tag.gold {
+      box-shadow: 0 0 8px rgba(200, 168, 75, 0.4);
+    }
+
+    /* ── SCREENSHOT CARD ENHANCED ── */
+    .screenshot-card img {
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .screenshot-card:hover img {
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+
+    .screenshot-card {
+      transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+    }
+
+    .screenshot-card:hover {
+      box-shadow: 0 12px 40px rgba(92, 40, 120, 0.25);
+    }
+
+    /* Tab button enhanced */
+    .tab-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--gold));
+      box-shadow: 0 0 10px var(--accent2);
+    }
+
+    /* ── INSTALL STEPS ENHANCED ── */
+    .step {
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .step:hover {
+      transform: translateX(4px);
+    }
+
+    .step-num {
+      transition: all 0.3s;
+    }
+
+    .step:hover .step-num {
+      color: rgba(118, 38, 160, 0.7);
+      text-shadow: 0 0 20px rgba(118, 38, 160, 0.4);
+    }
+
+    .step-pill {
+      transition: all 0.3s;
+    }
+
+    .step:hover .step-pill {
+      transform: scale(1.05);
+    }
+
+    /* ── FAQ ENHANCED ── */
+    .faq-item {
+      transition: all 0.3s;
+    }
+
+    .faq-item.open {
+      background: var(--bg3);
+      box-shadow: inset 3px 0 0 var(--accent2), 0 0 20px rgba(92, 40, 120, 0.08);
+    }
+
+    .faq-q {
+      transition: color 0.2s, padding-left 0.3s;
+    }
+
+    .faq-item.open .faq-q {
+      color: #fff;
+      padding-left: 2.2rem;
+    }
+
+    .faq-q .arrow {
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .faq-item.open .faq-q .arrow {
+      color: var(--gold);
+    }
+
+    /* ── DOWNLOAD BOX ENHANCED ── */
+    .download-box {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .download-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 60px rgba(92, 40, 120, 0.3);
+    }
+
+    .download-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* Download button pulse */
+    .download-btns .btn-primary {
+      animation: btn-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes btn-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 24px rgba(92, 40, 120, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 4px 24px rgba(92, 40, 120, 0.5), 0 0 40px rgba(118, 38, 160, 0.3);
+      }
+    }
+
+    /* ── FOOTER ENHANCED ── */
+    .footer-logo {
+      text-shadow: 0 0 30px rgba(92, 40, 120, 0.5);
+    }
+
+    .footer-links a {
+      position: relative;
+    }
+
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .footer-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ── NOTICE BOX ENHANCED ── */
+    .notice {
+      transition: all 0.3s;
+    }
+
+    .notice:hover {
+      border-left-color: var(--gold);
+      background: rgba(92, 40, 120, 0.18);
+    }
+
+    /* ── REVEAL STAGGER ── */
+    .features-grid .feature-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s;
+    }
+
+    .features-grid.visible .feature-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .features-grid.visible .feature-card:nth-child(1) {
+      transition-delay: 0.05s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(3) {
+      transition-delay: 0.15s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(4) {
+      transition-delay: 0.2s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(5) {
+      transition-delay: 0.25s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(6) {
+      transition-delay: 0.3s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(7) {
+      transition-delay: 0.35s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(8) {
+      transition-delay: 0.4s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(9) {
+      transition-delay: 0.45s;
+    }
+
+    .features-grid.visible .feature-card:nth-child(10) {
+      transition-delay: 0.5s;
+    }
+
+    /* ── HERO FLOAT ANIMATION ── */
+    .hero-logo {
+      animation: pulse-logo 3s ease-in-out infinite, hero-float 6s ease-in-out infinite;
+    }
+
+    @keyframes hero-float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* ── SMOOTH BTN SHINE ── */
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+      transform: skewX(-20deg);
+      animation: btn-shine 4s ease-in-out infinite;
+    }
+
+    @keyframes btn-shine {
+
+      0%,
+      100% {
+        left: -60%;
+      }
+
+      50% {
+        left: 120%;
+      }
+    }
+
+    /* ── GLASS MORPHISM FOR STATS ── */
+    .stats-bar {
+      background: rgba(4, 6, 26, 0.8);
+      backdrop-filter: blur(10px);
+    }
   </style>
 </head>
 
 <body>
 
+  <div id="scrollProgress"></div>
   <div id="particles"></div>
 
   <!-- NAV -->
@@ -1376,10 +2106,30 @@
       <div class="reveal">
         <div class="section-label" data-i18n="changelog_label">Changelog</div>
         <h2 class="section-title" data-i18n="changelog_title">Changelog</h2>
-        <div class="changelog-meta" data-i18n="changelog_meta">v2.1 — 2026-05-25</div>
+        <div class="changelog-meta" data-i18n="changelog_meta">v1.4</div>
       </div>
-      <div class="reveal" style="margin-top:1rem;">
-        <pre class="console" data-i18n="changelog_console"></pre>
+      <div class="reveal">
+        <div class="terminal-window">
+          <div class="terminal-titlebar">
+            <div class="terminal-dots"><span></span><span></span><span></span></div>
+            <div class="terminal-title">nightwatch — changelog</div>
+            <div class="terminal-status" data-i18n="terminal_status">LIVE</div>
+          </div>
+          <div class="terminal-body" id="changelogTerminalBody">
+            <div class="terminal-prompt">
+              <span class="path">~/nightwatch</span>
+              <span class="cmd">$ cat CHANGELOG.md<span class="terminal-cursor"></span></span>
+            </div>
+            <div class="changelog-cards" id="changelogCards">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="terminal-footer">
+            <span>nightwatch-radar.exe</span>
+            <span class="ver-badge" data-i18n="changelog_meta">v1.4</span>
+            <span>UTF-8 | LF</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1482,7 +2232,20 @@
         dl_version: 'Sürüm 2 — Windows x64', dl_req: 'Gereksinim:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
         btn_dl_gh: 'GitHub\'dan İndir', btn_dl_npcap: 'Npcap İndir',
         dl_notice_title: '⚠️ Sorumluluk Reddi:', dl_notice_desc: ' Nightwatch, Albion Online\'ın resmi bir aracı değildir. Kullanım kendi sorumluluğunuzdadır. Discord: Jung1330',
-        changelog_label: 'Güncelleme Notları', changelog_title: 'Yenilikler', changelog_meta: 'v1.4', changelog_html: '<h3>Sürüm Notları [V1.4]</h3><ul><li>Bazı çeviri hataları giderildi,</li><li>Dil kaydetme sistemi otomatik hale getirildi,</li><li>Kaynaklar yanlış seviye (tier) gösteriyordu, düzeltildi</li><li>Log ikonu sorunu çözüldü</li></ul><div class="notice"><strong>Gelecek Planları:</strong><ul><li>Klan Üyeleri sorunu</li></ul></div><div class="notice"><strong>İPUCU:</strong> Herhangi bir hata bulursanız, lütfen Github Issues üzerinden bildirin.</div>', changelog_console: 'Sürüm Notları [V1.4] :\n+ Bazı çeviri hataları giderildi,\n+ Dil kaydetme sistemi otomatik hale getirildi,\n+ Kaynaklar yanlış seviye (tier) gösteriyordu, düzeltildi\n+ Log ikonu sorunu çözüldü\n\nGelecek Planları :\n+ Klan Üyeleri sorunu\n\nİPUCU: Herhangi bir hata bulursanız, lütfen Github Issues üzerinden bildirin.', footer_sub: 'Albion Online Network Radar — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
+        changelog_label: 'Güncelleme Notları', changelog_title: 'Yenilikler', changelog_meta: 'v1.4',
+        terminal_status: 'CANLI',
+        changelog_entries: [
+          { icon: 'fix', text: 'Bazı çeviri hataları giderildi' },
+          { icon: 'add', text: 'Dil kaydetme sistemi otomatik hale getirildi' },
+          { icon: 'fix', text: 'Kaynaklar yanlış seviye (tier) gösteriyordu, düzeltildi' },
+          { icon: 'fix', text: 'Log ikonu sorunu çözüldü' },
+          { icon: 'divider' },
+          { icon: 'section', text: 'GELECEK PLANLARI' },
+          { icon: 'warn', text: 'Klan Üyeleri sorunu' },
+          { icon: 'divider' },
+          { icon: 'tip', text: 'Herhangi bir hata bulursanız, lütfen Github Issues üzerinden bildirin.' }
+        ],
+        footer_sub: 'Albion Online Network Radar — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       },
       en: {
         nav_features: 'Features', nav_screens: 'Screenshots', nav_install: 'Installation', nav_faq: 'FAQ', nav_download: 'Download',
@@ -1532,7 +2295,19 @@
         dl_version: 'Version 2 — Windows x64', dl_req: 'Requirements:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
         btn_dl_gh: 'Download from GitHub', btn_dl_npcap: 'Download Npcap',
         dl_notice_title: '⚠️ Disclaimer:', dl_notice_desc: ' Nightwatch is not an official Albion Online tool. Use at your own risk. Discord: Jung1330',
-        changelog_label: 'Changelog', changelog_title: "What's New", changelog_meta: 'v1.4', changelog_html: '<h3>Version Check [V1.4]</h3><ul><li>Some of Translation Mistakes solved,</li><li>Language save system became automated,</li><li>Resources was showing wrong tier, it fixed</li><li>Logs icon problem solved</li></ul><div class="notice"><strong>Future Check :</strong><ul><li>Guild Members problem</li></ul></div><div class="notice"><strong>TIP:</strong> If you find any bug, please report them on Github Issues.</div>', changelog_console: 'Version Check [V1.4] :\n+ Some of Translation Mistakes solved,\n+ Language save system became automated,\n+ Resources was showing wrong tier, it fixed\n+ Logs icon problem solved\n\nFuture Check :\n+ Guild Members problem\n\nTIP: If you find any bug, please report them on Github Issues.',
+        changelog_label: 'Changelog', changelog_title: "What's New", changelog_meta: 'v1.4',
+        terminal_status: 'LIVE',
+        changelog_entries: [
+          { icon: 'fix', text: 'Some of Translation Mistakes solved' },
+          { icon: 'add', text: 'Language save system became automated' },
+          { icon: 'fix', text: 'Resources was showing wrong tier, it fixed' },
+          { icon: 'fix', text: 'Logs icon problem solved' },
+          { icon: 'divider' },
+          { icon: 'section', text: 'FUTURE CHECK' },
+          { icon: 'warn', text: 'Guild Members problem' },
+          { icon: 'divider' },
+          { icon: 'tip', text: 'If you find any bug, please report them on Github Issues.' }
+        ],
         footer_sub: 'Albion Online Network Radar — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       },
       ru: {
@@ -1583,7 +2358,20 @@
         dl_version: 'Версия 2 — Windows x64', dl_req: 'Требования:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
         btn_dl_gh: 'Скачать с GitHub', btn_dl_npcap: 'Скачать Npcap',
         dl_notice_title: '⚠️ Отказ от ответственности:', dl_notice_desc: ' Nightwatch не является официальным инструментом Albion Online. Используйте на свой риск. Discord: Jung1330',
-        changelog_label: 'Журнал изменений', changelog_title: 'Что нового', changelog_meta: 'v1.4', changelog_html: '<h3>Обновление [V1.4]</h3><ul><li>Исправлены некоторые ошибки перевода,</li><li>Система сохранения языка стала автоматической,</li><li>Ресурсы отображали неправильный тир, исправлено</li><li>Решена проблема с иконкой логов</li></ul><div class="notice"><strong>В планах :</strong><ul><li>Проблема с участниками гильдии</li></ul></div><div class="notice"><strong>СОВЕТ:</strong> Если вы нашли ошибку, пожалуйста, сообщите о ней в Github Issues.</div>', changelog_console: 'Обновление [V1.4] :\n+ Исправлены некоторые ошибки перевода,\n+ Система сохранения языка стала автоматической,\n+ Ресурсы отображали неправильный тир, исправлено\n+ Решена проблема с иконкой логов\n\nВ планах :\n+ Проблема с участниками гильдии\n\nСОВЕТ: Если вы нашли ошибку, пожалуйста, сообщите о ней в Github Issues.', footer_sub: 'Сетевой Радар для Albion Online — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
+        changelog_label: 'Журнал изменений', changelog_title: 'Что нового', changelog_meta: 'v1.4',
+        terminal_status: 'АКТИВ',
+        changelog_entries: [
+          { icon: 'fix', text: 'Исправлены некоторые ошибки перевода' },
+          { icon: 'add', text: 'Система сохранения языка стала автоматической' },
+          { icon: 'fix', text: 'Ресурсы отображали неправильный тир, исправлено' },
+          { icon: 'fix', text: 'Решена проблема с иконкой логов' },
+          { icon: 'divider' },
+          { icon: 'section', text: 'В ПЛАНАХ' },
+          { icon: 'warn', text: 'Проблема с участниками гильдии' },
+          { icon: 'divider' },
+          { icon: 'tip', text: 'Если вы нашли ошибку, пожалуйста, сообщите о ней в Github Issues.' }
+        ],
+        footer_sub: 'Сетевой Радар для Albion Online — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       },
       zh: {
         nav_features: '功能', nav_screens: '截图', nav_install: '安装', nav_faq: '常见问题', nav_download: '下载',
@@ -1633,7 +2421,20 @@
         dl_version: '版本 2 — Windows x64', dl_req: '需求:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8运行时',
         btn_dl_gh: '从GitHub下载', btn_dl_npcap: '下载Npcap',
         dl_notice_title: '⚠️ 免责声明:', dl_notice_desc: ' Nightwatch不是Albion Online的官方工具。使用风险自负。Discord: Jung1330',
-        changelog_label: '更新日志', changelog_title: '更新内容', changelog_meta: 'v1.4', changelog_html: '<h3>版本更新 [V1.4]</h3><ul><li>修复了一些翻译错误，</li><li>语言保存系统变为自动化，</li><li>资源显示错误的等级，已修复</li><li>日志图标问题已解决</li></ul><div class="notice"><strong>未来计划 :</strong><ul><li>公会成员问题</li></ul></div><div class="notice"><strong>提示:</strong> 如果您发现任何错误，请在 Github Issues 报告。</div>', changelog_console: '版本更新 [V1.4] :\n+ 修复了一些翻译错误，\n+ 语言保存系统变为自动化，\n+ 资源显示错误的等级，已修复\n+ 日志图标问题已解决\n\n未来计划 :\n+ 公会成员问题\n\n提示: 如果您发现任何错误，请在 Github Issues 报告。', footer_sub: 'Albion Online 网络雷达 — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
+        changelog_label: '更新日志', changelog_title: '更新内容', changelog_meta: 'v1.4',
+        terminal_status: '在线',
+        changelog_entries: [
+          { icon: 'fix', text: '修复了一些翻译错误' },
+          { icon: 'add', text: '语言保存系统变为自动化' },
+          { icon: 'fix', text: '资源显示错误的等级，已修复' },
+          { icon: 'fix', text: '日志图标问题已解决' },
+          { icon: 'divider' },
+          { icon: 'section', text: '未来计划' },
+          { icon: 'warn', text: '公会成员问题' },
+          { icon: 'divider' },
+          { icon: 'tip', text: '如果您发现任何错误，请在 Github Issues 报告。' }
+        ],
+        footer_sub: 'Albion Online 网络雷达 — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       }
     };
 
@@ -1663,6 +2464,33 @@
 
       // Update screenshot images for current tab
       updateScreenshotImage(currentTab, lang);
+
+      // Render changelog terminal cards
+      renderChangelog(data);
+    }
+
+    function renderChangelog(data) {
+      const container = document.getElementById('changelogCards');
+      if (!container || !data.changelog_entries) return;
+      const iconMap = {
+        add: '+',
+        fix: '~',
+        warn: '!',
+        info: 'i',
+        tip: '▶'
+      };
+      let html = '';
+      data.changelog_entries.forEach(entry => {
+        if (entry.icon === 'divider') {
+          html += '<hr class="cl-divider">';
+        } else if (entry.icon === 'section') {
+          html += `<div class="cl-section-title">${entry.text}</div>`;
+        } else {
+          const symbol = iconMap[entry.icon] || '+';
+          html += `<div class="cl-entry"><span class="cl-icon ${entry.icon}">${symbol}</span><span class="cl-text">${entry.text}</span></div>`;
+        }
+      });
+      container.innerHTML = html;
     }
 
     function updateScreenshotImage(tabName, lang) {
@@ -1722,6 +2550,76 @@
       setLang(currentLang);
       document.querySelectorAll('.feature-card').forEach(function (el) {
         if (!el.querySelector('h3') && !el.querySelector('p')) el.remove();
+      });
+
+      // ── SCROLL PROGRESS BAR ──
+      const progressBar = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        progressBar.style.width = progress + '%';
+      });
+
+      // ── NAVBAR SCROLL EFFECT ──
+      const nav = document.querySelector('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // ── FEATURE CARD MOUSE GLOW ──
+      document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--mx', x + '%');
+          card.style.setProperty('--my', y + '%');
+        });
+      });
+
+      // ── STATS COUNTER ANIMATION ──
+      const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const nums = entry.target.querySelectorAll('.stat-num');
+            nums.forEach(num => {
+              const finalText = num.textContent;
+              const match = finalText.match(/(\d+)/);
+              if (match) {
+                const target = parseInt(match[1]);
+                const prefix = finalText.substring(0, finalText.indexOf(match[1]));
+                const suffix = finalText.substring(finalText.indexOf(match[1]) + match[1].length);
+                let current = 0;
+                const increment = target / 40;
+                const timer = setInterval(() => {
+                  current += increment;
+                  if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                  }
+                  num.textContent = prefix + Math.floor(current) + suffix;
+                }, 30);
+              }
+            });
+            statObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      const statsGrid = document.querySelector('.stats-grid');
+      if (statsGrid) statObserver.observe(statsGrid);
+
+      // ── HERO PARALLAX ──
+      const heroBg = document.querySelector('.hero-bg');
+      window.addEventListener('scroll', () => {
+        if (heroBg) {
+          const scrolled = window.scrollY;
+          heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
       });
     });
   </script>
