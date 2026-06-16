@@ -1,4 +1,4 @@
-What's the Changes:
+What's the Changes [V1.3] :
 + Some of Translation Mistakes solved,
 + Language save system became automated,
 
