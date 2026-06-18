@@ -10,3 +10,4 @@ Known Mistakes
 + “Solo Dungeon” can be written on all doors that is, on anything you can pass through.
 
 TIP: If you find any bug, please report them on Github Issues.
+Dev : Please give feedback for UI Design
