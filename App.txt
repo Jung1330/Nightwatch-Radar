@@ -6,6 +6,6 @@ Future Check :
 + There may be translation errors.
 
 Known Mistakes
-+ + “Solo Dungeon” can be written on all doors that is, on anything you can pass through.
++ “Solo Dungeon” can be written on all doors that is, on anything you can pass through.
 
 TIP: If you find any bug, please report them on Github Issues.
