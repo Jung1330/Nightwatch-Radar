@@ -8,6 +8,7 @@ using AlbionDataHandlers.Handlers;
 using AlbionDataHandlers.Handlers.MapHandler;
 using Nightwatch.Managers;
 using Nightwatch.UserControls.Language;
+using System.Net.Http;
 
 namespace Nightwatch
 {
@@ -22,7 +23,7 @@ namespace Nightwatch
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        // Main metodunun EN BA�INA, her �eyden �nce
+        // Main metodunun EN BAŞINA, her şeyden önce
         [DllImport("SDL3.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern bool SDL_SetHint(string name, string value);
 
@@ -36,19 +37,25 @@ namespace Nightwatch
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool SetProcessDpiAwarenessContext(int dpiContext);
         private const int DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4;
-
+        public static string UpdateStatusText = "Sürüm Kontrol Ediliyor...";
+        public static System.Numerics.Vector4 UpdateStatusColor = new System.Numerics.Vector4(0.6f, 0.6f, 0.6f, 1f); // Başlangıçta gri
         // --- ANA PROGRAM ---
         [STAThread]
         public static void Main(string[] args)
         {
+
+
+
             ErrorCodeSink.Install();
 
+            // Konsol açılır açılmaz arka planda güncellemeyi kontrol etsin
+            Task.Run(() => CheckForUpdatesAsync());
 
-            // Sonra Main i�inde ilk sat�r olarak:
+            // Sonra Main içinde ilk satır olarak:
             TrySetSdlHint("SDL_WINDOW_UTILITY", "0");
+
             TrySetSdlHint("SDL_HINT_WINDOW_NO_TASKBAR", "0");
-            // En basta sadece temel dili Ingilizce veya TR olarak yukle (Login ekrani icin)
-            Lang.LoadLanguage("TR");
+            Lang.LoadLanguage("EN");
             bool isRunningAsAdmin = IsAdministrator();
 
             try { SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2); }
@@ -56,67 +63,80 @@ namespace Nightwatch
 
             try
             {
-                // Motoru degil, sadece "Bos" yoneticiyi olustur
                 var manager = new GameStateManager();
                 var radar = new AlbionOverlay(manager, isRunningAsAdmin);
-
-                // ========================================================
-                // --- KEYAUTH SUNUCUSUNA ON BAGLANTIYI KUR ---
-                // ========================================================
-                RenkliYaz("KeyAuth Sunucusuna Baglaniliyor...", ConsoleColor.Yellow);
-                KeyAuthManager.Init();
-                RenkliYaz("Giri� bekleniyor...", ConsoleColor.Cyan);
-
-                // ========================================================
-                // --- SINYAL BEKLEYICI: LOGIN BASARILI OLUNCA CALISACAK KISIM ---
-                // ========================================================
                 radar.OnLoginSuccess = () =>
                 {
-                    // Bu kodlar sadece KeyAuth onay verirse calisir!
-                    DrawLogo();
-                    RenkliYaz(Lang.Get("SysLoading"), ConsoleColor.Cyan);
-
-                    var parser = new AlbionDataParser();
-                    var mobsHandler = new MobsHandler();
-                    var playersHandler = new PlayersHandler();
-                    var harvestableHandler = new HarvestableHandler();
-
-                    var mapHandler = new MapChangeHandler((yeniMapId) =>
+                    try
                     {
-                        RenkliYaz(string.Format(Lang.Get("MapLoaded"), yeniMapId), ConsoleColor.Magenta);
-                        manager.SetCurrentMap(yeniMapId);
-                    });
+                                                DrawLogo();
+                        RenkliYaz(Lang.Get("SysLoading"), ConsoleColor.Cyan);
 
-                    parser.RegisterEventHandler(mobsHandler);
-                    parser.RegisterEventHandler(playersHandler);
-                    parser.RegisterEventHandler(harvestableHandler);
-                    parser.RegisterEventHandler(mapHandler);
-                    RenkliYaz(Lang.Get("HandlersOK"), ConsoleColor.Green);
+                        var parser = new AlbionDataParser();
+                        var mobsHandler = new MobsHandler();
+                        var playersHandler = new PlayersHandler();
+                        var harvestableHandler = new HarvestableHandler();
+                        var dungeonHandler = new AlbionDataHandlers.Handlers.DungeonHandler.DungeonHandler();
+                        var unknownPacketHandler = new AlbionDataHandlers.Handlers.UnknownPacketHandler.UnknownPacketHandler();
 
-                    mobsHandler.Mobs.Subscribe(manager.UpdateMobsState);
-                    harvestableHandler.Harvestables += manager.UpdateHarvestablesState;
-                    playersHandler.LocalPlayerPosition += manager.UpdateLocalPlayer;
-                    playersHandler.OtherPlayersDetected += manager.UpdateOtherPlayers;
-                    playersHandler.PlayerLeft += manager.RemovePlayer;
+                        var mapHandler = new MapChangeHandler((yeniMapId) =>
+                        {
+                            RenkliYaz(string.Format(Lang.Get("MapLoaded"), yeniMapId), ConsoleColor.Magenta);
+                            manager.SetCurrentMap(yeniMapId);
+                        });
 
-                    RenkliYaz(Lang.Get("EventsOK"), ConsoleColor.Green);
+                        parser.RegisterEventHandler(mobsHandler);
+                        parser.RegisterEventHandler(playersHandler);
+                        parser.RegisterEventHandler(harvestableHandler);
+                        parser.RegisterEventHandler(dungeonHandler);
+                        parser.RegisterEventHandler(unknownPacketHandler);
+                        parser.RegisterEventHandler(mapHandler);
+                        RenkliYaz(Lang.Get("HandlersOK"), ConsoleColor.Green);
 
-                    RenkliYaz(Lang.Get("EngineStart"), ConsoleColor.Yellow);
-                    var engine = new PacketEngine(parser, manager);
-                    engine.Start();
+                        mobsHandler.Mobs.Subscribe(manager.UpdateMobsState);
+                        harvestableHandler.Harvestables += manager.UpdateHarvestablesState;
+                        playersHandler.LocalPlayerPosition += manager.UpdateLocalPlayer;
+                        playersHandler.OtherPlayersDetected += manager.UpdateOtherPlayers;
+                        playersHandler.PlayerLeft += manager.RemovePlayer;
+                        dungeonHandler.DungeonDetected += manager.UpdateDungeonsState;
+                        dungeonHandler.DungeonLeft += manager.RemoveDungeon;
 
-                    RenkliYaz(Lang.Get("ListenActive"), ConsoleColor.White);
+                        RenkliYaz(Lang.Get("EventsOK"), ConsoleColor.Green);
 
-                    // Motorlar tam gaz calistiktan sonra CMD'yi gizle
-                    new Thread(() =>
+                        RenkliYaz(Lang.Get("EngineStart"), ConsoleColor.Yellow);
+                        var engine = new PacketEngine(parser, manager);
+
+                        // Capture baslangici bloklayici olabildigi icin UI thread'i kilitlemesin.
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                engine.Start();
+                                RenkliYaz(Lang.Get("ListenActive"), ConsoleColor.White);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Console.WriteLine($"Error Code : 511 | {ex.Message}");
+                                RenkliYaz($"ENGINE START ERROR: {ex.Message}", ConsoleColor.Red);
+                            }
+                        });
+
+                        // Motorlar tam gaz calistiktan sonra CMD'yi gizle
+                        new Thread(() =>
+                        {
+                            Thread.Sleep(100);
+                            IntPtr handle = GetConsoleWindow();
+                            if (handle != IntPtr.Zero) ShowWindow(handle, SW_HIDE);
+                        })
+                        { IsBackground = true }.Start();
+                    }
+                    catch (Exception ex)
                     {
-                        Thread.Sleep(100);
-                        IntPtr handle = GetConsoleWindow();
-                        if (handle != IntPtr.Zero) ShowWindow(handle, SW_HIDE);
-                    })
-                    { IsBackground = true }.Start();
+                        System.Console.WriteLine($"Error Code : 510 | {ex.Message}");
+                    }
                 };
 
+                radar.OnLoginSuccess?.Invoke();
                 radar.Run();
             }
             catch (Exception ex)
@@ -124,6 +144,47 @@ namespace Nightwatch
                 System.Console.WriteLine($"Error Code : 51 | {ex.Message}");
                 RenkliYaz($"FATAL ERROR: {ex.Message}", ConsoleColor.Red);
                 Console.ReadLine();
+            }
+        }
+
+
+        private static async Task CheckForUpdatesAsync()
+        {
+            try
+            {
+                using System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", "Nightwatch-Updater");
+
+                // REPO ADINI VE KULLANICI ADINI KENDÄ° GITHUB BÄ°LGÄ°LERÄ°NE GÃ–RE DEÄžÄ°ÅžTÄ°R
+                string url = $"https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App/version.txt?t={DateTime.Now.Ticks}";
+
+                string response = await client.GetStringAsync(url);
+                int currentVersion = 5; // Github 'tan kontrol et aynı ise güncel,değilse eski
+
+                if (int.TryParse(response.Trim(), out int latestVersion))
+                {
+                    if (latestVersion > currentVersion)
+                    {
+                        // UI iÃ§in GÃ¼ncelleme Var durumunu ayarla (KÄ±rmÄ±zÄ± Renk)
+                        UpdateStatusText = Lang.Get("UpdateAvailable");
+                        UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.3f, 0.3f, 1f);
+                        RenkliYaz($"[BÄ°LDÄ°RÄ°M] Yeni Bir GÃ¼ncelleme Mevcut! LÃ¼tfen GitHub'dan gÃ¼ncelleyin.", ConsoleColor.Cyan);
+                    }
+                    else
+                    {
+                        // UI iÃ§in GÃ¼ncel durumunu ayarla (YeÅŸil Renk)
+                        UpdateStatusText = Lang.Get("Updated");
+                        UpdateStatusColor = new System.Numerics.Vector4(0.2f, 1.0f, 0.2f, 1f);
+                        RenkliYaz($"[BÄ°LDÄ°RÄ°M] Uygulama GÃ¼ncel.", ConsoleColor.DarkGray);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // UI iÃ§in Hata durumunu ayarla (SarÄ± Renk)
+                UpdateStatusText = "[SÃ¼rÃ¼m Kontrol Edilemedi]";
+                UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.8f, 0.2f, 1f);
+                RenkliYaz("[UYARI] SÃ¼rÃ¼m kontrolÃ¼ yapÄ±lamadÄ± (BaÄŸlantÄ± veya Link HatasÄ±).", ConsoleColor.DarkGray);
             }
         }
 
@@ -166,11 +227,11 @@ namespace Nightwatch
             }
             catch (DllNotFoundException)
             {
-                // SDL y�klenmeden �nce hint set edilmek istenirse sessiz ge�.
+                // SDL yÃ¼klenmeden Ã¶nce hint set edilmek istenirse sessiz geÃ§.
             }
             catch (EntryPointNotFoundException)
             {
-                // SDL s�r�m� ilgili hint API'sini desteklemiyorsa sessiz ge�.
+                // SDL sÃ¼rÃ¼mÃ¼ ilgili hint API'sini desteklemiyorsa sessiz geÃ§.
             }
         }
 
@@ -184,5 +245,7 @@ namespace Nightwatch
         }
     }
 }
+
+
 
 
