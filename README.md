@@ -5,10 +5,10 @@
 <h1 align="center">🌙 Nightwatch Radar</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 8"/>
   <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows"/>
   <img src="https://img.shields.io/badge/UI-ImGui-orange?style=for-the-badge" alt="ImGui"/>
   <img src="https://img.shields.io/badge/Language-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white" alt="C#"/>
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License"/>
   <img src="https://img.shields.io/badge/Version-1.4-gold?style=for-the-badge" />
 </p>
 
