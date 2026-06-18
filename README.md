@@ -52,17 +52,7 @@
 - Oyun haritasıyla senkronize gerçek zamanlı minimap
 - 50m / 100m / 150m mesafe halkaları
 - Aktif algılama menzili çemberi
-- Waypoint (işaret koyma) sistemi
 - Özelleştirilebilir zoom ve kalibrasyon
-
-### 👥 Oyuncu Takibi
-- Diğer oyuncuların gerçek zamanlı konumları
-- İsim ve guild gösterimi
-- Hareket izi (trail) çizgileri
-- Yaklaşan düşman sesli alarm
-- Anlık düşman sayacı (watermark)
-- Whitelist (arkadaş listesi) desteği
-- Ekipman kartları (Albion Render API)
 
 ### 🐉 Mob Sistemi
 - Tüm düşman mob'ları radarda gösterme
@@ -114,17 +104,7 @@
 - Real-time minimap synchronized with the game map
 - 50m / 100m / 150m distance rings
 - Active sniff range indicator
-- Waypoint (map marker) system
 - Customizable zoom and calibration
-
-### 👥 Player Tracking
-- Real-time positions of other players
-- Name and guild display
-- Movement trail lines
-- Approaching enemy sound alarm
-- Live enemy counter (watermark)
-- Whitelist (friends list) support
-- Equipment cards (Albion Render API)
 
 ### 🐉 Mob System
 - Display all enemy mobs on radar
