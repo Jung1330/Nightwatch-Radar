@@ -8,6 +8,7 @@ Future Check :
 
 Known Mistakes
 + “Solo Dungeon” can be written on all doors that is, on anything you can pass through.
++  There are some issues with the “Chinese” and “Russian” languages due to the UI change; I'll fix them.
 
 TIP: If you find any bug, please report them on Github Issues.
 Dev : Please give feedback for UI Design
