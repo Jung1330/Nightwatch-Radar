@@ -1,10 +1,11 @@
-Version Check [V1.4] :
-+ Some of Translation Mistakes solved,
-+ Language save system became automated,
-+ Resources was showing wrong tier,it fixed
-+ Logs icon problem solved
+Version Check [V1.5] - 19.06.2026 :
++ UI Changed
++ Dungeons Added (Boss-Lair include)
 
 Future Check :
-+ Guild Members problem
++ There may be translation errors.
+
+Known Mistakes
++ + “Solo Dungeon” can be written on all doors that is, on anything you can pass through.
 
 TIP: If you find any bug, please report them on Github Issues.
