@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/UI-ImGui-orange?style=for-the-badge" alt="ImGui"/>
   <img src="https://img.shields.io/badge/Language-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white" alt="C#"/>
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License"/>
-  <img src="https://img.shields.io/badge/Version-1.4-gold?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Version-1.5-gold?style=for-the-badge" />
 </p>
 
 ---
