@@ -1,6 +1,7 @@
 Version Check [V1.5] - 19.06.2026 :
 + UI Changed
 + Dungeons Added (Boss-Lair include)
++ Radar was sometimes shaking, that issue resolved.
 
 Future Check :
 + There may be translation errors.
