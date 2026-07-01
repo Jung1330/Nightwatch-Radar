@@ -1,13 +1,10 @@
-Version Check [V1.5] - 19.06.2026 :
-+ UI Changed
-+ Dungeons Added (Boss-Lair include)
-+ Radar was sometimes shaking, that issue resolved.
+Version Check [V1.5.2] - 01.07.2026 :
 
-Future Check :
-+ There may be translation errors.
-
-Known Mistakes
-+ 'Solo Dungeon' can be written on all doors that is, on anything you can pass through.
++ Updated Dungeon portal packet codes to match the latest Albion Online client version (Event 325).
++ Fixed Wisp Cages and Caged Smugglers detection by mapping the new network event codes (Event 532).
++ Resolved the tracking system issue to make foot tracks (Event 558, e.g., Werewolves) visible on the radar.
++ Fixed the map loading/clearing timing bug that caused static portals, dungeons, and cages to disappear right after loading screens.
++ Resolved a classification bug where Morgana/Group dungeons were occasionally mislabeled as Solo Dungeons.
 
 TIP: If you find any bug, please report them on Github Issues.
 Dev : Please give feedback for UI Design
