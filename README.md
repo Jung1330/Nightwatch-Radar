@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/Jung1330/Nightwatch-Radar/blob/main/Assets/Nightwatch.png" width="80" height="80" alt="Nightwatch Logo" />
-</p>
-
 <h1 align="center">🌙 Nightwatch Radar</h1>
 
 <p align="center">
