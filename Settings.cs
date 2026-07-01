@@ -8,7 +8,7 @@ namespace Nightwatch
 {
     public static class Settings
     {
-        // Varsayýlan olarak hepsi açýk (true)
+        // Varsaylan olarak hepsi aÃ§Ä±k (true)
         public static bool ShowPlayers = true;
         public static bool ShowMobs = true;
         public static bool ShowHarvestables = true;

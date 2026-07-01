@@ -1,0 +1,395 @@
+{
+  "ShowMapBackground": true,
+  "MapOpacity": 0.8,
+  "EnableBetaHeatmap": false,
+  "LastMapIDConfig": "",
+  "SelectedTheme": 0,
+  "Language": "TR",
+  "TrackerEnableResources": false,
+  "TrackerEnableVipMobs": false,
+  "TrackerEnableNormalMobs": false,
+  "TrackerCustomMobs": [],
+  "TrackerLaserColorMobs": {
+    "X": 0.0,
+    "Y": 1.0,
+    "Z": 1.0,
+    "W": 0.9
+  },
+  "TrackerLaserColorResources": {
+    "X": 0.8,
+    "Y": 0.0,
+    "Z": 1.0,
+    "W": 0.8
+  },
+  "TrackerLaserWorldScale": 0.0,
+  "TrackerPixelsPerUnit": 0.0,
+  "TrackerScaleX": 7.0,
+  "TrackerScaleY": 7.0,
+  "TrackerAngleOffset": 0.0,
+  "TrackerLaserEndOffsetX": 0.0,
+  "TrackerLaserEndOffsetY": 0.0,
+  "EnableSoundAlerts": true,
+  "StreamModuleEnabled": false,
+  "CrownBlacklist": [],
+  "ToggleKey": 123,
+  "ShowResourceIcons": true,
+  "ShowDungeonIcons": true,
+  "ShowSoloDungeons": true,
+  "ShowSoloEnchantments": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "ShowSoloBossLair": true,
+  "ShowGroupDungeons": true,
+  "ShowGroupEnchantments": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "ShowGroupBossLair": true,
+  "ShowCorruptedDungeons": false,
+  "ShowHellgateDungeons": false,
+  "EnableLogging": false,
+  "ShowPlayers": true,
+  "ShowEnemyMobs": true,
+  "ShowResources": true,
+  "ShowMists": true,
+  "ShowBetaTracks": false,
+  "ShowBetaWisps": false,
+  "ShowBetaIndicators": false,
+  "ShowBetaStructures": false,
+  "ShowBetaChests": false,
+  "ShowExits": true,
+  "ShowWispCages": true,
+  "ShowSmugglers": true,
+  "ShowTrackers": true,
+  "TrackBear": true,
+  "TrackWolf": true,
+  "TrackPanther": true,
+  "TrackHumanoid": true,
+  "TrackElemental": true,
+  "TrackEnt": true,
+  "TrackImp": true,
+  "TrackGolem": true,
+  "TrackWerewolf": true,
+  "ShowAvalonianDungeons": false,
+  "ShowAvalonianTiers": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "ShowNormalMobs": true,
+  "ShowBosses": true,
+  "ShowHiddenChests": true,
+  "ShowGuild": true,
+  "ShowPlayerName": true,
+  "ShowPlayerCount": true,
+  "ShowMobNames": false,
+  "DebugConsoleLog": false,
+  "ShowPlayerList": true,
+  "PlayerListMoveable": false,
+  "PlayerListX": 300.0,
+  "PlayerListY": 600.0,
+  "ShowItemIds": false,
+  "ShowChestIds": false,
+  "ShowWatermark": true,
+  "WatermarkMoveable": false,
+  "WatermarkX": 100.0,
+  "WatermarkY": 100.0,
+  "ShowDangerCompass": true,
+  "ShowEquipmentCards": true,
+  "ResourceTrackerOnlyMode": false,
+  "ResourceShowOnlyEnchanted": false,
+  "EquipmentCardsMoveable": false,
+  "EquipmentCardsX": -1.0,
+  "EquipmentCardsY": 12.0,
+  "EquipmentCardsMaxSlots": 5,
+  "EquipmentCardsMemorySeconds": 3.0,
+  "WhitelistImportSameGuild": true,
+  "WhitelistImportSameAlliance": false,
+  "DetachRadar": true,
+  "RadarWinX": 300.0,
+  "RadarWinY": 300.0,
+  "RadarMoveable": false,
+  "RadarSize": 400.0,
+  "Zoom": 1.0,
+  "GlobalIconSize": 28.0,
+  "BossIconSize": 36.0,
+  "RenderDistance": 70.0,
+  "InvertX": false,
+  "InvertY": false,
+  "SwapXY": true,
+  "RadarRotation": -45.0,
+  "CustomPriorityMobs": [],
+  "IgnoredMobIds": [],
+  "ResourceMasterToggles": {
+    "Fiber": true,
+    "Hide": true,
+    "Log": true,
+    "Ore": true,
+    "Rock": false
+  },
+  "ResourceFilters": {
+    "Fiber": [
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ]
+    ],
+    "Hide": [
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ]
+    ],
+    "Log": [
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ]
+    ],
+    "Ore": [
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ]
+    ],
+    "Rock": [
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ]
+    ]
+  }
+}

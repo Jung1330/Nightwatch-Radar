@@ -1,0 +1,483 @@
+using AlbionDataHandlers.Entities;
+using System.Collections.Generic;
+using System;
+using System.Linq;
+
+namespace Nightwatch.Managers
+{
+    public class GameStateManager
+    {
+        private Player _localPlayer = new Player();
+        private bool _localPlayerLerpedInitialized;
+        private readonly List<Mob> _mobs = new();
+        private readonly List<Harvestable> _harvestables = new List<Harvestable>();
+        private readonly List<Player> _otherPlayers = new();
+        private readonly List<Dungeon> _dungeons = new();
+        
+
+        private readonly List<Mob> _debugMobs = new List<Mob>();
+        private readonly List<Harvestable> _debugHarvestables = new List<Harvestable>();
+
+        public string CurrentMapId { get; private set; } = "";
+        private readonly object _stateLock = new object();
+
+        public bool IsSafeZone
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(CurrentMapId)) return false;
+                string upper = CurrentMapId.ToUpperInvariant();
+                return upper.Contains("CITY") || upper.Contains("PORTAL") || upper.Contains("ISLAND") || upper.Contains("HIDEOUT");
+            }
+        }
+
+        public void SetCurrentMap(string mapId)
+        {
+            lock (_stateLock)
+            {
+                if (CurrentMapId != mapId || mapId == "LEAVING_ZONE")
+                {
+                    CurrentMapId = mapId;
+                    // Note: We don't call ClearAllData() here directly anymore if it takes the lock.
+                    // Wait, ClearAllData() takes _stateLock. If we lock (_stateLock) here, and then call ClearAllData(),
+                    // standard C# locks are re-entrant, so it won't deadlock.
+                    // However, we can just clear it directly.
+                    _mobs.Clear();
+                    _harvestables.Clear();
+                    _otherPlayers.Clear();
+                    _dungeons.Clear();
+                    
+                    _debugMobs.Clear();
+                    _debugHarvestables.Clear();
+                    _localPlayerLerpedInitialized = false;
+                }
+            }
+        }
+
+        // --- SİMÜLATÖR METOTLARI ---
+
+        // 1. Fake Mob Ekle
+        public void AddDebugMob(int typeId, float x, float y, string name)
+        {
+            lock (_stateLock)
+            {
+                var m = new Mob { Id = -Math.Abs(Guid.NewGuid().GetHashCode()), TypeId = typeId, PositionX = x, PositionY = y, CurrentLerpedX = x, CurrentLerpedY = y, Name = name };
+                _debugMobs.Add(m); // Gerçek listeye değil, VIP listeye ekle
+            }
+        }
+
+        // 2. Fake Resource Ekle
+        public void AddDebugHarvestable(int typeId, int tier, int count, int capacity, int enchant, float x, float y)
+        {
+            lock (_stateLock)
+            {
+                var h = new Harvestable { Id = -Math.Abs(Guid.NewGuid().GetHashCode()), Type = typeId, Tier = tier, Count = count, Capacity = capacity, PositionX = x, PositionY = y, CurrentLerpedX = x, CurrentLerpedY = y, EnchantmentLevel = enchant };
+                _debugHarvestables.Add(h); // Gerçek listeye değil, VIP listeye ekle
+            }
+        }
+
+        // 3. Ekrana Çizdirirken İkisini Birleştir
+        public void GetMobs(List<Mob> buffer)
+        {
+            lock (_stateLock)
+            {
+                buffer.AddRange(_mobs);      // Gerçek moblar
+                buffer.AddRange(_debugMobs); // Simülatör mobları (Ezilmez)
+            }
+        }
+        public void GetHarvestables(List<Harvestable> buffer)
+        {
+            lock (_stateLock)
+            {
+                buffer.AddRange(_harvestables);      // Gerçek kaynaklar
+                buffer.AddRange(_debugHarvestables); // Simülatör kaynakları (Ezilmez)
+            }
+        }
+
+        // 4. Tablodan Silme
+        public void RemoveDebugEntity(int id)
+        {
+            lock (_stateLock)
+            {
+                _debugMobs.RemoveAll(x => x.Id == id);
+                _debugHarvestables.RemoveAll(x => x.Id == id);
+            }
+        }
+
+        // 5. Tüm Simülasyonu Temizle
+        public void ClearAllData()
+        {
+            lock (_stateLock)
+            {
+                _mobs.Clear();
+                _harvestables.Clear();
+                _otherPlayers.Clear();
+                _dungeons.Clear();
+                
+                _debugMobs.Clear();
+                _debugHarvestables.Clear();
+                _localPlayerLerpedInitialized = false;
+            }
+        }
+        /* Eski yöntem
+        public void UpdateLocalPlayer(Player p)
+        {
+            _localPlayer.PositionX = p.PositionX;
+            _localPlayer.PositionY = p.PositionY;
+            _localPlayer.CurrentLerpedX = p.PositionX;
+            _localPlayer.CurrentLerpedY = p.PositionY;
+        }*/
+
+        public void UpdateLocalPlayer(Player p)
+        {
+            lock (_stateLock) // YENİ: Çakışmaları ve ışınlanmaları engeller!
+            {
+                float prevLerpedX = _localPlayer.CurrentLerpedX;
+                float prevLerpedY = _localPlayer.CurrentLerpedY;
+
+                _localPlayer.Id = p.Id;
+                _localPlayer.Name = p.Name;
+                _localPlayer.Guild = p.Guild;
+                _localPlayer.Alliance = p.Alliance;
+                _localPlayer.Faction = p.Faction;
+                _localPlayer.CurrentHealth = p.CurrentHealth;
+                _localPlayer.MaxHealth = p.MaxHealth;
+                _localPlayer.Equipment = p.Equipment?.ToArray() ?? Array.Empty<int>();
+                _localPlayer.PositionX = p.PositionX;
+                _localPlayer.PositionY = p.PositionY;
+
+                float dx = p.PositionX - prevLerpedX;
+                float dy = p.PositionY - prevLerpedY;
+                if (!_localPlayerLerpedInitialized || (dx * dx + dy * dy) > 900f)
+                {
+                    _localPlayer.CurrentLerpedX = p.PositionX;
+                    _localPlayer.CurrentLerpedY = p.PositionY;
+                    _localPlayerLerpedInitialized = true;
+                }
+            }
+        }
+        public void UpdateOtherPlayers(IEnumerable<Player> players)
+        {
+            lock (_stateLock)
+            {
+                var prevPlayers = new Dictionary<int, Player>();
+                foreach (var p in _otherPlayers) prevPlayers[p.Id] = p;
+                
+                _otherPlayers.Clear();
+
+                // Deduplicate incoming players by taking the last occurrence
+                var uniquePlayers = players.GroupBy(p => p.Id).Select(g => g.Last());
+
+                foreach (var p in uniquePlayers)
+                {
+                    if (prevPlayers.TryGetValue(p.Id, out var prev))
+                    {
+                        p.CurrentLerpedX = prev.CurrentLerpedX;
+                        p.CurrentLerpedY = prev.CurrentLerpedY;
+                    }
+                    else
+                    {
+                        p.CurrentLerpedX = p.PositionX;
+                        p.CurrentLerpedY = p.PositionY;
+                    }
+                    _otherPlayers.Add(p);
+                }
+            }
+        }
+
+        public void UpdateDungeonsState(Dungeon d)
+        {
+            lock (_stateLock)
+            {
+                var existing = _dungeons.FirstOrDefault(x => x.Id == d.Id);
+                if (existing != null)
+                {
+                    existing.PositionX = d.PositionX;
+                    existing.PositionY = d.PositionY;
+                    existing.Type = d.Type;
+                    existing.Prefab = d.Prefab;
+                    existing.EnchantmentLevel = d.EnchantmentLevel;
+                }
+                else
+                {
+                    _dungeons.Add(d);
+                }
+            }
+        }
+
+        public void RemoveDungeon(long id)
+        {
+            lock (_stateLock)
+            {
+                _dungeons.RemoveAll(x => x.Id == id);
+            }
+        }
+
+        public void GetDungeons(List<Dungeon> buffer)
+        {
+            lock (_stateLock)
+            {
+                buffer.AddRange(_dungeons);
+            }
+        }
+
+
+
+        public void RemovePlayer(int id)
+        {
+            lock (_stateLock)
+            {
+                _otherPlayers.RemoveAll(x => x.Id == id);
+            }
+        }
+
+        public void UpdateMobsState(IEnumerable<Mob> newMobs)
+        {
+            lock (_stateLock)
+            {
+                var prevMobs = new Dictionary<int, Mob>();
+                foreach (var m in _mobs) prevMobs[m.Id] = m;
+                
+                _mobs.Clear();
+                
+                var uniqueMobs = newMobs.GroupBy(m => m.Id).Select(g => g.Last());
+                
+                foreach (var mob in uniqueMobs)
+                {
+                    if (prevMobs.TryGetValue(mob.Id, out var prev))
+                    {
+                        mob.CurrentLerpedX = prev.CurrentLerpedX;
+                        mob.CurrentLerpedY = prev.CurrentLerpedY;
+                    }
+                    else
+                    {
+                        mob.CurrentLerpedX = mob.PositionX;
+                        mob.CurrentLerpedY = mob.PositionY;
+                    }
+                    _mobs.Add(mob);
+                }
+            }
+        }
+
+        public void UpdateHarvestablesState(IEnumerable<Harvestable> newHarvestables)
+        {
+            lock (_stateLock)
+            {
+                var prevHarvestables = new Dictionary<int, Harvestable>();
+                foreach (var h in _harvestables) prevHarvestables[h.Id] = h;
+                
+                _harvestables.Clear();
+                
+                var uniqueHarvestables = newHarvestables.GroupBy(h => h.Id).Select(g => g.Last());
+                
+                foreach (var harvestable in uniqueHarvestables)
+                {
+                    if (prevHarvestables.TryGetValue(harvestable.Id, out var prev))
+                    {
+                        harvestable.CurrentLerpedX = prev.CurrentLerpedX;
+                        harvestable.CurrentLerpedY = prev.CurrentLerpedY;
+                    }
+                    else
+                    {
+                        harvestable.CurrentLerpedX = harvestable.PositionX;
+                        harvestable.CurrentLerpedY = harvestable.PositionY;
+                    }
+                    _harvestables.Add(harvestable);
+                }
+            }
+        }
+
+        public void RemoveHarvestables(IEnumerable<int> idsToRemove)
+        {
+            lock (_stateLock)
+            {
+                var removeSet = idsToRemove as HashSet<int> ?? new HashSet<int>(idsToRemove);
+                _harvestables.RemoveAll(x => removeSet.Contains(x.Id));
+            }
+        }
+
+        // --- FPS DOSTU HIZLI MESAFE HESAPLAMA (KAREKÖK İPTAL EDİLDİ) ---
+
+
+        public void Update()
+        {
+            lock (_stateLock)
+            {
+                if (_localPlayer == null) return;
+
+                float px = _localPlayer.PositionX;
+                float py = _localPlayer.PositionY;
+
+                // maxDist 400 ise karesi tam 160.000 yapar! Artık karekök almadan direkt karesiyle karşılaştıracağız.
+                float maxDistSquared = 160000.0f;
+
+                // Gerçek listelerden uzak objeleri sil
+                PruneMobsByDistance(_mobs, px, py, maxDistSquared);
+                PruneHarvestablesByDistance(_harvestables, px, py, maxDistSquared);
+                PrunePlayersByDistance(_otherPlayers, px, py, maxDistSquared);
+                
+
+                // Simülatör (Sahte) objeleri de çok uzaklaşırsa sil ki test yaparken ekran şişmesin
+                PruneMobsByDistance(_debugMobs, px, py, maxDistSquared);
+                PruneHarvestablesByDistance(_debugHarvestables, px, py, maxDistSquared);
+            }
+        }
+
+        private static void PruneMobsByDistance(List<Mob> mobs, float px, float py, float maxDistSquared)
+        {
+            for (int i = mobs.Count - 1; i >= 0; i--)
+            {
+                var m = mobs[i];
+                if (((px - m.PositionX) * (px - m.PositionX)) + ((py - m.PositionY) * (py - m.PositionY)) > maxDistSquared)
+                    mobs.RemoveAt(i);
+            }
+        }
+
+        private static void PruneHarvestablesByDistance(List<Harvestable> harvestables, float px, float py, float maxDistSquared)
+        {
+            for (int i = harvestables.Count - 1; i >= 0; i--)
+            {
+                var h = harvestables[i];
+                if (((px - h.PositionX) * (px - h.PositionX)) + ((py - h.PositionY) * (py - h.PositionY)) > maxDistSquared)
+                    harvestables.RemoveAt(i);
+            }
+        }
+
+        private static void PrunePlayersByDistance(List<Player> players, float px, float py, float maxDistSquared)
+        {
+            for (int i = players.Count - 1; i >= 0; i--)
+            {
+                var p = players[i];
+                if (((px - p.PositionX) * (px - p.PositionX)) + ((py - p.PositionY) * (py - p.PositionY)) > maxDistSquared)
+                    players.RemoveAt(i);
+            }
+        }
+
+        public Player GetPlayer()
+        {
+            lock (_stateLock)
+            {
+                return new Player
+                {
+                    Id = _localPlayer.Id,
+                    Name = _localPlayer.Name,
+                    Guild = _localPlayer.Guild,
+                    Alliance = _localPlayer.Alliance,
+                    Faction = _localPlayer.Faction,
+                    PositionX = _localPlayer.PositionX,
+                    PositionY = _localPlayer.PositionY,
+                    CurrentLerpedX = _localPlayer.CurrentLerpedX,
+                    CurrentHealth = _localPlayer.CurrentHealth,
+                    MaxHealth = _localPlayer.MaxHealth,
+                    Equipment = _localPlayer.Equipment?.ToArray() ?? Array.Empty<int>()
+                };
+            }
+        }
+
+        public void MoveLocalPlayer(float dx, float dy)
+        {
+            lock (_stateLock)
+            {
+                _localPlayer.PositionX += dx;
+                _localPlayer.PositionY += dy;
+                _localPlayer.CurrentLerpedX = _localPlayer.PositionX;
+                _localPlayer.CurrentLerpedY = _localPlayer.PositionY;
+            }
+        }
+
+
+        // --- MOB ENCHANT GÜNCELLEMESİ (MobChangeState paketi için) ---
+        public void UpdateMobEnchant(int entityId, int enchant)
+        {
+            lock (_stateLock)
+            {
+                // Gerçek moblar içinde bu ID'yi bul
+                var mob = _mobs.FirstOrDefault(m => m.Id == entityId);
+                if (mob != null)
+                {
+                    mob.EnchantmentLevel = enchant;
+                }
+
+                // Simülatör açıksa debug moblarına da uygula
+                var debugMob = _debugMobs.FirstOrDefault(m => m.Id == entityId);
+                if (debugMob != null)
+                {
+                    debugMob.EnchantmentLevel = enchant;
+                }
+            }
+        }
+
+        public void GetOtherPlayers(List<Player> buffer)
+        {
+            lock (_stateLock)
+            {
+                buffer.Clear();
+                buffer.AddRange(_otherPlayers);
+            }
+        }
+
+        public void RunComprehensiveDiagnosticTest()
+        {
+            lock (_stateLock)
+            {
+                _mobs.Clear();
+                _harvestables.Clear();
+                _otherPlayers.Clear();
+                _dungeons.Clear();
+                _debugMobs.Clear();
+                _debugHarvestables.Clear();
+
+                Random rnd = new Random();
+                float bx = _localPlayer.PositionX;
+                float by = _localPlayer.PositionY;
+                int idCounter = -1000;
+
+                // 1. Mobs (Bosses, Aspects, Mists, Normal, Drones)
+                int[] testMobTypes = { 1, 2, 3, 4, 18, 59, 102, 103, 104, 888, 889, 795, 2637, 2638 };
+                foreach (int t in testMobTypes)
+                {
+                    for (int e = 0; e <= 4; e++) // Enchants
+                    {
+                        float angle = (float)(rnd.NextDouble() * Math.PI * 2);
+                        float dist = 10f + (float)(rnd.NextDouble() * 30f);
+                        _debugMobs.Add(new Mob { Id = idCounter--, TypeId = t, EnchantmentLevel = e, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, CurrentLerpedX = bx + (float)Math.Cos(angle) * dist, CurrentLerpedY = by + (float)Math.Sin(angle) * dist, Name = $"Test Mob {t}.{e}" });
+                    }
+                }
+
+                // 2. Harvestables (T1-T8, Enchants 0-4, Hidden Chests)
+                int[] testResTypes = { 0, 1, 2, 3, 4, 5, 795, 798, 800 };
+                foreach (int t in testResTypes)
+                {
+                    for (int tier = 1; tier <= 8; tier++)
+                    {
+                        for (int e = 0; e <= 4; e++)
+                        {
+                            float angle = (float)(rnd.NextDouble() * Math.PI * 2);
+                            float dist = 10f + (float)(rnd.NextDouble() * 40f);
+                            _debugHarvestables.Add(new Harvestable { Id = idCounter--, Type = t, Tier = tier, EnchantmentLevel = e, Count = 5, Capacity = 5, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, CurrentLerpedX = bx + (float)Math.Cos(angle) * dist, CurrentLerpedY = by + (float)Math.Sin(angle) * dist });
+                        }
+                    }
+                }
+
+                // 3. Players
+                for (int i = 0; i < 20; i++)
+                {
+                    float angle = (float)(rnd.NextDouble() * Math.PI * 2);
+                    float dist = 5f + (float)(rnd.NextDouble() * 45f);
+                    _otherPlayers.Add(new Player { Id = idCounter--, Name = $"Player {i}", Guild = i % 2 == 0 ? "TestGuild" : "", Alliance = i % 4 == 0 ? "TEST" : "", CurrentHealth = rnd.Next(100, 2000), MaxHealth = 2000, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, CurrentLerpedX = bx + (float)Math.Cos(angle) * dist, CurrentLerpedY = by + (float)Math.Sin(angle) * dist, Equipment = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 } });
+                }
+
+                // 4. Dungeons
+                string[] dTypes = { "Solo", "Group", "Corrupted", "Hellgate", "Avalon" };
+                foreach (string dt in dTypes)
+                {
+                    float angle = (float)(rnd.NextDouble() * Math.PI * 2);
+                    float dist = 15f + (float)(rnd.NextDouble() * 50f);
+                    _dungeons.Add(new Dungeon { Id = idCounter--, Type = dt, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, EnchantmentLevel = (byte)rnd.Next(0, 4) });
+                }
+            }
+        }
+    }
+}
+
+

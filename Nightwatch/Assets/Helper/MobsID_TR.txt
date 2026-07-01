@@ -1,0 +1,5186 @@
+[15] : Seçkin Kemikkıran Toprak Ana
+[16] : Toprak Koruyan Büyük Anası
+[17] : Savaş Şefi
+[18] : Savaş Şefi
+[19] : Savaş Şefi
+[20] : Savaş Şefi
+[21] : Başdruid
+[22] : Başdruid
+[23] : Başdruid
+[24] : Başdruid
+[25] : Balta Hanımı
+[26] : Balta Hanımı
+[27] : Balta Hanımı
+[28] : Balta Hanımı
+[29] : Toprak Koruyan Kahin
+[30] : Toprak Koruyan Kahin
+[31] : Toprak Koruyan Kahin
+[32] : Toprak Koruyan Kahin
+[33] : Toprak Koruyan Kahin
+[34] : Toprak Koruyan Kahin
+[35] : Toprak Koruyan Kahin
+[36] : Toprak Koruyan Kahin
+[37] : Alev Arayan
+[38] : Unutulmuş Şampiyon
+[39] : Savaş Şefi
+[40] : Lekeli Gölge
+[41] : Gölge Maske
+[42] : Gölge Maske
+[43] : Gölge Maske
+[44] : Gölge Maske
+[45] : Gölge Maske
+[46] : Toprak Kızı
+[47] : Toprak Kızı
+[48] : Toprak Kızı
+[49] : Toprak Kızı
+[50] : Toprak Kızı
+[51] : Morgana'nın Prensi
+[52] : Ruh Hasatçısı
+[53] : Ruh Hasatçısı
+[54] : Ruh Hasatçısı
+[55] : Ruh Hasatçısı
+[56] : Ruh Hasatçısı
+[57] : Gölge Maske
+[58] : Gölge Maske
+[59] : Gölge Maske
+[60] : Gölge Maske
+[61] : Gölge Maske
+[62] : Toprak Kızı
+[63] : Toprak Kızı
+[64] : Toprak Kızı
+[65] : Toprak Kızı
+[66] : Toprak Kızı
+[67] : Morgana'nın Prensi
+[68] : Ruh Hasatçısı
+[69] : Ruh Hasatçısı
+[70] : Ruh Hasatçısı
+[71] : Ruh Hasatçısı
+[72] : Ruh Hasatçısı
+[73] : Gölge Panteri
+[74] : Orman Atası
+[75] : Ruh Ayısı
+[76] : Kurt Adam
+[77] : Cehennem Ateşi İblisi
+[78] : Rün Taşı Golemi
+[79] : Şafak Kuşu
+[80] : Gölge Panteri
+[81] : Orman Atası
+[82] : Ruh Ayısı
+[83] : Kurt Adam
+[84] : Cehennem Ateşi İblisi
+[85] : Rün Taşı Golemi
+[86] : Şafak Kuşu
+[87] : Gölge Panteri
+[88] : Gölge Panteri
+[89] : Gölge Panteri Klonu
+[90] : Gölge Panteri Klonu
+[91] : Orman Atası
+[92] : Orman Fidanı
+[93] : Ruh Ayısı
+[94] : Kurt Adam
+[95] : Unknown
+[96] : Cehennem Ateşi İblisi
+[97] : Rün Taşı Golemi
+[98] : Rün Taşı Topağı
+[99] : Rün Taşı Parçacığı
+[100] : Şafak Kuşu
+[101] : Enerji Tekilliği
+[102] : Gölge Panteri
+[103] : Gölge Panteri Klonu
+[104] : Orman Atası
+[105] : Orman Fidanı
+[106] : Ruh Ayısı
+[107] : Kurt Adam
+[108] : Unknown
+[109] : Cehennem Ateşi İblisi
+[110] : Rün Taşı Golemi
+[111] : Rün Taşı Topağı
+[112] : Rün Taşı Parçacığı
+[113] : Şafak Kuşu
+[114] : Enerji Tekilliği
+[115] : Sis Perisi
+[116] : Sis Perisi
+[117] : Sis Perisi
+[118] : Sis Perisi
+[119] : Sis Perisi
+[120] : Büyük Sis Perisi
+[121] : Büyük Sis Perisi
+[122] : Büyük Sis Perisi
+[123] : Büyük Sis Perisi
+[124] : Büyük Sis Perisi
+[125] : Yemyeşil Sis Perisi
+[126] : Yemyeşil Sis Perisi
+[127] : Yemyeşil Sis Perisi
+[128] : Yemyeşil Sis Perisi
+[129] : Yemyeşil Sis Perisi
+[130] : Unknown
+[131] : Enerji Burgacı
+[132] : Enerji Burgacı
+[133] : Enerji Burgacı
+[134] : Enerji Burgacı
+[135] : Unknown
+[136] : Enerji Burgacı
+[137] : Enerji Burgacı
+[138] : Enerji Burgacı
+[139] : Enerji Burgacı
+[140] : Unknown
+[141] : Enerji Burgacı
+[142] : Enerji Burgacı
+[143] : Enerji Burgacı
+[144] : Enerji Burgacı
+[145] : Unknown
+[146] : Enerji Burgacı
+[147] : Enerji Burgacı
+[148] : Enerji Burgacı
+[149] : Enerji Burgacı
+[150] : Unknown
+[151] : Güç Anomalisi
+[152] : Unknown
+[153] : Güç Anomalisi
+[154] : Unknown
+[155] : Güç Anomalisi
+[156] : Unknown
+[157] : Güç Anomalisi
+[158] : Unknown
+[159] : Unknown
+[160] : Unknown
+[161] : Unknown
+[162] : Unknown
+[163] : Unknown
+[164] : Unknown
+[165] : Unknown
+[166] : Unknown
+[167] : Toprak Kızı
+[168] : Unknown
+[169] : Unknown
+[170] : Hedef Tahtası
+[171] : Hedef Tahtası
+[172] : Hedef Tahtası
+[173] : Hedef Tahtası
+[174] : Hedef Tahtası
+[175] : Hedef Tahtası
+[176] : Hedef Tahtası
+[177] : Hedef Tahtası
+[178] : Hedef Tahtası
+[179] : Hedef Tahtası
+[180] : Hedef Tahtası
+[181] : Hedef Tahtası
+[182] : Hedef Tahtası
+[183] : Hedef Tahtası
+[184] : Hedef Tahtası
+[185] : Hedef Tahtası
+[186] : Unknown
+[187] : Unknown
+[188] : Unknown
+[189] : Unknown
+[190] : Unknown
+[191] : Unknown
+[192] : Unknown
+[193] : Unknown
+[194] : Unknown
+[195] : Unknown
+[196] : Unknown
+[197] : Unknown
+[198] : Unknown
+[199] : Unknown
+[200] : Unknown
+[201] : Unknown
+[202] : Unknown
+[203] : Unknown
+[204] : Unknown
+[205] : Unknown
+[206] : Unknown
+[207] : Unknown
+[208] : Unknown
+[209] : Unknown
+[210] : Unknown
+[211] : Unknown
+[212] : Unknown
+[213] : Unknown
+[214] : Unknown
+[215] : Asırlık Yapıt
+[216] : İlk Çağ Titanı
+[217] : İlk Çağ Titanı
+[218] : İlk Çağ Titanı
+[219] : İlk Çağ Titanı
+[220] : İlk Çağ Titanı
+[221] : Beşinci Çağ Titanı
+[222] : Beşinci Çağ Titanı
+[223] : Beşinci Çağ Titanı
+[224] : Beşinci Çağ Titanı
+[225] : Beşinci Çağ Titanı
+[226] : Yedinci Çağ Titanı
+[227] : Yedinci Çağ Titanı
+[228] : Yedinci Çağ Titanı
+[229] : Yedinci Çağ Titanı
+[230] : Yedinci Çağ Titanı
+[231] : Sekizinci Çağ Titanı
+[232] : Sekizinci Çağ Titanı
+[233] : Sekizinci Çağ Titanı
+[234] : Sekizinci Çağ Titanı
+[235] : Sekizinci Çağ Titanı
+[236] : Dokuzuncu Çağ Titanı
+[237] : Dokuzuncu Çağ Titanı
+[238] : Dokuzuncu Çağ Titanı
+[239] : Dokuzuncu Çağ Titanı
+[240] : Dokuzuncu Çağ Titanı
+[241] : On Birinci Çağ Titanı
+[242] : On Birinci Çağ Titanı
+[243] : On Birinci Çağ Titanı
+[244] : On Birinci Çağ Titanı
+[245] : On Birinci Çağ Titanı
+[246] : On İkinci Çağ Titanı
+[247] : On İkinci Çağ Titanı
+[248] : On İkinci Çağ Titanı
+[249] : On İkinci Çağ Titanı
+[250] : On İkinci Çağ Titanı
+[251] : On Dördüncü Çağ Titanı
+[252] : On Dördüncü Çağ Titanı
+[253] : On Dördüncü Çağ Titanı
+[254] : On Dördüncü Çağ Titanı
+[255] : On Dördüncü Çağ Titanı
+[256] : On Altıncı Çağ Titanı
+[257] : On Altıncı Çağ Titanı
+[258] : On Altıncı Çağ Titanı
+[259] : On Altıncı Çağ Titanı
+[260] : On Altıncı Çağ Titanı
+[261] : On Yedinci Çağ Titanı
+[262] : On Yedinci Çağ Titanı
+[263] : On Yedinci Çağ Titanı
+[264] : On Yedinci Çağ Titanı
+[265] : On Yedinci Çağ Titanı
+[266] : On Sekizinci Çağ Titanı
+[267] : On Sekizinci Çağ Titanı
+[268] : On Sekizinci Çağ Titanı
+[269] : On Sekizinci Çağ Titanı
+[270] : On Sekizinci Çağ Titanı
+[271] : On Dokuzuncu Çağ Titanı
+[272] : On Dokuzuncu Çağ Titanı
+[273] : On Dokuzuncu Çağ Titanı
+[274] : On Dokuzuncu Çağ Titanı
+[275] : On Dokuzuncu Çağ Titanı
+[276] : Doğu On Dokuzuncu Çağ Titanı
+[277] : Doğu On Dokuzuncu Çağ Titanı
+[278] : Doğu On Dokuzuncu Çağ Titanı
+[279] : Doğu On Dokuzuncu Çağ Titanı
+[280] : Doğu On Dokuzuncu Çağ Titanı
+[281] : Doğu Yirminci Çağ Titanı
+[282] : Doğu Yirminci Çağ Titanı
+[283] : Doğu Yirminci Çağ Titanı
+[284] : Doğu Yirminci Çağ Titanı
+[285] : Doğu Yirminci Çağ Titanı
+[286] : İlk Çağ Devi
+[287] : İlk Çağ Devi
+[288] : İlk Çağ Devi
+[289] : İlk Çağ Devi
+[290] : İlk Çağ Devi
+[291] : Beşinci Çağ Devi
+[292] : Beşinci Çağ Devi
+[293] : Beşinci Çağ Devi
+[294] : Beşinci Çağ Devi
+[295] : Beşinci Çağ Devi
+[296] : Yedinci Çağ Devi
+[297] : Yedinci Çağ Devi
+[298] : Yedinci Çağ Devi
+[299] : Yedinci Çağ Devi
+[300] : Yedinci Çağ Devi
+[301] : Sekizinci Çağ Devi
+[302] : Sekizinci Çağ Devi
+[303] : Sekizinci Çağ Devi
+[304] : Sekizinci Çağ Devi
+[305] : Sekizinci Çağ Devi
+[306] : Dokuzuncu Çağ Devi
+[307] : Dokuzuncu Çağ Devi
+[308] : Dokuzuncu Çağ Devi
+[309] : Dokuzuncu Çağ Devi
+[310] : Dokuzuncu Çağ Devi
+[311] : On Birinci Çağ Devi
+[312] : On Birinci Çağ Devi
+[313] : On Birinci Çağ Devi
+[314] : On Birinci Çağ Devi
+[315] : On Birinci Çağ Devi
+[316] : On İkinci Çağ Devi
+[317] : On İkinci Çağ Devi
+[318] : On İkinci Çağ Devi
+[319] : On İkinci Çağ Devi
+[320] : On İkinci Çağ Devi
+[321] : On Dördüncü Çağ Devi
+[322] : On Dördüncü Çağ Devi
+[323] : On Dördüncü Çağ Devi
+[324] : On Dördüncü Çağ Devi
+[325] : On Dördüncü Çağ Devi
+[326] : Asırlık Yapıt
+[327] : Asırlık Yapıt
+[328] : Asırlık Yapıt
+[329] : Asırlık Yapıt
+[330] : Asırlık Yapıt
+[331] : Asırlık Yapıt
+[332] : Asırlık Yapıt
+[333] : Asırlık Yapıt
+[334] : Asırlık Yapıt
+[335] : Asırlık Yapıt
+[336] : Asırlık Yapıt
+[337] : Asırlık Yapıt
+[338] : Asırlık Yapıt
+[339] : Asırlık Yapıt
+[340] : Asırlık Yapıt
+[341] : Asırlık Yapıt
+[342] : Asırlık Yapıt
+[343] : Asırlık Yapıt
+[344] : Asırlık Yapıt
+[345] : Asırlık Yapıt
+[346] : Kraliyet Sihirbazı
+[347] : Kraliyet Sihirbazı
+[348] : Kraliyet Sihirbazı
+[349] : Kraliyet Sihirbazı
+[350] : Kraliyet Kılıçtutanı
+[351] : Kraliyet Kılıçtutanı
+[352] : Kraliyet Kılıçtutanı
+[353] : Kraliyet Kılıçtutanı
+[354] : Kraliyet Yaylısı
+[355] : Kraliyet Yaylısı
+[356] : Kraliyet Yaylısı
+[357] : Kraliyet Yaylısı
+[358] : Unknown
+[359] : Unknown
+[360] : Özümlenmiş Muhafız
+[361] : Özümlenmiş Kıdemli Muhafız
+[362] : Özümlenmiş Seçkin Muhafız
+[363] : Unknown
+[364] : Unknown
+[365] : Unknown
+[366] : Seçkin İntikamcı Muhafız Lordu
+[367] : Arkana Örümceği
+[368] : Arkana Örümceği
+[369] : Arkana Örümceği
+[370] : Arkana Örümceği
+[371] : Kristal Örümcek
+[372] : Kristal Örümcek
+[373] : Kristal Örümcek
+[374] : Kristal Örümcek
+[375] : Kristal Örümcek
+[376] : Kristal Kobra
+[377] : Kristal Kobra
+[378] : Kristal Kobra
+[379] : Kristal Kobra
+[380] : Kristal Böcek
+[381] : Kristal Böcek
+[382] : Kristal Böcek
+[383] : Kristal Böcek
+[384] : Portal
+[385] : Tavşan
+[386] : Kurbağa
+[387] : Dağ Sıçanı
+[388] : Kar Tavşanı
+[389] : Tepe Dağ Sıçanı
+[390] : Unknown
+[391] : Unknown
+[392] : Unknown
+[393] : Unknown
+[394] : Unknown
+[395] : Unknown
+[396] : Unknown
+[397] : Unknown
+[398] : Unknown
+[399] : Unknown
+[400] : Unknown
+[401] : Unknown
+[402] : Unknown
+[403] : Unknown
+[404] : Giz Dokumacısı
+[405] : Giz Dokumacısı
+[406] : Giz Dokumacısı
+[407] : Giz Dokumacısı
+[408] : Unknown
+[409] : Fey Ejderşahini
+[410] : Fey Ejderşahini
+[411] : Fey Ejderşahini
+[412] : Fey Ejderşahini
+[413] : Unknown
+[414] : Grifin
+[415] : Grifin
+[416] : Grifin
+[417] : Grifin
+[418] : Grifin
+[419] : Unknown
+[420] : Unknown
+[421] : Tilki
+[422] : Unknown
+[423] : Kurt
+[424] : Unknown
+[425] : Domuz
+[426] : Unknown
+[427] : Ayı
+[428] : Unknown
+[429] : Azılı Kurt
+[430] : Unknown
+[431] : Sığın
+[432] : Unknown
+[433] : Yaban Domuzu
+[434] : Unknown
+[435] : Unknown
+[436] : Vahşi Ayı
+[437] : Unknown
+[438] : Unknown
+[439] : Unknown
+[440] : Unknown
+[441] : Unknown
+[442] : Unknown
+[443] : Unknown
+[444] : Unknown
+[445] : Unknown
+[446] : Dev Kurbağa
+[447] : Unknown
+[448] : Gözlemci Kertenkele
+[449] : Unknown
+[450] : Dev Yılan
+[451] : Unknown
+[452] : Bataklık Ejderhası
+[453] : Unknown
+[454] : Unknown
+[455] : Unknown
+[456] : Unknown
+[457] : Unknown
+[458] : Unknown
+[459] : Moa Kuşu
+[460] : Unknown
+[461] : Dev Geyik
+[462] : Unknown
+[463] : Dehşet Kuşu
+[464] : Unknown
+[465] : Sırtlan
+[466] : Gergedan
+[467] : Gergedan
+[468] : Unknown
+[469] : Unknown
+[470] : Mamut
+[471] : Unknown
+[472] : Unknown
+[473] : Unknown
+[474] : Unknown
+[475] : Unknown
+[476] : Unknown
+[477] : Unknown
+[478] : Unknown
+[479] : Unknown
+[480] : Unknown
+[481] : Unknown
+[482] : Unknown
+[483] : Unknown
+[484] : Unknown
+[485] : Unknown
+[486] : Unknown
+[487] : Unknown
+[488] : Unknown
+[489] : Unknown
+[490] : Unknown
+[491] : Unknown
+[492] : Unknown
+[493] : Unknown
+[494] : Unknown
+[495] : Unknown
+[496] : Unknown
+[497] : Unknown
+[498] : Unknown
+[499] : Unknown
+[500] : Unknown
+[501] : Unknown
+[502] : Unknown
+[503] : Unknown
+[504] : Unknown
+[505] : Unknown
+[506] : Unknown
+[507] : Unknown
+[508] : Unknown
+[509] : Unknown
+[510] : Unknown
+[511] : Unknown
+[512] : Unknown
+[513] : Unknown
+[514] : Unknown
+[515] : Unknown
+[516] : Unknown
+[517] : Unknown
+[518] : Unknown
+[519] : Unknown
+[520] : Unknown
+[521] : Unknown
+[522] : Unknown
+[523] : Unknown
+[524] : Unknown
+[525] : Unknown
+[526] : Unknown
+[527] : Unknown
+[528] : Unknown
+[529] : Unknown
+[530] : Unknown
+[531] : Unknown
+[532] : Unknown
+[533] : Unknown
+[534] : Unknown
+[535] : Unknown
+[536] : Unknown
+[537] : Unknown
+[538] : Unknown
+[539] : Unknown
+[540] : Unknown
+[541] : Unknown
+[542] : Unknown
+[543] : Unknown
+[544] : Unknown
+[545] : Unknown
+[546] : Keten Orman Perisi
+[547] : Yetişkin Bataklık Ruhu
+[548] : Yüce Bataklık Ruhu
+[549] : Keten Orman Perisi
+[550] : Keten Orman Perisi
+[551] : Kenevir Orman Perisi
+[552] : Kenevir Orman Perisi
+[553] : Gökçiçeği Orman Perisi
+[554] : Gökçiçeği Orman Perisi
+[555] : Kehribar Yapraklı Orman Perisi
+[556] : Kehribar Yapraklı Orman Perisi
+[557] : Güneşketeni Orman Perisi
+[558] : Hayalet Keneviri Orman Perisi
+[559] : Puma
+[560] : Yetişkin Puma
+[561] : Kılıç Dişli Kaplan
+[562] : Yetişkin Kılıç Dişli Kaplan
+[563] : Yetişkin Kılıç Dişli Kaplan
+[564] : Alfa Kılıç Dişli Kaplan
+[565] : Kalay Elementali
+[566] : Kalay Elementali
+[567] : Demir Elementali
+[568] : Demir Elementali
+[569] : Titanyum Elementali
+[570] : Titanyum Elementali
+[571] : Rünit Elementali
+[572] : Rünit Elementali
+[573] : Meteorit Elementali
+[574] : Adamantiyum Elementali
+[575] : Kestane Ruhu
+[576] : Kestane Ruhu
+[577] : Çam Ruhu
+[578] : Çam Ruhu
+[579] : Sedir Ruhu
+[580] : Sedir Ruhu
+[581] : Kanmeşe Ruhu
+[582] : Kanmeşe Ruhu
+[583] : Külkabuğu Ruhu
+[584] : Lale Ağacı Ruhu
+[585] : Kum Taşı Elementali
+[586] : Kum Taşı Elementali
+[587] : Traverten Elementali
+[588] : Traverten Elementali
+[589] : Granit Elementali
+[590] : Granit Elementali
+[591] : Kayrak Elementali
+[592] : Kayrak Elementali
+[593] : Bazalt Elementali
+[594] : Mermer Elementali
+[595] : Yavru Sis Puması
+[596] : Küçük Sis Puması
+[597] : Sis Puması
+[598] : Büyük Sis Puması
+[599] : Alfa Sis Puması
+[600] : Yaşlı Yavru Sis Puması
+[601] : Yaşlı Küçük Sis Puması
+[602] : Yaşlı Sis Puması
+[603] : Yaşlı Büyük Sis Puması
+[604] : Yaşlı Alfa Sis Puması
+[605] : Kadim Yavru Sis Puması
+[606] : Kadim Küçük Sis Puması
+[607] : Kadim Sis Puması
+[608] : Kadim Büyük Sis Puması
+[609] : Kadim Alfa Sis Puması
+[610] : Çam Ruhu
+[611] : Sedir Ruhu
+[612] : Kanmeşe Ruhu
+[613] : Külkabuğu Ruhu
+[614] : Lale Ağacı Ruhu
+[615] : Yaşlı Çam Ruhu
+[616] : Yaşlı Sedir Ruhu
+[617] : Kadim Kanmeşe Ruhu
+[618] : Yaşlı Külkabuğu Ruhu
+[619] : Yaşlı Lale Ağacı Ruhu
+[620] : Kadim Çam Ruhu
+[621] : Kadim Sedir Ruhu
+[622] : Kadim Kanmeşe Ruhu
+[623] : Kadim Külkabuğu Ruhu
+[624] : Kadim Lale Ağacı Ruhu
+[625] : Traverten Elementali
+[626] : Granit Elementali
+[627] : Kayrak Elementali
+[628] : Bazalt Elementali
+[629] : Mermer Elementali
+[630] : Yaşlı Traverten Elementali
+[631] : Yaşlı Granit Elementali
+[632] : Yaşlı Kayrak Elementali
+[633] : Yaşlı Bazalt Elementali
+[634] : Yaşlı Mermer Elementali
+[635] : Kadim Traverten Elementali
+[636] : Kadim Granit Elementali
+[637] : Kadim Kayrak Elemental
+[638] : Kadim Bazalt Elementali
+[639] : Kadim Mermer Elementali
+[640] : Demir Elementali
+[641] : Titanyum Elementali
+[642] : Rünit Elementali
+[643] : Meteorit Elementali
+[644] : Adamantiyum Elementali
+[645] : Yaşlı Demir Elementali
+[646] : Yaşlı Titanyum Elementali
+[647] : Yaşlı Rünit Elementali
+[648] : Yaşlı Meteorit Elementali
+[649] : Yaşlı Adamantiyum Elementali
+[650] : Kadim Demir Elementali
+[651] : Kadim Titanyum Elementali
+[652] : Kadim Rünit Elementali
+[653] : Kadim Meteorit Elementali
+[654] : Kadim Adamantiyum Elementali
+[655] : Kenevir Orman Perisi
+[656] : Gökçiçeği Orman Perisi
+[657] : Kehribar Yapraklı Orman Perisi
+[658] : Güneşketeni Orman Perisi
+[659] : Hayalet Keneviri Orman Perisi
+[660] : Yaşlı Kenevir Orman Perisi
+[661] : Yaşlı Gökçiçeği Orman Perisi
+[662] : Yaşlı Kehribar Yapraklı Orman Perisi
+[663] : Yaşlı Güneşketeni Orman Perisi
+[664] : Yaşlı Hayalet Keneviri Orman Perisi
+[665] : Kadim Kenevir Orman Perisi
+[666] : Kadim Gökçiçeği Orman Perisi
+[667] : Kadim Kehribar Yapraklı Orman Perisi
+[668] : Kadim Güneşketeni Orman Perisi
+[669] : Kadim Hayalet Keneviri Orman Perisi
+[670] : Kestane Ruhu
+[671] : Çam Ruhu
+[672] : Sedir Ruhu
+[673] : Kanmeşe Ruhu
+[674] : Külkabuğu Ruhu
+[675] : Lale Ağacı Ruhu
+[676] : Kum Taşı Elementali
+[677] : Traverten Elementali
+[678] : Granit Elementali
+[679] : Kayrak Elementali
+[680] : Bazalt Elementali
+[681] : Mermer Elementali
+[682] : Kalay Elementali
+[683] : Demir Elementali
+[684] : Titanyum Elementali
+[685] : Rünit Elementali
+[686] : Meteorit Elementali
+[687] : Adamantiyum Elementali
+[688] : Keten Orman Perisi
+[689] : Kenevir Orman Perisi
+[690] : Gökçiçeği Orman Perisi
+[691] : Kehribar Yapraklı Orman Perisi
+[692] : Güneşketeni Orman Perisi
+[693] : Hayalet Keneviri Orman Perisi
+[694] : Kestane Ruhu
+[695] : Çam Ruhu
+[696] : Sedir Ruhu
+[697] : Kanmeşe Ruhu
+[698] : Külkabuğu Ruhu
+[699] : Lale Ağacı Ruhu
+[700] : Kum Taşı Elementali
+[701] : Traverten Elementali
+[702] : Granit Elementali
+[703] : Kayrak Elementali
+[704] : Bazalt Elementali
+[705] : Mermer Elementali
+[706] : Kalay Elementali
+[707] : Demir Elementali
+[708] : Titanyum Elementali
+[709] : Rünit Elementali
+[710] : Meteorit Elementali
+[711] : Adamantiyum Elementali
+[712] : Keten Orman Perisi
+[713] : Kenevir Orman Perisi
+[714] : Gökçiçeği Orman Perisi
+[715] : Kehribar Yapraklı Orman Perisi
+[716] : Güneşketeni Orman Perisi
+[717] : Hayalet Keneviri Orman Perisi
+[718] : Kestane Ruhu
+[719] : Çam Ruhu
+[720] : Sedir Ruhu
+[721] : Kanmeşe Ruhu
+[722] : Külkabuğu Ruhu
+[723] : Lale Ağacı Ruhu
+[724] : Kum Taşı Elementali
+[725] : Traverten Elementali
+[726] : Granit Elementali
+[727] : Kayrak Elementali
+[728] : Bazalt Elementali
+[729] : Mermer Elementali
+[730] : Kalay Elementali
+[731] : Demir Elementali
+[732] : Titanyum Elementali
+[733] : Rünit Elementali
+[734] : Meteorit Elementali
+[735] : Adamantiyum Elementali
+[736] : Keten Orman Perisi
+[737] : Kenevir Orman Perisi
+[738] : Gökçiçeği Orman Perisi
+[739] : Kehribar Yapraklı Orman Perisi
+[740] : Güneşketeni Orman Perisi
+[741] : Hayalet Keneviri Orman Perisi
+[742] : Unknown
+[743] : Kadim Ent
+[744] : Kadim Ent
+[745] : Kadim Ent
+[746] : Kadim Ent
+[747] : Kadim Ent
+[748] : Kadim Ent
+[749] : Kaya Devi
+[750] : Kaya Devi
+[751] : Kaya Devi
+[752] : Kaya Devi
+[753] : Kaya Devi
+[754] : Kaya Devi
+[755] : Cevher Devi
+[756] : Cevher Devi
+[757] : Cevher Devi
+[758] : Cevher Devi
+[759] : Cevher Devi
+[760] : Cevher Devi
+[761] : Unknown
+[762] : Devasa Orman Perisi
+[763] : Devasa Orman Perisi
+[764] : Devasa Orman Perisi
+[765] : Devasa Orman Perisi
+[766] : Devasa Orman Perisi
+[767] : Devasa Orman Perisi
+[768] : Unknown
+[769] : Unknown
+[770] : Unknown
+[771] : Unknown
+[772] : Unknown
+[773] : Unknown
+[774] : Unknown
+[775] : Unknown
+[776] : Unknown
+[777] : Unknown
+[778] : Unknown
+[779] : Unknown
+[780] : Unknown
+[781] : Unknown
+[782] : Unknown
+[783] : Unknown
+[784] : Unknown
+[785] : Yaşayan Çakıl
+[786] : Orman Perisi Suret
+[787] : Orman Perisi Suret
+[788] : Unknown
+[789] : Cevher Devi Sureti
+[790] : Cevher Devi Sureti
+[791] : Kadim Ent Sureti
+[792] : Kadim Ent Sureti
+[793] : Kaya Devi Sureti
+[794] : Kaya Devi Sureti
+[795] : Yaşlı Kanmeşe Sureti
+[796] : Yaşlı Külkabuğu Sureti
+[797] : Yaşlı Lale Ağacı Sureti
+[798] : Yaşlı Kayrak Sureti
+[799] : Yaşlı Bazalt Sureti
+[800] : Yaşlı Mermer Sureti
+[801] : Yaşlı Rünit Sureti
+[802] : Yaşlı Meteorit Sureti
+[803] : Yaşlı Adamantiyum Sureti
+[804] : Yaşlı Basilisk Sureti
+[805] : Yaşlı Büyük Basilisk Sureti
+[806] : Yaşlı Dev Basilisk Sureti
+[807] : Yaşlı Kehribar Yapraklı Sureti
+[808] : Yaşlı Güneşketeni Sureti
+[809] : Yaşlı Hayalet Keneviri Sureti
+[810] : Unknown
+[811] : Unknown
+[812] : Unknown
+[813] : Unknown
+[814] : Unknown
+[815] : Unknown
+[816] : Unknown
+[817] : Gizli Hazine
+[818] : Gizli Hazine
+[819] : Gizli Hazine
+[820] : Gizli Hazine
+[821] : Gizli Hazine
+[822] : Unknown
+[823] : Unknown
+[824] : Unknown
+[825] : Unknown
+[826] : Unknown
+[827] : Gizli Hazine
+[828] : Unknown
+[829] : Unknown
+[830] : Unknown
+[831] : Unknown
+[832] : Gizli Hazine
+[833] : Unknown
+[834] : Unknown
+[835] : Unknown
+[836] : Unknown
+[837] : Gizli Hazine
+[838] : Unknown
+[839] : Unknown
+[840] : Unknown
+[841] : Unknown
+[842] : Gizli Hazine
+[843] : Unknown
+[844] : Unknown
+[845] : Unknown
+[846] : Unknown
+[847] : Unknown
+[848] : Hediye Sandığı
+[849] : Hediye Sandığı
+[850] : Hediye Sandığı
+[851] : Hediye Sandığı
+[852] : Hediye Sandığı
+[853] : Hediye Sandığı
+[854] : Unknown
+[855] : Dev Renkli Yumurta
+[856] : Dev Renkli Yumurta
+[857] : Dev Renkli Yumurta
+[858] : Dev Renkli Yumurta
+[859] : Dev Renkli Yumurta
+[860] : Dev Renkli Yumurta
+[861] : Unknown
+[862] : Unknown
+[863] : Unknown
+[864] : Unknown
+[865] : Unknown
+[866] : Hediye Kutusu
+[867] : Hediye Kutusu
+[868] : Hediye Kutusu
+[869] : Hediye Kutusu
+[870] : Hediye Kutusu
+[871] : Renkli Yumurtalar
+[872] : Renkli Yumurtalar
+[873] : Renkli Yumurtalar
+[874] : Renkli Yumurtalar
+[875] : Renkli Yumurtalar
+[876] : Küt Kesim
+[877] : Küt Kesim
+[878] : Küt Kesim
+[879] : Küt Kesim
+[880] : Küt Kesim
+[881] : Küt Kesim
+[882] : Küt Kesim
+[883] : Küt Kesim
+[884] : Küt Kesim
+[885] : Küt Kesim
+[886] : Uçan Bal Kabağı
+[887] : Uçan Bal Kabağı
+[888] : Uçan Bal Kabağı
+[889] : Uçan Bal Kabağı
+[890] : Uçan Bal Kabağı
+[891] : Uçan Bal Kabağı
+[892] : Uçan Bal Kabağı
+[893] : Uçan Bal Kabağı
+[894] : Uçan Bal Kabağı
+[895] : Uçan Bal Kabağı
+[896] : Unknown
+[897] : Unknown
+[898] : Unknown
+[899] : Unknown
+[900] : Unknown
+[901] : Unknown
+[902] : Unknown
+[903] : Unknown
+[904] : Unknown
+[905] : Unknown
+[906] : Kıdemli Kemikkıran Sandık
+[907] : Unknown
+[908] : Unknown
+[909] : Unknown
+[910] : Unknown
+[911] : Dengesiz Sandık
+[912] : Unknown
+[913] : Unknown
+[914] : Unknown
+[915] : Unknown
+[916] : Unknown
+[917] : Unknown
+[918] : Unknown
+[919] : Unknown
+[920] : Unknown
+[921] : Unknown
+[922] : Unknown
+[923] : Unknown
+[924] : Unknown
+[925] : Unknown
+[926] : Unknown
+[927] : Unknown
+[928] : Unknown
+[929] : Unknown
+[930] : Avalonlu Hazine Dronu
+[931] : Avalonlu Hazine Dronu
+[932] : Avalonlu Hazine Dronu
+[933] : Avalonlu Hazine Dronu
+[934] : Avalonlu Hazine Dronu
+[935] : Avalonlu Hazine Dronu
+[936] : Avalonlu Hazine Dronu
+[937] : Avalonlu Hazine Dronu
+[938] : Avalonlu Hazine Dronu
+[939] : Avalonlu Hazine Dronu
+[940] : Avalonlu Hazine Dronu
+[941] : Avalonlu Hazine Dronu
+[942] : Avalonlu Hazine Dronu
+[943] : Avalonlu Hazine Dronu
+[944] : Avalonlu Hazine Dronu
+[945] : Avalonlu Hazine Dronu
+[946] : Rehber Kargılı
+[947] : Avalonlu Okçu
+[948] : Rehber Büyük Büyücü
+[949] : Rehber Büyük Büyücü
+[950] : Avalonlu Başbüyücü
+[951] : Avalonlu Şavaşçı
+[952] : Avalon Şövalye
+[953] : Rehber Ağır Dron
+[954] : Rehber Ağır Dron
+[955] : Rehber Ağır Dron
+[956] : Rehber Fener Dronu
+[957] : Rehber Fener Dronu
+[958] : Rehber Fener Dronu
+[959] : Avalonlu Saldırı Dronu
+[960] : Avalonlu Saldırı Dronu
+[961] : Avalonlu Saldırı Dronu
+[962] : Gözcü Nakil Dronu
+[963] : Gözcü Nakil Dronu
+[964] : Gözcü Nakil Dronu
+[965] : Gözcü Maden Dronu
+[966] : Gözcü Maden Dronu
+[967] : Gözcü Maden Dronu
+[968] : Rehber Kargılı
+[969] : Rehber Kargılı
+[970] : Rehber Kargılı
+[971] : Rehber Mızraklı
+[972] : Rehber Mızraklı
+[973] : Rehber Mızraklı
+[974] : Rehber Çaylak
+[975] : Rehber Çaylak
+[976] : Rehber Çaylak
+[977] : Rehber Keşiş
+[978] : Rehber Keşiş
+[979] : Rehber Keşiş
+[980] : Avalonlu Şavaşçı
+[981] : Avalonlu Şavaşçı
+[982] : Avalonlu Şavaşçı
+[983] : Avalon Şövalye
+[984] : Avalon Şövalye
+[985] : Avalon Şövalye
+[986] : Rehber Avcı
+[987] : Rehber Avcı
+[988] : Rehber Avcı
+[989] : Rehber Kolcu
+[990] : Rehber Kolcu
+[991] : Rehber Kolcu
+[992] : Avalonlu Okçu
+[993] : Avalonlu Okçu
+[994] : Avalonlu Okçu
+[995] : Avalonlu Okçu
+[996] : Avalonlu Okçu
+[997] : Avalonlu Okçu
+[998] : Rehber Büyü Üstadı
+[999] : Rehber Büyü Üstadı
+[1000] : Rehber Büyü Üstadı
+[1001] : Avalonlu Takipçi
+[1002] : Avalonlu Takipçi
+[1003] : Avalonlu Takipçi
+[1004] : Rehber Büyücü
+[1005] : Rehber Büyücü
+[1006] : Rehber Büyücü
+[1007] : Rehber Zeki Büyücü
+[1008] : Rehber Zeki Büyücü
+[1009] : Rehber Zeki Büyücü
+[1010] : Rehber Büyü Ustası
+[1011] : Rehber Büyü Ustası
+[1012] : Rehber Büyü Ustası
+[1013] : Rehber Büyük Büyücü
+[1014] : Rehber Büyük Büyücü
+[1015] : Rehber Büyük Büyücü
+[1016] : Uzun Çöpçü
+[1017] : Uzun Çöpçü
+[1018] : Uzun Çöpçü
+[1019] : Uzun Çöpçü
+[1020] : Uzun Çöpçü
+[1021] : Uzun Çöpçü
+[1022] : Uzun Çöpçü
+[1023] : Uzun Çöpçü
+[1024] : Uzun Çöpçü
+[1025] : Uzun Çöpçü
+[1026] : Uzun Çöpçü
+[1027] : Uzun Çöpçü
+[1028] : Uzun Çöpçü
+[1029] : Uzun Çöpçü
+[1030] : Uzun Çöpçü
+[1031] : Uzun Çöpçü
+[1032] : Uzun Çöpçü
+[1033] : Uzun Odun Toplayıcı
+[1034] : Uzun Odun Toplayıcı
+[1035] : Uzun Odun Toplayıcı
+[1036] : Uzun Odun Toplayıcı
+[1037] : Uzun Odun Toplayıcı
+[1038] : Uzun Odun Toplayıcı
+[1039] : Uzun Odun Toplayıcı
+[1040] : Uzun Odun Toplayıcı
+[1041] : Uzun Odun Toplayıcı
+[1042] : Uzun Odun Toplayıcı
+[1043] : Uzun Odun Toplayıcı
+[1044] : Uzun Odun Toplayıcı
+[1045] : Uzun Odun Toplayıcı
+[1046] : Uzun Odun Toplayıcı
+[1047] : Uzun Odun Toplayıcı
+[1048] : Uzun Odun Toplayıcı
+[1049] : Uzun Odun Toplayıcı
+[1050] : Yankesici
+[1051] : Yankesici
+[1052] : Yankesici
+[1053] : Yankesici
+[1054] : Yankesici
+[1055] : Yankesici
+[1056] : Yankesici
+[1057] : Yankesici
+[1058] : Yankesici
+[1059] : Yankesici
+[1060] : Yankesici
+[1061] : Yankesici
+[1062] : Yankesici
+[1063] : Yankesici
+[1064] : Yankesici
+[1065] : Yankesici
+[1066] : Yankesici
+[1067] : Acımasız Yankesici
+[1068] : Acımasız Yankesici
+[1069] : Acımasız Yankesici
+[1070] : Acımasız Yankesici
+[1071] : Acımasız Yankesici
+[1072] : Acımasız Yankesici
+[1073] : Acımasız Yankesici
+[1074] : Acımasız Yankesici
+[1075] : Acımasız Yankesici
+[1076] : Acımasız Yankesici
+[1077] : Acımasız Yankesici
+[1078] : Acımasız Yankesici
+[1079] : Acımasız Yankesici
+[1080] : Acımasız Yankesici
+[1081] : Acımasız Yankesici
+[1082] : Acımasız Yankesici
+[1083] : Acımasız Yankesici
+[1084] : Arbedeci
+[1085] : Arbedeci
+[1086] : Arbedeci
+[1087] : Arbedeci
+[1088] : Arbedeci
+[1089] : Arbedeci
+[1090] : Arbedeci
+[1091] : Arbedeci
+[1092] : Arbedeci
+[1093] : Arbedeci
+[1094] : Arbedeci
+[1095] : Arbedeci
+[1096] : Arbedeci
+[1097] : Arbedeci
+[1098] : Arbedeci
+[1099] : Arbedeci
+[1100] : Arbedeci
+[1101] : Kaçakçı
+[1102] : Kaçakçı
+[1103] : Kaçakçı
+[1104] : Kaçakçı
+[1105] : Kaçakçı
+[1106] : Kaçakçı
+[1107] : Kaçakçı
+[1108] : Kaçakçı
+[1109] : Kaçakçı
+[1110] : Kaçakçı
+[1111] : Kaçakçı
+[1112] : Kaçakçı
+[1113] : Kaçakçı
+[1114] : Kaçakçı
+[1115] : Kaçakçı
+[1116] : Kaçakçı
+[1117] : Kaçakçı
+[1118] : Kurnaz Kaçakçı
+[1119] : Kurnaz Kaçakçı
+[1120] : Kurnaz Kaçakçı
+[1121] : Kurnaz Kaçakçı
+[1122] : Kurnaz Kaçakçı
+[1123] : Kurnaz Kaçakçı
+[1124] : Kurnaz Kaçakçı
+[1125] : Kurnaz Kaçakçı
+[1126] : Kurnaz Kaçakçı
+[1127] : Kurnaz Kaçakçı
+[1128] : Kurnaz Kaçakçı
+[1129] : Kurnaz Kaçakçı
+[1130] : Kurnaz Kaçakçı
+[1131] : Kurnaz Kaçakçı
+[1132] : Kurnaz Kaçakçı
+[1133] : Kurnaz Kaçakçı
+[1134] : Kurnaz Kaçakçı
+[1135] : Zeki Tuzakçı
+[1136] : Zeki Tuzakçı
+[1137] : Zeki Tuzakçı
+[1138] : Zeki Tuzakçı
+[1139] : Zeki Tuzakçı
+[1140] : Zeki Tuzakçı
+[1141] : Zeki Tuzakçı
+[1142] : Zeki Tuzakçı
+[1143] : Zeki Tuzakçı
+[1144] : Zeki Tuzakçı
+[1145] : Zeki Tuzakçı
+[1146] : Zeki Tuzakçı
+[1147] : Zeki Tuzakçı
+[1148] : Zeki Tuzakçı
+[1149] : Zeki Tuzakçı
+[1150] : Zeki Tuzakçı
+[1151] : Zeki Tuzakçı
+[1152] : Kundakçı
+[1153] : Kundakçı
+[1154] : Kundakçı
+[1155] : Kundakçı
+[1156] : Kundakçı
+[1157] : Kundakçı
+[1158] : Kundakçı
+[1159] : Kundakçı
+[1160] : Kundakçı
+[1161] : Kundakçı
+[1162] : Kundakçı
+[1163] : Kundakçı
+[1164] : Kundakçı
+[1165] : Kundakçı
+[1166] : Kundakçı
+[1167] : Kundakçı
+[1168] : Kundakçı
+[1169] : Usta Kundakçı
+[1170] : Usta Kundakçı
+[1171] : Usta Kundakçı
+[1172] : Usta Kundakçı
+[1173] : Usta Kundakçı
+[1174] : Usta Kundakçı
+[1175] : Usta Kundakçı
+[1176] : Usta Kundakçı
+[1177] : Usta Kundakçı
+[1178] : Usta Kundakçı
+[1179] : Usta Kundakçı
+[1180] : Usta Kundakçı
+[1181] : Usta Kundakçı
+[1182] : Usta Kundakçı
+[1183] : Usta Kundakçı
+[1184] : Usta Kundakçı
+[1185] : Usta Kundakçı
+[1186] : Ateş Delisi
+[1187] : Ateş Delisi
+[1188] : Ateş Delisi
+[1189] : Ateş Delisi
+[1190] : Ateş Delisi
+[1191] : Ateş Delisi
+[1192] : Ateş Delisi
+[1193] : Ateş Delisi
+[1194] : Ateş Delisi
+[1195] : Ateş Delisi
+[1196] : Ateş Delisi
+[1197] : Ateş Delisi
+[1198] : Ateş Delisi
+[1199] : Ateş Delisi
+[1200] : Ateş Delisi
+[1201] : Ateş Delisi
+[1202] : Ateş Delisi
+[1203] : Alev Arayan
+[1204] : Alev Arayan
+[1205] : Alev Arayan
+[1206] : Alev Arayan
+[1207] : Alev Arayan
+[1208] : Alev Arayan
+[1209] : Alev Arayan
+[1210] : Alev Arayan
+[1211] : Alev Arayan
+[1212] : Şiddetli Alev
+[1213] : Haşin Fedai
+[1214] : Haşin Fedai
+[1215] : Haşin Fedai
+[1216] : Haşin Fedai
+[1217] : Haşin Fedai
+[1218] : Haşin Fedai
+[1219] : Haşin Fedai
+[1220] : Haşin Fedai
+[1221] : Haşin Fedai
+[1222] : Haşin Fedai
+[1223] : Haşin Fedai
+[1224] : Haşin Fedai
+[1225] : Haşin Fedai
+[1226] : Haşin Fedai
+[1227] : Haşin Fedai
+[1228] : Haşin Fedai
+[1229] : Haşin Fedai
+[1230] : Dengesiz Hırpalayıcı
+[1231] : Dengesiz Hırpalayıcı
+[1232] : Dengesiz Hırpalayıcı
+[1233] : Dengesiz Hırpalayıcı
+[1234] : Dengesiz Hırpalayıcı
+[1235] : Dengesiz Hırpalayıcı
+[1236] : Dengesiz Hırpalayıcı
+[1237] : Dengesiz Hırpalayıcı
+[1238] : Dengesiz Hırpalayıcı
+[1239] : Dengesiz Hırpalayıcı
+[1240] : Dengesiz Hırpalayıcı
+[1241] : Dengesiz Hırpalayıcı
+[1242] : Dengesiz Hırpalayıcı
+[1243] : Dengesiz Hırpalayıcı
+[1244] : Dengesiz Hırpalayıcı
+[1245] : Dengesiz Hırpalayıcı
+[1246] : Dengesiz Hırpalayıcı
+[1247] : Tuzak Ustası
+[1248] : Tuzak Ustası
+[1249] : Tuzak Ustası
+[1250] : Tuzak Ustası
+[1251] : Tuzak Ustası
+[1252] : Tuzak Ustası
+[1253] : Tuzak Ustası
+[1254] : Tuzak Ustası
+[1255] : Tuzak Ustası
+[1256] : Müfettiş
+[1257] : Müfettiş
+[1258] : Müfettiş
+[1259] : Müfettiş
+[1260] : Müfettiş
+[1261] : Müfettiş
+[1262] : Müfettiş
+[1263] : Müfettiş
+[1264] : Müfettiş
+[1265] : Dengesiz Kokuşmuş Sıçan
+[1266] : Uzun Odun Toplayıcı
+[1267] : Dengesiz Çöpçü
+[1268] : Yankesici
+[1269] : Acımasız Yankesici
+[1270] : Arbedeci
+[1271] : Kaçakçı
+[1272] : Kurnaz Kaçakçı
+[1273] : Zeki Tuzakçı
+[1274] : Dengesiz Yangıncı
+[1275] : Kundakçı
+[1276] : Usta Kundakçı
+[1277] : Ateş Delisi
+[1278] : Vak
+[1279] : Şifacı
+[1280] : Mahir
+[1281] : Cani
+[1282] : Fedai
+[1283] : Haşin Fedai
+[1284] : Dengesiz Hırpalayıcı
+[1285] : Kırılgan Bombacı
+[1286] : Bombacı
+[1287] : Güçlü Bombacı
+[1288] : Zayıf Topçu
+[1289] : Topçu
+[1290] : Ağır Topçu
+[1291] : Unknown
+[1292] : Unknown
+[1293] : Unknown
+[1294] : Unknown
+[1295] : Unknown
+[1296] : Unknown
+[1297] : Unknown
+[1298] : Unknown
+[1299] : Unknown
+[1300] : Unknown
+[1301] : Unknown
+[1302] : Unknown
+[1303] : Unknown
+[1304] : Unknown
+[1305] : Unknown
+[1306] : Unknown
+[1307] : Unknown
+[1308] : Unknown
+[1309] : Unknown
+[1310] : Unknown
+[1311] : Unknown
+[1312] : Unknown
+[1313] : Unknown
+[1314] : Unknown
+[1315] : Unknown
+[1316] : Unknown
+[1317] : Unknown
+[1318] : Unknown
+[1319] : Unknown
+[1320] : Unknown
+[1321] : Unknown
+[1322] : Unknown
+[1323] : Unknown
+[1324] : Unknown
+[1325] : Unknown
+[1326] : Unknown
+[1327] : Unknown
+[1328] : Unknown
+[1329] : Unknown
+[1330] : Unknown
+[1331] : Unknown
+[1332] : Unknown
+[1333] : Vahşi Çöpçü
+[1334] : Unknown
+[1335] : Unknown
+[1336] : Unknown
+[1337] : Unknown
+[1338] : Unknown
+[1339] : Unknown
+[1340] : Unknown
+[1341] : Unknown
+[1342] : Unknown
+[1343] : Unknown
+[1344] : Unknown
+[1345] : Unknown
+[1346] : Unknown
+[1347] : Unknown
+[1348] : Unknown
+[1349] : İnkârcı Topçu
+[1350] : Unknown
+[1351] : Unknown
+[1352] : Unknown
+[1353] : Unknown
+[1354] : Unknown
+[1355] : Unknown
+[1356] : Unknown
+[1357] : Acemi Kargılı
+[1358] : Acemi Kargılı
+[1359] : Acemi Kargılı
+[1360] : Acemi Kargılı
+[1361] : Acemi Kargılı
+[1362] : Acemi Kargılı
+[1363] : Acemi Kargılı
+[1364] : Acemi Kargılı
+[1365] : Acemi Kargılı
+[1366] : Acemi Kargılı
+[1367] : Acemi Kargılı
+[1368] : Acemi Kargılı
+[1369] : Acemi Kargılı
+[1370] : Acemi Kargılı
+[1371] : Acemi Kargılı
+[1372] : Acemi Kargılı
+[1373] : Acemi Kargılı
+[1374] : Acemi Kargılı
+[1375] : Kargılı
+[1376] : Kargılı
+[1377] : Kargılı
+[1378] : Kargılı
+[1379] : Kargılı
+[1380] : Kargılı
+[1381] : Kargılı
+[1382] : Kargılı
+[1383] : Kargılı
+[1384] : Kargılı
+[1385] : Kargılı
+[1386] : Kargılı
+[1387] : Kargılı
+[1388] : Kargılı
+[1389] : Kargılı
+[1390] : Kargılı
+[1391] : Kargılı
+[1392] : Kargılı
+[1393] : Hain Kargılı
+[1394] : Hain Kargılı
+[1395] : Hain Kargılı
+[1396] : Hain Kargılı
+[1397] : Hain Kargılı
+[1398] : Hain Kargılı
+[1399] : Hain Kargılı
+[1400] : Hain Kargılı
+[1401] : Hain Kargılı
+[1402] : Hain Kargılı
+[1403] : Hain Kargılı
+[1404] : Hain Kargılı
+[1405] : Hain Kargılı
+[1406] : Hain Kargılı
+[1407] : Hain Kargılı
+[1408] : Hain Kargılı
+[1409] : Hain Kargılı
+[1410] : Hain Kargılı
+[1411] : Muhafız Teğmen
+[1412] : Muhafız Teğmen
+[1413] : Muhafız Teğmen
+[1414] : Muhafız Teğmen
+[1415] : Muhafız Teğmen
+[1416] : Muhafız Teğmen
+[1417] : Muhafız Teğmen
+[1418] : Muhafız Teğmen
+[1419] : Muhafız Teğmen
+[1420] : Muhafız Teğmen
+[1421] : Muhafız Teğmen
+[1422] : Muhafız Teğmen
+[1423] : Muhafız Teğmen
+[1424] : Muhafız Teğmen
+[1425] : Muhafız Teğmen
+[1426] : Muhafız Teğmen
+[1427] : Muhafız Teğmen
+[1428] : Muhafız Teğmen
+[1429] : Muhafız Komutanı
+[1430] : Muhafız Komutanı
+[1431] : Muhafız Komutanı
+[1432] : Muhafız Komutanı
+[1433] : Muhafız Komutanı
+[1434] : Muhafız Komutanı
+[1435] : Muhafız Komutanı
+[1436] : Muhafız Komutanı
+[1437] : Muhafız Komutanı
+[1438] : Muhafız Komutanı
+[1439] : Muhafız Komutanı
+[1440] : Muhafız Komutanı
+[1441] : Muhafız Komutanı
+[1442] : Muhafız Komutanı
+[1443] : Muhafız Komutanı
+[1444] : Muhafız Komutanı
+[1445] : Muhafız Komutanı
+[1446] : Muhafız Komutanı
+[1447] : Acemi Zulmedici
+[1448] : Acemi Zulmedici
+[1449] : Acemi Zulmedici
+[1450] : Acemi Zulmedici
+[1451] : Acemi Zulmedici
+[1452] : Acemi Zulmedici
+[1453] : Acemi Zulmedici
+[1454] : Acemi Zulmedici
+[1455] : Acemi Zulmedici
+[1456] : Acemi Zulmedici
+[1457] : Acemi Zulmedici
+[1458] : Acemi Zulmedici
+[1459] : Acemi Zulmedici
+[1460] : Acemi Zulmedici
+[1461] : Acemi Zulmedici
+[1462] : Acemi Zulmedici
+[1463] : Acemi Zulmedici
+[1464] : Acemi Zulmedici
+[1465] : Zulmedici
+[1466] : Zulmedici
+[1467] : Zulmedici
+[1468] : Zulmedici
+[1469] : Zulmedici
+[1470] : Zulmedici
+[1471] : Zulmedici
+[1472] : Zulmedici
+[1473] : Zulmedici
+[1474] : Zulmedici
+[1475] : Zulmedici
+[1476] : Zulmedici
+[1477] : Zulmedici
+[1478] : Zulmedici
+[1479] : Zulmedici
+[1480] : Zulmedici
+[1481] : Zulmedici
+[1482] : Zulmedici
+[1483] : Amansız Zulmedici
+[1484] : Amansız Zulmedici
+[1485] : Amansız Zulmedici
+[1486] : Amansız Zulmedici
+[1487] : Amansız Zulmedici
+[1488] : Amansız Zulmedici
+[1489] : Amansız Zulmedici
+[1490] : Amansız Zulmedici
+[1491] : Amansız Zulmedici
+[1492] : Amansız Zulmedici
+[1493] : Amansız Zulmedici
+[1494] : Amansız Zulmedici
+[1495] : Amansız Zulmedici
+[1496] : Amansız Zulmedici
+[1497] : Amansız Zulmedici
+[1498] : Amansız Zulmedici
+[1499] : Amansız Zulmedici
+[1500] : Amansız Zulmedici
+[1501] : Zulüm Ekibi Lideri
+[1502] : Zulüm Ekibi Lideri
+[1503] : Zulüm Ekibi Lideri
+[1504] : Zulüm Ekibi Lideri
+[1505] : Zulüm Ekibi Lideri
+[1506] : Zulüm Ekibi Lideri
+[1507] : Zulüm Ekibi Lideri
+[1508] : Zulüm Ekibi Lideri
+[1509] : Zulüm Ekibi Lideri
+[1510] : Zulüm Ekibi Lideri
+[1511] : Zulüm Ekibi Lideri
+[1512] : Zulüm Ekibi Lideri
+[1513] : Zulüm Ekibi Lideri
+[1514] : Zulüm Ekibi Lideri
+[1515] : Zulüm Ekibi Lideri
+[1516] : Zulüm Ekibi Lideri
+[1517] : Zulüm Ekibi Lideri
+[1518] : Zulüm Ekibi Lideri
+[1519] : Zulüm Ustası
+[1520] : Zulüm Ustası
+[1521] : Zulüm Ustası
+[1522] : Zulüm Ustası
+[1523] : Zulüm Ustası
+[1524] : Zulüm Ustası
+[1525] : Zulüm Ustası
+[1526] : Zulüm Ustası
+[1527] : Zulüm Ustası
+[1528] : Zulüm Ustası
+[1529] : Zulüm Ustası
+[1530] : Zulüm Ustası
+[1531] : Zulüm Ustası
+[1532] : Zulüm Ustası
+[1533] : Zulüm Ustası
+[1534] : Zulüm Ustası
+[1535] : Zulüm Ustası
+[1536] : Zulüm Ustası
+[1537] : Takipçi Tarikatçı
+[1538] : Takipçi Tarikatçı
+[1539] : Takipçi Tarikatçı
+[1540] : Takipçi Tarikatçı
+[1541] : Takipçi Tarikatçı
+[1542] : Takipçi Tarikatçı
+[1543] : Takipçi Tarikatçı
+[1544] : Takipçi Tarikatçı
+[1545] : Takipçi Tarikatçı
+[1546] : Takipçi Tarikatçı
+[1547] : Takipçi Tarikatçı
+[1548] : Takipçi Tarikatçı
+[1549] : Takipçi Tarikatçı
+[1550] : Takipçi Tarikatçı
+[1551] : Takipçi Tarikatçı
+[1552] : Takipçi Tarikatçı
+[1553] : Takipçi Tarikatçı
+[1554] : Takipçi Tarikatçı
+[1555] : Tarikatçı
+[1556] : Tarikatçı
+[1557] : Tarikatçı
+[1558] : Tarikatçı
+[1559] : Tarikatçı
+[1560] : Tarikatçı
+[1561] : Tarikatçı
+[1562] : Tarikatçı
+[1563] : Tarikatçı
+[1564] : Tarikatçı
+[1565] : Tarikatçı
+[1566] : Tarikatçı
+[1567] : Tarikatçı
+[1568] : Tarikatçı
+[1569] : Tarikatçı
+[1570] : Tarikatçı
+[1571] : Tarikatçı
+[1572] : Tarikatçı
+[1573] : Nasırlı Tarikatçı
+[1574] : Nasırlı Tarikatçı
+[1575] : Nasırlı Tarikatçı
+[1576] : Nasırlı Tarikatçı
+[1577] : Nasırlı Tarikatçı
+[1578] : Nasırlı Tarikatçı
+[1579] : Nasırlı Tarikatçı
+[1580] : Nasırlı Tarikatçı
+[1581] : Nasırlı Tarikatçı
+[1582] : Nasırlı Tarikatçı
+[1583] : Nasırlı Tarikatçı
+[1584] : Nasırlı Tarikatçı
+[1585] : Nasırlı Tarikatçı
+[1586] : Nasırlı Tarikatçı
+[1587] : Nasırlı Tarikatçı
+[1588] : Nasırlı Tarikatçı
+[1589] : Nasırlı Tarikatçı
+[1590] : Nasırlı Tarikatçı
+[1591] : Ayin Lideri
+[1592] : Ayin Lideri
+[1593] : Ayin Lideri
+[1594] : Ayin Lideri
+[1595] : Ayin Lideri
+[1596] : Ayin Lideri
+[1597] : Ayin Lideri
+[1598] : Ayin Lideri
+[1599] : Ayin Lideri
+[1600] : Ayin Lideri
+[1601] : Ayin Lideri
+[1602] : Ayin Lideri
+[1603] : Ayin Lideri
+[1604] : Ayin Lideri
+[1605] : Ayin Lideri
+[1606] : Ayin Lideri
+[1607] : Ayin Lideri
+[1608] : Ayin Lideri
+[1609] : Şeytanların Hanımı
+[1610] : Şeytanların Hanımı
+[1611] : Şeytanların Hanımı
+[1612] : Şeytanların Hanımı
+[1613] : Şeytanların Hanımı
+[1614] : Şeytanların Hanımı
+[1615] : Şeytanların Hanımı
+[1616] : Şeytanların Hanımı
+[1617] : Şeytanların Hanımı
+[1618] : Şeytanların Hanımı
+[1619] : Şeytanların Hanımı
+[1620] : Şeytanların Hanımı
+[1621] : Şeytanların Hanımı
+[1622] : Şeytanların Hanımı
+[1623] : Şeytanların Hanımı
+[1624] : Şeytanların Hanımı
+[1625] : Şeytanların Hanımı
+[1626] : Şeytanların Hanımı
+[1627] : Karanlık Paladin
+[1628] : Karanlık Paladin
+[1629] : Karanlık Paladin
+[1630] : Karanlık Paladin
+[1631] : Karanlık Paladin
+[1632] : Karanlık Paladin
+[1633] : Karanlık Paladin
+[1634] : Karanlık Paladin
+[1635] : Karanlık Paladin
+[1636] : Karanlık Paladin
+[1637] : Karanlık Paladin
+[1638] : Karanlık Paladin
+[1639] : Karanlık Paladin
+[1640] : Karanlık Paladin
+[1641] : Karanlık Paladin
+[1642] : Karanlık Paladin
+[1643] : Karanlık Paladin
+[1644] : Karanlık Paladin
+[1645] : Morgana'nın Seçilmişi
+[1646] : Morgana'nın Seçilmişi
+[1647] : Morgana'nın Seçilmişi
+[1648] : Morgana'nın Seçilmişi
+[1649] : Morgana'nın Seçilmişi
+[1650] : Morgana'nın Seçilmişi
+[1651] : Morgana'nın Seçilmişi
+[1652] : Morgana'nın Seçilmişi
+[1653] : Morgana'nın Seçilmişi
+[1654] : Morgana'nın Seçilmişi
+[1655] : Morgana'nın Seçilmişi
+[1656] : Morgana'nın Seçilmişi
+[1657] : Morgana'nın Seçilmişi
+[1658] : Morgana'nın Seçilmişi
+[1659] : Morgana'nın Seçilmişi
+[1660] : Morgana'nın Seçilmişi
+[1661] : Morgana'nın Seçilmişi
+[1662] : Morgana'nın Seçilmişi
+[1663] : Unknown
+[1664] : Unknown
+[1665] : Unknown
+[1666] : Unknown
+[1667] : Unknown
+[1668] : Unknown
+[1669] : Unknown
+[1670] : Unknown
+[1671] : Unknown
+[1672] : Unknown
+[1673] : Unknown
+[1674] : Unknown
+[1675] : Unknown
+[1676] : Unknown
+[1677] : Unknown
+[1678] : Acemi Zulmedici
+[1679] : Unknown
+[1680] : Acemi Kargılı
+[1681] : Kargılı
+[1682] : Hain Kargılı
+[1683] : Muhafız Teğmen
+[1684] : Muhafız Komutanı
+[1685] : Acemi Kargılı
+[1686] : Kargılı
+[1687] : Hain Kargılı
+[1688] : Hain Kargılı
+[1689] : Muhafız Teğmen
+[1690] : Muhafız Komutanı
+[1691] : Unknown
+[1692] : Unknown
+[1693] : Kargılı
+[1694] : Muhafız Teğmen
+[1695] : Muhafız Komutanı
+[1696] : Acemi Kargılı
+[1697] : Kargılı
+[1698] : Hain Kargılı
+[1699] : Hain Kargılı
+[1700] : Muhafız Teğmen
+[1701] : Muhafız Komutanı
+[1702] : Unknown
+[1703] : Unknown
+[1704] : Acemi Zulmedici
+[1705] : Zulmedici
+[1706] : Amansız Zulmedici
+[1707] : Zulüm Ekibi Lideri
+[1708] : Zulüm Ustası
+[1709] : Acemi Zulmedici
+[1710] : Zulmedici
+[1711] : Amansız Zulmedici
+[1712] : Amansız Zulmedici
+[1713] : Zulüm Ekibi Lideri
+[1714] : Zulüm Ustası
+[1715] : Unknown
+[1716] : Unknown
+[1717] : Zulmedici
+[1718] : Zulüm Ekibi Lideri
+[1719] : Zulüm Ustası
+[1720] : Acemi Zulmedici
+[1721] : Zulmedici
+[1722] : Amansız Zulmedici
+[1723] : Amansız Zulmedici
+[1724] : Zulüm Ekibi Lideri
+[1725] : Zulüm Ustası
+[1726] : Unknown
+[1727] : Unknown
+[1728] : Çağrılmış İblis
+[1729] : Çağrılmış İblis
+[1730] : Çağrılmış İblis
+[1731] : Çağrılmış İblis
+[1732] : Çağrılmış Dikenli Şeytan
+[1733] : Çağrılmış Dikenli Şeytan
+[1734] : Çağrılmış Dikenli Şeytan
+[1735] : Takipçi Tarikatçı
+[1736] : Tarikatçı
+[1737] : Tarikatçı
+[1738] : Nasırlı Tarikatçı
+[1739] : Ayin Lideri
+[1740] : Ayin Lideri
+[1741] : Şeytanların Hanımı
+[1742] : Şeytanların Hanımı
+[1743] : Takipçi Tarikatçı
+[1744] : Tarikatçı
+[1745] : Nasırlı Tarikatçı
+[1746] : Nasırlı Tarikatçı
+[1747] : Ayin Lideri
+[1748] : Şeytanların Hanımı
+[1749] : Takipçi Tarikatçı
+[1750] : Tarikatçı
+[1751] : Nasırlı Tarikatçı
+[1752] : Nasırlı Tarikatçı
+[1753] : Ayin Lideri
+[1754] : Şeytanların Hanımı
+[1755] : Unknown
+[1756] : Unknown
+[1757] : Unknown
+[1758] : Unknown
+[1759] : Unknown
+[1760] : Unknown
+[1761] : Unknown
+[1762] : Unknown
+[1763] : Unknown
+[1764] : Unknown
+[1765] : Unknown
+[1766] : Acemi Sahire
+[1767] : Sahire
+[1768] : Üstün Sahire
+[1769] : Lütuflu Sahire
+[1770] : Sihir Hanımı
+[1771] : Acemi Sahire
+[1772] : Acemi Sahire
+[1773] : Sahire
+[1774] : Sahire
+[1775] : Üstün Sahire
+[1776] : Üstün Sahire
+[1777] : Üstün Sahire
+[1778] : Üstün Sahire
+[1779] : Lütuflu Sahire
+[1780] : Lütuflu Sahire
+[1781] : Sihir Hanımı
+[1782] : Sihir Hanımı
+[1783] : Unknown
+[1784] : Unknown
+[1785] : Acemi Şövalye
+[1786] : Şövalye
+[1787] : Karanlık Paladin
+[1788] : Unknown
+[1789] : Morgana'nın Seçilmişi
+[1790] : Acemi Şövalye
+[1791] : Şövalye
+[1792] : Karanlık Paladin
+[1793] : Karanlık Paladin
+[1794] : Unknown
+[1795] : Morgana'nın Seçilmişi
+[1796] : Unknown
+[1797] : Unknown
+[1798] : Unknown
+[1799] : Şövalye
+[1800] : Unknown
+[1801] : Morgana'nın Seçilmişi
+[1802] : Acemi Şövalye
+[1803] : Şövalye
+[1804] : Karanlık Paladin
+[1805] : Karanlık Paladin
+[1806] : Unknown
+[1807] : Morgana'nın Seçilmişi
+[1808] : Unknown
+[1809] : Unknown
+[1810] : Unknown
+[1811] : Dev Kuzgun
+[1812] : Dev Kuzgun
+[1813] : Dev Kuzgun
+[1814] : Dev Kuzgun
+[1815] : Morgana Canlandırılmış Kitabı
+[1816] : Morgana Şeytani Kitabı
+[1817] : Morgana Canlandırılmış Kitabı
+[1818] : Morgana Şeytani Kitabı
+[1819] : Bağlı Eriyik Şeytan
+[1820] : Bağlı Eriyik Şeytan
+[1821] : Dev Kuzgun
+[1822] : Dev Kuzgun
+[1823] : Takıntılı Portal
+[1824] : Takıntılı Portal
+[1825] : Unknown
+[1826] : Unknown
+[1827] : Unknown
+[1828] : Unknown
+[1829] : Unknown
+[1830] : Unknown
+[1831] : Unknown
+[1832] : Unknown
+[1833] : Unknown
+[1834] : Unknown
+[1835] : Unknown
+[1836] : Unknown
+[1837] : Takıntılı Portal
+[1838] : Takıntılı Portal
+[1839] : Unknown
+[1840] : Takıntılı Dikenli Şeytan
+[1841] : Takıntılı Dikenli Şeytan
+[1842] : Unknown
+[1843] : Kırılgan Dirilmiş
+[1844] : Kırılgan Dirilmiş
+[1845] : Kırılgan Dirilmiş
+[1846] : Kırılgan Dirilmiş
+[1847] : Kırılgan Dirilmiş
+[1848] : Kırılgan Dirilmiş
+[1849] : Kırılgan Dirilmiş
+[1850] : Kırılgan Dirilmiş
+[1851] : Kırılgan Dirilmiş
+[1852] : Kırılgan Dirilmiş
+[1853] : Kırılgan Dirilmiş
+[1854] : Kırılgan Dirilmiş
+[1855] : Kırılgan Dirilmiş
+[1856] : Kırılgan Dirilmiş
+[1857] : Kırılgan Dirilmiş
+[1858] : Kırılgan Dirilmiş
+[1859] : Kırılgan Dirilmiş
+[1860] : Kırılgan Dirilmiş
+[1861] : Kırılgan Dirilmiş
+[1862] : Kırılgan Dirilmiş
+[1863] : Çelimsiz Ayaz Dokumacısı
+[1864] : Çelimsiz Ayaz Dokumacısı
+[1865] : Çelimsiz Ayaz Dokumacısı
+[1866] : Çelimsiz Ayaz Dokumacısı
+[1867] : Çelimsiz Ayaz Dokumacısı
+[1868] : Çelimsiz Ayaz Dokumacısı
+[1869] : Çelimsiz Ayaz Dokumacısı
+[1870] : Çelimsiz Ayaz Dokumacısı
+[1871] : Çelimsiz Ayaz Dokumacısı
+[1872] : Çelimsiz Ayaz Dokumacısı
+[1873] : Çelimsiz Ayaz Dokumacısı
+[1874] : Çelimsiz Ayaz Dokumacısı
+[1875] : Çelimsiz Ayaz Dokumacısı
+[1876] : Çelimsiz Ayaz Dokumacısı
+[1877] : Çelimsiz Ayaz Dokumacısı
+[1878] : Çelimsiz Ayaz Dokumacısı
+[1879] : Çelimsiz Ayaz Dokumacısı
+[1880] : Çelimsiz Ayaz Dokumacısı
+[1881] : Çelimsiz Ayaz Dokumacısı
+[1882] : Çelimsiz Ayaz Dokumacısı
+[1883] : Gul
+[1884] : Gul
+[1885] : Gul
+[1886] : Gul
+[1887] : Gul
+[1888] : Gul
+[1889] : Gul
+[1890] : Gul
+[1891] : Gul
+[1892] : Gul
+[1893] : Gul
+[1894] : Gul
+[1895] : Gul
+[1896] : Gul
+[1897] : Gul
+[1898] : Gul
+[1899] : Gul
+[1900] : Gul
+[1901] : Gul
+[1902] : Gul
+[1903] : Dirilmiş
+[1904] : Dirilmiş
+[1905] : Dirilmiş
+[1906] : Dirilmiş
+[1907] : Dirilmiş
+[1908] : Dirilmiş
+[1909] : Dirilmiş
+[1910] : Dirilmiş
+[1911] : Dirilmiş
+[1912] : Dirilmiş
+[1913] : Dirilmiş
+[1914] : Dirilmiş
+[1915] : Dirilmiş
+[1916] : Dirilmiş
+[1917] : Dirilmiş
+[1918] : Dirilmiş
+[1919] : Dirilmiş
+[1920] : Dirilmiş
+[1921] : Dirilmiş
+[1922] : Dirilmiş
+[1923] : İnatçı Dirilmiş
+[1924] : İnatçı Dirilmiş
+[1925] : İnatçı Dirilmiş
+[1926] : İnatçı Dirilmiş
+[1927] : İnatçı Dirilmiş
+[1928] : İnatçı Dirilmiş
+[1929] : İnatçı Dirilmiş
+[1930] : İnatçı Dirilmiş
+[1931] : İnatçı Dirilmiş
+[1932] : İnatçı Dirilmiş
+[1933] : İnatçı Dirilmiş
+[1934] : İnatçı Dirilmiş
+[1935] : İnatçı Dirilmiş
+[1936] : İnatçı Dirilmiş
+[1937] : İnatçı Dirilmiş
+[1938] : İnatçı Dirilmiş
+[1939] : İnatçı Dirilmiş
+[1940] : İnatçı Dirilmiş
+[1941] : İnatçı Dirilmiş
+[1942] : İnatçı Dirilmiş
+[1943] : Uyanmış Kılıç Ustası
+[1944] : Uyanmış Kılıç Ustası
+[1945] : Uyanmış Kılıç Ustası
+[1946] : Uyanmış Kılıç Ustası
+[1947] : Uyanmış Kılıç Ustası
+[1948] : Uyanmış Kılıç Ustası
+[1949] : Uyanmış Kılıç Ustası
+[1950] : Uyanmış Kılıç Ustası
+[1951] : Uyanmış Kılıç Ustası
+[1952] : Uyanmış Kılıç Ustası
+[1953] : Uyanmış Kılıç Ustası
+[1954] : Uyanmış Kılıç Ustası
+[1955] : Uyanmış Kılıç Ustası
+[1956] : Uyanmış Kılıç Ustası
+[1957] : Uyanmış Kılıç Ustası
+[1958] : Uyanmış Kılıç Ustası
+[1959] : Uyanmış Kılıç Ustası
+[1960] : Uyanmış Kılıç Ustası
+[1961] : Uyanmış Kılıç Ustası
+[1962] : Uyanmış Kılıç Ustası
+[1963] : Kemik Okçu
+[1964] : Kemik Okçu
+[1965] : Kemik Okçu
+[1966] : Kemik Okçu
+[1967] : Kemik Okçu
+[1968] : Kemik Okçu
+[1969] : Kemik Okçu
+[1970] : Kemik Okçu
+[1971] : Kemik Okçu
+[1972] : Kemik Okçu
+[1973] : Kemik Okçu
+[1974] : Kemik Okçu
+[1975] : Kemik Okçu
+[1976] : Kemik Okçu
+[1977] : Kemik Okçu
+[1978] : Kemik Okçu
+[1979] : Kemik Okçu
+[1980] : Kemik Okçu
+[1981] : Kemik Okçu
+[1982] : Kemik Okçu
+[1983] : İsabetli Kemik Okçu
+[1984] : İsabetli Kemik Okçu
+[1985] : İsabetli Kemik Okçu
+[1986] : İsabetli Kemik Okçu
+[1987] : İsabetli Kemik Okçu
+[1988] : İsabetli Kemik Okçu
+[1989] : İsabetli Kemik Okçu
+[1990] : İsabetli Kemik Okçu
+[1991] : İsabetli Kemik Okçu
+[1992] : İsabetli Kemik Okçu
+[1993] : İsabetli Kemik Okçu
+[1994] : İsabetli Kemik Okçu
+[1995] : İsabetli Kemik Okçu
+[1996] : İsabetli Kemik Okçu
+[1997] : İsabetli Kemik Okçu
+[1998] : İsabetli Kemik Okçu
+[1999] : İsabetli Kemik Okçu
+[2000] : İsabetli Kemik Okçu
+[2001] : İsabetli Kemik Okçu
+[2002] : İsabetli Kemik Okçu
+[2003] : Dirilmiş Nişancı
+[2004] : Dirilmiş Nişancı
+[2005] : Dirilmiş Nişancı
+[2006] : Dirilmiş Nişancı
+[2007] : Dirilmiş Nişancı
+[2008] : Dirilmiş Nişancı
+[2009] : Dirilmiş Nişancı
+[2010] : Dirilmiş Nişancı
+[2011] : Dirilmiş Nişancı
+[2012] : Dirilmiş Nişancı
+[2013] : Dirilmiş Nişancı
+[2014] : Dirilmiş Nişancı
+[2015] : Dirilmiş Nişancı
+[2016] : Dirilmiş Nişancı
+[2017] : Dirilmiş Nişancı
+[2018] : Dirilmiş Nişancı
+[2019] : Dirilmiş Nişancı
+[2020] : Dirilmiş Nişancı
+[2021] : Dirilmiş Nişancı
+[2022] : Dirilmiş Nişancı
+[2023] : Unutulmuş Şampiyon
+[2024] : Unutulmuş Şampiyon
+[2025] : Unutulmuş Şampiyon
+[2026] : Unutulmuş Şampiyon
+[2027] : Unutulmuş Şampiyon
+[2028] : Unutulmuş Şampiyon
+[2029] : Unutulmuş Şampiyon
+[2030] : Unutulmuş Şampiyon
+[2031] : Unutulmuş Şampiyon
+[2032] : Unutulmuş Şampiyon
+[2033] : Unutulmuş Şampiyon
+[2034] : Unutulmuş Şampiyon
+[2035] : Unutulmuş Şampiyon
+[2036] : Unutulmuş Şampiyon
+[2037] : Unutulmuş Şampiyon
+[2038] : Unutulmuş Şampiyon
+[2039] : Unutulmuş Şampiyon
+[2040] : Unutulmuş Şampiyon
+[2041] : Unutulmuş Şampiyon
+[2042] : Unutulmuş Şampiyon
+[2043] : Ayaz Dokumacısı
+[2044] : Ayaz Dokumacısı
+[2045] : Ayaz Dokumacısı
+[2046] : Ayaz Dokumacısı
+[2047] : Ayaz Dokumacısı
+[2048] : Ayaz Dokumacısı
+[2049] : Ayaz Dokumacısı
+[2050] : Ayaz Dokumacısı
+[2051] : Ayaz Dokumacısı
+[2052] : Ayaz Dokumacısı
+[2053] : Ayaz Dokumacısı
+[2054] : Ayaz Dokumacısı
+[2055] : Ayaz Dokumacısı
+[2056] : Ayaz Dokumacısı
+[2057] : Ayaz Dokumacısı
+[2058] : Ayaz Dokumacısı
+[2059] : Ayaz Dokumacısı
+[2060] : Ayaz Dokumacısı
+[2061] : Ayaz Dokumacısı
+[2062] : Ayaz Dokumacısı
+[2063] : Baskın Ayaz Dokumacısı
+[2064] : Baskın Ayaz Dokumacısı
+[2065] : Baskın Ayaz Dokumacısı
+[2066] : Baskın Ayaz Dokumacısı
+[2067] : Baskın Ayaz Dokumacısı
+[2068] : Baskın Ayaz Dokumacısı
+[2069] : Baskın Ayaz Dokumacısı
+[2070] : Baskın Ayaz Dokumacısı
+[2071] : Baskın Ayaz Dokumacısı
+[2072] : Baskın Ayaz Dokumacısı
+[2073] : Baskın Ayaz Dokumacısı
+[2074] : Baskın Ayaz Dokumacısı
+[2075] : Baskın Ayaz Dokumacısı
+[2076] : Baskın Ayaz Dokumacısı
+[2077] : Baskın Ayaz Dokumacısı
+[2078] : Baskın Ayaz Dokumacısı
+[2079] : Baskın Ayaz Dokumacısı
+[2080] : Baskın Ayaz Dokumacısı
+[2081] : Baskın Ayaz Dokumacısı
+[2082] : Baskın Ayaz Dokumacısı
+[2083] : Buz Üstadı
+[2084] : Buz Üstadı
+[2085] : Buz Üstadı
+[2086] : Buz Üstadı
+[2087] : Buz Üstadı
+[2088] : Buz Üstadı
+[2089] : Buz Üstadı
+[2090] : Buz Üstadı
+[2091] : Buz Üstadı
+[2092] : Buz Üstadı
+[2093] : Buz Üstadı
+[2094] : Buz Üstadı
+[2095] : Buz Üstadı
+[2096] : Buz Üstadı
+[2097] : Buz Üstadı
+[2098] : Buz Üstadı
+[2099] : Buz Üstadı
+[2100] : Buz Üstadı
+[2101] : Buz Üstadı
+[2102] : Buz Üstadı
+[2103] : İnsafsız Ölüm Şövalyesi
+[2104] : İnsafsız Ölüm Şövalyesi
+[2105] : İnsafsız Ölüm Şövalyesi
+[2106] : İnsafsız Ölüm Şövalyesi
+[2107] : İnsafsız Ölüm Şövalyesi
+[2108] : İnsafsız Ölüm Şövalyesi
+[2109] : İnsafsız Ölüm Şövalyesi
+[2110] : İnsafsız Ölüm Şövalyesi
+[2111] : İnsafsız Ölüm Şövalyesi
+[2112] : İnsafsız Ölüm Şövalyesi
+[2113] : İnsafsız Ölüm Şövalyesi
+[2114] : İnsafsız Ölüm Şövalyesi
+[2115] : İnsafsız Ölüm Şövalyesi
+[2116] : İnsafsız Ölüm Şövalyesi
+[2117] : İnsafsız Ölüm Şövalyesi
+[2118] : İnsafsız Ölüm Şövalyesi
+[2119] : İnsafsız Ölüm Şövalyesi
+[2120] : İnsafsız Ölüm Şövalyesi
+[2121] : İnsafsız Ölüm Şövalyesi
+[2122] : İnsafsız Ölüm Şövalyesi
+[2123] : Dehşet Lordu
+[2124] : Dehşet Lordu
+[2125] : Dehşet Lordu
+[2126] : Dehşet Lordu
+[2127] : Dehşet Lordu
+[2128] : Dehşet Lordu
+[2129] : Dehşet Lordu
+[2130] : Dehşet Lordu
+[2131] : Dehşet Lordu
+[2132] : Dehşet Lordu
+[2133] : Dehşet Lordu
+[2134] : Dehşet Lordu
+[2135] : Dehşet Lordu
+[2136] : Dehşet Lordu
+[2137] : Dehşet Lordu
+[2138] : Dehşet Lordu
+[2139] : Dehşet Lordu
+[2140] : Dehşet Lordu
+[2141] : Dehşet Lordu
+[2142] : Dehşet Lordu
+[2143] : İsimsiz Kahraman
+[2144] : İsimsiz Kahraman
+[2145] : İsimsiz Kahraman
+[2146] : İsimsiz Kahraman
+[2147] : İsimsiz Kahraman
+[2148] : İsimsiz Kahraman
+[2149] : İsimsiz Kahraman
+[2150] : İsimsiz Kahraman
+[2151] : İsimsiz Kahraman
+[2152] : İsimsiz Kahraman
+[2153] : İsimsiz Kahraman
+[2154] : İsimsiz Kahraman
+[2155] : İsimsiz Kahraman
+[2156] : İsimsiz Kahraman
+[2157] : İsimsiz Kahraman
+[2158] : İsimsiz Kahraman
+[2159] : İsimsiz Kahraman
+[2160] : İsimsiz Kahraman
+[2161] : İsimsiz Kahraman
+[2162] : İsimsiz Kahraman
+[2163] : Usta Buz Üstadı
+[2164] : Usta Buz Üstadı
+[2165] : Usta Buz Üstadı
+[2166] : Usta Buz Üstadı
+[2167] : Usta Buz Üstadı
+[2168] : Usta Buz Üstadı
+[2169] : Usta Buz Üstadı
+[2170] : Usta Buz Üstadı
+[2171] : Usta Buz Üstadı
+[2172] : Usta Buz Üstadı
+[2173] : Usta Buz Üstadı
+[2174] : Usta Buz Üstadı
+[2175] : Usta Buz Üstadı
+[2176] : Usta Buz Üstadı
+[2177] : Usta Buz Üstadı
+[2178] : Usta Buz Üstadı
+[2179] : Usta Buz Üstadı
+[2180] : Usta Buz Üstadı
+[2181] : Usta Buz Üstadı
+[2182] : Usta Buz Üstadı
+[2183] : Unknown
+[2184] : Unknown
+[2185] : Unknown
+[2186] : Unknown
+[2187] : Unknown
+[2188] : Unknown
+[2189] : Unknown
+[2190] : Unknown
+[2191] : Unknown
+[2192] : Unknown
+[2193] : Unknown
+[2194] : Unknown
+[2195] : Unknown
+[2196] : Unknown
+[2197] : Lanetli Kırılgan İskelet
+[2198] : Lanetli Kırılgan İskelet
+[2199] : Unknown
+[2200] : Unknown
+[2201] : Unknown
+[2202] : Unknown
+[2203] : Unknown
+[2204] : Unknown
+[2205] : Unknown
+[2206] : Unknown
+[2207] : Unknown
+[2208] : Çağrılmış Gölge
+[2209] : Çağrılmış Hortlak Asker
+[2210] : Çağrılmış Hortlak Asker
+[2211] : Çağrılmış Hortlak Okçu
+[2212] : Çağrılmış Hortlak Okçu
+[2213] : Çağrılmış Hortlak Büyücü
+[2214] : Çağrılmış Hortlak Büyücü
+[2215] : Çağrılmış Hortlak Asker
+[2216] : Çağrılmış Hortlak Asker
+[2217] : Çağrılmış Hortlak Okçu
+[2218] : Çağrılmış Hortlak Okçu
+[2219] : Çağrılmış Hortlak Büyücü
+[2220] : Çağrılmış Hortlak Büyücü
+[2221] : Çağrılmış Hortlak Asker
+[2222] : Çağrılmış Hortlak Asker
+[2223] : Çağrılmış Hortlak Okçu
+[2224] : Çağrılmış Hortlak Okçu
+[2225] : Çağrılmış Hortlak Büyücü
+[2226] : Çağrılmış Hortlak Büyücü
+[2227] : Çağrılmış Hortlak Asker
+[2228] : Çağrılmış Hortlak Asker
+[2229] : Çağrılmış Hortlak Okçu
+[2230] : Çağrılmış Hortlak Okçu
+[2231] : Çağrılmış Hortlak Büyücü
+[2232] : Çağrılmış Hortlak Büyücü
+[2233] : Çağrılmış Hortlak Asker
+[2234] : Çağrılmış Hortlak Asker
+[2235] : Çağrılmış Hortlak Okçu
+[2236] : Çağrılmış Hortlak Okçu
+[2237] : Çağrılmış Hortlak Büyücü
+[2238] : Çağrılmış Hortlak Büyücü
+[2239] : Kırılgan Dirilmiş
+[2240] : Kırılgan Dirilmiş
+[2241] : Unknown
+[2242] : Kırılgan Dirilmiş
+[2243] : Kırılgan Dirilmiş
+[2244] : Unknown
+[2245] : Melun Kırılgan İskelet
+[2246] : Kıdemli Melun Kırılgan İskelet
+[2247] : Seçkin Melun Kırılgan İskelet
+[2248] : Unknown
+[2249] : Unknown
+[2250] : Unknown
+[2251] : Unknown
+[2252] : Unknown
+[2253] : Unknown
+[2254] : Melun Zayıf İskelet
+[2255] : Kıdemli Melun Zayıf İskelet
+[2256] : Seçkin Melun Zayıf İskelet
+[2257] : Titreyen Kemik Okçu
+[2258] : Titreyen Kemik Okçu
+[2259] : Unknown
+[2260] : Titreyen Kemik Okçu
+[2261] : Titreyen Kemik Okçu
+[2262] : Unknown
+[2263] : Çürük Sıçan
+[2264] : Çürük Sıçan
+[2265] : Gul
+[2266] : Unknown
+[2267] : Cılız Gul
+[2268] : Gul
+[2269] : Vahşi Gul
+[2270] : Unknown
+[2271] : Unknown
+[2272] : Gul
+[2273] : Gul
+[2274] : Gul
+[2275] : Vahşi Gul
+[2276] : Unknown
+[2277] : Unknown
+[2278] : Unknown
+[2279] : Unknown
+[2280] : Unknown
+[2281] : Unknown
+[2282] : Unknown
+[2283] : Unknown
+[2284] : Hortlak Tayf Sıçanı
+[2285] : Çağrılmış Tayf Gölgesi
+[2286] : Hortlak Tayf Yarasası
+[2287] : Hortlak Tayf Sıçanı
+[2288] : Çağrılmış Tayf Gölgesi
+[2289] : Hortlak Tayf Yarasası
+[2290] : Hortlak Perili Heykel
+[2291] : Hortlak Perili Heykel
+[2292] : Hortlak Perili Heykel
+[2293] : Hortlak Perili Heykel
+[2294] : Hortlak Perili Heykel
+[2295] : Hortlak Perili Heykel
+[2296] : Dirilmiş
+[2297] : Uyanmış Kılıç Ustası
+[2298] : İsimsiz Kahraman
+[2299] : Uyanmış Kılıç Ustası
+[2300] : İsimsiz Kahraman
+[2301] : Dirilmiş
+[2302] : İnatçı Dirilmiş
+[2303] : İnatçı Dirilmiş
+[2304] : Unknown
+[2305] : Unknown
+[2306] : Dirilmiş
+[2307] : İnatçı Dirilmiş
+[2308] : Uyanmış Kılıç Ustası
+[2309] : İsimsiz Kahraman
+[2310] : Dirilmiş
+[2311] : İnatçı Dirilmiş
+[2312] : İnatçı Dirilmiş
+[2313] : Uyanmış Kılıç Ustası
+[2314] : İsimsiz Kahraman
+[2315] : Unknown
+[2316] : Unknown
+[2317] : Unknown
+[2318] : Unknown
+[2319] : Unknown
+[2320] : Unknown
+[2321] : Canlandırılmış Zırh
+[2322] : Dehşet Şövalyesi
+[2323] : İnsafsız Ölüm Şövalyesi
+[2324] : İnsafsız Ölüm Şövalyesi
+[2325] : Dehşet Mareşali
+[2326] : Dehşet Lordu
+[2327] : Canlandırılmış Zırh
+[2328] : Dehşet Şövalyesi
+[2329] : İnsafsız Ölüm Şövalyesi
+[2330] : İnsafsız Ölüm Şövalyesi
+[2331] : Dehşet Mareşali
+[2332] : Dehşet Lordu
+[2333] : Canlandırılmış Zırh
+[2334] : Dehşet Şövalyesi
+[2335] : İnsafsız Ölüm Şövalyesi
+[2336] : İnsafsız Ölüm Şövalyesi
+[2337] : Dehşet Mareşali
+[2338] : Dehşet Lordu
+[2339] : Melun Şövalye
+[2340] : Melun Şövalye
+[2341] : Kemik Okçu
+[2342] : Dirilmiş Nişancı
+[2343] : Unutulmuş Şampiyon
+[2344] : Kemik Okçu
+[2345] : İsabetli Kemik Okçu
+[2346] : İsabetli Kemik Okçu
+[2347] : Dirilmiş Nişancı
+[2348] : Unutulmuş Şampiyon
+[2349] : Unknown
+[2350] : Unknown
+[2351] : Kemik Okçu
+[2352] : İsabetli Kemik Okçu
+[2353] : Dirilmiş Nişancı
+[2354] : Unutulmuş Şampiyon
+[2355] : Kemik Okçu
+[2356] : İsabetli Kemik Okçu
+[2357] : İsabetli Kemik Okçu
+[2358] : Dirilmiş Nişancı
+[2359] : Unutulmuş Şampiyon
+[2360] : Unknown
+[2361] : Unknown
+[2362] : Unknown
+[2363] : Unknown
+[2364] : Unknown
+[2365] : Ayaz Dokumacısı
+[2366] : Buz Üstadı
+[2367] : Usta Buz Üstadı
+[2368] : Çelimsiz Ayaz Dokumacısı
+[2369] : Ayaz Dokumacısı
+[2370] : Baskın Ayaz Dokumacısı
+[2371] : Baskın Ayaz Dokumacısı
+[2372] : Buz Üstadı
+[2373] : Usta Buz Üstadı
+[2374] : Unknown
+[2375] : Unknown
+[2376] : Kırılgan Dirilmiş
+[2377] : Kırılgan Dirilmiş
+[2378] : Kırılgan Dirilmiş
+[2379] : Kırılgan Dirilmiş
+[2380] : Kırılgan Dirilmiş
+[2381] : Kırılgan Dirilmiş
+[2382] : Çelimsiz Ayaz Dokumacısı
+[2383] : Ayaz Dokumacısı
+[2384] : Baskın Ayaz Dokumacısı
+[2385] : Buz Üstadı
+[2386] : Usta Buz Üstadı
+[2387] : Kırılgan Dirilmiş
+[2388] : Kırılgan Dirilmiş
+[2389] : Çelimsiz Ayaz Dokumacısı
+[2390] : Ayaz Dokumacısı
+[2391] : Baskın Ayaz Dokumacısı
+[2392] : Baskın Ayaz Dokumacısı
+[2393] : Buz Üstadı
+[2394] : Usta Buz Üstadı
+[2395] : Unknown
+[2396] : Unknown
+[2397] : Unknown
+[2398] : Unknown
+[2399] : Unknown
+[2400] : Unknown
+[2401] : Unknown
+[2402] : Unknown
+[2403] : Unknown
+[2404] : Unknown
+[2405] : Unknown
+[2406] : Unknown
+[2407] : Unknown
+[2408] : Unknown
+[2409] : Unknown
+[2410] : Unknown
+[2411] : Unknown
+[2412] : Unknown
+[2413] : Unknown
+[2414] : Unknown
+[2415] : Unknown
+[2416] : Unknown
+[2417] : Unknown
+[2418] : Unknown
+[2419] : Unknown
+[2420] : Unknown
+[2421] : Unknown
+[2422] : Unknown
+[2423] : Unknown
+[2424] : Unknown
+[2425] : Unknown
+[2426] : Unknown
+[2427] : Unknown
+[2428] : Unknown
+[2429] : Unknown
+[2430] : Unknown
+[2431] : İsimsiz Kahraman
+[2432] : Öfkeli Ölüm Perisi
+[2433] : Unknown
+[2434] : Unknown
+[2435] : Unknown
+[2436] : Unknown
+[2437] : Unknown
+[2438] : Unknown
+[2439] : Unknown
+[2440] : Unknown
+[2441] : Unknown
+[2442] : Lanetli Yetkili
+[2443] : Belalı Yetkili
+[2444] : Hayaletli Yetkili
+[2445] : Melun Yetkili
+[2446] : Ölümcül Yetkili
+[2447] : Unknown
+[2448] : Unknown
+[2449] : Unknown
+[2450] : Unknown
+[2451] : Unknown
+[2452] : Unknown
+[2453] : Seçkin Melun General
+[2454] : Unknown
+[2455] : Unknown
+[2456] : Unknown
+[2457] : Unknown
+[2458] : Unknown
+[2459] : Unknown
+[2460] : Unknown
+[2461] : Unknown
+[2462] : Unknown
+[2463] : Unknown
+[2464] : Unknown
+[2465] : Yetişkin Kaya Elemental
+[2466] : Yabani
+[2467] : Yabani
+[2468] : Yabani
+[2469] : Vahşi Savaşçı
+[2470] : Vahşi Savaşçı
+[2471] : Vahşi Savaşçı
+[2472] : Savaş Yaralı Vahşi Savaşçı
+[2473] : Savaş Yaralı Vahşi Savaşçı
+[2474] : Savaş Yaralı Vahşi Savaşçı
+[2475] : Rakipsiz Savaşçı
+[2476] : Rakipsiz Savaşçı
+[2477] : Rakipsiz Savaşçı
+[2478] : Savaş Şefi
+[2479] : Savaş Şefi
+[2480] : Savaş Şefi
+[2481] : Bıçaklı
+[2482] : Bıçaklı
+[2483] : Bıçaklı
+[2484] : Av Hanımı
+[2485] : Av Hanımı
+[2486] : Av Hanımı
+[2487] : Meşhur Av Hanımı
+[2488] : Meşhur Av Hanımı
+[2489] : Meşhur Av Hanımı
+[2490] : Sürü Lideri
+[2491] : Sürü Lideri
+[2492] : Sürü Lideri
+[2493] : Balta Hanımı
+[2494] : Balta Hanımı
+[2495] : Balta Hanımı
+[2496] : Kırçıl Dev
+[2497] : Kırçıl Dev
+[2498] : Kırçıl Dev
+[2499] : Aksakal
+[2500] : Aksakal
+[2501] : Aksakal
+[2502] : Dağ İhtiyarı
+[2503] : Dağ İhtiyarı
+[2504] : Dağ İhtiyarı
+[2505] : Druid
+[2506] : Druid
+[2507] : Druid
+[2508] : Aydınlanmış Druid
+[2509] : Aydınlanmış Druid
+[2510] : Aydınlanmış Druid
+[2511] : Yüce Druid
+[2512] : Yüce Druid
+[2513] : Yüce Druid
+[2514] : Başdruid
+[2515] : Başdruid
+[2516] : Başdruid
+[2517] : Unknown
+[2518] : Unknown
+[2519] : Unknown
+[2520] : Unknown
+[2521] : Unknown
+[2522] : Bıçaklı
+[2523] : Bıçaklı
+[2524] : Unknown
+[2525] : Yabani
+[2526] : Yabani
+[2527] : Unknown
+[2528] : Korucu Ok Tutucu
+[2529] : Korucu Ok Tutucu
+[2530] : Korucu Ayı
+[2531] : Korucu Ayı
+[2532] : Korucu Ayı
+[2533] : Korucu Ayı
+[2534] : Şaman
+[2535] : Şaman
+[2536] : Toprak Kızı
+[2537] : Korucu Toprak Çocuğu
+[2538] : Korucu Toprak Çocuğu
+[2539] : Vahşi Savaşçı
+[2540] : Savaş Yaralı Vahşi Savaşçı
+[2541] : Rakipsiz Savaşçı
+[2542] : Savaş Şefi
+[2543] : Vahşi Savaşçı
+[2544] : Savaş Yaralı Vahşi Savaşçı
+[2545] : Savaş Yaralı Vahşi Savaşçı
+[2546] : Rakipsiz Savaşçı
+[2547] : Savaş Şefi
+[2548] : Unknown
+[2549] : Unknown
+[2550] : Unknown
+[2551] : Unknown
+[2552] : Unknown
+[2553] : Unknown
+[2554] : Unknown
+[2555] : Av Hanımı
+[2556] : Sürü Lideri
+[2557] : Balta Hanımı
+[2558] : Av Hanımı
+[2559] : Meşhur Av Hanımı
+[2560] : Meşhur Av Hanımı
+[2561] : Sürü Lideri
+[2562] : Balta Hanımı
+[2563] : Unknown
+[2564] : Unknown
+[2565] : Ehil
+[2566] : Druid
+[2567] : Aydınlanmış Druid
+[2568] : Yüce Druid
+[2569] : Başdruid
+[2570] : Ehil
+[2571] : Druid
+[2572] : Aydınlanmış Druid
+[2573] : Aydınlanmış Druid
+[2574] : Yüce Druid
+[2575] : Başdruid
+[2576] : Unknown
+[2577] : Unknown
+[2578] : Unknown
+[2579] : Genç Dev
+[2580] : Dev
+[2581] : Aksakal
+[2582] : Dağ İhtiyarı
+[2583] : Genç Dev
+[2584] : Dev
+[2585] : Kırçıl Dev
+[2586] : Kırçıl Dev
+[2587] : Aksakal
+[2588] : Dağ İhtiyarı
+[2589] : Unknown
+[2590] : Kemikkıran Aksakal
+[2591] : Unknown
+[2592] : Unknown
+[2593] : Unknown
+[2594] : Unknown
+[2595] : Unknown
+[2596] : Unknown
+[2597] : Unknown
+[2598] : Unknown
+[2599] : Unknown
+[2600] : Unknown
+[2601] : Unknown
+[2602] : Unknown
+[2603] : Unknown
+[2604] : Kemikkıran Bıçaklı
+[2605] : Kemikkıran Vahşi Savaşçı
+[2606] : Kemikkıran Balta Savurucu
+[2607] : Kemikkıran İzbandut
+[2608] : Kemikkıran Uyanışçı
+[2609] : Kıdemli Kemikkıran Bıçaklı
+[2610] : Seçkin Kemikkıran Bıçaklı
+[2611] : Unknown
+[2612] : Unknown
+[2613] : Unknown
+[2614] : Unknown
+[2615] : Unknown
+[2616] : Unknown
+[2617] : Unknown
+[2618] : Unknown
+[2619] : Unknown
+[2620] : Unknown
+[2621] : Unknown
+[2622] : Unknown
+[2623] : Unknown
+[2624] : Unknown
+[2625] : Unknown
+[2626] : Seçkin Kemikkıran Büyük Druid
+[2627] : Unknown
+[2628] : Haydut Paralı Asker
+[2629] : Haydut Paralı Asker
+[2630] : Haydut Paralı Asker
+[2631] : Haydut Paralı Asker
+[2632] : Yankesici Haydut
+[2633] : Yankesici Haydut
+[2634] : Yankesici Haydut
+[2635] : Yankesici Haydut
+[2636] : Haydut İnfazcı
+[2637] : Haydut İnfazcı
+[2638] : Haydut İnfazcı
+[2639] : Haydut İnfazcı
+[2640] : Ateşoku Haydut
+[2641] : Ateşoku Haydut
+[2642] : Ateşoku Haydut
+[2643] : Ateşoku Haydut
+[2644] : Kuvveteli Haydut
+[2645] : Kuvveteli Haydut
+[2646] : Kuvveteli Haydut
+[2647] : Kuvveteli Haydut
+[2648] : Lanetyayan Haydut
+[2649] : Lanetyayan Haydut
+[2650] : Lanetyayan Haydut
+[2651] : Lanetyayan Haydut
+[2652] : Uğursuz Haydut
+[2653] : Uğursuz Haydut
+[2654] : Uğursuz Haydut
+[2655] : Uğursuz Haydut
+[2656] : Haydut Paralı Asker
+[2657] : Haydut Paralı Asker
+[2658] : Haydut Paralı Asker
+[2659] : Haydut Paralı Asker
+[2660] : Yankesici Haydut
+[2661] : Yankesici Haydut
+[2662] : Yankesici Haydut
+[2663] : Yankesici Haydut
+[2664] : Haydut İnfazcı
+[2665] : Haydut İnfazcı
+[2666] : Haydut İnfazcı
+[2667] : Haydut İnfazcı
+[2668] : Ateşoku Haydut
+[2669] : Ateşoku Haydut
+[2670] : Ateşoku Haydut
+[2671] : Ateşoku Haydut
+[2672] : Kuvveteli Haydut
+[2673] : Kuvveteli Haydut
+[2674] : Kuvveteli Haydut
+[2675] : Kuvveteli Haydut
+[2676] : Lanetyayan Haydut
+[2677] : Lanetyayan Haydut
+[2678] : Lanetyayan Haydut
+[2679] : Lanetyayan Haydut
+[2680] : Uğursuz Haydut
+[2681] : Uğursuz Haydut
+[2682] : Uğursuz Haydut
+[2683] : Uğursuz Haydut
+[2684] : Unknown
+[2685] : Haydut Çete Lideri
+[2686] : Haydut Çete Lideri
+[2687] : Haydut Çapulcu
+[2688] : Haydut Çapulcu
+[2689] : Haydut Çapulcu
+[2690] : Haydut Çapulcu
+[2691] : Haydut Kundakçı
+[2692] : Haydut Kundakçı
+[2693] : Haydut Kundakçı
+[2694] : Haydut Kundakçı
+[2695] : Lymhurst Muhafızı
+[2696] : Lymhurst Muhafızı
+[2697] : Unknown
+[2698] : Lymhurst Şampiyonu
+[2699] : Lymhurst Şampiyonu
+[2700] : Mob T4 Mob City Forest Boss Direboar
+[2701] : Mob T4 Mob City Forest Boss Direboar
+[2702] : Martlock Muhafızı
+[2703] : Martlock Muhafızı
+[2704] : Unknown
+[2705] : Martlock Şampiyonu
+[2706] : Martlock Şampiyonu
+[2707] : Fort Sterling Muhafızı
+[2708] : Fort Sterling Muhafızı
+[2709] : Unknown
+[2710] : Fort Sterling Şampiyonu
+[2711] : Fort Sterling Şampiyonu
+[2712] : Bridgewatch Muhafızı
+[2713] : Bridgewatch Muhafızı
+[2714] : Unknown
+[2715] : Bridgewatch Şampiyonu
+[2716] : Bridgewatch Şampiyonu
+[2717] : Thetford Muhafızı
+[2718] : Thetford Muhafızı
+[2719] : Unknown
+[2720] : Thetford Şampiyonu
+[2721] : Thetford Şampiyonu
+[2722] : Unknown
+[2723] : Unknown
+[2724] : Unknown
+[2725] : Unknown
+[2726] : Unknown
+[2727] : Unknown
+[2728] : Unknown
+[2729] : Kale Lordu
+[2730] : Unknown
+[2731] : Unknown
+[2732] : Unknown
+[2733] : Unknown
+[2734] : Gözetleme Kulesi Büyücüsü
+[2735] : Gözetleme Kulesi Büyücüsü
+[2736] : Gözetleme Kulesi Büyücüsü
+[2737] : Gözetleme Kulesi Büyücüsü
+[2738] : Gözetleme Kulesi Büyücüsü
+[2739] : Kule Kılıç Ustası
+[2740] : Kule Kılıç Ustası
+[2741] : Kule Kılıç Ustası
+[2742] : Kule Kılıç Ustası
+[2743] : Kule Kılıç Ustası
+[2744] : Kule Okçusu
+[2745] : Kule Okçusu
+[2746] : Kule Okçusu
+[2747] : Kule Okçusu
+[2748] : Kule Okçusu
+[2749] : Gözetleme Kulesi Büyücüsü
+[2750] : Kule Kılıç Ustası
+[2751] : Kule Okçusu
+[2752] : Unknown
+[2753] : Unknown
+[2754] : Kule Kılıç Ustası
+[2755] : Kule Kılıç Ustası
+[2756] : Kule Kılıç Ustası
+[2757] : Kule Okçusu
+[2758] : Kule Okçusu
+[2759] : Kule Okçusu
+[2760] : Gözetleme Kulesi Büyücüsü
+[2761] : Gözetleme Kulesi Büyücüsü
+[2762] : Gözetleme Kulesi Büyücüsü
+[2763] : Kule Kılıç Ustası
+[2764] : Kule Kılıç Ustası
+[2765] : Kule Kılıç Ustası
+[2766] : Kule Kılıç Ustası
+[2767] : Kule Kılıç Ustası
+[2768] : Kule Kılıç Ustası
+[2769] : Kule Kılıç Ustası
+[2770] : Kule Kılıç Ustası
+[2771] : Kule Kılıç Ustası
+[2772] : Kule Kılıç Ustası
+[2773] : Kule Kılıç Ustası
+[2774] : Kule Kılıç Ustası
+[2775] : Kule Kılıç Ustası
+[2776] : Kule Kılıç Ustası
+[2777] : Kule Kılıç Ustası
+[2778] : Kule Okçusu
+[2779] : Kule Okçusu
+[2780] : Kule Okçusu
+[2781] : Kule Okçusu
+[2782] : Kule Okçusu
+[2783] : Kule Okçusu
+[2784] : Kule Okçusu
+[2785] : Kule Okçusu
+[2786] : Kule Okçusu
+[2787] : Kule Okçusu
+[2788] : Kule Okçusu
+[2789] : Kule Okçusu
+[2790] : Kule Okçusu
+[2791] : Kule Okçusu
+[2792] : Kule Okçusu
+[2793] : Gözetleme Kulesi Büyücüsü
+[2794] : Gözetleme Kulesi Büyücüsü
+[2795] : Gözetleme Kulesi Büyücüsü
+[2796] : Gözetleme Kulesi Büyücüsü
+[2797] : Gözetleme Kulesi Büyücüsü
+[2798] : Gözetleme Kulesi Büyücüsü
+[2799] : Gözetleme Kulesi Büyücüsü
+[2800] : Gözetleme Kulesi Büyücüsü
+[2801] : Gözetleme Kulesi Büyücüsü
+[2802] : Gözetleme Kulesi Büyücüsü
+[2803] : Gözetleme Kulesi Büyücüsü
+[2804] : Gözetleme Kulesi Büyücüsü
+[2805] : Gözetleme Kulesi Büyücüsü
+[2806] : Gözetleme Kulesi Büyücüsü
+[2807] : Gözetleme Kulesi Büyücüsü
+[2808] : Unknown
+[2809] : Menfur Şeytani Sandık
+[2810] : Unknown
+[2811] : İblis
+[2812] : Unknown
+[2813] : Unknown
+[2814] : Unknown
+[2815] : Unknown
+[2816] : Dikenli Şeytan
+[2817] : Unknown
+[2818] : Unknown
+[2819] : Unknown
+[2820] : Yozlaşmış Mefit
+[2821] : Şeytani İzleyici
+[2822] : Şeytani İzleyici
+[2823] : Şeytani Esirci
+[2824] : Şeytani Esirci
+[2825] : Şeytani Yırtıcı
+[2826] : Şeytani Yırtıcı
+[2827] : Cehennem Tazısı
+[2828] : Cehennem Tazısı
+[2829] : Kötücül İblis
+[2830] : Kötücül İblis
+[2831] : Kasvetli Azman
+[2832] : Kasvetli Azman
+[2833] : Şeytani Yaralayıcı
+[2834] : Şeytani Yaralayıcı
+[2835] : Şeytani Sahir
+[2836] : Şeytani Sahir
+[2837] : Unknown
+[2838] : Unknown
+[2839] : Kasvetli Dehşet
+[2840] : Kasvetli Dehşet
+[2841] : Şeytani Ast Lord
+[2842] : Şeytani Ast Lord
+[2843] : Şeytani Lanet Üstadı
+[2844] : Şeytani Lanet Üstadı
+[2845] : Şeytani Alamet
+[2846] : Şeytani Alamet
+[2847] : Şeytani İzleyici
+[2848] : Şeytani İzleyici
+[2849] : Şeytani Esirci
+[2850] : Şeytani Esirci
+[2851] : Şeytani Yırtıcı
+[2852] : Şeytani Yırtıcı
+[2853] : Cehennem Tazısı
+[2854] : Cehennem Tazısı
+[2855] : Kötücül İblis
+[2856] : Kötücül İblis
+[2857] : Kasvetli Azman
+[2858] : Kasvetli Azman
+[2859] : Şeytani Yaralayıcı
+[2860] : Şeytani Yaralayıcı
+[2861] : Şeytani Sahir
+[2862] : Şeytani Sahir
+[2863] : Unknown
+[2864] : Unknown
+[2865] : Kasvetli Dehşet
+[2866] : Kasvetli Dehşet
+[2867] : Şeytani Ast Lord
+[2868] : Şeytani Ast Lord
+[2869] : Şeytani Lanet Üstadı
+[2870] : Şeytani Lanet Üstadı
+[2871] : Şeytani Alamet
+[2872] : Şeytani Alamet
+[2873] : Şeytani İzleyici
+[2874] : Şeytani İzleyici
+[2875] : Şeytani Esirci
+[2876] : Şeytani Esirci
+[2877] : Şeytani Yırtıcı
+[2878] : Şeytani Yırtıcı
+[2879] : Cehennem Tazısı
+[2880] : Cehennem Tazısı
+[2881] : Kötücül İblis
+[2882] : Kötücül İblis
+[2883] : Kasvetli Azman
+[2884] : Kasvetli Azman
+[2885] : Şeytani Yaralayıcı
+[2886] : Şeytani Yaralayıcı
+[2887] : Şeytani Sahir
+[2888] : Şeytani Sahir
+[2889] : Unknown
+[2890] : Unknown
+[2891] : Kasvetli Dehşet
+[2892] : Kasvetli Dehşet
+[2893] : Şeytani Ast Lord
+[2894] : Şeytani Ast Lord
+[2895] : Şeytani Lanet Üstadı
+[2896] : Şeytani Lanet Üstadı
+[2897] : Şeytani Alamet
+[2898] : Şeytani Alamet
+[2899] : Şeytani İzleyici
+[2900] : Cehennem Tazısı
+[2901] : Şeytani Sahir
+[2902] : Şeytani Esirci
+[2903] : Şeytani Yırtıcı
+[2904] : Kasvetli Azman
+[2905] : Şeytani Lanet Üstadı
+[2906] : Şeytani Alamet
+[2907] : Unknown
+[2908] : Unknown
+[2909] : Hapsedilmiş Şeytan
+[2910] : Unknown
+[2911] : Unknown
+[2912] : Unknown
+[2913] : Unknown
+[2914] : Unknown
+[2915] : Unknown
+[2916] : Menfur Gardiyan
+[2917] : Unknown
+[2918] : Unknown
+[2919] : Unknown
+[2920] : Kaçık İnkârcı Hırsız
+[2921] : Kaçık İnkârcı Hırsız
+[2922] : Kaçık İnkârcı Hırsız
+[2923] : Kaçık İnkârcı Hırsız
+[2924] : Kaçık İnkârcı Hırsız
+[2925] : Kaçık İnkârcı Hırsız
+[2926] : Kaçık İnkârcı Hırsız
+[2927] : Kaçık İnkârcı Hırsız
+[2928] : Büyülenmiş İnkârcı Büyücü
+[2929] : Büyülenmiş İnkârcı Büyücü
+[2930] : Büyülenmiş İnkârcı Büyücü
+[2931] : Büyülenmiş İnkârcı Büyücü
+[2932] : Büyülenmiş İnkârcı Büyücü
+[2933] : Büyülenmiş İnkârcı Büyücü
+[2934] : Büyülenmiş İnkârcı Büyücü
+[2935] : Büyülenmiş İnkârcı Büyücü
+[2936] : Dengesiz İnkârcı Arbaletçi
+[2937] : Dengesiz İnkârcı Arbaletçi
+[2938] : Dengesiz İnkârcı Arbaletçi
+[2939] : Dengesiz İnkârcı Arbaletçi
+[2940] : Dengesiz İnkârcı Arbaletçi
+[2941] : Dengesiz İnkârcı Arbaletçi
+[2942] : Dengesiz İnkârcı Arbaletçi
+[2943] : Dengesiz İnkârcı Arbaletçi
+[2944] : Şaşkın İnkârcı Kavgacı
+[2945] : Şaşkın İnkârcı Kavgacı
+[2946] : Şaşkın İnkârcı Kavgacı
+[2947] : Şaşkın İnkârcı Kavgacı
+[2948] : Şaşkın İnkârcı Kavgacı
+[2949] : Şaşkın İnkârcı Kavgacı
+[2950] : Şaşkın İnkârcı Kavgacı
+[2951] : Şaşkın İnkârcı Kavgacı
+[2952] : Şeytani Esirci
+[2953] : Şeytani Esirci
+[2954] : Şeytani Esirci
+[2955] : Şeytani Esirci
+[2956] : Şeytani Esirci
+[2957] : Şeytani Esirci
+[2958] : Şeytani Esirci
+[2959] : Şeytani Esirci
+[2960] : Şeytani Yırtıcı
+[2961] : Şeytani Yırtıcı
+[2962] : Şeytani Yırtıcı
+[2963] : Şeytani Yırtıcı
+[2964] : Şeytani Yırtıcı
+[2965] : Şeytani Yırtıcı
+[2966] : Şeytani Yırtıcı
+[2967] : Şeytani Yırtıcı
+[2968] : Cehennem Tazısı
+[2969] : Cehennem Tazısı
+[2970] : Cehennem Tazısı
+[2971] : Cehennem Tazısı
+[2972] : Cehennem Tazısı
+[2973] : Cehennem Tazısı
+[2974] : Cehennem Tazısı
+[2975] : Cehennem Tazısı
+[2976] : Kötücül İblis
+[2977] : Kötücül İblis
+[2978] : Kötücül İblis
+[2979] : Kötücül İblis
+[2980] : Kötücül İblis
+[2981] : Kötücül İblis
+[2982] : Kötücül İblis
+[2983] : Kötücül İblis
+[2984] : Kasvetli Azman
+[2985] : Kasvetli Azman
+[2986] : Kasvetli Azman
+[2987] : Kasvetli Azman
+[2988] : Kasvetli Azman
+[2989] : Kasvetli Azman
+[2990] : Kasvetli Azman
+[2991] : Kasvetli Azman
+[2992] : Şeytani Yaralayıcı
+[2993] : Şeytani Yaralayıcı
+[2994] : Şeytani Yaralayıcı
+[2995] : Şeytani Yaralayıcı
+[2996] : Şeytani Yaralayıcı
+[2997] : Şeytani Yaralayıcı
+[2998] : Şeytani Yaralayıcı
+[2999] : Şeytani Yaralayıcı
+[3000] : Şeytani Sahir
+[3001] : Şeytani Sahir
+[3002] : Şeytani Sahir
+[3003] : Şeytani Sahir
+[3004] : Şeytani Sahir
+[3005] : Şeytani Sahir
+[3006] : Şeytani Sahir
+[3007] : Şeytani Sahir
+[3008] : Şeytani Vahşi Savaşçı
+[3009] : Şeytani Vahşi Savaşçı
+[3010] : Şeytani Vahşi Savaşçı
+[3011] : Şeytani Vahşi Savaşçı
+[3012] : Şeytani Vahşi Savaşçı
+[3013] : Şeytani Vahşi Savaşçı
+[3014] : Şeytani Vahşi Savaşçı
+[3015] : Şeytani Vahşi Savaşçı
+[3016] : Kasvetli Dehşet
+[3017] : Kasvetli Dehşet
+[3018] : Kasvetli Dehşet
+[3019] : Kasvetli Dehşet
+[3020] : Kasvetli Dehşet
+[3021] : Kasvetli Dehşet
+[3022] : Kasvetli Dehşet
+[3023] : Kasvetli Dehşet
+[3024] : Şeytani Ast Lord
+[3025] : Şeytani Ast Lord
+[3026] : Şeytani Ast Lord
+[3027] : Şeytani Ast Lord
+[3028] : Şeytani Ast Lord
+[3029] : Şeytani Ast Lord
+[3030] : Şeytani Ast Lord
+[3031] : Şeytani Ast Lord
+[3032] : Şeytani Lanet Üstadı
+[3033] : Şeytani Lanet Üstadı
+[3034] : Şeytani Lanet Üstadı
+[3035] : Şeytani Lanet Üstadı
+[3036] : Şeytani Lanet Üstadı
+[3037] : Şeytani Lanet Üstadı
+[3038] : Şeytani Lanet Üstadı
+[3039] : Şeytani Lanet Üstadı
+[3040] : Şeytani Alamet
+[3041] : Şeytani Alamet
+[3042] : Şeytani Alamet
+[3043] : Şeytani Alamet
+[3044] : Şeytani Alamet
+[3045] : Şeytani Alamet
+[3046] : Şeytani Alamet
+[3047] : Şeytani Alamet
+[3048] : Şeytani İzleyici
+[3049] : Unknown
+[3050] : Şeytani İzleyici
+[3051] : Kötücül İblis
+[3052] : Unknown
+[3053] : Kötücül İblis
+[3054] : Cehennem Tazısı
+[3055] : Unknown
+[3056] : Cehennem Tazısı
+[3057] : Kaçık İnkârcı Hırsız
+[3058] : Unknown
+[3059] : Kaçık İnkârcı Hırsız
+[3060] : Büyülenmiş İnkârcı Büyücü
+[3061] : Unknown
+[3062] : Büyülenmiş İnkârcı Büyücü
+[3063] : İgnis
+[3064] : Unknown
+[3065] : İgnis
+[3066] : Dengesiz İnkârcı Arbaletçi
+[3067] : Unknown
+[3068] : Dengesiz İnkârcı Arbaletçi
+[3069] : Şeytani Sahir
+[3070] : Unknown
+[3071] : Şeytani Sahir
+[3072] : Şeytani Esirci
+[3073] : Unknown
+[3074] : Şeytani Esirci
+[3075] : Kasvetli Azman
+[3076] : Unknown
+[3077] : Kasvetli Azman
+[3078] : Şeytani Yırtıcı
+[3079] : Unknown
+[3080] : Şeytani Yırtıcı
+[3081] : Şeytani Yaralayıcı
+[3082] : Unknown
+[3083] : Şeytani Yaralayıcı
+[3084] : Şaşkın İnkârcı Kavgacı
+[3085] : Unknown
+[3086] : Şaşkın İnkârcı Kavgacı
+[3087] : Kasvetli Dehşet
+[3088] : Unknown
+[3089] : Kasvetli Dehşet
+[3090] : Şeytani Lanet Üstadı
+[3091] : Unknown
+[3092] : Şeytani Lanet Üstadı
+[3093] : Şeytani Lanet Üstadı
+[3094] : Şeytani Lanet Üstadı
+[3095] : Şeytani Lanet Üstadı
+[3096] : Kurt
+[3097] : Şeytani Alamet
+[3098] : Unknown
+[3099] : Şeytani Alamet
+[3100] : Şeytani Ast Lord
+[3101] : Unknown
+[3102] : Şeytani Ast Lord
+[3103] : Gizli Hazine
+[3104] : Unknown
+[3105] : Gizli Hazine
+[3106] : Gizli Hazine
+[3107] : Unknown
+[3108] : Gizli Hazine
+[3109] : Şeytani Parça
+[3110] : Unknown
+[3111] : Şeytani Parça
+[3112] : Unknown
+[3113] : Unknown
+[3114] : Unknown
+[3115] : Unknown
+[3116] : Yanıcı Çatlak
+[3117] : Unknown
+[3118] : Yanıcı Çatlak
+[3119] : Yanıcı Çatlak
+[3120] : Unknown
+[3121] : Yanıcı Çatlak
+[3122] : Lav Püsküren
+[3123] : Unknown
+[3124] : Lav Püsküren
+[3125] : Kasvetli Yarık
+[3126] : Unknown
+[3127] : Kasvetli Yarık
+[3128] : Kasvetli Yarık
+[3129] : Kasvetli Yarık
+[3130] : Kasvetli Yarık
+[3131] : Kasvetli Yarık
+[3132] : Kasvetli Yarık
+[3133] : Kasvetli Yarık
+[3134] : Abis Delicisi
+[3135] : Unknown
+[3136] : Abis Delicisi
+[3137] : Abis Delicisi
+[3138] : Abis Delicisi
+[3139] : Abis Delicisi
+[3140] : Abis Delicisi
+[3141] : Abis Delicisi
+[3142] : Abis Delicisi
+[3143] : Abis Delicisi
+[3144] : Abis Delicisi
+[3145] : Abis Delicisi
+[3146] : Abis Delicisi
+[3147] : Abis Delicisi
+[3148] : Abis Delicisi
+[3149] : Patlayıcı Fıçı
+[3150] : Kıdemli Deli Çığırtkan
+[3151] : Dengesiz Kokuşmuş Sıçan
+[3152] : Unknown
+[3153] : Unknown
+[3154] : Unknown
+[3155] : Unknown
+[3156] : Unknown
+[3157] : Unknown
+[3158] : Unknown
+[3159] : Unknown
+[3160] : Dengesiz Çöpçü
+[3161] : Unknown
+[3162] : Unknown
+[3163] : Unknown
+[3164] : Unknown
+[3165] : Kıdemli Deli Çöpçü
+[3166] : Unknown
+[3167] : Unknown
+[3168] : Dengesiz Fedai
+[3169] : Unknown
+[3170] : Unknown
+[3171] : Unknown
+[3172] : Unknown
+[3173] : Unknown
+[3174] : Unknown
+[3175] : Dengesiz Hırsız
+[3176] : Unknown
+[3177] : Unknown
+[3178] : Unknown
+[3179] : Unknown
+[3180] : Unknown
+[3181] : Unknown
+[3182] : Kıdemli Deli Hırsız
+[3183] : Dengesiz Kaçakçı
+[3184] : Unknown
+[3185] : Unknown
+[3186] : Unknown
+[3187] : Unknown
+[3188] : Unknown
+[3189] : Unknown
+[3190] : Kıdemli Deli Kaçakçı
+[3191] : Dengesiz Münzevi
+[3192] : Unknown
+[3193] : Unknown
+[3194] : Unknown
+[3195] : Unknown
+[3196] : Unknown
+[3197] : Unknown
+[3198] : Kıdemli Deli Münzevi
+[3199] : Unknown
+[3200] : Unknown
+[3201] : Unknown
+[3202] : Çıldırmış İyileştirme Totemi
+[3203] : Çıldırmış İyileştirme Totemi
+[3204] : Dengesiz Yangıncı
+[3205] : Unknown
+[3206] : Dengesiz Ateş Delisi
+[3207] : Unknown
+[3208] : Unknown
+[3209] : Unknown
+[3210] : Unknown
+[3211] : Unknown
+[3212] : Unknown
+[3213] : Unknown
+[3214] : Kıdemli Deli Yangıncı
+[3215] : Unknown
+[3216] : Unknown
+[3217] : Unknown
+[3218] : Unknown
+[3219] : Unknown
+[3220] : Unknown
+[3221] : Unknown
+[3222] : Unknown
+[3223] : Unknown
+[3224] : Unknown
+[3225] : Kıdemli Deli Kavgacı
+[3226] : Kıdemli Deli Büyük Spencer
+[3227] : Unknown
+[3228] : Unknown
+[3229] : Unknown
+[3230] : Unknown
+[3231] : Unknown
+[3232] : Unknown
+[3233] : Dengesiz Müfettiş
+[3234] : Unknown
+[3235] : Unknown
+[3236] : Unknown
+[3237] : Unknown
+[3238] : Unknown
+[3239] : Unknown
+[3240] : Unknown
+[3241] : Unknown
+[3242] : Unknown
+[3243] : Unknown
+[3244] : Kıdemli Deli Kargaşa
+[3245] : Kıdemli Deli Gölge Maske
+[3246] : Unknown
+[3247] : Unknown
+[3248] : Unknown
+[3249] : Unknown
+[3250] : Unknown
+[3251] : Unknown
+[3252] : Unknown
+[3253] : Unknown
+[3254] : Unknown
+[3255] : Unknown
+[3256] : Unknown
+[3257] : Unknown
+[3258] : Unknown
+[3259] : Unknown
+[3260] : Unknown
+[3261] : Unknown
+[3262] : Unknown
+[3263] : Unknown
+[3264] : Unknown
+[3265] : Unknown
+[3266] : Unknown
+[3267] : Unknown
+[3268] : Unknown
+[3269] : Unknown
+[3270] : Unknown
+[3271] : Unknown
+[3272] : Unknown
+[3273] : Unknown
+[3274] : Unknown
+[3275] : Unknown
+[3276] : Unknown
+[3277] : Unknown
+[3278] : Unknown
+[3279] : Unknown
+[3280] : Unknown
+[3281] : Unknown
+[3282] : Unknown
+[3283] : Unknown
+[3284] : Unknown
+[3285] : Unknown
+[3286] : Unknown
+[3287] : Unknown
+[3288] : Unknown
+[3289] : Unknown
+[3290] : Unknown
+[3291] : Unknown
+[3292] : Unknown
+[3293] : Unknown
+[3294] : Unknown
+[3295] : Unknown
+[3296] : Unknown
+[3297] : Unknown
+[3298] : Unknown
+[3299] : Unknown
+[3300] : Unknown
+[3301] : Unknown
+[3302] : Unknown
+[3303] : Unknown
+[3304] : Unknown
+[3305] : Unknown
+[3306] : Unknown
+[3307] : Unknown
+[3308] : Unknown
+[3309] : Unknown
+[3310] : Unknown
+[3311] : Unknown
+[3312] : Unknown
+[3313] : Unknown
+[3314] : Unknown
+[3315] : Unknown
+[3316] : Unknown
+[3317] : Unknown
+[3318] : Unknown
+[3319] : Unknown
+[3320] : Unknown
+[3321] : Unknown
+[3322] : Unknown
+[3323] : Unknown
+[3324] : Unknown
+[3325] : Unknown
+[3326] : Unknown
+[3327] : Unknown
+[3328] : Unknown
+[3329] : Unknown
+[3330] : Unknown
+[3331] : Unknown
+[3332] : Unknown
+[3333] : Unknown
+[3334] : Unknown
+[3335] : Unknown
+[3336] : Unknown
+[3337] : Unknown
+[3338] : Unknown
+[3339] : Unknown
+[3340] : Unknown
+[3341] : Kıdemli Takıntılı İşkenceci
+[3342] : Unknown
+[3343] : Unknown
+[3344] : Unknown
+[3345] : Unknown
+[3346] : Kıdemli Takıntılı Talip
+[3347] : Unknown
+[3348] : Unknown
+[3349] : Unknown
+[3350] : Unknown
+[3351] : Unknown
+[3352] : Unknown
+[3353] : Unknown
+[3354] : Unknown
+[3355] : Unknown
+[3356] : Unknown
+[3357] : Unknown
+[3358] : Unknown
+[3359] : Unknown
+[3360] : Unknown
+[3361] : Unknown
+[3362] : Unknown
+[3363] : Unknown
+[3364] : Unknown
+[3365] : Unknown
+[3366] : Unknown
+[3367] : Unknown
+[3368] : Unknown
+[3369] : Unknown
+[3370] : Unknown
+[3371] : Unknown
+[3372] : Unknown
+[3373] : Unknown
+[3374] : Unknown
+[3375] : Unknown
+[3376] : Unknown
+[3377] : Unknown
+[3378] : Unknown
+[3379] : Unknown
+[3380] : Unknown
+[3381] : Unknown
+[3382] : Unknown
+[3383] : Unknown
+[3384] : Unknown
+[3385] : Unknown
+[3386] : Unknown
+[3387] : Unknown
+[3388] : Unknown
+[3389] : Unknown
+[3390] : Kıdemli Hayaletli Kırılgan İskelet
+[3391] : Kıdemli Hayaletli Kırılgan İskelet
+[3392] : Unknown
+[3393] : Unknown
+[3394] : Unknown
+[3395] : Unknown
+[3396] : Unknown
+[3397] : Unknown
+[3398] : Unknown
+[3399] : Unknown
+[3400] : Unknown
+[3401] : Unknown
+[3402] : Unknown
+[3403] : Unknown
+[3404] : Unknown
+[3405] : Unknown
+[3406] : Unknown
+[3407] : Kıdemli Takıntılı Hapsedici
+[3408] : Kıdemli Takıntılı İşkenceci
+[3409] : Unknown
+[3410] : Unknown
+[3411] : Unknown
+[3412] : Unknown
+[3413] : Kıdemli Takıntılı Talip
+[3414] : Unknown
+[3415] : Unknown
+[3416] : Unknown
+[3417] : Unknown
+[3418] : Unknown
+[3419] : Unknown
+[3420] : Unknown
+[3421] : Unknown
+[3422] : Korucu Ok Tutucu
+[3423] : Korucu Ok Tutucu
+[3424] : Korucu Ok Tutucu
+[3425] : Korucu Ok Tutucu
+[3426] : Korucu Ok Tutucu
+[3427] : Korucu Ok Tutucu
+[3428] : Korucu Ok Tutucu
+[3429] : Korucu Ok Tutucu
+[3430] : Korucu Ok Tutucu
+[3431] : Korucu Ok Tutucu
+[3432] : Korucu Ok Tutucu
+[3433] : Korucu Ok Tutucu
+[3434] : Korucu Ok Tutucu
+[3435] : Korucu Ok Tutucu
+[3436] : Korucu Ok Tutucu
+[3437] : Korucu Ok Tutucu
+[3438] : Korucu Ok Tutucu
+[3439] : Korucu Ok Tutucu
+[3440] : Korucu Ok Tutucu
+[3441] : Korucu Ok Tutucu
+[3442] : Metal Püsküren
+[3443] : Çürük Sıçan
+[3444] : Çürük Sıçan
+[3445] : Çürük Sıçan
+[3446] : Çürük Sıçan
+[3447] : Hortlak Tayf Sıçanı
+[3448] : Hortlak Tayf Sıçanı
+[3449] : Hortlak Tayf Sıçanı
+[3450] : Hortlak Tayf Sıçanı
+[3451] : Hortlak Tayf Yarasası
+[3452] : Hortlak Tayf Yarasası
+[3453] : Hortlak Tayf Yarasası
+[3454] : Hortlak Tayf Yarasası
+[3455] : Hortlak Hayalet
+[3456] : Hortlak Hayalet
+[3457] : Hortlak Hayalet
+[3458] : Hortlak Hayalet
+[3459] : Lanetli Parçacıkçı
+[3460] : Lanetli Parçacıkçı
+[3461] : Lanetli Parçacıkçı
+[3462] : Lanetli Parçacıkçı
+[3463] : Hortlak Perili Heykel
+[3464] : Hortlak Perili Heykel
+[3465] : Hortlak Perili Heykel
+[3466] : Hortlak Perili Heykel
+[3467] : Çağrılmış Tayf Gölgesi
+[3468] : Çağrılmış Tayf Gölgesi
+[3469] : Çağrılmış Tayf Gölgesi
+[3470] : Çağrılmış Tayf Gölgesi
+[3471] : Hortlak Akrep
+[3472] : Hortlak Akrep
+[3473] : Hortlak Akrep
+[3474] : Hortlak Akrep
+[3475] : Çelimsiz Ayaz Dokumacısı
+[3476] : Çelimsiz Ayaz Dokumacısı
+[3477] : Çelimsiz Ayaz Dokumacısı
+[3478] : Çelimsiz Ayaz Dokumacısı
+[3479] : Kırılgan Dirilmiş
+[3480] : Kırılgan Dirilmiş
+[3481] : Kırılgan Dirilmiş
+[3482] : Kırılgan Dirilmiş
+[3483] : Gul
+[3484] : Gul
+[3485] : Gul
+[3486] : Gul
+[3487] : Hortlak Lacedon
+[3488] : Hortlak Lacedon
+[3489] : Hortlak Lacedon
+[3490] : Hortlak Lacedon
+[3491] : Kemik Okçu
+[3492] : Kemik Okçu
+[3493] : Kemik Okçu
+[3494] : Kemik Okçu
+[3495] : İsabetli Kemik Okçu
+[3496] : İsabetli Kemik Okçu
+[3497] : İsabetli Kemik Okçu
+[3498] : İsabetli Kemik Okçu
+[3499] : Dirilmiş Nişancı
+[3500] : Dirilmiş Nişancı
+[3501] : Dirilmiş Nişancı
+[3502] : Dirilmiş Nişancı
+[3503] : Unutulmuş Şampiyon
+[3504] : Unutulmuş Şampiyon
+[3505] : Unutulmuş Şampiyon
+[3506] : Unutulmuş Şampiyon
+[3507] : Dirilmiş
+[3508] : Dirilmiş
+[3509] : Dirilmiş
+[3510] : Dirilmiş
+[3511] : İnatçı Dirilmiş
+[3512] : İnatçı Dirilmiş
+[3513] : İnatçı Dirilmiş
+[3514] : İnatçı Dirilmiş
+[3515] : Uyanmış Kılıç Ustası
+[3516] : Uyanmış Kılıç Ustası
+[3517] : Uyanmış Kılıç Ustası
+[3518] : Uyanmış Kılıç Ustası
+[3519] : İsimsiz Kahraman
+[3520] : İsimsiz Kahraman
+[3521] : İsimsiz Kahraman
+[3522] : İsimsiz Kahraman
+[3523] : İnsafsız Ölüm Şövalyesi
+[3524] : İnsafsız Ölüm Şövalyesi
+[3525] : İnsafsız Ölüm Şövalyesi
+[3526] : İnsafsız Ölüm Şövalyesi
+[3527] : Dehşet Lordu
+[3528] : Dehşet Lordu
+[3529] : Dehşet Lordu
+[3530] : Dehşet Lordu
+[3531] : Ayaz Dokumacısı
+[3532] : Ayaz Dokumacısı
+[3533] : Ayaz Dokumacısı
+[3534] : Ayaz Dokumacısı
+[3535] : Baskın Ayaz Dokumacısı
+[3536] : Baskın Ayaz Dokumacısı
+[3537] : Baskın Ayaz Dokumacısı
+[3538] : Baskın Ayaz Dokumacısı
+[3539] : Buz Üstadı
+[3540] : Buz Üstadı
+[3541] : Buz Üstadı
+[3542] : Buz Üstadı
+[3543] : Usta Buz Üstadı
+[3544] : Usta Buz Üstadı
+[3545] : Usta Buz Üstadı
+[3546] : Usta Buz Üstadı
+[3547] : İyileştirme Totemi
+[3548] : İyileştirme Totemi
+[3549] : İyileştirme Totemi
+[3550] : İyileştirme Totemi
+[3551] : İyileştirme Totemi
+[3552] : Patlayıcı Fıçı
+[3553] : Patlayıcı Fıçı
+[3554] : Patlayıcı Fıçı
+[3555] : Patlayıcı Fıçı
+[3556] : Patlayıcı Fıçı
+[3557] : Patlayıcı Fıçı
+[3558] : Patlayıcı Fıçı
+[3559] : İnkârcı Çığırtkan
+[3560] : İnkârcı Çığırtkan
+[3561] : İnkârcı Çığırtkan
+[3562] : İnkârcı Çığırtkan
+[3563] : İnkârcı Çığırtkan
+[3564] : İnkârcı Çığırtkan
+[3565] : İnkârcı Çığırtkan
+[3566] : Kokuşmuş Sıçan
+[3567] : Kokuşmuş Sıçan
+[3568] : Kokuşmuş Sıçan
+[3569] : Kokuşmuş Sıçan
+[3570] : Kokuşmuş Sıçan
+[3571] : Kokuşmuş Sıçan
+[3572] : Kokuşmuş Sıçan
+[3573] : İnkârcı Çöpçü
+[3574] : İnkârcı Çöpçü
+[3575] : İnkârcı Çöpçü
+[3576] : İnkârcı Çöpçü
+[3577] : İnkârcı Çöpçü
+[3578] : İnkârcı Çöpçü
+[3579] : İnkârcı Çöpçü
+[3580] : İnkârcı Madenci
+[3581] : İnkârcı Madenci
+[3582] : İnkârcı Madenci
+[3583] : İnkârcı Madenci
+[3584] : İnkârcı Madenci
+[3585] : İnkârcı Madenci
+[3586] : İnkârcı Madenci
+[3587] : İnkârcı Toplayıcı
+[3588] : İnkârcı Toplayıcı
+[3589] : İnkârcı Toplayıcı
+[3590] : İnkârcı Toplayıcı
+[3591] : İnkârcı Toplayıcı
+[3592] : İnkârcı Toplayıcı
+[3593] : İnkârcı Toplayıcı
+[3594] : İnkârcı Fedai
+[3595] : İnkârcı Fedai
+[3596] : İnkârcı Fedai
+[3597] : İnkârcı Fedai
+[3598] : İnkârcı Fedai
+[3599] : İnkârcı Fedai
+[3600] : İnkârcı Fedai
+[3601] : İnkârcı Hırsız
+[3602] : İnkârcı Hırsız
+[3603] : İnkârcı Hırsız
+[3604] : İnkârcı Hırsız
+[3605] : İnkârcı Hırsız
+[3606] : İnkârcı Hırsız
+[3607] : İnkârcı Hırsız
+[3608] : İnkârcı Eşkıya
+[3609] : İnkârcı Eşkıya
+[3610] : İnkârcı Eşkıya
+[3611] : İnkârcı Eşkıya
+[3612] : İnkârcı Eşkıya
+[3613] : İnkârcı Eşkıya
+[3614] : İnkârcı Eşkıya
+[3615] : İnkârcı Kaçakçı
+[3616] : İnkârcı Kaçakçı
+[3617] : İnkârcı Kaçakçı
+[3618] : İnkârcı Kaçakçı
+[3619] : İnkârcı Kaçakçı
+[3620] : İnkârcı Kaçakçı
+[3621] : İnkârcı Kaçakçı
+[3622] : İnkârcı Tuzakçı
+[3623] : İnkârcı Tuzakçı
+[3624] : İnkârcı Tuzakçı
+[3625] : İnkârcı Tuzakçı
+[3626] : İnkârcı Tuzakçı
+[3627] : İnkârcı Tuzakçı
+[3628] : İnkârcı Tuzakçı
+[3629] : İnkârcı Münzevi
+[3630] : İnkârcı Münzevi
+[3631] : İnkârcı Münzevi
+[3632] : İnkârcı Münzevi
+[3633] : İnkârcı Münzevi
+[3634] : İnkârcı Münzevi
+[3635] : İnkârcı Münzevi
+[3636] : İnkârcı Yangıncı
+[3637] : İnkârcı Yangıncı
+[3638] : İnkârcı Yangıncı
+[3639] : İnkârcı Yangıncı
+[3640] : İnkârcı Yangıncı
+[3641] : İnkârcı Yangıncı
+[3642] : İnkârcı Yangıncı
+[3643] : İnkârcı Ateş Delisi
+[3644] : İnkârcı Ateş Delisi
+[3645] : İnkârcı Ateş Delisi
+[3646] : İnkârcı Ateş Delisi
+[3647] : İnkârcı Ateş Delisi
+[3648] : İnkârcı Ateş Delisi
+[3649] : İnkârcı Ateş Delisi
+[3650] : İnkârcı Bombacı
+[3651] : İnkârcı Bombacı
+[3652] : İnkârcı Bombacı
+[3653] : İnkârcı Bombacı
+[3654] : İnkârcı Bombacı
+[3655] : İnkârcı Bombacı
+[3656] : İnkârcı Bombacı
+[3657] : İnkârcı Topçu
+[3658] : İnkârcı Topçu
+[3659] : İnkârcı Topçu
+[3660] : İnkârcı Topçu
+[3661] : İnkârcı Topçu
+[3662] : İnkârcı Topçu
+[3663] : İnkârcı Topçu
+[3664] : İnkârcı Kavgacı
+[3665] : İnkârcı Kavgacı
+[3666] : İnkârcı Kavgacı
+[3667] : İnkârcı Kavgacı
+[3668] : İnkârcı Kavgacı
+[3669] : İnkârcı Kavgacı
+[3670] : İnkârcı Kavgacı
+[3671] : Büyük Spencer
+[3672] : Büyük Spencer
+[3673] : Büyük Spencer
+[3674] : Büyük Spencer
+[3675] : Büyük Spencer
+[3676] : Büyük Spencer
+[3677] : Büyük Spencer
+[3678] : Büyük Spencer
+[3679] : Devasa Kabadayı
+[3680] : Devasa Kabadayı
+[3681] : Devasa Kabadayı
+[3682] : Devasa Kabadayı
+[3683] : Devasa Kabadayı
+[3684] : Devasa Kabadayı
+[3685] : Devasa Kabadayı
+[3686] : İnkârcı Vurucu
+[3687] : İnkârcı Vurucu
+[3688] : İnkârcı Vurucu
+[3689] : İnkârcı Vurucu
+[3690] : İnkârcı Vurucu
+[3691] : İnkârcı Vurucu
+[3692] : İnkârcı Vurucu
+[3693] : İnkârcı Müfettiş
+[3694] : İnkârcı Müfettiş
+[3695] : İnkârcı Müfettiş
+[3696] : İnkârcı Müfettiş
+[3697] : İnkârcı Müfettiş
+[3698] : İnkârcı Müfettiş
+[3699] : İnkârcı Müfettiş
+[3700] : İnkârcı Silah Ustası
+[3701] : İnkârcı Silah Ustası
+[3702] : İnkârcı Silah Ustası
+[3703] : İnkârcı Silah Ustası
+[3704] : İnkârcı Silah Ustası
+[3705] : İnkârcı Silah Ustası
+[3706] : İnkârcı Silah Ustası
+[3707] : İnkârcı Yaşlı Oduncu
+[3708] : İnkârcı Yaşlı Oduncu
+[3709] : İnkârcı Yaşlı Oduncu
+[3710] : İnkârcı Yaşlı Oduncu
+[3711] : İnkârcı Yaşlı Oduncu
+[3712] : İnkârcı Yaşlı Oduncu
+[3713] : İnkârcı Yaşlı Oduncu
+[3714] : Ateşleyici Şefi
+[3715] : Ateşleyici Şefi
+[3716] : Ateşleyici Şefi
+[3717] : Ateşleyici Şefi
+[3718] : Ateşleyici Şefi
+[3719] : Ateşleyici Şefi
+[3720] : Ateşleyici Şefi
+[3721] : İyileştirme Totemi
+[3722] : İyileştirme Totemi
+[3723] : İyileştirme Totemi
+[3724] : İyileştirme Totemi
+[3725] : İyileştirme Totemi
+[3726] : Patlayıcı Fıçı
+[3727] : Patlayıcı Fıçı
+[3728] : Patlayıcı Fıçı
+[3729] : Patlayıcı Fıçı
+[3730] : Patlayıcı Fıçı
+[3731] : İnkârcı Çığırtkan
+[3732] : İnkârcı Çığırtkan
+[3733] : İnkârcı Çığırtkan
+[3734] : İnkârcı Çığırtkan
+[3735] : İnkârcı Çığırtkan
+[3736] : Kokuşmuş Sıçan
+[3737] : Kokuşmuş Sıçan
+[3738] : Kokuşmuş Sıçan
+[3739] : Kokuşmuş Sıçan
+[3740] : Kokuşmuş Sıçan
+[3741] : İnkârcı Çöpçü
+[3742] : İnkârcı Çöpçü
+[3743] : İnkârcı Çöpçü
+[3744] : İnkârcı Çöpçü
+[3745] : İnkârcı Çöpçü
+[3746] : İnkârcı Madenci
+[3747] : İnkârcı Madenci
+[3748] : İnkârcı Madenci
+[3749] : İnkârcı Madenci
+[3750] : İnkârcı Madenci
+[3751] : İnkârcı Toplayıcı
+[3752] : İnkârcı Toplayıcı
+[3753] : İnkârcı Toplayıcı
+[3754] : İnkârcı Toplayıcı
+[3755] : İnkârcı Toplayıcı
+[3756] : İnkârcı Fedai
+[3757] : İnkârcı Fedai
+[3758] : İnkârcı Fedai
+[3759] : İnkârcı Fedai
+[3760] : İnkârcı Fedai
+[3761] : İnkârcı Hırsız
+[3762] : İnkârcı Hırsız
+[3763] : İnkârcı Hırsız
+[3764] : İnkârcı Hırsız
+[3765] : İnkârcı Hırsız
+[3766] : İnkârcı Eşkıya
+[3767] : İnkârcı Eşkıya
+[3768] : İnkârcı Eşkıya
+[3769] : İnkârcı Eşkıya
+[3770] : İnkârcı Eşkıya
+[3771] : İnkârcı Kaçakçı
+[3772] : İnkârcı Kaçakçı
+[3773] : İnkârcı Kaçakçı
+[3774] : İnkârcı Kaçakçı
+[3775] : İnkârcı Kaçakçı
+[3776] : İnkârcı Tuzakçı
+[3777] : İnkârcı Tuzakçı
+[3778] : İnkârcı Tuzakçı
+[3779] : İnkârcı Tuzakçı
+[3780] : İnkârcı Tuzakçı
+[3781] : İnkârcı Münzevi
+[3782] : İnkârcı Münzevi
+[3783] : İnkârcı Münzevi
+[3784] : İnkârcı Münzevi
+[3785] : İnkârcı Münzevi
+[3786] : İnkârcı Yangıncı
+[3787] : İnkârcı Yangıncı
+[3788] : İnkârcı Yangıncı
+[3789] : İnkârcı Yangıncı
+[3790] : İnkârcı Yangıncı
+[3791] : İnkârcı Ateş Delisi
+[3792] : İnkârcı Ateş Delisi
+[3793] : İnkârcı Ateş Delisi
+[3794] : İnkârcı Ateş Delisi
+[3795] : İnkârcı Ateş Delisi
+[3796] : İnkârcı Bombacı
+[3797] : İnkârcı Bombacı
+[3798] : İnkârcı Bombacı
+[3799] : İnkârcı Bombacı
+[3800] : İnkârcı Bombacı
+[3801] : İnkârcı Topçu
+[3802] : İnkârcı Topçu
+[3803] : İnkârcı Topçu
+[3804] : İnkârcı Topçu
+[3805] : İnkârcı Topçu
+[3806] : İnkârcı Kavgacı
+[3807] : İnkârcı Kavgacı
+[3808] : İnkârcı Kavgacı
+[3809] : İnkârcı Kavgacı
+[3810] : İnkârcı Kavgacı
+[3811] : Büyük Spencer
+[3812] : Büyük Spencer
+[3813] : Büyük Spencer
+[3814] : Büyük Spencer
+[3815] : Büyük Spencer
+[3816] : Devasa Kabadayı
+[3817] : Devasa Kabadayı
+[3818] : Devasa Kabadayı
+[3819] : Devasa Kabadayı
+[3820] : Devasa Kabadayı
+[3821] : İnkârcı Vurucu
+[3822] : İnkârcı Vurucu
+[3823] : İnkârcı Vurucu
+[3824] : İnkârcı Vurucu
+[3825] : İnkârcı Vurucu
+[3826] : İnkârcı Müfettiş
+[3827] : İnkârcı Müfettiş
+[3828] : İnkârcı Müfettiş
+[3829] : İnkârcı Müfettiş
+[3830] : İnkârcı Müfettiş
+[3831] : İnkârcı Silah Ustası
+[3832] : İnkârcı Silah Ustası
+[3833] : İnkârcı Silah Ustası
+[3834] : İnkârcı Silah Ustası
+[3835] : İnkârcı Silah Ustası
+[3836] : İnkârcı Yaşlı Oduncu
+[3837] : İnkârcı Yaşlı Oduncu
+[3838] : İnkârcı Yaşlı Oduncu
+[3839] : İnkârcı Yaşlı Oduncu
+[3840] : İnkârcı Yaşlı Oduncu
+[3841] : Ateşleyici Şefi
+[3842] : Ateşleyici Şefi
+[3843] : Ateşleyici Şefi
+[3844] : Ateşleyici Şefi
+[3845] : Ateşleyici Şefi
+[3846] : Gölge Maske
+[3847] : Gölge Maske
+[3848] : Gölge Maske
+[3849] : Gölge Maske
+[3850] : Gölge Maske
+[3851] : Çağrılmış Tayf Gölgesi
+[3852] : Çağrılmış Tayf Gölgesi
+[3853] : Çağrılmış Tayf Gölgesi
+[3854] : Çağrılmış Tayf Gölgesi
+[3855] : Çağrılmış Tayf Gölgesi
+[3856] : Çağrılmış Zayıf İskelet
+[3857] : Çağrılmış Zayıf İskelet
+[3858] : Çağrılmış Zayıf İskelet
+[3859] : Çağrılmış Zayıf İskelet
+[3860] : Çağrılmış Zayıf İskelet
+[3861] : Çağrılmış Zayıf İskelet
+[3862] : Çağrılmış Zayıf İskelet
+[3863] : Çağrılmış Zayıf İskelet
+[3864] : Çağrılmış Zayıf İskelet
+[3865] : Çağrılmış Zayıf İskelet
+[3866] : Lanetli Parçacıkçı
+[3867] : Lanetli Parçacıkçı
+[3868] : Lanetli Parçacıkçı
+[3869] : Lanetli Parçacıkçı
+[3870] : Lanetli Parçacıkçı
+[3871] : Çürük Sıçan
+[3872] : Çürük Sıçan
+[3873] : Çürük Sıçan
+[3874] : Çürük Sıçan
+[3875] : Çürük Sıçan
+[3876] : Kırılgan İskelet
+[3877] : Kırılgan İskelet
+[3878] : Kırılgan İskelet
+[3879] : Kırılgan İskelet
+[3880] : Kırılgan İskelet
+[3881] : Kırılgan İskelet
+[3882] : Kırılgan İskelet
+[3883] : Kırılgan İskelet
+[3884] : Kırılgan İskelet
+[3885] : Kırılgan İskelet
+[3886] : Hortlak Tayf Sıçanı
+[3887] : Hortlak Tayf Sıçanı
+[3888] : Hortlak Tayf Sıçanı
+[3889] : Hortlak Tayf Sıçanı
+[3890] : Hortlak Tayf Sıçanı
+[3891] : Hortlak Perili Heykel
+[3892] : Hortlak Perili Heykel
+[3893] : Hortlak Perili Heykel
+[3894] : Hortlak Perili Heykel
+[3895] : Hortlak Perili Heykel
+[3896] : Hortlak Tayf Yarasası
+[3897] : Hortlak Tayf Yarasası
+[3898] : Hortlak Tayf Yarasası
+[3899] : Hortlak Tayf Yarasası
+[3900] : Hortlak Tayf Yarasası
+[3901] : Hortlak Kılıçlı
+[3902] : Hortlak Kılıçlı
+[3903] : Hortlak Kılıçlı
+[3904] : Hortlak Kılıçlı
+[3905] : Hortlak Kılıçlı
+[3906] : Hortlak Abide
+[3907] : Hortlak Abide
+[3908] : Hortlak Abide
+[3909] : Hortlak Abide
+[3910] : Hortlak Abide
+[3911] : Hortlak Akrep
+[3912] : Hortlak Akrep
+[3913] : Hortlak Akrep
+[3914] : Hortlak Akrep
+[3915] : Hortlak Akrep
+[3916] : Hortlak Okçu
+[3917] : Hortlak Okçu
+[3918] : Hortlak Okçu
+[3919] : Hortlak Okçu
+[3920] : Hortlak Okçu
+[3921] : Hortlak Keskin Nişancı
+[3922] : Hortlak Keskin Nişancı
+[3923] : Hortlak Keskin Nişancı
+[3924] : Hortlak Keskin Nişancı
+[3925] : Hortlak Keskin Nişancı
+[3926] : Hortlak Ölüm Getiren
+[3927] : Hortlak Ölüm Getiren
+[3928] : Hortlak Ölüm Getiren
+[3929] : Hortlak Ölüm Getiren
+[3930] : Hortlak Ölüm Getiren
+[3931] : Hortlak Ölüm Ustası
+[3932] : Hortlak Ölüm Ustası
+[3933] : Hortlak Ölüm Ustası
+[3934] : Hortlak Ölüm Ustası
+[3935] : Hortlak Ölüm Ustası
+[3936] : Hortlak Şövalye
+[3937] : Hortlak Şövalye
+[3938] : Hortlak Şövalye
+[3939] : Hortlak Şövalye
+[3940] : Hortlak Şövalye
+[3941] : Hortlak Gul
+[3942] : Hortlak Gul
+[3943] : Hortlak Gul
+[3944] : Hortlak Gul
+[3945] : Hortlak Gul
+[3946] : Hortlak Lacedon
+[3947] : Hortlak Lacedon
+[3948] : Hortlak Lacedon
+[3949] : Hortlak Lacedon
+[3950] : Hortlak Lacedon
+[3951] : Hortlak Hayalet
+[3952] : Hortlak Hayalet
+[3953] : Hortlak Hayalet
+[3954] : Hortlak Hayalet
+[3955] : Hortlak Hayalet
+[3956] : Öfkeli Ölüm Perisi
+[3957] : Öfkeli Ölüm Perisi
+[3958] : Öfkeli Ölüm Perisi
+[3959] : Öfkeli Ölüm Perisi
+[3960] : Öfkeli Ölüm Perisi
+[3961] : Günahkâr Vali
+[3962] : Günahkâr Vali
+[3963] : Günahkâr Vali
+[3964] : Günahkâr Vali
+[3965] : Günahkâr Vali
+[3966] : Kadim Kahraman
+[3967] : Kadim Kahraman
+[3968] : Kadim Kahraman
+[3969] : Kadim Kahraman
+[3970] : Kadim Kahraman
+[3971] : Hortlak Ölüm Büyücüsü
+[3972] : Hortlak Ölüm Büyücüsü
+[3973] : Hortlak Ölüm Büyücüsü
+[3974] : Hortlak Ölüm Büyücüsü
+[3975] : Hortlak Ölüm Büyücüsü
+[3976] : Unutulmuş General
+[3977] : Unutulmuş General
+[3978] : Unutulmuş General
+[3979] : Unutulmuş General
+[3980] : Unutulmuş General
+[3981] : Çağrılmış Tayf Gölgesi
+[3982] : Çağrılmış Tayf Gölgesi
+[3983] : Çağrılmış Tayf Gölgesi
+[3984] : Çağrılmış Tayf Gölgesi
+[3985] : Çağrılmış Tayf Gölgesi
+[3986] : Çağrılmış Zayıf İskelet
+[3987] : Çağrılmış Zayıf İskelet
+[3988] : Çağrılmış Zayıf İskelet
+[3989] : Çağrılmış Zayıf İskelet
+[3990] : Çağrılmış Zayıf İskelet
+[3991] : Çağrılmış Zayıf İskelet
+[3992] : Çağrılmış Zayıf İskelet
+[3993] : Çağrılmış Zayıf İskelet
+[3994] : Çağrılmış Zayıf İskelet
+[3995] : Çağrılmış Zayıf İskelet
+[3996] : Çürük Sıçan
+[3997] : Çürük Sıçan
+[3998] : Çürük Sıçan
+[3999] : Çürük Sıçan
+[4000] : Çürük Sıçan
+[4001] : Lanetli Parçacıkçı
+[4002] : Lanetli Parçacıkçı
+[4003] : Lanetli Parçacıkçı
+[4004] : Lanetli Parçacıkçı
+[4005] : Lanetli Parçacıkçı
+[4006] : Kırılgan İskelet
+[4007] : Kırılgan İskelet
+[4008] : Kırılgan İskelet
+[4009] : Kırılgan İskelet
+[4010] : Kırılgan İskelet
+[4011] : Zayıf İskelet
+[4012] : Zayıf İskelet
+[4013] : Zayıf İskelet
+[4014] : Zayıf İskelet
+[4015] : Zayıf İskelet
+[4016] : Hortlak Tayf Sıçanı
+[4017] : Hortlak Tayf Sıçanı
+[4018] : Hortlak Tayf Sıçanı
+[4019] : Hortlak Tayf Sıçanı
+[4020] : Hortlak Tayf Sıçanı
+[4021] : Hortlak Perili Heykel
+[4022] : Hortlak Perili Heykel
+[4023] : Hortlak Perili Heykel
+[4024] : Hortlak Perili Heykel
+[4025] : Hortlak Perili Heykel
+[4026] : Hortlak Tayf Yarasası
+[4027] : Hortlak Tayf Yarasası
+[4028] : Hortlak Tayf Yarasası
+[4029] : Hortlak Tayf Yarasası
+[4030] : Hortlak Tayf Yarasası
+[4031] : Hortlak Kılıçlı
+[4032] : Hortlak Kılıçlı
+[4033] : Hortlak Kılıçlı
+[4034] : Hortlak Kılıçlı
+[4035] : Hortlak Kılıçlı
+[4036] : Hortlak Abide
+[4037] : Hortlak Abide
+[4038] : Hortlak Abide
+[4039] : Hortlak Abide
+[4040] : Hortlak Abide
+[4041] : Hortlak Akrep
+[4042] : Hortlak Akrep
+[4043] : Hortlak Akrep
+[4044] : Hortlak Akrep
+[4045] : Hortlak Akrep
+[4046] : Hortlak Okçu
+[4047] : Hortlak Okçu
+[4048] : Hortlak Okçu
+[4049] : Hortlak Okçu
+[4050] : Hortlak Okçu
+[4051] : Hortlak Keskin Nişancı
+[4052] : Hortlak Keskin Nişancı
+[4053] : Hortlak Keskin Nişancı
+[4054] : Hortlak Keskin Nişancı
+[4055] : Hortlak Keskin Nişancı
+[4056] : Hortlak Ölüm Getiren
+[4057] : Hortlak Ölüm Getiren
+[4058] : Hortlak Ölüm Getiren
+[4059] : Hortlak Ölüm Getiren
+[4060] : Hortlak Ölüm Getiren
+[4061] : Hortlak Ölüm Ustası
+[4062] : Hortlak Ölüm Ustası
+[4063] : Hortlak Ölüm Ustası
+[4064] : Hortlak Ölüm Ustası
+[4065] : Hortlak Ölüm Ustası
+[4066] : Hortlak Şövalye
+[4067] : Hortlak Şövalye
+[4068] : Hortlak Şövalye
+[4069] : Hortlak Şövalye
+[4070] : Hortlak Şövalye
+[4071] : Hortlak Gul
+[4072] : Hortlak Gul
+[4073] : Hortlak Gul
+[4074] : Hortlak Gul
+[4075] : Hortlak Gul
+[4076] : Hortlak Lacedon
+[4077] : Hortlak Lacedon
+[4078] : Hortlak Lacedon
+[4079] : Hortlak Lacedon
+[4080] : Hortlak Lacedon
+[4081] : Hortlak Hayalet
+[4082] : Hortlak Hayalet
+[4083] : Hortlak Hayalet
+[4084] : Hortlak Hayalet
+[4085] : Hortlak Hayalet
+[4086] : Öfkeli Ölüm Perisi
+[4087] : Öfkeli Ölüm Perisi
+[4088] : Öfkeli Ölüm Perisi
+[4089] : Öfkeli Ölüm Perisi
+[4090] : Öfkeli Ölüm Perisi
+[4091] : Günahkâr Vali
+[4092] : Günahkâr Vali
+[4093] : Günahkâr Vali
+[4094] : Günahkâr Vali
+[4095] : Günahkâr Vali
+[4096] : Kadim Kahraman
+[4097] : Kadim Kahraman
+[4098] : Kadim Kahraman
+[4099] : Kadim Kahraman
+[4100] : Kadim Kahraman
+[4101] : Hortlak Ölüm Büyücüsü
+[4102] : Hortlak Ölüm Büyücüsü
+[4103] : Hortlak Ölüm Büyücüsü
+[4104] : Hortlak Ölüm Büyücüsü
+[4105] : Hortlak Ölüm Büyücüsü
+[4106] : Unutulmuş General
+[4107] : Unutulmuş General
+[4108] : Unutulmuş General
+[4109] : Unutulmuş General
+[4110] : Unutulmuş General
+[4111] : Çağrılmış Gölge
+[4112] : Çağrılmış Gölge
+[4113] : Çağrılmış Gölge
+[4114] : Çağrılmış Gölge
+[4115] : Çağrılmış Gölge
+[4116] : Orakçı
+[4117] : Orakçı
+[4118] : Orakçı
+[4119] : Orakçı
+[4120] : Orakçı
+[4121] : Çağrılmış Kök
+[4122] : Çağrılmış Kök
+[4123] : Çağrılmış Kök
+[4124] : Çağrılmış Kök
+[4125] : Çağrılmış Kök
+[4126] : Korucu Yaşayan Kök
+[4127] : Korucu Yaşayan Kök
+[4128] : Korucu Yaşayan Kök
+[4129] : Korucu Yaşayan Kök
+[4130] : Korucu Yaşayan Kök
+[4131] : Çağrılmış Kök
+[4132] : Çağrılmış Kök
+[4133] : Çağrılmış Kök
+[4134] : Çağrılmış Kök
+[4135] : Çağrılmış Kök
+[4136] : Korucu Yaşayan Kök
+[4137] : Korucu Yaşayan Kök
+[4138] : Korucu Yaşayan Kök
+[4139] : Korucu Yaşayan Kök
+[4140] : Korucu Yaşayan Kök
+[4141] : Çağrılmış Çakıl
+[4142] : Çağrılmış Çakıl
+[4143] : Çağrılmış Çakıl
+[4144] : Çağrılmış Çakıl
+[4145] : Çağrılmış Çakıl
+[4146] : Çağrılmış Çakıl
+[4147] : Çağrılmış Çakıl
+[4148] : Çağrılmış Çakıl
+[4149] : Çağrılmış Çakıl
+[4150] : Çağrılmış Çakıl
+[4151] : Kaya Elementali
+[4152] : Kaya Elementali
+[4153] : Kaya Elementali
+[4154] : Kaya Elementali
+[4155] : Kaya Elementali
+[4156] : Hayalet Işık
+[4157] : Hayalet Işık
+[4158] : Hayalet Işık
+[4159] : Hayalet Işık
+[4160] : Hayalet Işık
+[4161] : Öfkeli Hayalet Işık
+[4162] : Öfkeli Hayalet Işık
+[4163] : Öfkeli Hayalet Işık
+[4164] : Öfkeli Hayalet Işık
+[4165] : Öfkeli Hayalet Işık
+[4166] : Toprak Koruyan Bıçaklı
+[4167] : Toprak Koruyan Bıçaklı
+[4168] : Toprak Koruyan Bıçaklı
+[4169] : Toprak Koruyan Bıçaklı
+[4170] : Toprak Koruyan Bıçaklı
+[4171] : Toprak Koruyan Bıçaklı
+[4172] : Toprak Koruyan Bıçaklı
+[4173] : Toprak Koruyan Bıçaklı
+[4174] : Toprak Koruyan Bıçaklı
+[4175] : Toprak Koruyan Bıçaklı
+[4176] : Toprak Koruyan Yabani
+[4177] : Toprak Koruyan Yabani
+[4178] : Toprak Koruyan Yabani
+[4179] : Toprak Koruyan Yabani
+[4180] : Toprak Koruyan Yabani
+[4181] : Çağrılmış Kaya Elementali
+[4182] : Çağrılmış Kaya Elementali
+[4183] : Çağrılmış Kaya Elementali
+[4184] : Çağrılmış Kaya Elementali
+[4185] : Çağrılmış Kaya Elementali
+[4186] : Kaya Elementali
+[4187] : Kaya Elementali
+[4188] : Kaya Elementali
+[4189] : Korucu Ayı
+[4190] : Korucu Ayı
+[4191] : Korucu Ayı
+[4192] : Korucu Ayı
+[4193] : Korucu Ayı
+[4194] : Toprak Koruyan Üretici
+[4195] : Toprak Koruyan Üretici
+[4196] : Toprak Koruyan Üretici
+[4197] : Toprak Koruyan Üretici
+[4198] : Toprak Koruyan Üretici
+[4199] : Toprak Koruyan Üretici
+[4200] : Toprak Koruyan Üretici
+[4201] : Toprak Koruyan Üretici
+[4202] : Toprak Koruyan Üretici
+[4203] : Toprak Koruyan Üretici
+[4204] : Toprak Koruyan Vahşi Savaşçı
+[4205] : Toprak Koruyan Vahşi Savaşçı
+[4206] : Toprak Koruyan Vahşi Savaşçı
+[4207] : Toprak Koruyan Vahşi Savaşçı
+[4208] : Toprak Koruyan Vahşi Savaşçı
+[4209] : Toprak Koruyan Beyi
+[4210] : Toprak Koruyan Beyi
+[4211] : Toprak Koruyan Beyi
+[4212] : Toprak Koruyan Beyi
+[4213] : Toprak Koruyan Beyi
+[4214] : Korucu Toprak Çocuğu
+[4215] : Korucu Toprak Çocuğu
+[4216] : Korucu Toprak Çocuğu
+[4217] : Korucu Toprak Çocuğu
+[4218] : Korucu Toprak Çocuğu
+[4219] : Toprak Koruyan Balta Savurucu
+[4220] : Toprak Koruyan Balta Savurucu
+[4221] : Toprak Koruyan Balta Savurucu
+[4222] : Toprak Koruyan Balta Savurucu
+[4223] : Toprak Koruyan Balta Savurucu
+[4224] : Toprak Koruyan Sürü Lideri
+[4225] : Toprak Koruyan Sürü Lideri
+[4226] : Toprak Koruyan Sürü Lideri
+[4227] : Toprak Koruyan Sürü Lideri
+[4228] : Toprak Koruyan Sürü Lideri
+[4229] : Toprak Koruyan Druid
+[4230] : Toprak Koruyan Druid
+[4231] : Toprak Koruyan Druid
+[4232] : Toprak Koruyan Druid
+[4233] : Toprak Koruyan Druid
+[4234] : Toprak Koruyan Bilge
+[4235] : Toprak Koruyan Bilge
+[4236] : Toprak Koruyan Bilge
+[4237] : Toprak Koruyan Bilge
+[4238] : Toprak Koruyan Bilge
+[4239] : Toprak Koruyan Keskin Gözlü
+[4240] : Toprak Koruyan Keskin Gözlü
+[4241] : Toprak Koruyan Keskin Gözlü
+[4242] : Toprak Koruyan Keskin Gözlü
+[4243] : Toprak Koruyan Keskin Gözlü
+[4244] : Toprak Koruyan Dev
+[4245] : Toprak Koruyan Dev
+[4246] : Toprak Koruyan Dev
+[4247] : Toprak Koruyan Dev
+[4248] : Toprak Koruyan Dev
+[4249] : Toprak Koruyan Aksakal
+[4250] : Toprak Koruyan Aksakal
+[4251] : Toprak Koruyan Aksakal
+[4252] : Toprak Koruyan Aksakal
+[4253] : Toprak Koruyan Aksakal
+[4254] : Toprak Koruyan Reis
+[4255] : Toprak Koruyan Reis
+[4256] : Toprak Koruyan Reis
+[4257] : Toprak Koruyan Reis
+[4258] : Toprak Koruyan Reis
+[4259] : Toprak Koruyan Büyük Druid
+[4260] : Toprak Koruyan Büyük Druid
+[4261] : Toprak Koruyan Büyük Druid
+[4262] : Toprak Koruyan Büyük Druid
+[4263] : Toprak Koruyan Büyük Druid
+[4264] : Athos
+[4265] : Athos
+[4266] : Athos
+[4267] : Athos
+[4268] : Athos
+[4269] : Ayaz Amca
+[4270] : Ayaz Amca
+[4271] : Ayaz Amca
+[4272] : Ayaz Amca
+[4273] : Ayaz Amca
+[4274] : Çağrılmış Hayalet Işık
+[4275] : Çağrılmış Hayalet Işık
+[4276] : Çağrılmış Hayalet Işık
+[4277] : Çağrılmış Hayalet Işık
+[4278] : Çağrılmış Hayalet Işık
+[4279] : Toprak Koruyan Kahin
+[4280] : Toprak Koruyan Kahin
+[4281] : Toprak Koruyan Kahin
+[4282] : Toprak Koruyan Kahin
+[4283] : Toprak Koruyan Kahin
+[4284] : Toprak Kızı
+[4285] : Toprak Kızı
+[4286] : Toprak Kızı
+[4287] : Toprak Kızı
+[4288] : Toprak Kızı
+[4289] : Kaya Elementali
+[4290] : Kaya Elementali
+[4291] : Kaya Elementali
+[4292] : Kaya Elementali
+[4293] : Kaya Elementali
+[4294] : Hayalet Işık
+[4295] : Hayalet Işık
+[4296] : Hayalet Işık
+[4297] : Hayalet Işık
+[4298] : Hayalet Işık
+[4299] : Öfkeli Hayalet Işık
+[4300] : Öfkeli Hayalet Işık
+[4301] : Öfkeli Hayalet Işık
+[4302] : Öfkeli Hayalet Işık
+[4303] : Öfkeli Hayalet Işık
+[4304] : Toprak Koruyan Bıçaklı
+[4305] : Toprak Koruyan Bıçaklı
+[4306] : Toprak Koruyan Bıçaklı
+[4307] : Toprak Koruyan Bıçaklı
+[4308] : Toprak Koruyan Bıçaklı
+[4309] : Toprak Koruyan Bıçaklı
+[4310] : Toprak Koruyan Bıçaklı
+[4311] : Toprak Koruyan Bıçaklı
+[4312] : Toprak Koruyan Bıçaklı
+[4313] : Toprak Koruyan Bıçaklı
+[4314] : Toprak Koruyan Yabani
+[4315] : Toprak Koruyan Yabani
+[4316] : Toprak Koruyan Yabani
+[4317] : Toprak Koruyan Yabani
+[4318] : Toprak Koruyan Yabani
+[4319] : Kaya Elementali
+[4320] : Kaya Elementali
+[4321] : Kaya Elementali
+[4322] : Kaya Elementali
+[4323] : Kaya Elementali
+[4324] : Kaya Elementali
+[4325] : Kaya Elementali
+[4326] : Kaya Elementali
+[4327] : Korucu Ayı
+[4328] : Korucu Ayı
+[4329] : Korucu Ayı
+[4330] : Korucu Ayı
+[4331] : Korucu Ayı
+[4332] : Korucu Toprak Çocuğu
+[4333] : Korucu Toprak Çocuğu
+[4334] : Korucu Toprak Çocuğu
+[4335] : Korucu Toprak Çocuğu
+[4336] : Korucu Toprak Çocuğu
+[4337] : Toprak Koruyan Üretici
+[4338] : Toprak Koruyan Üretici
+[4339] : Toprak Koruyan Üretici
+[4340] : Toprak Koruyan Üretici
+[4341] : Toprak Koruyan Üretici
+[4342] : Toprak Koruyan Üretici
+[4343] : Toprak Koruyan Üretici
+[4344] : Toprak Koruyan Üretici
+[4345] : Toprak Koruyan Üretici
+[4346] : Toprak Koruyan Üretici
+[4347] : Toprak Koruyan Vahşi Savaşçı
+[4348] : Toprak Koruyan Vahşi Savaşçı
+[4349] : Toprak Koruyan Vahşi Savaşçı
+[4350] : Toprak Koruyan Vahşi Savaşçı
+[4351] : Toprak Koruyan Vahşi Savaşçı
+[4352] : Toprak Koruyan Beyi
+[4353] : Toprak Koruyan Beyi
+[4354] : Toprak Koruyan Beyi
+[4355] : Toprak Koruyan Beyi
+[4356] : Toprak Koruyan Beyi
+[4357] : Toprak Koruyan Balta Savurucu
+[4358] : Toprak Koruyan Balta Savurucu
+[4359] : Toprak Koruyan Balta Savurucu
+[4360] : Toprak Koruyan Balta Savurucu
+[4361] : Toprak Koruyan Balta Savurucu
+[4362] : Toprak Koruyan Sürü Lideri
+[4363] : Toprak Koruyan Sürü Lideri
+[4364] : Toprak Koruyan Sürü Lideri
+[4365] : Toprak Koruyan Sürü Lideri
+[4366] : Toprak Koruyan Sürü Lideri
+[4367] : Toprak Koruyan Druid
+[4368] : Toprak Koruyan Druid
+[4369] : Toprak Koruyan Druid
+[4370] : Toprak Koruyan Druid
+[4371] : Toprak Koruyan Druid
+[4372] : Toprak Koruyan Bilge
+[4373] : Toprak Koruyan Bilge
+[4374] : Toprak Koruyan Bilge
+[4375] : Toprak Koruyan Bilge
+[4376] : Toprak Koruyan Bilge
+[4377] : Toprak Koruyan Keskin Gözlü
+[4378] : Toprak Koruyan Keskin Gözlü
+[4379] : Toprak Koruyan Keskin Gözlü
+[4380] : Toprak Koruyan Keskin Gözlü
+[4381] : Toprak Koruyan Keskin Gözlü
+[4382] : Toprak Koruyan Dev
+[4383] : Toprak Koruyan Dev
+[4384] : Toprak Koruyan Dev
+[4385] : Toprak Koruyan Dev
+[4386] : Toprak Koruyan Dev
+[4387] : Toprak Koruyan Aksakal
+[4388] : Toprak Koruyan Aksakal
+[4389] : Toprak Koruyan Aksakal
+[4390] : Toprak Koruyan Aksakal
+[4391] : Toprak Koruyan Aksakal
+[4392] : Toprak Koruyan Reis
+[4393] : Toprak Koruyan Reis
+[4394] : Toprak Koruyan Reis
+[4395] : Toprak Koruyan Reis
+[4396] : Toprak Koruyan Reis
+[4397] : Toprak Koruyan Büyük Druid
+[4398] : Toprak Koruyan Büyük Druid
+[4399] : Toprak Koruyan Büyük Druid
+[4400] : Toprak Koruyan Büyük Druid
+[4401] : Toprak Koruyan Büyük Druid
+[4402] : Athos
+[4403] : Athos
+[4404] : Athos
+[4405] : Athos
+[4406] : Athos
+[4407] : Ayaz Amca
+[4408] : Ayaz Amca
+[4409] : Ayaz Amca
+[4410] : Ayaz Amca
+[4411] : Ayaz Amca
+[4412] : Ruh Ateşi
+[4413] : Çağrılmış Hayalet Işık
+[4414] : Çağrılmış Hayalet Işık
+[4415] : Çağrılmış Hayalet Işık
+[4416] : Çağrılmış Hayalet Işık
+[4417] : Çağrılmış Hayalet Işık
+[4418] : Toprak Koruyan Kahin
+[4419] : Toprak Koruyan Kahin
+[4420] : Toprak Koruyan Kahin
+[4421] : Toprak Koruyan Kahin
+[4422] : Toprak Koruyan Kahin
+[4423] : Toprak Kızı
+[4424] : Toprak Kızı
+[4425] : Toprak Kızı
+[4426] : Toprak Kızı
+[4427] : Toprak Kızı
+[4428] : Toprak Talibi
+[4429] : Toprak Talibi
+[4430] : Toprak Talibi
+[4431] : Toprak Talibi
+[4432] : Toprak Talibi
+[4433] : Morgana Yarasası
+[4434] : Morgana Yarasası
+[4435] : Morgana Yarasası
+[4436] : Morgana Yarasası
+[4437] : Morgana Yarasası
+[4438] : Morgana Canlandırılmış Kitabı
+[4439] : Morgana Canlandırılmış Kitabı
+[4440] : Morgana Canlandırılmış Kitabı
+[4441] : Morgana Canlandırılmış Kitabı
+[4442] : Morgana Canlandırılmış Kitabı
+[4443] : Morgana Şeytani Kitabı
+[4444] : Morgana Şeytani Kitabı
+[4445] : Morgana Şeytani Kitabı
+[4446] : Morgana Şeytani Kitabı
+[4447] : Morgana Şeytani Kitabı
+[4448] : Morgana Takipçisi
+[4449] : Morgana Takipçisi
+[4450] : Morgana Takipçisi
+[4451] : Morgana Takipçisi
+[4452] : Morgana Takipçisi
+[4453] : Morgana Bekçi Köpeği
+[4454] : Morgana Bekçi Köpeği
+[4455] : Morgana Bekçi Köpeği
+[4456] : Morgana Bekçi Köpeği
+[4457] : Morgana Bekçi Köpeği
+[4458] : Morgana Acemi Şövalyesi
+[4459] : Morgana Acemi Şövalyesi
+[4460] : Morgana Acemi Şövalyesi
+[4461] : Morgana Acemi Şövalyesi
+[4462] : Morgana Acemi Şövalyesi
+[4463] : Metal Püsküren
+[4464] : Metal Püsküren
+[4465] : Metal Püsküren
+[4466] : Metal Püsküren
+[4467] : Metal Püsküren
+[4468] : Dev Kuzgun
+[4469] : Dev Kuzgun
+[4470] : Dev Kuzgun
+[4471] : Dev Kuzgun
+[4472] : Dev Kuzgun
+[4473] : Morgana Beyaz Tazısı
+[4474] : Morgana Beyaz Tazısı
+[4475] : Morgana Beyaz Tazısı
+[4476] : Morgana Beyaz Tazısı
+[4477] : Morgana Beyaz Tazısı
+[4478] : Bağlı Eriyik Şeytan
+[4479] : Bağlı Eriyik Şeytan
+[4480] : Bağlı Eriyik Şeytan
+[4481] : Bağlı Eriyik Şeytan
+[4482] : Bağlı Eriyik Şeytan
+[4483] : Morgana Piyadesi
+[4484] : Morgana Piyadesi
+[4485] : Morgana Piyadesi
+[4486] : Morgana Piyadesi
+[4487] : Morgana Piyadesi
+[4488] : Morgana İnfazcısı
+[4489] : Morgana İnfazcısı
+[4490] : Morgana İnfazcısı
+[4491] : Morgana İnfazcısı
+[4492] : Morgana İnfazcısı
+[4493] : Morgana Arbaletçisi
+[4494] : Morgana Arbaletçisi
+[4495] : Morgana Arbaletçisi
+[4496] : Morgana Arbaletçisi
+[4497] : Morgana Arbaletçisi
+[4498] : Morgana Nişancısı
+[4499] : Morgana Nişancısı
+[4500] : Morgana Nişancısı
+[4501] : Morgana Nişancısı
+[4502] : Morgana Nişancısı
+[4503] : Morgana Tarikatçısı
+[4504] : Morgana Tarikatçısı
+[4505] : Morgana Tarikatçısı
+[4506] : Morgana Tarikatçısı
+[4507] : Morgana Tarikatçısı
+[4508] : Morgana Talibi
+[4509] : Morgana Talibi
+[4510] : Morgana Talibi
+[4511] : Morgana Talibi
+[4512] : Morgana Talibi
+[4513] : Morgana Üstadı
+[4514] : Morgana Üstadı
+[4515] : Morgana Üstadı
+[4516] : Morgana Üstadı
+[4517] : Morgana Üstadı
+[4518] : Morgana Dişi
+[4519] : Morgana Dişi
+[4520] : Morgana Dişi
+[4521] : Morgana Dişi
+[4522] : Morgana Dişi
+[4523] : Morgana Kuzgunu
+[4524] : Morgana Kuzgunu
+[4525] : Morgana Kuzgunu
+[4526] : Morgana Kuzgunu
+[4527] : Morgana Kuzgunu
+[4528] : Morgana Sihirbazı
+[4529] : Morgana Sihirbazı
+[4530] : Morgana Sihirbazı
+[4531] : Morgana Sihirbazı
+[4532] : Morgana Sihirbazı
+[4533] : Morgana İstilacısı
+[4534] : Morgana İstilacısı
+[4535] : Morgana İstilacısı
+[4536] : Morgana İstilacısı
+[4537] : Morgana İstilacısı
+[4538] : Morgana Şövalyesi
+[4539] : Morgana Şövalyesi
+[4540] : Morgana Şövalyesi
+[4541] : Morgana Şövalyesi
+[4542] : Morgana Şövalyesi
+[4543] : Morgana Başzebanisi
+[4544] : Morgana Başzebanisi
+[4545] : Morgana Başzebanisi
+[4546] : Morgana Başzebanisi
+[4547] : Morgana Başzebanisi
+[4548] : Portal
+[4549] : Portal
+[4550] : Portal
+[4551] : Portal
+[4552] : Portal
+[4553] : Çağrılmış İblis
+[4554] : Çağrılmış İblis
+[4555] : Çağrılmış İblis
+[4556] : Çağrılmış İblis
+[4557] : Çağrılmış İblis
+[4558] : Morgana İşkencecisi
+[4559] : Morgana İşkencecisi
+[4560] : Morgana İşkencecisi
+[4561] : Morgana İşkencecisi
+[4562] : Morgana İşkencecisi
+[4563] : Morgana Yarasası
+[4564] : Morgana Yarasası
+[4565] : Morgana Yarasası
+[4566] : Morgana Yarasası
+[4567] : Morgana Yarasası
+[4568] : Morgana Canlandırılmış Kitabı
+[4569] : Morgana Canlandırılmış Kitabı
+[4570] : Morgana Canlandırılmış Kitabı
+[4571] : Morgana Canlandırılmış Kitabı
+[4572] : Morgana Canlandırılmış Kitabı
+[4573] : Morgana Şeytani Kitabı
+[4574] : Morgana Şeytani Kitabı
+[4575] : Morgana Şeytani Kitabı
+[4576] : Morgana Şeytani Kitabı
+[4577] : Morgana Şeytani Kitabı
+[4578] : Morgana Takipçisi
+[4579] : Morgana Takipçisi
+[4580] : Morgana Takipçisi
+[4581] : Morgana Takipçisi
+[4582] : Morgana Takipçisi
+[4583] : Morgana Bekçi Köpeği
+[4584] : Morgana Bekçi Köpeği
+[4585] : Morgana Bekçi Köpeği
+[4586] : Morgana Bekçi Köpeği
+[4587] : Morgana Bekçi Köpeği
+[4588] : Morgana Acemi Şövalyesi
+[4589] : Morgana Acemi Şövalyesi
+[4590] : Morgana Acemi Şövalyesi
+[4591] : Morgana Acemi Şövalyesi
+[4592] : Morgana Acemi Şövalyesi
+[4593] : Metal Püsküren
+[4594] : Metal Püsküren
+[4595] : Metal Püsküren
+[4596] : Metal Püsküren
+[4597] : Metal Püsküren
+[4598] : Dev Kuzgun
+[4599] : Dev Kuzgun
+[4600] : Dev Kuzgun
+[4601] : Dev Kuzgun
+[4602] : Dev Kuzgun
+[4603] : Bağlı Eriyik Şeytan
+[4604] : Bağlı Eriyik Şeytan
+[4605] : Bağlı Eriyik Şeytan
+[4606] : Bağlı Eriyik Şeytan
+[4607] : Bağlı Eriyik Şeytan
+[4608] : Morgana Piyadesi
+[4609] : Morgana Piyadesi
+[4610] : Morgana Piyadesi
+[4611] : Morgana Piyadesi
+[4612] : Morgana Piyadesi
+[4613] : Morgana İnfazcısı
+[4614] : Morgana İnfazcısı
+[4615] : Morgana İnfazcısı
+[4616] : Morgana İnfazcısı
+[4617] : Morgana İnfazcısı
+[4618] : Morgana Arbaletçisi
+[4619] : Morgana Arbaletçisi
+[4620] : Morgana Arbaletçisi
+[4621] : Morgana Arbaletçisi
+[4622] : Morgana Arbaletçisi
+[4623] : Morgana Nişancısı
+[4624] : Morgana Nişancısı
+[4625] : Morgana Nişancısı
+[4626] : Morgana Nişancısı
+[4627] : Morgana Nişancısı
+[4628] : Morgana Tarikatçısı
+[4629] : Morgana Tarikatçısı
+[4630] : Morgana Tarikatçısı
+[4631] : Morgana Tarikatçısı
+[4632] : Morgana Tarikatçısı
+[4633] : Morgana Talibi
+[4634] : Morgana Talibi
+[4635] : Morgana Talibi
+[4636] : Morgana Talibi
+[4637] : Morgana Talibi
+[4638] : Morgana Üstadı
+[4639] : Morgana Üstadı
+[4640] : Morgana Üstadı
+[4641] : Morgana Üstadı
+[4642] : Morgana Üstadı
+[4643] : Morgana Dişi
+[4644] : Morgana Dişi
+[4645] : Morgana Dişi
+[4646] : Morgana Dişi
+[4647] : Morgana Dişi
+[4648] : Morgana Kuzgunu
+[4649] : Morgana Kuzgunu
+[4650] : Morgana Kuzgunu
+[4651] : Morgana Kuzgunu
+[4652] : Morgana Kuzgunu
+[4653] : Morgana Sihirbazı
+[4654] : Morgana Sihirbazı
+[4655] : Morgana Sihirbazı
+[4656] : Morgana Sihirbazı
+[4657] : Morgana Sihirbazı
+[4658] : Morgana İstilacısı
+[4659] : Morgana İstilacısı
+[4660] : Morgana İstilacısı
+[4661] : Morgana İstilacısı
+[4662] : Morgana İstilacısı
+[4663] : Morgana Şövalyesi
+[4664] : Morgana Şövalyesi
+[4665] : Morgana Şövalyesi
+[4666] : Morgana Şövalyesi
+[4667] : Morgana Şövalyesi
+[4668] : Morgana Başzebanisi
+[4669] : Morgana Başzebanisi
+[4670] : Morgana Başzebanisi
+[4671] : Morgana Başzebanisi
+[4672] : Morgana Başzebanisi
+[4673] : Portal
+[4674] : Portal
+[4675] : Portal
+[4676] : Portal
+[4677] : Portal
+[4678] : Çağrılmış İblis
+[4679] : Çağrılmış İblis
+[4680] : Çağrılmış İblis
+[4681] : Çağrılmış İblis
+[4682] : Çağrılmış İblis
+[4683] : Morgana İşkencecisi
+[4684] : Morgana İşkencecisi
+[4685] : Morgana İşkencecisi
+[4686] : Morgana İşkencecisi
+[4687] : Morgana İşkencecisi
+[4688] : Şeytan General
+[4689] : Şeytan General
+[4690] : Şeytan General
+[4691] : Şeytan General
+[4692] : Şeytan General
+[4693] : Çağrılmış Portal
+[4694] : Çağrılmış Portal
+[4695] : Çağrılmış Portal
+[4696] : Çağrılmış Portal
+[4697] : Çağrılmış Portal
+[4698] : Çağrılmış Dikenli Şeytan
+[4699] : Çağrılmış Dikenli Şeytan
+[4700] : Çağrılmış Dikenli Şeytan
+[4701] : Çağrılmış Dikenli Şeytan
+[4702] : Çağrılmış Dikenli Şeytan
+[4703] : Çağrılmış Dikenli Şeytan
+[4704] : Çağrılmış Dikenli Şeytan
+[4705] : Çağrılmış Dikenli Şeytan
+[4706] : Çağrılmış Dikenli Şeytan
+[4707] : Çağrılmış Dikenli Şeytan
+[4708] : Çağrılmış Dikenli Şeytan
+[4709] : Çağrılmış Dikenli Şeytan
+[4710] : Çağrılmış Dikenli Şeytan
+[4711] : Çağrılmış Dikenli Şeytan
+[4712] : Çağrılmış Dikenli Şeytan
+[4713] : Çağrılmış Dikenli Şeytan
+[4714] : Çağrılmış Dikenli Şeytan
+[4715] : Çağrılmış Dikenli Şeytan
+[4716] : Çağrılmış Dikenli Şeytan
+[4717] : Çağrılmış Dikenli Şeytan
+[4718] : Rehber Ağır Dron
+[4719] : Rehber Ağır Dron
+[4720] : Rehber Ağır Dron
+[4721] : Rehber Fener Dronu
+[4722] : Rehber Fener Dronu
+[4723] : Rehber Fener Dronu
+[4724] : Gözcü Nakil Dronu
+[4725] : Gözcü Nakil Dronu
+[4726] : Gözcü Nakil Dronu
+[4727] : Gözcü Maden Dronu
+[4728] : Gözcü Maden Dronu
+[4729] : Gözcü Maden Dronu
+[4730] : Avalonlu Kargılı
+[4731] : Avalonlu Kargılı
+[4732] : Avalonlu Kargılı
+[4733] : Avalonlu Mızraklı
+[4734] : Avalonlu Mızraklı
+[4735] : Avalonlu Mızraklı
+[4736] : Avalonlu Mızraklı
+[4737] : Avalonlu Mızraklı
+[4738] : Avalonlu Mızraklı
+[4739] : Avalonlu Çaylak
+[4740] : Avalonlu Çaylak
+[4741] : Avalonlu Çaylak
+[4742] : Avalonlu Keşiş
+[4743] : Avalonlu Keşiş
+[4744] : Avalonlu Keşiş
+[4745] : Avalonlu Keşiş
+[4746] : Avalonlu Keşiş
+[4747] : Avalonlu Keşiş
+[4748] : Avalonlu Şavaşçı
+[4749] : Avalonlu Şavaşçı
+[4750] : Avalonlu Şavaşçı
+[4751] : Avalon Şövalye
+[4752] : Avalon Şövalye
+[4753] : Avalon Şövalye
+[4754] : Avalonlu Avcı
+[4755] : Avalonlu Avcı
+[4756] : Avalonlu Avcı
+[4757] : Avalonlu Kolcusu
+[4758] : Avalonlu Kolcusu
+[4759] : Avalonlu Kolcusu
+[4760] : Avalonlu Kolcusu
+[4761] : Avalonlu Kolcusu
+[4762] : Avalonlu Kolcusu
+[4763] : Avalonlu Okçu
+[4764] : Avalonlu Okçu
+[4765] : Avalonlu Okçu
+[4766] : Avalonlu Okçu
+[4767] : Avalonlu Okçu
+[4768] : Avalonlu Okçu
+[4769] : Avalonlu Büyük Üstat
+[4770] : Avalonlu Büyük Üstat
+[4771] : Avalonlu Büyük Üstat
+[4772] : Rehber Büyük Büyücü
+[4773] : Rehber Büyük Büyücü
+[4774] : Rehber Büyük Büyücü
+[4775] : Rehber Büyük Büyücü
+[4776] : Rehber Büyük Büyücü
+[4777] : Rehber Büyük Büyücü
+[4778] : Rehber Büyük Büyücü
+[4779] : Rehber Büyük Büyücü
+[4780] : Rehber Büyük Büyücü
+[4781] : Avalonlu Takipçi
+[4782] : Avalonlu Takipçi
+[4783] : Avalonlu Takipçi
+[4784] : Avalonlu Takipçi
+[4785] : Avalonlu Takipçi
+[4786] : Avalonlu Takipçi
+[4787] : Rehber Ağır Dron
+[4788] : Rehber Ağır Dron
+[4789] : Rehber Ağır Dron
+[4790] : Rehber Fener Dronu
+[4791] : Rehber Fener Dronu
+[4792] : Rehber Fener Dronu
+[4793] : Avalonlu Saldırı Dronu
+[4794] : Rehber Saldırı Dronu
+[4795] : Rehber Saldırı Dronu
+[4796] : Rehber Saldırı Dronu
+[4797] : Gözcü Nakil Dronu
+[4798] : Gözcü Nakil Dronu
+[4799] : Gözcü Nakil Dronu
+[4800] : Gözcü Maden Dronu
+[4801] : Gözcü Maden Dronu
+[4802] : Gözcü Maden Dronu
+[4803] : Avalonlu Kargılı
+[4804] : Avalonlu Kargılı
+[4805] : Avalonlu Kargılı
+[4806] : Avalonlu Mızraklı
+[4807] : Avalonlu Mızraklı
+[4808] : Avalonlu Mızraklı
+[4809] : Avalonlu Mızraklı
+[4810] : Avalonlu Mızraklı
+[4811] : Avalonlu Mızraklı
+[4812] : Avalonlu Çaylak
+[4813] : Avalonlu Çaylak
+[4814] : Avalonlu Çaylak
+[4815] : Avalonlu Keşiş
+[4816] : Avalonlu Keşiş
+[4817] : Avalonlu Keşiş
+[4818] : Avalonlu Keşiş
+[4819] : Avalonlu Keşiş
+[4820] : Avalonlu Keşiş
+[4821] : Avalonlu Şavaşçı
+[4822] : Avalonlu Şavaşçı
+[4823] : Avalonlu Şavaşçı
+[4824] : Avalon Şövalye
+[4825] : Avalon Şövalye
+[4826] : Avalon Şövalye
+[4827] : Avalonlu Kolcusu
+[4828] : Avalonlu Kolcusu
+[4829] : Avalonlu Kolcusu
+[4830] : Avalonlu Okçu
+[4831] : Avalonlu Okçu
+[4832] : Avalonlu Okçu
+[4833] : Avalonlu Okçu
+[4834] : Avalonlu Okçu
+[4835] : Avalonlu Okçu
+[4836] : Avalonlu Büyü Üstadı
+[4837] : Avalonlu Büyü Üstadı
+[4838] : Avalonlu Büyü Üstadı
+[4839] : Rehber Büyük Büyücü
+[4840] : Rehber Büyük Büyücü
+[4841] : Rehber Büyük Büyücü
+[4842] : Rehber Büyük Büyücü
+[4843] : Rehber Büyük Büyücü
+[4844] : Rehber Büyük Büyücü
+[4845] : Avalonlu Takipçi
+[4846] : Avalonlu Takipçi
+[4847] : Avalonlu Takipçi
+[4848] : Avalonlu Takipçi
+[4849] : Avalonlu Takipçi
+[4850] : Avalonlu Takipçi
+[4851] : Avalonlu Kargılı
+[4852] : Avalonlu Kargılı
+[4853] : Avalonlu Mızraklı
+[4854] : Avalonlu Mızraklı
+[4855] : Avalonlu Çaylak
+[4856] : Avalonlu Çaylak
+[4857] : Avalonlu Keşiş
+[4858] : Avalonlu Keşiş
+[4859] : Avalonlu Şavaşçı
+[4860] : Avalonlu Şavaşçı
+[4861] : Avalonlu Şavaşçı
+[4862] : Avalonlu Şavaşçı
+[4863] : Avalon Şövalye
+[4864] : Avalon Şövalye
+[4865] : Avalon Şövalye
+[4866] : Avalon Şövalye
+[4867] : Avalonlu Avcı
+[4868] : Avalonlu Avcı
+[4869] : Avalonlu Kolcusu
+[4870] : Avalonlu Kolcusu
+[4871] : Avalonlu Okçu
+[4872] : Avalonlu Okçu
+[4873] : Avalonlu Okçu
+[4874] : Avalonlu Okçu
+[4875] : Avalonlu Okçu
+[4876] : Avalonlu Okçu
+[4877] : Avalonlu Büyük Üstat
+[4878] : Avalonlu Büyük Üstat
+[4879] : Avalonlu Büyü Üstadı
+[4880] : Avalonlu Büyü Üstadı
+[4881] : Avalonlu Büyücü
+[4882] : Avalonlu Büyücü
+[4883] : Avalonlu Zeki Büyücü
+[4884] : Avalonlu Zeki Büyücü
+[4885] : Avalonlu Büyü Ustası
+[4886] : Avalonlu Büyü Ustası
+[4887] : Rehber Büyük Büyücü
+[4888] : Rehber Büyük Büyücü
+[4889] : Rehber Büyük Büyücü
+[4890] : Rehber Büyük Büyücü
+[4891] : Rehber Büyük Büyücü
+[4892] : Rehber Büyük Büyücü
+[4893] : Avalonlu Takipçi
+[4894] : Avalonlu Takipçi
+[4895] : Avalonlu Rahibe
+[4896] : Avalonlu Rahibe
+[4897] : Avalonlu Başrahibe
+[4898] : Avalonlu Başrahibe
+[4899] : Avalonlu Kurucu
+[4900] : Avalonlu Kurucu
+[4901] : Avalonlu Yapıt
+[4902] : Avalonlu Yapıt
+[4903] : Avalonlu Kristal Basilisk
+[4904] : Avalonlu Kristal Basilisk
+[4905] : Avalonlu Kapı Çekirdeği
+[4906] : Avalonlu Kapı Çekirdeği
+[4907] : Avalonlu Kapı Çekirdeği
+[4908] : Avalon Merceği
+[4909] : Avalon Merceği
+[4910] : Avalon Merceği
+[4911] : Avalonlu Kurucu
+[4912] : Avalonlu Kurucu
+[4913] : Avalonlu Kurucu
+[4914] : Avalonlu Saldırı Dronu
+[4915] : Avalonlu Saldırı Dronu
+[4916] : Avalonlu Saldırı Dronu
+[4917] : Avalonlu Dron
+[4918] : Avalonlu Dron
+[4919] : Avalonlu Dron
+[4920] : Avalonlu Saldırı Dronu
+[4921] : Avalonlu Saldırı Dronu
+[4922] : Avalonlu Saldırı Dronu
+[4923] : Avalonlu Şavaşçı
+[4924] : Avalonlu Şavaşçı
+[4925] : Avalonlu Şavaşçı
+[4926] : Avalon Şövalye
+[4927] : Avalon Şövalye
+[4928] : Avalon Şövalye
+[4929] : Avalonlu Okçu
+[4930] : Avalonlu Okçu
+[4931] : Avalonlu Okçu
+[4932] : Avalonlu Mızraklı
+[4933] : Avalonlu Mızraklı
+[4934] : Avalonlu Mızraklı
+[4935] : Avalonlu Keşiş
+[4936] : Avalonlu Keşiş
+[4937] : Avalonlu Keşiş
+[4938] : Avalonlu Büyü Ustası
+[4939] : Avalonlu Büyü Ustası
+[4940] : Avalonlu Büyü Ustası
+[4941] : Avalonlu Büyü Üstadı
+[4942] : Avalonlu Büyü Üstadı
+[4943] : Avalonlu Büyü Üstadı
+[4944] : Avalonlu Takipçi
+[4945] : Avalonlu Takipçi
+[4946] : Avalonlu Takipçi
+[4947] : Avalonlu Rahibe
+[4948] : Avalonlu Rahibe
+[4949] : Avalonlu Rahibe
+[4950] : Avalonlu Kanatlı Muhafız
+[4951] : Avalonlu Kanatlı Muhafız
+[4952] : Avalonlu Kanatlı Muhafız
+[4953] : Avalonlu Şövalye Yüzbaşı
+[4954] : Avalonlu Şövalye Yüzbaşı
+[4955] : Avalonlu Şövalye Yüzbaşı
+[4956] : Avalonlu Yapıt
+[4957] : Avalonlu Yapıt
+[4958] : Avalonlu Yapıt
+[4959] : Avalonlu Kristal Basilisk
+[4960] : Avalonlu Kristal Basilisk
+[4961] : Avalonlu Kristal Basilisk
+[4962] : Avalonlu Başrahibe
+[4963] : Avalonlu Başrahibe
+[4964] : Avalonlu Başrahibe
+[4965] : Lekeli Gölge
+[4966] : Lekeli Gölge
+[4967] : Lekeli Gölge
+[4968] : Avalonlu Başbüyücü
+[4969] : Avalonlu Başbüyücü
+[4970] : Avalonlu Başbüyücü
+[4971] : Sör Bedivere
+[4972] : Sör Bedivere
+[4973] : Sör Bedivere
+[4974] : Yabani
+[4975] : Yabani
+[4976] : Yabani
+[4977] : Yabani
+[4978] : Vahşi Savaşçı
+[4979] : Vahşi Savaşçı
+[4980] : Vahşi Savaşçı
+[4981] : Vahşi Savaşçı
+[4982] : Savaş Yaralı Vahşi Savaşçı
+[4983] : Savaş Yaralı Vahşi Savaşçı
+[4984] : Savaş Yaralı Vahşi Savaşçı
+[4985] : Savaş Yaralı Vahşi Savaşçı
+[4986] : Bıçaklı
+[4987] : Bıçaklı
+[4988] : Bıçaklı
+[4989] : Bıçaklı
+[4990] : Av Hanımı
+[4991] : Av Hanımı
+[4992] : Av Hanımı
+[4993] : Av Hanımı
+[4994] : Meşhur Av Hanımı
+[4995] : Meşhur Av Hanımı
+[4996] : Meşhur Av Hanımı
+[4997] : Meşhur Av Hanımı
+[4998] : Ehil
+[4999] : Ehil
+[5000] : Ehil
+[5001] : Ehil
+[5002] : Druid
+[5003] : Druid
+[5004] : Druid
+[5005] : Druid
+[5006] : Aydınlanmış Druid
+[5007] : Aydınlanmış Druid
+[5008] : Aydınlanmış Druid
+[5009] : Aydınlanmış Druid
+[5010] : Ruh Dokumacı
+[5011] : Ruh Dokumacı
+[5012] : Ruh Dokumacı
+[5013] : Ruh Dokumacı
+[5014] : Maeve - Özgür Kâhin
+[5015] : Maeve - Özgür Kâhin
+[5016] : Maeve - Özgür Kâhin
+[5017] : Maeve - Özgür Kâhin
+[5018] : Kaya Elementali
+[5019] : Kaya Elementali
+[5020] : Yetişkin Kaya Elemental
+[5021] : Yetişkin Kaya Elemental
+[5022] : Toprak Koruyan Üretici
+[5023] : Toprak Koruyan Üretici
+[5024] : Hayalet Işık
+[5025] : Hayalet Işık
+[5026] : Yabani
+[5027] : Yabani
+[5028] : Vahşi Savaşçı
+[5029] : Vahşi Savaşçı
+[5030] : Savaş Yaralı Vahşi Savaşçı
+[5031] : Savaş Yaralı Vahşi Savaşçı
+[5032] : Savaş Yaralı Vahşi Savaşçı
+[5033] : Savaş Yaralı Vahşi Savaşçı
+[5034] : Savaş Yaralı Vahşi Savaşçı
+[5035] : Savaş Yaralı Vahşi Savaşçı
+[5036] : Savaş Yaralı Vahşi Savaşçı
+[5037] : Savaş Yaralı Vahşi Savaşçı
+[5038] : Bıçaklı
+[5039] : Bıçaklı
+[5040] : Av Hanımı
+[5041] : Av Hanımı
+[5042] : Meşhur Av Hanımı
+[5043] : Meşhur Av Hanımı
+[5044] : Ehil
+[5045] : Ehil
+[5046] : Druid
+[5047] : Druid
+[5048] : Aydınlanmış Druid
+[5049] : Aydınlanmış Druid
+[5050] : Şaman
+[5051] : Şaman
+[5052] : Şaman
+[5053] : Şaman
+[5054] : Şaman
+[5055] : Şaman
+[5056] : Şaman
+[5057] : Şaman
+[5058] : Şaman
+[5059] : Şaman
+[5060] : Şaman
+[5061] : Şaman
+[5062] : Şaman
+[5063] : Şaman
+[5064] : Şaman
+[5065] : Lav Küresi
+[5066] : Şaman
+[5067] : Şaman
+[5068] : Yabani
+[5069] : Yabani
+[5070] : Yabani
+[5071] : Yabani
+[5072] : Bıçaklı
+[5073] : Bıçaklı
+[5074] : Bıçaklı
+[5075] : Bıçaklı
+[5076] : Genç Dev
+[5077] : Genç Dev
+[5078] : Dev
+[5079] : Dev
+[5080] : Kırçıl Dev
+[5081] : Kırçıl Dev
+[5082] : Unknown
+[5083] : Unknown
+[5084] : Unknown
+[5085] : Unknown
+[5086] : Unknown
+[5087] : Sör Bedivere
+[5088] : Sör Bedivere
+[5089] : Sör Bedivere
+[5090] : Sör Bedivere
+[5091] : Sör Bedivere
+[5092] : Sör Bedivere
+[5093] : Sör Bedivere
+[5094] : Unknown
+[5095] : Maeve - Özgür Kâhin
+[5096] : Kasvetli Azman
+[5097] : Kasvetli Azman
+[5098] : Kasvetli Azman
+[5099] : Kasvetli Azman
+[5100] : Kasvetli Azman
+[5101] : Kasvetli Azman
+[5102] : Kasvetli Azman
+[5103] : Kasvetli Azman
+[5104] : Maeve'nin Kayası
+[5105] : Maeve'nin Kayası
+[5106] : Maeve'nin Kayası
+[5107] : Maeve'nin Kayası
+[5108] : Maeve'nin Kayası
+[5109] : Maeve'nin Kayası
+[5110] : Maeve'nin Kayası
+[5111] : Maeve'nin Kayası
+[5112] : Maeve'nin Kayası
+[5113] : Maeve'nin Kayası
+[5114] : Maeve'nin Kayası
+[5115] : Maeve'nin Kayası
+[5116] : Maeve'nin Kayası
+[5117] : Maeve'nin Kayası
+[5118] : Maeve'nin Kayası
+[5119] : Maeve'nin Kayası
+[5120] : Maeve'nin Kayası
+[5121] : Maeve'nin Kayası
+[5122] : Maeve'nin Kayası
+[5123] : Maeve'nin Kayası
+[5124] : Maeve'nin Kayası
+[5125] : Maeve'nin Kayası
+[5126] : Maeve'nin Kayası
+[5127] : Maeve'nin Kayası
+[5128] : Avalonlu Yapıt
+[5129] : Kasvetli Azman
+[5130] : Kasvetli Azman
+[5131] : Kasvetli Azman
+[5132] : Yabani
+[5133] : Yabani
+[5134] : Vahşi Savaşçı
+[5135] : Savaş Yaralı Vahşi Savaşçı
+[5136] : Savaş Yaralı Vahşi Savaşçı
+[5137] : Bıçaklı
+[5138] : Av Hanımı
+[5139] : Meşhur Av Hanımı
+[5140] : Meşhur Av Hanımı
+[5141] : Kırçıl Dev
+[5142] : Kırçıl Dev
+[5143] : Druid
+[5144] : Aydınlanmış Druid
+[5145] : Aydınlanmış Druid
+[5146] : Mamut Avcısı
+[5147] : Mamut Avcısı
+[5148] : Mamut Avcısı
+[5149] : Mamut Avcısı
+[5150] : Şaman
+[5151] : Grifin
+[5152] : Grifin
+[5153] : Kaya Elementali
+[5154] : Yetişkin Kaya Elemental
+[5155] : Toprak Koruyan Üretici
+[5156] : Hayalet Işık
+[5157] : Yabani
+[5158] : Vahşi Savaşçı
+[5159] : Savaş Yaralı Vahşi Savaşçı
+[5160] : Savaş Yaralı Vahşi Savaşçı
+[5161] : Bıçaklı
+[5162] : Av Hanımı
+[5163] : Meşhur Av Hanımı
+[5164] : Ehil
+[5165] : Druid
+[5166] : Aydınlanmış Druid
+[5167] : Şaman
+[5168] : Şaman
+[5169] : Şaman
+[5170] : Genç Dev
+[5171] : Dev
+[5172] : Kırçıl Dev
+[5173] : Korucu Ok Tutucu
+[5174] : Korucu Ok Tutucu
+[5175] : Korucu Ok Tutucu
+[5176] : Abis Delicisi
+[5177] : Sör Bedivere
+[5178] : Kasvetli Azman
+[5179] : Avalonlu Yapıt
+[5180] : Sör Bedivere
+[5181] : Kasvetli Azman
+[5182] : Sör Bedivere
+[5183] : Sör Bedivere
+[5184] : Sör Bedivere
+[5185] : Sör Bedivere
+[5186] : Sör Bedivere
+[5187] : Sör Bedivere
+[5188] : Sör Bedivere
+[5189] : Sör Bedivere
+[5190] : Kasvetli Azman
+[5191] : Şiddetli Alev
+[5192] : Şiddetli Alev
+[5193] : Kristal Örümcek
+[5194] : Küt Kesim
+[5195] : Küt Kesim
+[5196] : Kurt
+[5197] : Kurt
+[5198] : Kurt
+[5199] : Mob Mob Heretic Locator
+[5200] : Mob Mob Heretic Locator
