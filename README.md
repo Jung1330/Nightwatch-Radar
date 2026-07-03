@@ -1,147 +1,74 @@
-<h1 align="center">🌙 Nightwatch Radar</h1>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows"/>
-  <img src="https://img.shields.io/badge/UI-ImGui-orange?style=for-the-badge" alt="ImGui"/>
-  <img src="https://img.shields.io/badge/Language-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white" alt="C#"/>
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License"/>
-  <img src="https://img.shields.io/badge/Version-1.5.2-gold?style=for-the-badge" />
-</p>
-
----
-
-<table>
+<div align="center">
 
 <br/>
 
-<img width="1169" height="567" alt="image" src="https://github.com/user-attachments/assets/9e85a914-9d49-4783-929b-c30273c16e25" />
+# 🌙 NIGHTWATCH
+
+**Real-time radar overlay for Albion Online**
 
 <br/>
 
-<tr>
-<td width="50%" valign="top">
+[![Windows](https://img.shields.io/badge/Windows_10%2F11-0a0a0a?style=for-the-badge&logo=windows11&logoColor=6C5CE7)](https://github.com/Jung1330/Nightwatch-Radar)
+[![C#](https://img.shields.io/badge/C%23_.NET4/.NET_8-0a0a0a?style=for-the-badge&logo=dotnet&logoColor=A29BFE)](https://dotnet.microsoft.com)
+[![ImGui](https://img.shields.io/badge/Dear_ImGui-0a0a0a?style=for-the-badge&logo=imgui&logoColor=00CEC9)](https://github.com/ocornut/imgui)
+[![Version](https://img.shields.io/badge/v1.5.2-0a0a0a?style=for-the-badge&logoColor=white)](#)
+[![License](https://img.shields.io/badge/MIT-0a0a0a?style=for-the-badge)](#)
 
-## 🇹🇷 Hakkında
+<br/>
 
-**Nightwatch**, Albion Online için geliştirilmiş gerçek zamanlı bir radar ve overlay aracıdır. Oyun penceresinin üzerine şeffaf bir katman olarak yerleşir ve ağ trafiğini analiz ederek oyuncuları, mob'ları, kaynakları ve mist portallarını harita üzerinde gösterir.
+<img src="https://github.com/user-attachments/assets/9e85a914-9d49-4783-929b-c30273c16e25" width="85%" alt="Nightwatch Radar Preview"/>
 
-</td>
-<td width="50%" valign="top">
+<br/><br/>
 
-## 🇬🇧 About
+[`Features`](#features) ·
+[`Install`](#installation) ·
+[`Usage`](#usage) ·
+[`Architecture`](#architecture) ·
+[`Türkçe`](#türkçe)
 
-**Nightwatch** is a real-time radar and overlay tool designed for Albion Online. It sits as a transparent layer on top of the game window and analyzes network traffic to display players, mobs, resources, and mist portals on the map.
+<br/>
 
-</td>
-</tr>
-</table>
+</div>
 
 ---
 
+## 📖 About
+
+**Nightwatch** is a transparent overlay that sits on top of your Albion Online game window. It passively captures and decodes network packets using **SharpPcap/Npcap** to extract real-time positional data — then renders a live minimap via **Dear ImGui** showing players, mobs, resources, mist portals, dungeons, and more.
+
+Built as a multi-project C# solution targeting **.NET 8.0**, the application is structured around a clean event-driven pipeline: packet capture → protocol parsing → handler dispatch → state management → overlay rendering.
+
+---
+
+## <a id="features"></a> ✨ Features
+
 <table>
 <tr>
-<td width="50%" valign="top">
-
-## ✨ Özellikler
+<td width="50%">
 
 ### 🗺️ Radar & Minimap
-- Oyun haritasıyla senkronize gerçek zamanlı minimap
-- 50m / 100m / 150m mesafe halkaları
-- Aktif algılama menzili çemberi
-- Özelleştirilebilir zoom ve kalibrasyon
+Real-time minimap synced to the game world. Distance rings at 50m / 100m / 150m. Custom zoom, rotation, and calibration. Active sniff-range indicator.
 
-### 🐉 Mob Sistemi
-- Tüm düşman mob'ları radarda gösterme
-- Boss & Aspect mobları taç ikonu ile vurgulama
-- ID/isim bazlı mob veritabanı tarayıcı
-- Blacklist — İstenmeyen mob'ları gizleme
-- Crown sistemi — Özel mob'lara taç atama
-- Crystal Spider, Fairy Dragon, Griffin, Veil Weaver özel ikonları
+### 🐉 Mob Tracking
+All hostile mobs on radar. Boss & Aspect mobs marked with crown icons. Built-in mob database browser (ID/name search). Blacklist system. Custom PNG icons for Crystal Spider, Fairy Dragon, Griffin, and Veil Weaver.
 
-### ⛏️ Kaynak Takibi
-- Ore, Stone, Fiber, Hide, Logs tam destek
-- T1-T8 ve Enchant 0-4 matris filtreleme
-- Canlı kaynaklar (Elemental, Geyik vb.) algılama
-- Tier/enchant'a özel PNG ikonlar
-- Tracker Only modu
-
-### 🌫️ Mist & Portal
-- Common → Legendary rarity renkleriyle mist gösterimi
-- Duo Mist desteği
-- Hidden Chest (gizli sandık) algılama
-
-### 🎯 Tracker Lazer Sistemi
-- Kaynaklara, VIP mob'lara ve normal mob'lara lazer
-- Scale X/Y, açı ve uç noktası kalibrasyonu
-- Mob ve kaynak lazerleri için ayrı renk seçimi
-
-### ⚙️ Gelişmiş Ayarlar
-- JSON profil kaydetme/yükleme
-- Otomatik config yükleme (Autoconfig)
-- Özelleştirilebilir kısayol tuşları
-- System tray (görev çubuğu) desteği
-- OBS Bypass / Streamer Modu (Win11)
-- DPI-Aware — Yüksek çözünürlük desteği
-- Tema seçimi (Obsidian Blue / Original)
-
-### 🛠️ Geliştirici Araçları
-- Mob ve kaynak simülatörü
-- Mob veritabanı tarayıcı
-- Ham paket parser ve karşılaştırma
-- Pointer scanner
-- Renkli UI konsol ve log dışa aktarma
+### ⛏️ Resource Mapping
+Full support: Ore, Stone, Fiber, Hide, Logs. Tier (T1–T8) and enchant (.0–.4) filter matrix. Living resource detection (Elementals, Stags). Enchant-specific colored icons. Tracker Only mode.
 
 </td>
-<td width="50%" valign="top">
+<td width="50%">
 
-## ✨ Features
+### 🌫️ Mist & Portal Detection
+Rarity-based coloring (Common → Legendary). Duo Mist support. Hidden Chest alerts.
 
-### 🗺️ Radar & Minimap
-- Real-time minimap synchronized with the game map
-- 50m / 100m / 150m distance rings
-- Active sniff range indicator
-- Customizable zoom and calibration
+### 🎯 Laser System
+Directional lasers pointing to resources, VIP mobs, or normal mobs. Per-target color selection. Full X/Y scale and endpoint calibration.
 
-### 🐉 Mob System
-- Display all enemy mobs on radar
-- Boss & Aspect mobs highlighted with crown icon
-- ID/name-based mob database browser
-- Blacklist — Hide unwanted mobs
-- Crown system — Assign crown icons to specific mobs
-- Crystal Spider, Fairy Dragon, Griffin, Veil Weaver special icons
+### ⚙️ System
+JSON config profiles with autoload. OBS Bypass / Streamer Mode (Win11). DPI-Aware (Per Monitor V2). System tray background mode. Customizable hotkeys. Three UI themes: **DeepSpace Black**, **Obsidian**, **BloodMoon**.
 
-### ⛏️ Resource Tracking
-- Full support for Ore, Stone, Fiber, Hide, Logs
-- T1-T8 and Enchant 0-4 matrix filtering
-- Living resources (Elemental, Deer, etc.) detection
-- Tier/enchant-specific PNG icons
-- Tracker Only mode
-
-### 🌫️ Mist & Portal
-- Mist display with Common → Legendary rarity colors
-- Duo Mist support
-- Hidden Chest detection
-
-### 🎯 Tracker Laser System
-- Lasers pointing to resources, VIP mobs, and normal mobs
-- Scale X/Y, angle, and endpoint calibration
-- Separate color picker for mob and resource lasers
-
-### ⚙️ Advanced Settings
-- JSON profile save/load
-- Auto config loading (Autoconfig)
-- Customizable hotkeys
-- System tray support
-- OBS Bypass / Streamer Mode (Win11)
-- DPI-Aware — High resolution support
-- Theme selection (Obsidian Blue / Original)
-
-### 🛠️ Developer Tools
-- Mob and resource simulator
-- Mob database browser
-- Raw packet parser and diff comparison
-- Pointer scanner
-- Color-coded UI console and log export
+### 🛠️ Dev Tools
+Mob & resource simulator. Raw packet parser/diff. Pointer scanner. Color-coded live UI console with log export.
 
 </td>
 </tr>
@@ -149,151 +76,234 @@
 
 ---
 
-<table>
-<tr>
-<td width="50%" valign="top">
+## <a id="installation"></a> 📦 Installation
 
-## 📦 Kurulum
+#### Requirements
 
-### Gereksinimler
+| | Requirement | Details |
+|:---|:---|:---|
+| 💻 | **OS** | Windows 10 / 11 (64-bit) |
+| ⚡ | **Runtime** | [.NET 8.0 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| 🔌 | **Packet Driver** | [Npcap](https://npcap.com/#download) (latest) |
+| 🔑 | **Privileges** | Administrator |
 
-| Gereksinim | Versiyon |
-|---|---|
-| Windows | 10/11 (64-bit) |
-| .NET Runtime | 8.0+ |
-| Npcap | Son sürüm |
-| Yetki | Yönetici |
+#### Steps
 
-### Adımlar
+```
+1.  Install Npcap  →  Enable "WinPcap API-compatible Mode" during setup
+2.  Download latest release from GitHub Releases
+3.  Extract & run Nightwatch.exe as Administrator
+```
 
-1. [npcap.com](https://npcap.com/#download) adresinden **Npcap** kur
-   - `"WinPcap API-compatible Mode"` seçeneğini işaretle
-2. [Releases](https://github.com/Jung1330/Nightwatch-Radar/releases) sayfasından son sürümü indir
-3. `Nightwatch.exe` dosyasını **Yönetici olarak** çalıştır
-
-</td>
-<td width="50%" valign="top">
-
-## 📦 Installation
-
-### Requirements
-
-| Requirement | Version |
-|---|---|
-| Windows | 10/11 (64-bit) |
-| .NET Runtime | 8.0+ |
-| Npcap | Latest |
-| Privilege | Administrator |
-
-### Steps
-
-1. Install **Npcap** from [npcap.com](https://npcap.com/#download)
-   - Check `"WinPcap API-compatible Mode"` during setup
-2. Download the latest release from [Releases](https://github.com/Jung1330/Nightwatch-Radar/releases)
-3. Run `Nightwatch.exe` **as Administrator**
-
-</td>
-</tr>
-</table>
+> [!IMPORTANT]
+> Npcap must be installed with **WinPcap API-compatible Mode** checked, otherwise SharpPcap cannot bind to the network adapter.
 
 ---
 
-<table>
-<tr>
-<td width="50%" valign="top">
+## <a id="usage"></a> 🖥️ Usage
 
-## 🖥️ Kullanım
+1. Launch **Albion Online** and enter the game world
+2. Run **Nightwatch.exe** as Administrator
+3. The overlay attaches automatically — the radar begins capturing packets
 
-1. **Albion Online'ı aç** ve oyuna gir
-2. **Nightwatch.exe'yi Yönetici olarak çalıştır**
-3. Radar otomatik olarak trafiği algılar
-4. Overlay oyun penceresinin üzerine yerleşir
+#### Default Hotkeys
 
-### Kısayol Tuşları
+| Key | Action |
+|:---|:---|
+| `F12` | Toggle overlay menu |
+| `INSERT` | Toggle sound alerts |
 
-| Tuş | İşlev |
-|---|---|
-| `F12` | Menüyü göster/gizle |
-| `INSERT` | Sesi aç/kapat |
+> [!TIP]
+> Hotkeys are fully configurable in **Settings → Hotkey**.
 
-> Kısayollar Settings → Hotkey bölümünden değiştirilebilir.
+#### VPN / ExitLag Users
 
-### VPN / Speed Booster
+If your traffic routes through a VPN or game booster:
 
-VPN veya ExitLag gibi bir araç kullanıyorsanız:
-1. **Device Info** sekmesine gidin
-2. **"Test Network Adapters"** butonuna basın
-3. **YES** etiketli adaptörü seçin
-4. **"Restart Application"** ile yeniden başlatın
-
-</td>
-<td width="50%" valign="top">
-
-## 🖥️ Usage
-
-1. **Open Albion Online** and enter the game
-2. **Run Nightwatch.exe as Administrator**
-3. Radar automatically detects traffic
-4. Overlay appears on top of the game window
-
-### Hotkeys
-
-| Key | Function |
-|---|---|
-| `F12` | Show/hide menu |
-| `INSERT` | Mute/unmute sounds |
-
-> Hotkeys can be changed in Settings → Hotkey section.
-
-### VPN / Speed Booster
-
-If you're using a VPN or tools like ExitLag:
-1. Go to the **Device Info** tab
-2. Click **"Test Network Adapters"**
-3. Select the adapter labeled **YES**
-4. Click **"Restart Application"** to restart
-
-</td>
-</tr>
-</table>
+1. Open overlay → **Device Info** tab
+2. Click **Test Network Adapters**
+3. Select the adapter marked **YES**
+4. Click **Restart Application**
 
 ---
 
-<table>
-<tr>
-<td width="50%" valign="top">
+## <a id="architecture"></a> 🏗️ Architecture
 
-## 🌍 Dil Desteği
+<details>
+<summary><b>Project Structure & Data Flow</b></summary>
 
-| Dil | Dosya | Durum |
-|---|---|---|
-| 🇬🇧 English | `EN.json` | ✅ Tam |
-| 🇹🇷 Türkçe | `TR.json` | ✅ Tam |
-| 🇷🇺 Русский | `RU.json` | ✅ Tam |
-| 🇨🇳 中文 | `ZH.json` | ✅ Tam |
+<br/>
 
-Değiştirmek için: **Settings → Language**
+```
+Nightwatch.sln
+│
+├── Nightwatch/                    ← Main overlay application (.NET 8, WinExe)
+│   ├── Program.cs                 ← Entry point, engine bootstrap
+│   ├── PacketEngine.cs            ← SharpPcap capture → parser bridge
+│   ├── Settings.cs                ← Runtime configuration
+│   ├── Managers/
+│   │   ├── GameStateManager.cs    ← Central state store (mobs, players, resources)
+│   │   └── ErrorCodeSink.cs       ← Global error handler
+│   ├── Entities/
+│   │   └── PlayerEntity.cs        ← Player data model
+│   ├── UserControls/
+│   │   ├── AlbionOverlay.cs       ← Overlay window (ClickableTransparentOverlay)
+│   │   ├── MentalityTheme.cs      ← ImGui theme engine (3 themes, animated widgets)
+│   │   ├── UIConsole.cs           ← In-app color-coded console
+│   │   └── AlbionOverlay/
+│   │       ├── Core/              ← Core rendering logic
+│   │       ├── Map/               ← Minimap rendering
+│   │       ├── Modules/           ← Config, Assets, Data modules
+│   │       └── ViewModels/        ← UI state bindings
+│   ├── Mappers/                   ← Data mapping utilities
+│   ├── ViewModels/                ← Shared view models
+│   └── Assets/
+│       ├── Helper/                ← Fonts (EN, RU, ZH)
+│       ├── Language/              ← Localization (EN, TR, RU, ZH)
+│       ├── Maps/                  ← Map image data
+│       └── Resources/             ← 168 entity/resource PNG icons
+│
+├── AlbionDataHandlersNET8/        ← Packet event handlers
+│   └── Handlers/
+│       ├── MobsHandler
+│       ├── PlayersHandler
+│       ├── HarvestableHandler
+│       ├── DungeonHandler
+│       ├── MapHandler
+│       └── UnknownPacketHandler
+│
+├── BaseUtilsNET8/                 ← Shared utilities and base classes
+│
+├── AOSnifferNET/                  ← Photon protocol parser (Protocol16/18)
+│   └── PhotonPacketParser/        ← PhotonPackageParser.dll, Protocol16/18.dll
+│
+└── Extra/                         ← Legacy README archive
+```
 
-</td>
-<td width="50%" valign="top">
+<br/>
+
+**Data Flow:**
+
+```
+Network Adapter (Npcap)
+    │
+    ▼
+PacketEngine.cs ──── SharpPcap capture loop
+    │
+    ▼
+AlbionDataParser ──── Photon protocol decode (Protocol16 / Protocol18)
+    │
+    ├──▶ MobsHandler         ──▶ GameStateManager.UpdateMobsState()
+    ├──▶ PlayersHandler       ──▶ GameStateManager.UpdateLocalPlayer()
+    │                              GameStateManager.UpdateOtherPlayers()
+    ├──▶ HarvestableHandler   ──▶ GameStateManager.UpdateHarvestablesState()
+    ├──▶ DungeonHandler       ──▶ GameStateManager.UpdateDungeonsState()
+    └──▶ MapChangeHandler     ──▶ GameStateManager.SetCurrentMap()
+                                    │
+                                    ▼
+                              AlbionOverlay (ImGui render loop)
+                                    │
+                                    ├── Minimap + distance rings
+                                    ├── Entity markers (mobs, players, resources)
+                                    ├── Laser lines to targets
+                                    └── UI panels (config, console, dev tools)
+```
+
+</details>
+
+---
+
+## 🎨 Themes
+
+The UI ships with three hand-crafted ImGui themes, each with animated widgets, glow effects, and gradient separators:
+
+| Theme | Accent | Style |
+|:---|:---|:---|
+| **DeepSpace Black** | `#6C5CE7` Purple | Ultra-dark, neon purple glow |
+| **Obsidian** | `#FFB86C` Amber | Dark, warm amber highlights |
+| **BloodMoon** | `#DC3545` Crimson | Deep red, aggressive |
+
+---
 
 ## 🌍 Language Support
 
 | Language | File | Status |
-|---|---|---|
-| 🇬🇧 English | `EN.json` | ✅ Full |
-| 🇹🇷 Türkçe | `TR.json` | ✅ Full |
-| 🇷🇺 Русский | `RU.json` | ✅ Full |
-| 🇨🇳 中文 | `ZH.json` | ✅ Full |
+|:---|:---:|:---:|
+| 🇬🇧 English | `EN.json` | ✅ |
+| 🇹🇷 Türkçe | `TR.json` | ✅ |
+| 🇷🇺 Русский | `RU.json` | ✅ |
+| 🇨🇳 中文 | `ZH.json` | ✅ |
 
-To change: **Settings → Language**
-
-</td>
-</tr>
-</table>
+Change via **Settings → Language** in the overlay.
 
 ---
 
-<p align="center">
-  <b>Nightwatch</b> — Karanlıkta Gören Göz / The Eye That Sees in the Dark 🌙
-</p>
+## <a id="türkçe"></a> 🇹🇷 Türkçe
+
+<details>
+<summary><b>Türkçe Dokümantasyon</b></summary>
+
+<br/>
+
+### Hakkında
+
+**Nightwatch**, Albion Online için geliştirilmiş gerçek zamanlı bir radar ve overlay aracıdır. Oyun penceresinin üzerine şeffaf bir katman olarak yerleşir, ağ trafiğini analiz ederek oyuncuları, yaratıkları, kaynakları, mist portallarını ve zindanları harita üzerinde gösterir.
+
+### Kurulum
+
+| Gereksinim | Detay |
+|:---|:---|
+| İşletim Sistemi | Windows 10 / 11 (64-bit) |
+| Runtime | .NET 8.0 Desktop Runtime |
+| Sürücü | Npcap (son sürüm) |
+| Yetki | Yönetici |
+
+1. [npcap.com](https://npcap.com/#download) adresinden **Npcap** kurun — kurulumda **"WinPcap API-compatible Mode"** seçeneğini işaretleyin
+2. [Releases](https://github.com/Jung1330/Nightwatch-Radar/releases) sayfasından son sürümü indirin
+3. `Nightwatch.exe` dosyasını **Yönetici olarak** çalıştırın
+
+### Kullanım
+
+1. **Albion Online**'ı açın ve oyuna girin
+2. **Nightwatch.exe**'yi Yönetici olarak çalıştırın
+3. Radar otomatik olarak trafiği algılar ve overlay oyun penceresinin üzerine yerleşir
+
+| Kısayol | İşlev |
+|:---|:---|
+| `F12` | Menüyü göster/gizle |
+| `INSERT` | Sesi aç/kapat |
+
+> Kısayollar **Settings → Hotkey** bölümünden değiştirilebilir.
+
+#### VPN / ExitLag Kullanıcıları
+
+1. **Device Info** sekmesine gidin
+2. **Test Network Adapters** butonuna basın
+3. **YES** etiketli adaptörü seçin
+4. **Restart Application** ile yeniden başlatın
+
+### Özellikler
+
+- **Radar & Minimap** — Gerçek zamanlı minimap, mesafe halkaları, zoom ve kalibrasyon
+- **Mob Takibi** — Tüm yaratıklar, boss/aspect taç ikonu, kara liste, özel PNG ikonları
+- **Kaynak Takibi** — Ore/Stone/Fiber/Hide/Logs, T1-T8 & enchant 0-4 filtre matrisi
+- **Mist & Portal** — Nadirlik renkli mist, duo mist, gizli sandık algılama
+- **Lazer Sistemi** — Kaynak/mob yönlendirme lazerleri, bağımsız renk seçimi
+- **Sistem** — JSON profil, autoconfig, OBS bypass, DPI-aware, system tray, 3 tema
+- **Geliştirici Araçları** — Simülatör, paket parser, pointer scanner, UI konsol
+
+</details>
+
+---
+
+<div align="center">
+
+<br/>
+
+**Nightwatch** — *Karanlıkta Gören Göz*
+
+🌙
+
+<br/>
+
+</div>
