@@ -16,8 +16,7 @@
 
 <br/>
 
-<img src="<img width="1262" height="619" alt="Screenshot_8" src="https://github.com/user-attachments/assets/16a650bd-a754-4fc9-b9b1-2cf4fc999212" />
-" width="85%" alt="Nightwatch Radar Preview"/>
+<img src="https://github.com/user-attachments/assets/16a650bd-a754-4fc9-b9b1-2cf4fc999212" width="85%" alt="Nightwatch Radar Preview"/>
 
 <br/><br/>
 
