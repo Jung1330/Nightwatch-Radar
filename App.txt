@@ -1,6 +1,6 @@
 Version Check [V1.5.3] - 05.07.2026 :
 
-DEV Report : Please Check Github Issues for Known Issues
+DEV Report : Please Check Github Issues for Known Issues.
 
 + Added regular Loot Chest & rarity color-coded tracking on the radar. ( It didn't test by DEV )
 + Integrated xUnit unit testing (packet parsers, localization verification) for automatic quality control.
