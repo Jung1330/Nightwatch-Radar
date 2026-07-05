@@ -1,5 +1,13 @@
-Version Check [V1.5.2] - 01.07.2026 :
+Version Check [V1.5.4] - 04.07.2026 :
 
++ Added regular Loot Chest & rarity color-coded tracking on the radar.
++ Integrated xUnit unit testing (packet parsers, localization verification) for automatic quality control.
++ Standardized translation keys across all language files (TR, EN, RU, ZH).
++ Added support for hiding/showing all overlays and panels with F11 hotkey.
++ Added a button in the Config tab to directly open and edit "Autoconfig.txt".
++ Fixed language/font sync issues during application startup and profile loading.
++ Removed Approach Alarm drawing lines due to encryption and redundancy.
++ Disabled the List Window option in the Players tab.
 + Updated Dungeon portal packet codes to match the latest Albion Online client version (Event 325).
 + Fixed Wisp Cages and Caged Smugglers detection by mapping the new network event codes (Event 532).
 + Resolved the tracking system issue to make foot tracks (Event 558, e.g., Werewolves) visible on the radar.

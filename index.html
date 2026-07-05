@@ -1780,7 +1780,7 @@
           <div class="stat-label" data-i18n="stat_ops">Operasyon Kodu</div>
         </div>
         <div>
-          <div class="stat-num">v1.4</div>
+          <div class="stat-num">v1.5.4</div>
           <div class="stat-label" data-i18n="stat_version">Güncel Sürüm</div>
         </div>
       </div>
@@ -2106,7 +2106,7 @@
       <div class="reveal">
         <div class="section-label" data-i18n="changelog_label">Changelog</div>
         <h2 class="section-title" data-i18n="changelog_title">Changelog</h2>
-        <div class="changelog-meta" data-i18n="changelog_meta">v1.4</div>
+        <div class="changelog-meta" data-i18n="changelog_meta">v1.5.4</div>
       </div>
       <div class="reveal">
         <div class="terminal-window">
@@ -2126,7 +2126,7 @@
           </div>
           <div class="terminal-footer">
             <span>nightwatch-radar.exe</span>
-            <span class="ver-badge" data-i18n="changelog_meta">v1.4</span>
+            <span class="ver-badge" data-i18n="changelog_meta">v1.5.4</span>
             <span>UTF-8 | LF</span>
           </div>
         </div>
@@ -2142,7 +2142,7 @@
       </div>
 
       <div class="download-box reveal">
-        <div class="download-version" data-i18n="dl_version">Sürüm 1.2 — Windows x64</div>
+        <div class="download-version" data-i18n="dl_version">Sürüm 1.5.4 — Windows x64</div>
         <div class="download-title">Nightwatch.exe</div>
         <div class="download-req">
           <span data-i18n="dl_req">Gereksinim:</span>
@@ -2228,22 +2228,31 @@
         faq4_q: 'Oyun güncellenince radar bozulur mu?', faq4_a: 'Albion Online büyük güncelleme yaptığında paket yapıları değişebilir. Bu durumda Nightwatch yeni sürüm yayınlar. GitHub sayfasını takip edin.',
         faq5_q: 'FPS düşüyor mu?', faq5_a: 'Hayır. Nightwatch ayrı bir işlem olarak çalışır ve oyunun render pipeline\'ına hiç dokunmaz.',
         faq6_q: 'OBS\'de radar görünüyor, nasıl gizlerim?', faq6_a: 'Ayarlar sekmesinden "OBS Bypass (Streamer Modu)" seçeneğini açın. Bu, radarı OBS ve benzeri yazılımlardan gizler.',
+
         sec_dl_label: 'Ücretsiz', sec_dl_title: 'İndir & <span>Başla</span>',
-        dl_version: 'Sürüm 2 — Windows x64', dl_req: 'Gereksinim:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
+        dl_version: 'Sürüm 1.5.4 — Windows x64', dl_req: 'Gereksinim:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
         btn_dl_gh: 'GitHub\'dan İndir', btn_dl_npcap: 'Npcap İndir',
         dl_notice_title: '⚠️ Sorumluluk Reddi:', dl_notice_desc: ' Nightwatch, Albion Online\'ın resmi bir aracı değildir. Kullanım kendi sorumluluğunuzdadır. Discord: Jung1330',
-        changelog_label: 'Güncelleme Notları', changelog_title: 'Yenilikler', changelog_meta: 'v1.4',
+        changelog_label: 'Güncelleme Notları', changelog_title: 'Yenilikler', changelog_meta: '1.5.0 - 1.5.4',
         terminal_status: 'CANLI',
         changelog_entries: [
-          { icon: 'fix', text: 'Bazı çeviri hataları giderildi' },
-          { icon: 'add', text: 'Dil kaydetme sistemi otomatik hale getirildi' },
-          { icon: 'fix', text: 'Kaynaklar yanlış seviye (tier) gösteriyordu, düzeltildi' },
-          { icon: 'fix', text: 'Log ikonu sorunu çözüldü' },
+          { icon: 'add', text: 'Düz Sandıkların (Loot Chest) ağ paketi üzerinden tespiti ve nadirlik seviyelerine (Sıradan, Sıradışı, Nadir, Efsanevi) göre renkli gösterimi eklendi.' },
+          { icon: 'add', text: 'xUnit birim testleri (paket çözümlenmesi, dil senkronizasyon kontrolleri) ve otomatik çeviri uyumluluğu doğrulama sistemi entegre edildi.' },
+          { icon: 'fix', text: 'Dil dosyalarındaki eksik çeviri anahtarları tüm diller (TR, EN, RU, ZH) için eşitlendi.' },
           { icon: 'divider' },
-          { icon: 'section', text: 'GELECEK PLANLARI' },
-          { icon: 'warn', text: 'Klan Üyeleri sorunu' },
+          { icon: 'add', text: 'F11 tuşu ile tüm arayüzleri ve panelleri tek tıkla gizleme/gösterme desteği eklendi.' },
+          { icon: 'add', text: 'Gizli Sandıkların (Hidden Chest) nadirlik/kalite bilgisi (Sıradan, Sıradışı, Nadir, Destansı, Efsanevi) radara eklendi.' },
+          { icon: 'add', text: 'Config sekmesine "Autoconfig.txt" dosyasını doğrudan açıp düzenlemek için buton eklendi.' },
+          { icon: 'fix', text: 'Uygulama açılışında ve profil yüklemelerinde oluşan dil/font senkronizasyon hataları tamamen çözüldü.' },
+          { icon: 'fix', text: 'Gereksiz çizim yapan ve şifreli olan Yaklaşma Alarmı (Approach Alarm) kaldırıldı.' },
+          { icon: 'fix', text: 'Oyuncular sekmesindeki Liste Penceresi (List Window) devre dışı bırakıldı.' },
           { icon: 'divider' },
-          { icon: 'tip', text: 'Herhangi bir hata bulursanız, lütfen Github Issues üzerinden bildirin.' }
+          { icon: 'add', text: 'Zindan portalları paket kodları güncellendi (Event 325).' },
+          { icon: 'add', text: 'Wisp Kafesleri ve Kaçakçılar (Event 532) tespit sistemi eklendi.' },
+          { icon: 'add', text: 'Kurtadam vb. ayak izi takip sistemi eklendi (Event 558).' },
+          { icon: 'fix', text: 'Zindan ve kafeslerin yükleme ekranından sonra kaybolma sorunu çözüldü.' },
+          { icon: 'divider' },
+          { icon: 'tip', text: 'Herhangi bir hata bulursanız, lütfen GitHub Issues üzerinden bildirin.' }
         ],
         footer_sub: 'Albion Online Network Radar — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       },
@@ -2292,21 +2301,29 @@
         faq5_q: 'Does it cause FPS drops?', faq5_a: 'No. Nightwatch runs as a separate process and never touches the game\'s render pipeline.',
         faq6_q: 'The radar is visible in OBS, how do I hide it?', faq6_a: 'Enable "OBS Bypass (Streamer Mode)" in the Settings tab. This hides the radar from OBS and similar software.',
         sec_dl_label: 'Free', sec_dl_title: 'Download & <span>Start</span>',
-        dl_version: 'Version 2 — Windows x64', dl_req: 'Requirements:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
+        dl_version: 'Version 1.5.4 — Windows x64', dl_req: 'Requirements:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
         btn_dl_gh: 'Download from GitHub', btn_dl_npcap: 'Download Npcap',
         dl_notice_title: '⚠️ Disclaimer:', dl_notice_desc: ' Nightwatch is not an official Albion Online tool. Use at your own risk. Discord: Jung1330',
-        changelog_label: 'Changelog', changelog_title: "What's New", changelog_meta: 'v1.4',
+        changelog_label: 'Changelog', changelog_title: "What's New", changelog_meta: '1.5.0 - 1.5.4',
         terminal_status: 'LIVE',
         changelog_entries: [
-          { icon: 'fix', text: 'Some of Translation Mistakes solved' },
-          { icon: 'add', text: 'Language save system became automated' },
-          { icon: 'fix', text: 'Resources was showing wrong tier, it fixed' },
-          { icon: 'fix', text: 'Logs icon problem solved' },
+          { icon: 'add', text: 'Added network packet detection for regular Loot Chests along with color representations based on their rarity (Common, Uncommon, Rare, Legendary).' },
+          { icon: 'add', text: 'Integrated xUnit-based unit tests (packet parsing, language sync) and automated translation compatibility verification.' },
+          { icon: 'fix', text: 'Synced missing translation keys across all language files (TR, EN, RU, ZH).' },
           { icon: 'divider' },
-          { icon: 'section', text: 'FUTURE CHECK' },
-          { icon: 'warn', text: 'Guild Members problem' },
+          { icon: 'add', text: 'Added support for hiding/showing all overlays and panels with F11 hotkey.' },
+          { icon: 'add', text: 'Added chest rarity/quality detection (Common, Uncommon, Rare, Epic, Legendary) to Hidden Chests.' },
+          { icon: 'add', text: 'Added a button in the Config tab to directly open and edit "Autoconfig.txt".' },
+          { icon: 'fix', text: 'Fixed language/font sync issues during application startup and profile loading.' },
+          { icon: 'fix', text: 'Removed Approach Alarm drawing lines due to encryption and redundancy.' },
+          { icon: 'fix', text: 'Disabled the List Window option in the Players tab.' },
           { icon: 'divider' },
-          { icon: 'tip', text: 'If you find any bug, please report them on Github Issues.' }
+          { icon: 'add', text: 'Updated dungeon portal packet codes (Event 325).' },
+          { icon: 'add', text: 'Added Wisp Cages and Smugglers detection (Event 532).' },
+          { icon: 'add', text: 'Added tracking system for footprints like Werewolves (Event 558).' },
+          { icon: 'fix', text: 'Fixed static dungeons and cages disappearing after loading screens.' },
+          { icon: 'divider' },
+          { icon: 'tip', text: 'If you find any bugs, please report them on GitHub Issues.' }
         ],
         footer_sub: 'Albion Online Network Radar — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       },
@@ -2321,12 +2338,10 @@
         sec_features_desc: 'Nightwatch предоставляет комплексные инструменты для наблюдения за противниками.',
         f1_title: 'Расширенный ESP игроков', f1_desc: 'Мгновенно отслеживайте реальный средний IP ближайших врагов, полный список снаряжения и HP.',
         f2_title: 'Карточки снаряжения', f2_desc: 'Смотрите снаряжение 5 ближайших врагов в виде карточек с иконками. Система памяти отслеживает временно ушедших врагов.',
-        // f3 (Danger Compass) removed
         f4_title: 'Отслеживание ресурсов', f4_desc: 'Расширенная фильтрация по уровню и зачарованию. Иконки из оригинальной игры.',
         f5_title: 'VPN и поддержка адаптеров', f5_desc: 'Панель выбора адаптера для пользователей VPN. Найдите нужный адаптер за секунды.',
         f6_title: 'Фон карты', f6_desc: 'Реальные карты Albion отображаются динамически на радаре. Настройка прозрачности и масштаба.',
         f7_title: 'Лазерный трекер', f7_desc: 'Отмечайте мобов и ресурсы лазерными линиями на экране.',
-        // f8 (Player Trails & Waypoint) removed
         f9_title: 'Обход OBS (Режим стримера)', f9_desc: 'Встроенный режим стримера, скрывающий радар от OBS.',
         f10_title: 'Система конфигов и профилей', f10_desc: 'Сохраняйте профили для разных сценариев. Автозагрузка конфига при запуске.',
         f11_title: 'DevTools и парсер', f11_desc: 'Анализ сырых пакетов, симулятор мобов, инструменты декодирования и сканер UDP.',
@@ -2355,21 +2370,29 @@
         faq5_q: 'Падает ли FPS?', faq5_a: 'Нет. Nightwatch работает в отдельном процессе и не трогает рендер игры.',
         faq6_q: 'Радар виден в OBS — как скрыть?', faq6_a: 'Включите "OBS Bypass (Режим стримера)" во вкладке Настройки.',
         sec_dl_label: 'Бесплатно', sec_dl_title: 'Скачать & <span>Начать</span>',
-        dl_version: 'Версия 2 — Windows x64', dl_req: 'Требования:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
+        dl_version: 'Версия 1.5.4 — Windows x64', dl_req: 'Требования:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8 Runtime',
         btn_dl_gh: 'Скачать с GitHub', btn_dl_npcap: 'Скачать Npcap',
         dl_notice_title: '⚠️ Отказ от ответственности:', dl_notice_desc: ' Nightwatch не является официальным инструментом Albion Online. Используйте на свой риск. Discord: Jung1330',
-        changelog_label: 'Журнал изменений', changelog_title: 'Что нового', changelog_meta: 'v1.4',
+        changelog_label: 'Список изменений', changelog_title: 'Что нового', changelog_meta: '1.5.0 - 1.5.4',
         terminal_status: 'АКТИВ',
         changelog_entries: [
-          { icon: 'fix', text: 'Исправлены некоторые ошибки перевода' },
-          { icon: 'add', text: 'Система сохранения языка стала автоматической' },
-          { icon: 'fix', text: 'Ресурсы отображали неправильный тир, исправлено' },
-          { icon: 'fix', text: 'Решена проблема с иконкой логов' },
+          { icon: 'add', text: 'Добавлено сетевое обнаружение сундуков с добычей (Loot Chests) с отображением редкости цветом (Обычный, Необычный, Редкий, Легендарный).' },
+          { icon: 'add', text: 'Интегрированы тесты xUnit (для парсинга пакетов и синхронизации языков) и автопроверка совместимости переводов.' },
+          { icon: 'fix', text: 'Синхронизированы отсутствующие ключи перевода во всех языковых файлах (TR, EN, RU, ZH).' },
           { icon: 'divider' },
-          { icon: 'section', text: 'В ПЛАНАХ' },
-          { icon: 'warn', text: 'Проблема с участниками гильдии' },
+          { icon: 'add', text: 'Добавлена возможность скрыть/показать все оверлеи и панели клавишей F11.' },
+          { icon: 'add', text: 'Добавлено определение качества скрытых сундуков (Обычный, Необычный, Редкий и т.д.).' },
+          { icon: 'add', text: 'Добавлена кнопка во вкладке Конфиг для открытия и редактирования "Autoconfig.txt".' },
+          { icon: 'fix', text: 'Исправлена синхронизация языка/шрифтов при запуске и загрузке профилей.' },
+          { icon: 'fix', text: 'Удалены линии сигнала сближения (Approach Alarm) из-за шифрования.' },
+          { icon: 'fix', text: 'Отключено окно списка игроков во вкладке Игроки.' },
           { icon: 'divider' },
-          { icon: 'tip', text: 'Если вы нашли ошибку, пожалуйста, сообщите о ней в Github Issues.' }
+          { icon: 'add', text: 'Обновлены сетевые коды порталов подземелий (Event 325).' },
+          { icon: 'add', text: 'Добавлено обнаружение клеток с огоньками и контрабандистов (Event 532).' },
+          { icon: 'add', text: 'Добавлено отслеживание следов оборотней (Event 558).' },
+          { icon: 'fix', text: 'Исправлено исчезновение статичных подземелий после загрузки.' },
+          { icon: 'divider' },
+          { icon: 'tip', text: 'Если вы обнаружите ошибки, пожалуйста, сообщите о них на GitHub Issues.' }
         ],
         footer_sub: 'Сетевой Радар для Albion Online — by Jung1330', footer_copy: '© 2026 Jung1330 — MIT License'
       },
@@ -2384,12 +2407,10 @@
         sec_features_desc: 'Nightwatch 提供全面的工具来监视您的敌人。雷达、ESP、资源追踪等。',
         f1_title: '高级玩家ESP', f1_desc: '实时追踪附近敌人的真实平均IP、完整装备列表和HP状态。',
         f2_title: '装备卡片', f2_desc: '在屏幕上以卡片形式显示最多5个敌人的装备图标。记忆系统持续追踪短暂离开的敌人。',
-        // f3 (Danger Compass) removed
         f4_title: '资源追踪', f4_desc: '按等级和附魔级别进行高级过滤。使用原始游戏图标可视化资源。',
         f5_title: 'VPN和适配器支持', f5_desc: '为VPN用户提供高级适配器选择面板。使用诊断工具在几秒内找到正确的适配器。',
         f6_title: '地图背景', f6_desc: '真实Albion地图在雷达上动态显示。通过透明度和缩放设置完全控制。',
         f7_title: '激光追踪系统', f7_desc: '用激光线在屏幕上标记被追踪的怪物和资源。可自定义颜色和校准。',
-        // f8 (Player Trails & Waypoint) removed
         f9_title: 'OBS绕过（主播模式）', f9_desc: '内置流模式，防止雷达被OBS或屏幕录制软件捕获。',
         f10_title: '配置和配置文件系统', f10_desc: '为不同场景保存多个配置文件。启动时自动加载。',
         f11_title: '开发工具和解析器', f11_desc: '原始网络数据包分析、怪物模拟器、玩家解码工具和UDP端口扫描器。',
@@ -2418,12 +2439,16 @@
         faq5_q: '会导致FPS下降吗？', faq5_a: '不会。Nightwatch作为独立进程运行，从不接触游戏的渲染管线。',
         faq6_q: '雷达在OBS中可见，如何隐藏？', faq6_a: '在设置标签页启用"OBS绕过（主播模式）"。',
         sec_dl_label: '免费', sec_dl_title: '下载 & <span>开始</span>',
-        dl_version: '版本 2 — Windows x64', dl_req: '需求:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8运行时',
+        dl_version: '版本 1.5.4 — Windows x64', dl_req: '需求:', dl_os: 'Windows 10/11 x64', dl_net: '.NET 8运行时',
         btn_dl_gh: '从GitHub下载', btn_dl_npcap: '下载Npcap',
         dl_notice_title: '⚠️ 免责声明:', dl_notice_desc: ' Nightwatch不是Albion Online的官方工具。使用风险自负。Discord: Jung1330',
-        changelog_label: '更新日志', changelog_title: '更新内容', changelog_meta: 'v1.4',
+        changelog_label: '更新日志', changelog_title: '更新内容', changelog_meta: '1.5.0 - 1.5.4',
         terminal_status: '在线',
         changelog_entries: [
+          { icon: 'add', text: '新增普通战利品宝箱（Loot Chests）的网络数据包检测与按稀有度着色显示的彩色雷达点。' },
+          { icon: 'add', text: '集成了基于 xUnit 的单元测试（数据包解析、语言同步检查）以及翻译一致性自动验证系统。' },
+          { icon: 'fix', text: '同步了所有语言文件（TR、EN、RU、ZH）中缺少的翻译键值。' },
+          { icon: 'divider' },
           { icon: 'fix', text: '修复了一些翻译错误' },
           { icon: 'add', text: '语言保存系统变为自动化' },
           { icon: 'fix', text: '资源显示错误的等级，已修复' },
