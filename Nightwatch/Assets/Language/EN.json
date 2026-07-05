@@ -1,4 +1,4 @@
-﻿{
+{
     "SysLoading":  "[Dev] Loading system components...",
     "HandlersOK":  "[+] Handlers registered.",
     "EventsOK":  "[+] Event connections established.",
@@ -204,6 +204,7 @@
     "Hide":  "Hide",
     "Ore":  "Ore",
     "Rock":  "Stone",
+    "Log":  "Wood",
     "Console_SelfFormat":  "[Self] ID: {0} | Name: {1} | X:{2:F1} Y:{3:F1} | PX:{4:F1} PY:{5:F1}",
     "Console_PlayersTotal":  "[Players] Total: {0}",
     "Console_PlayerFormat":  "[Player] ID:{0} | Name:{1} | X:{2:F1} Y:{3:F1} | Dist:{4:F1}m",
@@ -234,5 +235,14 @@
 	"UpdateNotifyUpdated": "[NOTICE] The application is up to date.",
 	"UpdateFailed": "[Version Check Failed]",
 	"UpdateNotifyFailed": "[WARNING] Version check failed (Connection or Link Error).",
-	"UpdateChecking": "Checking Version..."
+	"UpdateChecking": "Checking Version...",
+    "Settings_HotkeyHideAll": "Hide All: {0}",
+    "Config_AutoConfigBtn": "Configure Auto Config",
+    "Mob_ShowHiddenChests": "Hidden Chest",
+    "Mob_LootChest": "Loot Chest",
+    "Rarity_Common": "Common",
+    "Rarity_Uncommon": "Uncommon",
+    "Rarity_Rare": "Rare",
+    "Rarity_Epic": "Epic",
+    "Rarity_Legendary": "Legendary"
 }

@@ -4,6 +4,7 @@ using System.Numerics;
 using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Enums;
 using Nightwatch.UserControls.AlbionOverlay.ViewModels;
+using Nightwatch.UserControls.Language;
 
 namespace Nightwatch
 {
@@ -25,8 +26,30 @@ namespace Nightwatch
                     _mobDatabase.TryGetValue(m.TypeId, out info);
 
                     string displayName = "";
-                    if (_hiddenChestIds.Contains(m.TypeId))
-                        displayName = "Hidden Chest";
+                    if (m.TypeId == 51900)
+                    {
+                        string rarityStr = m.Rarity switch
+                        {
+                            1 => Lang.Get("Rarity_Common") ?? "Common",
+                            2 => Lang.Get("Rarity_Uncommon") ?? "Uncommon",
+                            3 => Lang.Get("Rarity_Rare") ?? "Rare",
+                            4 => Lang.Get("Rarity_Legendary") ?? "Legendary",
+                            _ => Lang.Get("Rarity_Common") ?? "Common"
+                        };
+                        displayName = $"{rarityStr} {Lang.Get("Mob_LootChest") ?? "Loot Chest"}";
+                    }
+                    else if (_hiddenChestIds.Contains(m.TypeId))
+                    {
+                        string rarityStr = m.Rarity switch
+                        {
+                            1 => Lang.Get("Rarity_Uncommon") ?? "Uncommon",
+                            2 => Lang.Get("Rarity_Rare") ?? "Rare",
+                            3 => Lang.Get("Rarity_Epic") ?? "Epic",
+                            4 => Lang.Get("Rarity_Legendary") ?? "Legendary",
+                            _ => Lang.Get("Rarity_Common") ?? "Common"
+                        };
+                        displayName = $"{rarityStr} {Lang.Get("Mob_ShowHiddenChests") ?? "Hidden Chest"}";
+                    }
                     else if (info != null && !string.IsNullOrEmpty(info.Name))
                         displayName = info.Name;
                     else if (!string.IsNullOrEmpty(m.Name))
@@ -45,22 +68,24 @@ namespace Nightwatch
                     var typeInfo2 = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
                     string uniqueNameUpper = (typeInfo2?.UniqueName ?? m.Name ?? "").ToUpperInvariant();
 
-                    bool isAspectOrWorldBoss = upperName.Contains("ASPECT") || upperName.Contains("WORLD_BOSS") || upperName.Contains("WORLD BOSS") || (upperName.Contains("TITAN") && !upperName.Contains("TITANIUM")) || upperName.Contains("GUARDIAN")
-                        || uniqueNameUpper.Contains("ASPECT") || uniqueNameUpper.Contains("WORLD_BOSS");
+                    bool isAspectOrWorldBoss = uniqueNameUpper.Contains("ASPECT") 
+                        || uniqueNameUpper.Contains("WORLD_BOSS") 
+                        || uniqueNameUpper.Contains("WORLD BOSS") 
+                        || (uniqueNameUpper.Contains("TITAN") && !uniqueNameUpper.Contains("TITANIUM")) 
+                        || uniqueNameUpper.Contains("GUARDIAN");
 
                     bool isMistBoss = uniqueNameUpper.Contains("FAIRYDRAGON") || uniqueNameUpper.Contains("GRIFFIN") || uniqueNameUpper.Contains("VEILWEAVER") || uniqueNameUpper.Contains("MISTS_SPIDER");
 
-                    // Crystal kontrolleri: hem displayName hem uniqueName
-                    bool isCrystalMob = upperName.Contains("CRYSTAL") || uniqueNameUpper.Contains("CRYSTAL")
-                        || upperName.Contains("KRİSTAL") || upperName.Contains("KRISTAL");
+                    // Crystal kontrolleri: sadece uniqueName
+                    bool isCrystalMob = uniqueNameUpper.Contains("CRYSTAL");
 
                     string specificIcon = null;
-                    if (upperName.Contains("FAIRY") || (upperName.Contains("FEY") && upperName.Contains("DRAGON")) || uniqueNameUpper.Contains("FAIRYDRAGON")) specificIcon = _feyDragonPath;
-                    else if (upperName.Contains("GRIFFIN") || uniqueNameUpper.Contains("GRIFFIN")) specificIcon = _griffinPath;
-                    else if ((upperName.Contains("VEIL") && upperName.Contains("WEAVER")) || uniqueNameUpper.Contains("VEILWEAVER")) specificIcon = _veilWeaverPath;
+                    if (uniqueNameUpper.Contains("FAIRY") || (uniqueNameUpper.Contains("FEY") && uniqueNameUpper.Contains("DRAGON")) || uniqueNameUpper.Contains("FAIRYDRAGON")) specificIcon = _feyDragonPath;
+                    else if (uniqueNameUpper.Contains("GRIFFIN")) specificIcon = _griffinPath;
+                    else if ((uniqueNameUpper.Contains("VEIL") && uniqueNameUpper.Contains("WEAVER")) || uniqueNameUpper.Contains("VEILWEAVER")) specificIcon = _veilWeaverPath;
                     else if (isAspectOrWorldBoss && IsImageExistsCached(_aspectBossIconPath)) specificIcon = _aspectBossIconPath;
                     else if ((GetMobCategory(displayName, info?.Tier ?? 0) == "Crystals") || isCrystalMob) specificIcon = _spiderImagePath;
-                    else if ((m.TypeId >= 908 && m.TypeId <= 923) || uniqueNameUpper.Contains("AVALON_TREASURE_MINION") || upperName.Contains("AVALONIAN TREASURE DRONE")) specificIcon = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources", "AVALONMINIONCHEST.png");
+                    else if ((m.TypeId >= 908 && m.TypeId <= 923) || uniqueNameUpper.Contains("AVALON_TREASURE_MINION") || uniqueNameUpper.Contains("AVALONIAN TREASURE DRONE")) specificIcon = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources", "AVALONMINIONCHEST.png");
 
                     var typeInfo = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
                     HarvestableCategory mobCategory = HarvestableCategory.None;
@@ -191,6 +216,7 @@ namespace Nightwatch
                         CurrentLerpedY = m.CurrentLerpedY,
                         DistanceToMainPlayer = dist,
                         DisplayName = displayName,
+                        UniqueName = uniqueNameUpper,
                         SpecificIconPath = specificIcon,
                         IsLivingResource = isLivingResource,
                         Tier = finalTier,
@@ -199,7 +225,7 @@ namespace Nightwatch
                         IsPriority = _customPriorityMobs.Contains(m.TypeId),
                         IsTrackerCustom = _trackerCustomMobs.Contains(m.TypeId),
                         IsHarvestableTypeId = IsHarvestableTypeId(m.TypeId),
-                        IsMist = !isLivingResource && !isMistBoss && (upperName.Contains("MIST") || (upperName.Contains("WISP") && !upperName.Contains("CAGE") && !uniqueNameUpper.Contains("CAGE")) || upperName.Contains("PORTAL")),
+                        IsMist = !isLivingResource && !isMistBoss && (uniqueNameUpper.Contains("MIST") || (uniqueNameUpper.Contains("WISP") && !uniqueNameUpper.Contains("CAGE")) || uniqueNameUpper.Contains("PORTAL") || m.TypeId == 51800 || m.TypeId == 51900),
                         RawMob = m
                     };
 

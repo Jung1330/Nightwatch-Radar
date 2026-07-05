@@ -80,6 +80,7 @@ namespace Nightwatch
                     EnableLogging = _enableLogging,
                     CrownBlacklist = _crownBlacklist,
                     ToggleKey = _toggleKey,
+                    HideAllKey = _hideAllKey,
                     ShowResourceIcons = _showResourceIcons,
                     ShowDungeonIcons = _showDungeonIcons,
                     ShowSoloDungeons = _showSoloDungeons,
@@ -254,14 +255,34 @@ namespace Nightwatch
 
                 if (!string.IsNullOrEmpty(cfg.Language))
                 {
-                    Lang.LoadLanguage(cfg.Language);
-                    _selectedLangIndex = cfg.Language.ToUpper() switch
+                    string loadedLang = cfg.Language.ToUpper();
+                    Lang.LoadLanguage(loadedLang);
+                    _selectedLangIndex = loadedLang switch
                     {
                         "EN" => 1,
                         "RU" => 2,
                         "ZH" => 3,
                         _ => 0
                     };
+
+                    // Sync language setting to lang.txt
+                    try
+                    {
+                        string langPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "lang.txt");
+                        System.IO.File.WriteAllText(langPath, loadedLang);
+                    }
+                    catch { }
+
+                    // Apply the language font only if ImGui has initialized
+                    if (_isFontReady)
+                    {
+                        ApplyLanguageFont(loadedLang);
+                    }
+
+                    // GÜNCELLEME: Haritada "Will o' Wisp", "Mists Portal" gibi isim bazlı arama eşleşmelerinin (Mists/Wisps/Cages)
+                    // bozulmaması için, yüklenen yeni dile göre Mob veritabanlarını ve Mapper'ı hemen yeniden yükle!
+                    AlbionDataHandlers.Mappers.MobMapper.Instance.Reload($"Assets/Helper/mobs_{loadedLang}_min.json");
+                    CheckAndLoadDatabase();
                 }
                 _showPlayerList = cfg.ShowPlayerList; _playerListMoveable = cfg.PlayerListMoveable; _playerListX = cfg.PlayerListX; _playerListY = cfg.PlayerListY;
                 _streamModuleEnabled = cfg.StreamModuleEnabled; _showDangerCompass = cfg.ShowDangerCompass; _showEquipmentCards = cfg.ShowEquipmentCards;
@@ -289,6 +310,7 @@ namespace Nightwatch
                 _trackerLaserEndOffsetX = cfg.TrackerLaserEndOffsetX;
                 _trackerLaserEndOffsetY = cfg.TrackerLaserEndOffsetY;
                 if (cfg.ToggleKey != 0) _toggleKey = cfg.ToggleKey;
+                if (cfg.HideAllKey != 0) _hideAllKey = cfg.HideAllKey;
 
                 // RADAR POZİSYONUNU ZORLA
                 _shouldUpdateRadarPos = true;

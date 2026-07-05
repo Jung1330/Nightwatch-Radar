@@ -164,7 +164,7 @@ namespace Nightwatch
             UpdateHarvestViewModels(mainPlayer);
 
             // Kısayol Dinleyicileri
-            if (!_isChangingHotkey && !_isChangingMuteHotkey)
+            if (!_isChangingHotkey && !_isChangingMuteHotkey && !_isChangingHideAllHotkey)
             {
                 bool currentKeyState = (GetAsyncKeyState(_toggleKey) & 0x8000) != 0;
                 if (currentKeyState && !_lastKeyState) { _hideSettingsWindow = !_hideSettingsWindow; }
@@ -173,11 +173,16 @@ namespace Nightwatch
                 bool currentMuteKeyState = (GetAsyncKeyState(_muteToggleKey) & 0x8000) != 0;
                 if (currentMuteKeyState && !_lastMuteKeyState) { _enableSoundAlerts = !_enableSoundAlerts; }
                 _lastMuteKeyState = currentMuteKeyState;
+
+                bool currentHideAllKeyState = (GetAsyncKeyState(_hideAllKey) & 0x8000) != 0;
+                if (currentHideAllKeyState && !_lastHideAllKeyState) { _hideAllMenus = !_hideAllMenus; }
+                _lastHideAllKeyState = currentHideAllKeyState;
             }
             else
             {
                 _lastKeyState = (GetAsyncKeyState(_toggleKey) & 0x8000) != 0;
                 _lastMuteKeyState = (GetAsyncKeyState(_muteToggleKey) & 0x8000) != 0;
+                _lastHideAllKeyState = (GetAsyncKeyState(_hideAllKey) & 0x8000) != 0;
             }
 
             int previousEnemyCount = _lastEnemyCount;
@@ -247,7 +252,7 @@ namespace Nightwatch
             _lastEnemyCount = enemyCount;
 
             // 1. WATERMARK
-            if (_showWatermark)
+            if (_showWatermark && !_hideAllMenus)
             {
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 12f);
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
@@ -342,6 +347,8 @@ namespace Nightwatch
             }
 
             // --- YAKLASAN DUSMAN YON GOSTERGESI (DANGER COMPASS) ---
+            // Yorum satırına alındı - Gereksiz çizim engellendi.
+            /*
             if (_showDangerCompass && mainPlayer != null)
             {
                 if (_cachedPrimaryScreenW == 0) _cachedPrimaryScreenW = GetSystemMetrics(SM_CXSCREEN);
@@ -356,62 +363,13 @@ namespace Nightwatch
                     {
                         // Konumlar XOR ile şifrelendiği için yaklaşma/ok çizimi iptal edildi.
                         continue;
-                        /*
-                        if (IsWhitelisted(p, mainPlayer)) continue;
-                        if (!_prevPlayerPos.TryGetValue(p.Id, out var prev)) continue;
-
-                        float cDistSq = Vector2.DistanceSquared(new Vector2(p.CurrentLerpedX, p.CurrentLerpedY), new Vector2(mainPlayer.CurrentLerpedX, mainPlayer.CurrentLerpedY));
-                        if (cDistSq > dangerDistanceSq) continue;
-
-                        float cDist = MathF.Sqrt(cDistSq);
-                        float dDist = cDist - prev.dist;
-                        if (dDist >= -0.25f) continue;
-
-                        float ldx = p.CurrentLerpedX - mainPlayer.CurrentLerpedX;
-                        float ldy = p.CurrentLerpedY - mainPlayer.CurrentLerpedY;
-                        if (_swapXY) { float tmp = ldx; ldx = ldy; ldy = tmp; }
-                        if (_invertX) ldx = -ldx;
-                        if (_invertY) ldy = -ldy;
-                        float rad = _radarRotation * MathF.PI / 180f;
-                        float angle = MathF.Atan2(ldy, ldx) + rad;
-                        float rotX = MathF.Cos(angle);
-                        float rotY = MathF.Sin(angle);
-
-                        if (rotX * rotX + rotY * rotY < 0.001f) continue;
-                        Vector2 dir = Vector2.Normalize(new Vector2(rotX, rotY));
-
-                        float margin = 55f;
-                        Vector2 sc = new Vector2(scrW / 2f, scrH / 2f);
-                        float tVal = float.MaxValue;
-                        if (dir.X > 0.001f) tVal = Math.Min(tVal, (scrW - margin - sc.X) / dir.X);
-                        else if (dir.X < -0.001f) tVal = Math.Min(tVal, (margin - sc.X) / dir.X);
-                        if (dir.Y > 0.001f) tVal = Math.Min(tVal, (scrH - margin - sc.Y) / dir.Y);
-                        else if (dir.Y < -0.001f) tVal = Math.Min(tVal, (margin - sc.Y) / dir.Y);
-                        if (tVal == float.MaxValue || tVal < 0) continue;
-                        Vector2 edgePt = sc + dir * tVal;
-                        Vector2 inward = -dir;
-                        Vector2 perp = new Vector2(-inward.Y, inward.X);
-                        float aLen = 22f, aWid = 11f;
-                        uint fA = (uint)(pulse * 210) << 24;
-                        uint bA = (uint)(pulse * 195) << 24;
-                        Vector2 tip = edgePt;
-                        Vector2 bL = edgePt - inward * aLen + perp * aWid;
-                        Vector2 bR = edgePt - inward * aLen - perp * aWid;
-                        fgDl.AddTriangleFilled(tip, bL, bR, fA | 0x002255FF);
-                        fgDl.AddTriangle(tip, bL, bR, bA | 0x00FFAA00, 1.5f);
-                        string lbl2 = $"{p.Name}";
-                        var ts2 = ImGui.CalcTextSize(lbl2);
-                        Vector2 la = edgePt + inward * (aLen + 4f) + new Vector2(-ts2.X / 2f, -ts2.Y / 2f);
-                        fgDl.AddRectFilled(la - new Vector2(4, 2), la + new Vector2(ts2.X + 4, ts2.Y + 2), 0xCC0B0D10, 4f);
-                        fgDl.AddRect(la - new Vector2(4, 2), la + new Vector2(ts2.X + 4, ts2.Y + 2), bA | 0x00FFAA00, 4f, ImDrawFlags.None, 1f);
-                        fgDl.AddText(la, 0xFFFFFFFF, lbl2);
-                        */
                     }
                 }
             }
+            */
 
             // 2. PLAYER LIST
-            if (_showPlayerList && _playersBuffer.Count > 0)
+            if (_showPlayerList && !_hideAllMenus && _playersBuffer.Count > 0)
             {
                 ImGuiWindowFlags flags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoSavedSettings | ImGuiWindowFlags.AlwaysAutoResize;
                 if (_playerListMoveable) ImGui.SetNextWindowPos(new Vector2(_playerListX, _playerListY), ImGuiCond.FirstUseEver);
@@ -530,7 +488,7 @@ namespace Nightwatch
             }
 
             // 2b. EKİPMAN KARTLARI
-            if (_showEquipmentCards && mainPlayer != null)
+            if (_showEquipmentCards && !_hideAllMenus && mainPlayer != null)
             {
                 int maxSlots = Math.Clamp(_equipmentCardsMaxSlots, 1, _equipCardSlots.Length);
                 float memorySeconds = Math.Max(0f, _equipmentCardsMemorySeconds);
@@ -777,7 +735,7 @@ namespace Nightwatch
             }
 
             // 3. RADAR WIDGET
-            if (_detachRadar)
+            if (_detachRadar && !_hideAllMenus)
             {
                 ImGuiWindowFlags radarFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoSavedSettings | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoDecoration;
                 if (!_radarMoveable) radarFlags |= ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs;
@@ -825,7 +783,7 @@ namespace Nightwatch
             }
 
             // 4. MODERN SETTINGS UI
-            if (!_hideSettingsWindow)
+            if (!_hideSettingsWindow && !_hideAllMenus)
             {
                 ImGui.SetNextWindowSize(new Vector2(900, 600), ImGuiCond.FirstUseEver);
 

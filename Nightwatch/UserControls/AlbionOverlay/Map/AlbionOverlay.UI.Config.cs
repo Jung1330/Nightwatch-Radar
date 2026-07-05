@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -91,6 +91,26 @@ namespace Nightwatch
             if (MentalityTheme.Button(Lang.Get("Config_RefreshBtn") ?? "Refresh List")) 
             {
                 RefreshConfigList();
+            }
+
+            ImGui.SameLine();
+
+            if (MentalityTheme.Button(Lang.Get("Config_AutoConfigBtn") ?? "Auto Config")) 
+            {
+                try
+                {
+                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                    string defaultTxtPath = System.IO.Path.Combine(baseDir, "Assets", "Autoconfig.txt");
+                    if (!File.Exists(defaultTxtPath))
+                    {
+                        File.WriteAllText(defaultTxtPath, "Default");
+                    }
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = defaultTxtPath, UseShellExecute = true });
+                }
+                catch (Exception ex)
+                {
+                    Nightwatch.UIConsole.Log($"[HATA] Auto Config Open: {ex.Message}", Nightwatch.LogLevel.Error);
+                }
             }
         }
     }

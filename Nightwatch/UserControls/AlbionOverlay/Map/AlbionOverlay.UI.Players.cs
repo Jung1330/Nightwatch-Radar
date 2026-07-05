@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -32,11 +32,11 @@ namespace Nightwatch
             MentalityTheme.AnimatedToggle(Lang.Get("Player_ShowNames") ?? "Show Names", ref _showPlayerName);
             MentalityTheme.AnimatedToggle(Lang.Get("Player_ShowGuild") ?? "Show Guild", ref _showGuild);
             MentalityTheme.AnimatedToggle(Lang.Get("Player_ShowCount") ?? "Show Count", ref _showPlayerCount);
-            MentalityTheme.AnimatedToggle(Lang.Get("Player_ShowList") ?? "Show List Window", ref _showPlayerList);
-            if (_showPlayerList)
-            {
-                MentalityTheme.AnimatedToggle(Lang.Get("Player_MoveList") ?? "Unlock List Position", ref _playerListMoveable);
-            }
+            // MentalityTheme.AnimatedToggle(Lang.Get("Player_ShowList") ?? "Show List Window", ref _showPlayerList);
+            // if (_showPlayerList)
+            // {
+            //     MentalityTheme.AnimatedToggle(Lang.Get("Player_MoveList") ?? "Unlock List Position", ref _playerListMoveable);
+            // }
 
             ImGui.Spacing();
             ImGui.TextColored(MentalityTheme.Colors.TextSecondary, Lang.Get("Player_EnemyCountHold") ?? "Enemy Count Hold (s)");

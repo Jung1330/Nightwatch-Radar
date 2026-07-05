@@ -66,7 +66,7 @@ namespace Nightwatch
             }
 
             MentalityTheme.GradientSeparator();
-            MentalityTheme.AnimatedToggle(Lang.Get("Settings_DangerAlarm") ?? "Danger Compass", ref _showDangerCompass);
+            // MentalityTheme.AnimatedToggle(Lang.Get("Settings_DangerAlarm") ?? "Danger Compass", ref _showDangerCompass);
             MentalityTheme.AnimatedToggle(Lang.Get("Settings_EnableSound") ?? "Enable Sound Alerts", ref _enableSoundAlerts);
             
             MentalityTheme.EndCard();
@@ -130,6 +130,17 @@ namespace Nightwatch
             {
                 _isChangingMuteHotkey = true;
                 _isChangingHotkey = false;
+                _isChangingHideAllHotkey = false;
+            }
+
+            ImGui.Spacing();
+
+            string hideAllBtnText = _isChangingHideAllHotkey ? Lang.Get("Settings_HotkeyWait") ?? "Wait..." : string.Format(Lang.Get("Settings_HotkeyHideAll") ?? "Hide All: {0}", GetKeyName(_hideAllKey));
+            if (MentalityTheme.Button(hideAllBtnText, new Vector2(250, 40)))
+            {
+                _isChangingHideAllHotkey = true;
+                _isChangingHotkey = false;
+                _isChangingMuteHotkey = false;
             }
 
             ImGui.SameLine();
@@ -140,7 +151,7 @@ namespace Nightwatch
             else
                 MentalityTheme.StatusBadge(Lang.Get("Settings_SoundOn") ?? "ON", MentalityTheme.Colors.AccentSuccess);
 
-            if (_isChangingHotkey || _isChangingMuteHotkey)
+            if (_isChangingHotkey || _isChangingMuteHotkey || _isChangingHideAllHotkey)
             {
                 int pressed = GetPressedKey();
                 if (pressed != -1 && pressed != 0x01 && pressed != 0x02)
@@ -149,14 +160,17 @@ namespace Nightwatch
                     {
                         _isChangingHotkey = false;
                         _isChangingMuteHotkey = false;
+                        _isChangingHideAllHotkey = false;
                     }
                     else
                     {
                         if (_isChangingHotkey) _toggleKey = pressed;
                         if (_isChangingMuteHotkey) _muteToggleKey = pressed;
+                        if (_isChangingHideAllHotkey) _hideAllKey = pressed;
 
                         _isChangingHotkey = false;
                         _isChangingMuteHotkey = false;
+                        _isChangingHideAllHotkey = false;
                     }
                 }
             }

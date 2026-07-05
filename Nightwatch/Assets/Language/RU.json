@@ -1,4 +1,4 @@
-﻿{
+{
     "SysLoading": "[Dev] Загрузка системных компонентов...",
     "HandlersOK": "[+] Обработчики зарегистрированы.",
     "EventsOK": "[+] Связи событий установлены.",
@@ -22,6 +22,7 @@
     "Tab_Device": "Адаптеры",
     "Res_Title": "Отображение ресурсов",
     "Res_ShowIcons": "Показывать иконки ресурсов",
+    "Dungeon_ShowIcons": "Показывать подземелья с иконками",
     "Res_ShowOnMap": "Показывать ресурсы на карте",
     "Res_TrackerOnly": "Только трекер (Скрыть точки радара)",
     "Res_IconSize": "Глобальный размер иконок",
@@ -203,6 +204,7 @@
     "Hide": "Шкура",
     "Ore": "Руда",
     "Rock": "Камень",
+    "Log": "Бревно",
     "Console_SelfFormat": "[Вас] ID: {0} | Имя: {1} | X:{2:F1} Y:{3:F1} | PX:{4:F1} PY:{5:F1}",
     "Console_PlayersTotal": "[Игроки] Всего: {0}",
     "Console_PlayerFormat": "[Игрок] ID:{0} | Имя:{1} | X:{2:F1} Y:{3:F1} | Дист:{4:F1}m",
@@ -220,12 +222,20 @@
     "Settings_UITheme": "Тема интерфейса",
     "Mob_ResourceTruthMode": "Режим проверки ресурсов",
     "Player_EnemyCountHold": "Удержание кол-ва врагов (с)",
-	"EngineError": "ОШИБКА ЗАПУСКА ДВИЖКА",
+    "EngineError": "ОШИБКА ЗАПУСКА ДВИЖКА",
     "FatalError": "КРИТИЧЕСКАЯ ОШИБКА",
     "UpdateNotifyAvailable": "[УВЕДОМЛЕНИЕ] Доступно новое обновление! Пожалуйста, обновите с GitHub.",
     "UpdateNotifyUpdated": "[УВЕДОМЛЕНИЕ] Приложение обновлено.",
     "UpdateFailed": "[Ошибка проверки версии]",
     "UpdateNotifyFailed": "[ПРЕДУПРЕЖДЕНИЕ] Ошибка проверки версии (ошибка подключения или ссылки).",
-    "UpdateChecking": "Проверка версии..."
-
+    "UpdateChecking": "Проверка версии...",
+    "Settings_HotkeyHideAll": "Скрыть все: {0}",
+    "Config_AutoConfigBtn": "Настроить автоконфиг",
+    "Mob_ShowHiddenChests": "Скрытый сундук",
+    "Mob_LootChest": "Сундук с добычей",
+    "Rarity_Common": "Обычный",
+    "Rarity_Uncommon": "Необычный",
+    "Rarity_Rare": "Редкий",
+    "Rarity_Epic": "Эпический",
+    "Rarity_Legendary": "Легендарный"
 }

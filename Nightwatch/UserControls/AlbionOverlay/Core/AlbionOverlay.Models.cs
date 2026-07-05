@@ -55,6 +55,7 @@ namespace Nightwatch
 
         public List<int> CrownBlacklist { get; set; } = new List<int>();
         public int ToggleKey { get; set; } = 0x7B; // Varsayılan F12 (Hex 0x7B)
+        public int HideAllKey { get; set; } = 0x7A; // Varsayılan F11 (Hex 0x7A)
         public bool ShowResourceIcons { get; set; } = false;
         public bool ShowDungeonIcons { get; set; } = true;
         public bool ShowSoloDungeons { get; set; } = true;

@@ -45,6 +45,9 @@ public class MobsHandler : IEventHandler
             case 529:
                 HandleChestRarity(parameters);
                 break;
+            case 391:
+                HandleLootChestSpawn(parameters);
+                break;
         }
     }
     private void HandleMobChangeState(Dictionary<byte, object> parameters)
@@ -506,6 +509,86 @@ public class MobsHandler : IEventHandler
                         EnchantmentLevel = 0,
                         NetworkTier = 0,
                         UnlockTicks = unlockTicks
+                    };
+                    _mobs.Add(mob);
+                }
+                Mobs.OnNext(_mobs);
+            }
+        }
+        catch { }
+    }
+
+    private void HandleLootChestSpawn(Dictionary<byte, object> parameters)
+    {
+        try
+        {
+            if (!parameters.TryGetValue(0, out var idObj)) return;
+            int id = GetIntSafe(idObj);
+            if (id == 0) return;
+
+            float[] pos = null;
+            if (parameters.TryGetValue(1, out var posObj))
+            {
+                if (posObj is float[] fArr) pos = fArr;
+                else if (posObj is IList<float> list) pos = new float[] { list[0], list[1] };
+                else if (posObj is System.Collections.IList list2) pos = new float[] { Convert.ToSingle(list2[0]), Convert.ToSingle(list2[1]) };
+            }
+
+            if (pos == null || pos.Length < 2) return;
+
+            string chestName = "LOOTCHEST";
+            if (parameters.TryGetValue(3, out var nameObj) && nameObj != null)
+            {
+                chestName = nameObj.ToString();
+            }
+
+            if (chestName != null && chestName.ToLowerInvariant().Contains("mist"))
+            {
+                if (parameters.TryGetValue(4, out var nameObj2) && nameObj2 != null)
+                {
+                    chestName = nameObj2.ToString();
+                }
+            }
+
+            int rarity = 1;
+            if (chestName != null)
+            {
+                string lower = chestName.ToLowerInvariant();
+                if (lower.Contains("legendary") || lower.Contains("yellow")) rarity = 4;
+                else if (lower.Contains("rare") || lower.Contains("purple")) rarity = 3;
+                else if (lower.Contains("uncommon") || lower.Contains("blue")) rarity = 2;
+                else if (lower.Contains("standard") || lower.Contains("green")) rarity = 1;
+                else rarity = 0;
+            }
+
+            lock (_lockObject)
+            {
+                var existingMob = _mobs.FirstOrDefault(m => m.Id == id);
+                if (existingMob != null)
+                {
+                    existingMob.PositionX = pos[0];
+                    existingMob.PositionY = pos[1];
+                    existingMob.CurrentLerpedX = pos[0];
+                    existingMob.CurrentLerpedY = pos[1];
+                    existingMob.TypeId = 51900;
+                    existingMob.Name = chestName;
+                    existingMob.Rarity = rarity;
+                }
+                else
+                {
+                    var mob = new Mob
+                    {
+                        Id = id,
+                        TypeId = 51900,
+                        Name = chestName,
+                        PositionX = pos[0],
+                        PositionY = pos[1],
+                        CurrentLerpedX = pos[0],
+                        CurrentLerpedY = pos[1],
+                        EnchantmentLevel = 0,
+                        NetworkTier = 0,
+                        Rarity = rarity,
+                        UnlockTicks = 0
                     };
                     _mobs.Add(mob);
                 }

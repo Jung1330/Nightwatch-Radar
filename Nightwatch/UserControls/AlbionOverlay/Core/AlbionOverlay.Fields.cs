@@ -257,6 +257,12 @@ namespace Nightwatch
         private bool _lastMuteKeyState = false;
         private bool _isChangingMuteHotkey = false;
 
+        private int _hideAllKey = 0x7A; // Varsayılan: F11
+        private bool _lastHideAllKeyState = false;
+        private bool _hideAllMenus = false;
+        private bool _isChangingHideAllHotkey = false;
+        private bool _isFontReady = false;
+
         private bool _isSizeFixed = false;
         private bool _isIconSet = false;
         private bool _shouldUpdateRadarPos = false; // Config yüklendiğinde pozisyonu zorlamak için
@@ -307,7 +313,7 @@ namespace Nightwatch
         private bool _showPlayerName = true;
         private bool _showPlayerCount = true;
         private bool _showMobNames = true;
-        private int _developer = 0;  // Developer tabs: 0 = hidden, 1 = visible
+        private int _developer = 1;  // Developer tabs: 0 = hidden, 1 = visible
         private bool _debugConsoleLog = false;
         private bool _debugMobs = false;
         private bool _debugStaticResources = false;

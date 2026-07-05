@@ -1,4 +1,4 @@
-﻿{
+{
     "SysLoading": "[Dev] 正在加载系统组件...",
     "HandlersOK": "[+] 处理程序已注册。",
     "EventsOK": "[+] 事件连接已建立。",
@@ -22,6 +22,7 @@
     "Tab_Device": "设备信息",
     "Res_Title": "资源显示",
     "Res_ShowIcons": "显示资源图标",
+    "Dungeon_ShowIcons": "显示地下城图标",
     "Res_ShowOnMap": "在地图上显示资源",
     "Res_TrackerOnly": "仅追踪器（隐藏雷达点）",
     "Res_IconSize": "全局图标大小",
@@ -203,6 +204,7 @@
     "Hide": "皮",
     "Ore": "矿石",
     "Rock": "石头",
+    "Log": "原木",
     "Console_SelfFormat": "[自己] ID: {0} | 名字: {1} | X:{2:F1} Y:{3:F1} | PX:{4:F1} PY:{5:F1}",
     "Console_PlayersTotal": "[玩家] 总计: {0}",
     "Console_PlayerFormat": "[玩家] ID:{0} | 名字:{1} | X:{2:F1} Y:{3:F1} | 距离:{4:F1}m",
@@ -220,11 +222,20 @@
     "Settings_UITheme": "界面主题",
     "Mob_ResourceTruthMode": "资源真实模式",
     "Player_EnemyCountHold": "敌人数量保持时间 (秒)",
-	"EngineError": "引擎启动错误",
+    "EngineError": "引擎启动错误",
     "FatalError": "致命错误",
     "UpdateNotifyAvailable": "[通知] 有新版本可用！请从 GitHub 更新。",
     "UpdateNotifyUpdated": "[通知] 应用程序已是最新版本。",
     "UpdateFailed": "[版本检查失败]",
     "UpdateNotifyFailed": "[警告] 版本检查失败（连接或链接错误）。",
-    "UpdateChecking": "正在检查版本..."
+    "UpdateChecking": "正在检查版本...",
+    "Settings_HotkeyHideAll": "全部隐藏: {0}",
+    "Config_AutoConfigBtn": "设置自动配置",
+    "Mob_ShowHiddenChests": "隐藏宝箱",
+    "Mob_LootChest": "战利品宝箱",
+    "Rarity_Common": "普通",
+    "Rarity_Uncommon": "不凡",
+    "Rarity_Rare": "珍稀",
+    "Rarity_Epic": "史诗",
+    "Rarity_Legendary": "传说"
 }

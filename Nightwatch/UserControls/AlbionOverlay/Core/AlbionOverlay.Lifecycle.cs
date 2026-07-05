@@ -81,30 +81,12 @@ namespace Nightwatch
             }
             catch { }
 
-            string startupLang = "EN"; // Varsayılan
-
-            // --- KALICI DİL YÜKLEME ---
-            try
-            {
-                string langPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "lang.txt");
-                if (File.Exists(langPath))
-                {
-                    startupLang = File.ReadAllText(langPath).Trim().ToUpper();
-                    Lang.LoadLanguage(startupLang);
-
-                    _selectedLangIndex = startupLang switch
-                    {
-                        "EN" => 1,
-                        "RU" => 2,
-                        "ZH" => 3,
-                        _ => 0
-                    };
-                }
-            }
-            catch (Exception ex) { Nightwatch.UIConsole.Log($"[HATA] Lang Init: {ex.Message}", Nightwatch.LogLevel.Error); }
+            string startupLang = Lang.CurrentLanguage ?? "EN";
 
             // Açılışta okunan dile uygun FONT'u ve karakter setini yükle!
             ApplyLanguageFont(startupLang);
+
+            _isFontReady = true;
 
             return base.PostInitialized();
         }

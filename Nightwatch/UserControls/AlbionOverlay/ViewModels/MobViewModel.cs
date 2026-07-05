@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using AlbionDataHandlers.Entities;
 
@@ -13,6 +13,7 @@ namespace Nightwatch.UserControls.AlbionOverlay.ViewModels
         public float DistanceToMainPlayer { get; set; }
         
         public string DisplayName { get; set; }
+        public string UniqueName { get; set; }
         public string SpecificIconPath { get; set; }
         
         // --- Kategorilendirme ---

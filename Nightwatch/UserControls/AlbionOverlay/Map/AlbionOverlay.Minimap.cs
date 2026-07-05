@@ -264,7 +264,9 @@ namespace Nightwatch
                 }
             }
 
-            // --- SNIFF RANGE ÃÆ’Ã¢â‚¬Â¡EMBERÃâ€Â° (HaritanÃâ€Â±n üstünde, entity'lerin altÃâ€Â±nda) ---
+
+
+            // --- SNIFF RANGE CEMBERI (Haritanin ustunde, entity'lerin altinda) ---
             float sniffRadiusPx = _renderDistance * _zoom;
             if (sniffRadiusPx < radiusLimit)
             {
@@ -443,7 +445,7 @@ namespace Nightwatch
                             if (_showMists)
                             {
                                 int rarity = m.Enchant;
-                                if (m.TypeId == 51800) rarity = m.RawMob?.Rarity ?? 0;
+                                if (m.TypeId == 51800 || m.TypeId == 51900) rarity = m.RawMob?.Rarity ?? 0;
                                 if (rarity > 4) rarity = 4;
                                 if (rarity < 0) rarity = 0;
 
@@ -470,12 +472,14 @@ namespace Nightwatch
                                 };
 
                                 float mistIconSize = 22f;
-                                string mistLabel = isDuo ? $"Duo[{rarityLabel}]" : rarityLabel;
-
                                 bool isBetaPortal = m.TypeId == 51800;
-                                if (!isBetaPortal || _showBetaChests)
+                                bool isLootChest = m.TypeId == 51900;
+                                string mistLabel = isLootChest ? m.DisplayName : (isDuo ? $"Duo[{rarityLabel}]" : rarityLabel);
+
+                                if ((!isBetaPortal && !isLootChest) || (isBetaPortal && _showBetaChests) || isLootChest)
                                 {
-                                    DrawMistDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, _mistImagePaths[rarity], rarityColor, mistLabel, radiusLimit, mistIconSize);
+                                    string imgPath = isLootChest ? null : _mistImagePaths[rarity];
+                                    DrawMistDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, imgPath, rarityColor, mistLabel, radiusLimit, mistIconSize);
 
                                     if (isBetaPortal)
                                     {
@@ -558,19 +562,12 @@ namespace Nightwatch
 
 
                             // --- Cages & Smugglers ---
-                            bool isSmuggler = upperName.Contains("SMUGGLER") || rawUpperName.Contains("SMUGGLER")
-                                || upperName.Contains("TRADING OUTPOST") || rawUpperName.Contains("TRADING OUTPOST")
-                                || upperName.Contains("TRADING POST") || rawUpperName.Contains("TRADING POST")
-                                || upperName.Contains("KAÇAKÇI") || rawUpperName.Contains("KAÇAKÇI")
-                                || upperName.Contains("KACAKCI") || rawUpperName.Contains("KACAKCI")
-                                || upperName.Contains("КОНТРАБАНДИСТ") || rawUpperName.Contains("КОНТРАБАНДИСТ")
-                                || upperName.Contains("走私") || rawUpperName.Contains("走私");
+                            bool isSmuggler = m.UniqueName != null && (m.UniqueName.Contains("SMUGGLER")
+                                || m.UniqueName.Contains("TRADING_OUTPOST")
+                                || m.UniqueName.Contains("TRADING_POST"));
 
                             bool isWispCage = !isSmuggler && (m.TypeId == 53000 
-                                || (upperName.Contains("CAGE") && upperName.Contains("WISP")) 
-                                || (rawUpperName.Contains("CAGE") && rawUpperName.Contains("WISP"))
-                                || upperName.Contains("KAFES")
-                                || rawUpperName.Contains("KAFES"));
+                                || (m.UniqueName != null && m.UniqueName.Contains("CAGE") && m.UniqueName.Contains("WISP")));
 
                             if (isWispCage || isSmuggler)
                             {
@@ -639,12 +636,27 @@ namespace Nightwatch
                                 continue;
                             }
 
-                            bool isAspectOrWorldBoss = upperName.Contains("ASPECT") || upperName.Contains("WORLD_BOSS") || upperName.Contains("WORLD BOSS") || (upperName.Contains("TITAN") && !upperName.Contains("TITANIUM") && !upperName.Contains("TITANYUM") && !upperName.Contains("TİTANYUM")) || upperName.Contains("GUARDIAN")
-                                || rawUpperName.Contains("ASPECT") || rawUpperName.Contains("WORLD_BOSS");
-                            bool isChestOrTreasure = upperName.Contains("CHEST") || upperName.Contains("TREASURE") || upperName.Contains("CACHE") || upperName.Contains("KASA")
-                                || rawUpperName.Contains("CHEST") || rawUpperName.Contains("TREASURE") || rawUpperName.Contains("CACHE");
-                            bool isCrystalBoss = upperName.Contains("CRYSTAL") || rawUpperName.Contains("CRYSTAL") || upperName.Contains("KRİSTAL") || upperName.Contains("KRISTAL");
-                            bool isBigBoss = upperName.Contains("BOSS") || rawUpperName.Contains("BOSS") || isAspectOrWorldBoss || upperName.Contains("OLD_WHITE") || rawUpperName.Contains("OLD_WHITE") || upperName.Contains("SPIDER") || rawUpperName.Contains("SPIDER") || upperName.Contains("VORTEX") || isCrystalBoss || isChestOrTreasure || !string.IsNullOrEmpty(m.SpecificIconPath);
+                            bool isAspectOrWorldBoss = m.UniqueName != null && (m.UniqueName.Contains("ASPECT") 
+                                || m.UniqueName.Contains("WORLD_BOSS") 
+                                || m.UniqueName.Contains("WORLD BOSS") 
+                                || (m.UniqueName.Contains("TITAN") && !m.UniqueName.Contains("TITANIUM")) 
+                                || m.UniqueName.Contains("GUARDIAN"));
+
+                            bool isChestOrTreasure = m.UniqueName != null && (m.UniqueName.Contains("CHEST") 
+                                || m.UniqueName.Contains("TREASURE") 
+                                || m.UniqueName.Contains("CACHE")
+                                || m.UniqueName.Contains("COFFER"));
+
+                            bool isCrystalBoss = m.UniqueName != null && m.UniqueName.Contains("CRYSTAL");
+
+                            bool isBigBoss = (m.UniqueName != null && (m.UniqueName.Contains("BOSS") 
+                                || m.UniqueName.Contains("OLD_WHITE") 
+                                || m.UniqueName.Contains("SPIDER") 
+                                || m.UniqueName.Contains("VORTEX"))) 
+                                || isAspectOrWorldBoss 
+                                || isCrystalBoss 
+                                || isChestOrTreasure 
+                                || !string.IsNullOrEmpty(m.SpecificIconPath);
 
                             if (m.IsLivingResource && !isAspectOrWorldBoss)
                                 isBigBoss = false;

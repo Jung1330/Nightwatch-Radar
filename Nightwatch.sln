@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.4.11513.90
@@ -9,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOSnifferNET", "AOSnifferNET\AOSnifferNET.csproj", "{B04C288D-0BF5-40E7-BC5E-CD097D14D07A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nightwatch", "Nightwatch\Nightwatch.csproj", "{80411062-5282-9C74-CCBF-09613E154849}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nightwatch.Tests", "Nightwatch.Tests\Nightwatch.Tests.csproj", "{97FB58FB-888D-4E28-9853-25D7C85C02E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +71,18 @@ Global
 		{80411062-5282-9C74-CCBF-09613E154849}.Release|x64.Build.0 = Release|x64
 		{80411062-5282-9C74-CCBF-09613E154849}.Release|x86.ActiveCfg = Release|Any CPU
 		{80411062-5282-9C74-CCBF-09613E154849}.Release|x86.Build.0 = Release|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Debug|x64.Build.0 = Debug|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Debug|x86.Build.0 = Debug|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Release|x64.ActiveCfg = Release|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Release|x64.Build.0 = Release|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Release|x86.ActiveCfg = Release|Any CPU
+		{97FB58FB-888D-4E28-9853-25D7C85C02E9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
