@@ -1,6 +1,8 @@
 Version Check [V1.5.4] - 05.07.2026 :
 
-+ Added regular Loot Chest & rarity color-coded tracking on the radar. ( Test )
+DEV Report : Please Check Github Issues for Known Issues
+
++ Added regular Loot Chest & rarity color-coded tracking on the radar. ( It didn't test by DEV )
 + Integrated xUnit unit testing (packet parsers, localization verification) for automatic quality control.
 + Standardized translation keys across all language files (TR, EN, RU, ZH).
 + Added support for hiding/showing all overlays and panels with F11 hotkey.
