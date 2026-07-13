@@ -19,5 +19,4 @@ DEV Report : Please Check Github Issues for Known Issues.
 TIP: If you find any bug, please report them on Github Issues.
 Dev : Please give feedback for UI Design
 
-____________________________________________________________
 DEV Report : Please Check Github Issues for Known Issues.  
