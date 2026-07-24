@@ -25,20 +25,33 @@ namespace Nightwatch
                     MobInfo info = null;
                     _mobDatabase.TryGetValue(m.TypeId, out info);
 
+                    var typeInfo2 = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
+                    string uniqueNameUpper = (info?.HarvestType ?? typeInfo2?.UniqueName ?? m.Name ?? "").ToUpperInvariant();
+
+                    // Check if hidden chest by ID or keyword matching
+                    bool isHiddenChest = _hiddenChestIds.Contains(m.TypeId) ||
+                        (uniqueNameUpper != null && 
+                         (uniqueNameUpper.Contains("CHEST") || 
+                          uniqueNameUpper.Contains("COFFER") || 
+                          uniqueNameUpper.Contains("CACHE") || 
+                          uniqueNameUpper.Contains("TREASURE")) && 
+                         !uniqueNameUpper.Contains("MINION") && 
+                         !uniqueNameUpper.Contains("DRONE"));
+
                     string displayName = "";
                     if (m.TypeId == 51900)
                     {
                         string rarityStr = m.Rarity switch
                         {
-                            1 => Lang.Get("Rarity_Common") ?? "Common",
-                            2 => Lang.Get("Rarity_Uncommon") ?? "Uncommon",
-                            3 => Lang.Get("Rarity_Rare") ?? "Rare",
+                            1 => Lang.Get("Rarity_Uncommon") ?? "Uncommon",
+                            2 => Lang.Get("Rarity_Rare") ?? "Rare",
+                            3 => Lang.Get("Rarity_Epic") ?? "Epic",
                             4 => Lang.Get("Rarity_Legendary") ?? "Legendary",
                             _ => Lang.Get("Rarity_Common") ?? "Common"
                         };
                         displayName = $"{rarityStr} {Lang.Get("Mob_LootChest") ?? "Loot Chest"}";
                     }
-                    else if (_hiddenChestIds.Contains(m.TypeId))
+                    else if (isHiddenChest)
                     {
                         string rarityStr = m.Rarity switch
                         {
@@ -65,9 +78,7 @@ namespace Nightwatch
 
                     string upperName = displayName.ToUpperInvariant();
                     // UniqueName her zaman İngilizce — dil bağımsız ikon/kategori tespiti için
-                    var typeInfo2 = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
-                    string uniqueNameUpper = (typeInfo2?.UniqueName ?? m.Name ?? "").ToUpperInvariant();
-
+                    
                     bool isAspectOrWorldBoss = uniqueNameUpper.Contains("ASPECT") 
                         || uniqueNameUpper.Contains("WORLD_BOSS") 
                         || uniqueNameUpper.Contains("WORLD BOSS") 
@@ -200,6 +211,17 @@ namespace Nightwatch
                     int enchant = ParseEnchant(m.Name);
                     if (enchant <= 0) enchant = m.EnchantmentLevel;
 
+                    if (uniqueNameUpper != null && 
+                        (uniqueNameUpper.Contains("MIST") || 
+                         uniqueNameUpper.Contains("PORTAL") || 
+                         (uniqueNameUpper.Contains("WISP") && !uniqueNameUpper.Contains("CAGE"))))
+                    {
+                        if (uniqueNameUpper.Contains("UNCOMMON")) enchant = 1;
+                        else if (uniqueNameUpper.Contains("RARE")) enchant = 2;
+                        else if (uniqueNameUpper.Contains("EPIC")) enchant = 3;
+                        else if (uniqueNameUpper.Contains("LEGENDARY")) enchant = 4;
+                    }
+
                     float dist = 0;
                     if (mainPlayer != null)
                     {
@@ -225,7 +247,7 @@ namespace Nightwatch
                         IsPriority = _customPriorityMobs.Contains(m.TypeId),
                         IsTrackerCustom = _trackerCustomMobs.Contains(m.TypeId),
                         IsHarvestableTypeId = IsHarvestableTypeId(m.TypeId),
-                        IsMist = !isLivingResource && !isMistBoss && (uniqueNameUpper.Contains("MIST") || (uniqueNameUpper.Contains("WISP") && !uniqueNameUpper.Contains("CAGE")) || uniqueNameUpper.Contains("PORTAL") || m.TypeId == 51800 || m.TypeId == 51900),
+                        IsMist = !isLivingResource && !isMistBoss && !isHiddenChest && ((uniqueNameUpper.Contains("WISP") && !uniqueNameUpper.Contains("CAGE")) || uniqueNameUpper.Contains("PORTAL") || m.TypeId == 51800 || m.TypeId == 51900),
                         RawMob = m
                     };
 

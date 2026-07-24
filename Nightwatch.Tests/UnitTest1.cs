@@ -57,7 +57,7 @@ namespace Nightwatch.Tests
             Assert.NotNull(greenChest);
             Assert.Equal(51900, greenChest.TypeId); // Custom Loot Chest TypeId'si
             Assert.Equal("TREASURE_STANDARD_01", greenChest.Name);
-            Assert.Equal(1, greenChest.Rarity); // standard -> Rarity 1 (Yeşil) olmalı
+            Assert.Equal(0, greenChest.Rarity); // standard -> Rarity 0 (Common) olmalı
             Assert.Equal(50.5f, greenChest.PositionX);
 
             // Efsanevi sandık doğrulaması

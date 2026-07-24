@@ -16,23 +16,8 @@ namespace AlbionDataHandlers.Handlers
         private static readonly bool SelfOnlyTestMode = false;
         private static readonly bool AllowEventBasedLocalFallback = false;
 
-        // --- PLAYER MOVE DECODE TEST SWITCHES (runtime) ---
-        // DevTools > Player Decode sekmesinden aç/kapat yapılır.
-        public static bool DecodePath01_Int1e7_1_9 { get; set; } = false;
-        public static bool DecodePath02_Int1e6_1_9 { get; set; } = false;
-        public static bool DecodePath03_Int1e5_1_9 { get; set; } = false;
-        public static bool DecodePath04_Int100_1_9 { get; set; } = false;
-        public static bool DecodePath05_Float_1_9 { get; set; } = false;
+        // --- PLAYER MOVE DECODE SWITCHES ---
         public static bool DecodePath06_Int1e7_9_13 { get; set; } = true;
-        public static bool DecodePath07_Int1e6_9_13 { get; set; } = false;
-        public static bool DecodePath08_Int1e5_9_13 { get; set; } = false;
-        public static bool DecodePath09_Int100_9_13 { get; set; } = false;
-        public static bool DecodePath10_Float_9_13 { get; set; } = false;
-        public static bool DecodePath11_XInt100YFloat_9_13 { get; set; } = false;
-        public static bool DecodePath12_XFloatYInt100_9_13 { get; set; } = false;
-        public static bool DecodePath13_Param4_5 { get; set; } = false;
-        public static bool DecodePath14_Param19_25 { get; set; } = false;
-        public static bool DecodePath15_List0_1 { get; set; } = false;
         public static bool DecodePath16_Float_9_17 { get; set; } = true;
 
         public event Action<Player>? LocalPlayerPosition;
@@ -40,7 +25,6 @@ namespace AlbionDataHandlers.Handlers
         public event Action<int>? PlayerLeft;
 
         private readonly List<Player> _otherPlayersList = new List<Player>();
-        private readonly Dictionary<int, (float x, float y)> _pendingPlayerMoves = new Dictionary<int, (float x, float y)>();
         private readonly Dictionary<int, DateTime> _pendingLeaveById = new Dictionary<int, DateTime>();
         private readonly Dictionary<int, DateTime> _lastHealthSeenById = new Dictionary<int, DateTime>();
         private readonly Dictionary<int, DateTime> _lastSeenById = new Dictionary<int, DateTime>();
@@ -117,8 +101,8 @@ namespace AlbionDataHandlers.Handlers
                 }
 
                 float[] pos = FindPosition(parameters);
-                float initialX = spawnX > 0.1f ? spawnX : (pos != null ? pos[0] : 0f);
-                float initialY = spawnY > 0.1f ? spawnY : (pos != null ? pos[1] : 0f);
+                float initialX = Math.Abs(spawnX) > 0.1f ? spawnX : (pos != null ? pos[0] : 0f);
+                float initialY = Math.Abs(spawnY) > 0.1f ? spawnY : (pos != null ? pos[1] : 0f);
 
                 lock (_syncLock)
                 {
@@ -141,14 +125,6 @@ namespace AlbionDataHandlers.Handlers
                         Equipment = equipIds
                     };
 
-                    if (_pendingPlayerMoves.TryGetValue(id, out var pendingPos))
-                    {
-                        newPlayer.PositionX = pendingPos.x; newPlayer.PositionY = pendingPos.y;
-                        newPlayer.CurrentLerpedX = pendingPos.x; newPlayer.CurrentLerpedY = pendingPos.y;
-                        _pendingPlayerMoves.Remove(id);
-                    }
-                    newPlayer.PositionX = spawnX;
-                    newPlayer.PositionY = spawnY;
                     _otherPlayersList.Add(newPlayer);
                     _lastSeenById[id] = DateTime.UtcNow;
                     OtherPlayersDetected?.Invoke(_otherPlayersList.ToList());
@@ -192,9 +168,40 @@ namespace AlbionDataHandlers.Handlers
                         });
                     }
                 }
-                
-                // Diğer oyuncuların anlık konum takibi kaldırıldı. (Konumlar Albion tarafından XOR-Şifreli olduğu için "06 Int" gibi test dekoderleri sadece rastgele saçma koordinatlar üretiyordu). 
-                // Radar sistemi diğer oyuncular için Event 29 (NewCharacter) üzerinden sadece "Erken Uyarı (Spawn & Identity)" mantığıyla çalışacak şekilde bırakıldı.
+                else
+                {
+                    // DİĞER OYUNCULARIN ANLIK KONUM TAKİBİ (LIVE PLAYER MOVEMENT)
+                    bool hasRaw = TryGetMoveRaw(parameters, 1, out var rawX, out var rawY)
+                        || TryGetMoveRaw(parameters, 3, out rawX, out rawY);
+
+                    if (!hasRaw && parameters.TryGetValue(4, out var p4) && parameters.TryGetValue(5, out var p5))
+                    {
+                        float fx = GetFloatSafe(p4);
+                        float fy = GetFloatSafe(p5);
+                        if (IsValidWorldPosition(fx, fy))
+                        {
+                            rawX = fx;
+                            rawY = fy;
+                            hasRaw = true;
+                        }
+                    }
+
+                    if (hasRaw && IsValidWorldPosition(rawX, rawY))
+                    {
+                        lock (_syncLock)
+                        {
+                            var player = _otherPlayersList.FirstOrDefault(p => p.Id == id);
+                            if (player != null)
+                            {
+                                player.PositionX = rawX;
+                                player.PositionY = rawY;
+                                player.CurrentLerpedX = rawX;
+                                player.CurrentLerpedY = rawY;
+                                OtherPlayersDetected?.Invoke(_otherPlayersList.ToList());
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex) { Console.WriteLine($"Error Code : 9 | {ex.Message}"); }
         }
@@ -226,7 +233,6 @@ namespace AlbionDataHandlers.Handlers
                 int id = Convert.ToInt32(idObj);
                 lock (_syncLock)
                 {
-                    _pendingPlayerMoves.Remove(id);
                     _spawnWorldById.Remove(id);
                     _originById.Remove(id);
                     _lastSeenById.Remove(id);
@@ -271,7 +277,6 @@ namespace AlbionDataHandlers.Handlers
 
                 foreach(var id in timeoutIds)
                 {
-                    _pendingPlayerMoves.Remove(id);
                     _spawnWorldById.Remove(id);
                     _originById.Remove(id);
                     _lastSeenById.Remove(id);
@@ -337,118 +342,17 @@ namespace AlbionDataHandlers.Handlers
             if (subtype != 1 && subtype != 3)
                 return false;
 
-            if (DecodePath01_Int1e7_1_9)
+            if (bytes.Length >= 17 && DecodePath06_Int1e7_9_13)
             {
-                float x = BitConverter.ToInt32(bytes, 1) / 10_000_000f;
-                float y = BitConverter.ToInt32(bytes, 9) / 10_000_000f;
+                float x = BitConverter.ToInt32(bytes, 9) / 10_000_000f;
+                float y = BitConverter.ToInt32(bytes, 13) / 10_000_000f;
                 if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
             }
 
-            if (DecodePath02_Int1e6_1_9)
+            if (bytes.Length >= 21 && DecodePath16_Float_9_17)
             {
-                float x = BitConverter.ToInt32(bytes, 1) / 1_000_000f;
-                float y = BitConverter.ToInt32(bytes, 9) / 1_000_000f;
-                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-            }
-
-            if (DecodePath03_Int1e5_1_9)
-            {
-                float x = BitConverter.ToInt32(bytes, 1) / 100_000f;
-                float y = BitConverter.ToInt32(bytes, 9) / 100_000f;
-                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-            }
-
-            if (DecodePath04_Int100_1_9)
-            {
-                float x = BitConverter.ToInt32(bytes, 1) / 100f;
-                float y = BitConverter.ToInt32(bytes, 9) / 100f;
-                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-            }
-
-            if (DecodePath05_Float_1_9)
-            {
-                float x = BitConverter.ToSingle(bytes, 1);
-                float y = BitConverter.ToSingle(bytes, 9);
-                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-            }
-
-            if (bytes.Length >= 17)
-            {
-                if (DecodePath06_Int1e7_9_13)
-                {
-                    float x = BitConverter.ToInt32(bytes, 9) / 10_000_000f;
-                    float y = BitConverter.ToInt32(bytes, 13) / 10_000_000f;
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (DecodePath07_Int1e6_9_13)
-                {
-                    float x = BitConverter.ToInt32(bytes, 9) / 1_000_000f;
-                    float y = BitConverter.ToInt32(bytes, 13) / 1_000_000f;
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (DecodePath08_Int1e5_9_13)
-                {
-                    float x = BitConverter.ToInt32(bytes, 9) / 100_000f;
-                    float y = BitConverter.ToInt32(bytes, 13) / 100_000f;
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (DecodePath09_Int100_9_13)
-                {
-                    float x = BitConverter.ToInt32(bytes, 9) / 100f;
-                    float y = BitConverter.ToInt32(bytes, 13) / 100f;
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (DecodePath10_Float_9_13)
-                {
-                    float x = BitConverter.ToSingle(bytes, 9);
-                    float y = BitConverter.ToSingle(bytes, 13);
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (bytes.Length >= 21 && DecodePath16_Float_9_17)
-                {
-                    float x = BitConverter.ToSingle(bytes, 9);
-                    float y = BitConverter.ToSingle(bytes, 17);
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (DecodePath11_XInt100YFloat_9_13)
-                {
-                    float x = BitConverter.ToInt32(bytes, 9) / 100f;
-                    float y = BitConverter.ToSingle(bytes, 13);
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-
-                if (DecodePath12_XFloatYInt100_9_13)
-                {
-                    float x = BitConverter.ToSingle(bytes, 9);
-                    float y = BitConverter.ToInt32(bytes, 13) / 100f;
-                    if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-                }
-            }
-
-            if (DecodePath13_Param4_5 && parameters.TryGetValue(4, out var p4) && parameters.TryGetValue(5, out var p5))
-            {
-                float x = GetFloatSafe(p4);
-                float y = GetFloatSafe(p5);
-                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-            }
-
-            if (DecodePath14_Param19_25 && parameters.TryGetValue(19, out var p19) && parameters.TryGetValue(25, out var p25))
-            {
-                float x = GetFloatSafe(p19);
-                float y = GetFloatSafe(p25);
-                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
-            }
-
-            if (DecodePath15_List0_1 && p1 is IList listRaw && listRaw.Count >= 2)
-            {
-                float x = GetFloatSafe(listRaw[0]);
-                float y = GetFloatSafe(listRaw[1]);
+                float x = BitConverter.ToSingle(bytes, 9);
+                float y = BitConverter.ToSingle(bytes, 17);
                 if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
             }
 
@@ -646,7 +550,7 @@ namespace AlbionDataHandlers.Handlers
             {
                 lock (_syncLock)
                 {
-                    _otherPlayersList.Clear(); _pendingPlayerMoves.Clear(); _spawnWorldById.Clear(); _originById.Clear();
+                    _otherPlayersList.Clear(); _spawnWorldById.Clear(); _originById.Clear();
                     _pendingLeaveById.Clear();
                     _localIdScores.Clear();
                     _localEntityId = LocalPlayerId;

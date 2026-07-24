@@ -117,6 +117,7 @@
     "Settings_EnableLog": "Сохранять игровые данные в лог",
     "Settings_SoundTitle": "Настройки звука и уведомлений",
     "Settings_EnableSound": "Проигрывать звук при врагах (Раннее предупреждение)",
+    "Settings_EnableToasts": "Включить всплывающие уведомления (Toast)",
     "Settings_HotkeyTitle": "Настройки горячих клавиш",
     "Settings_HotkeyMenu": "Скрыть/Показать меню: {0}",
     "Settings_HotkeyWait": "Нажмите клавишу... (ESC для отмены)",

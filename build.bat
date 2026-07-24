@@ -8,7 +8,7 @@ echo engellemek icin .NET'in native Single-File ozelligi kullaniliyor...
 echo.
 :: .NET Publish komutu ile tek bir exe oluşturma
 :: IncludeNativeLibrariesForSelfExtract=true komutu cimgui.dll gibi native eklentileri EXE icine gomer.
-dotnet publish Nightwatch.sln -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o "ReleaseBuild"
+dotnet publish Nightwatch\Nightwatch.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o "ReleaseBuildClean"
 echo.
 echo ===================================================
 echo BUILD TAMAMLANDI!

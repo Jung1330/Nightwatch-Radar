@@ -81,6 +81,7 @@ namespace Nightwatch.Managers
         {
             lock (_stateLock)
             {
+                buffer.Clear();
                 buffer.AddRange(_mobs);      // Gerçek moblar
                 buffer.AddRange(_debugMobs); // Simülatör mobları (Ezilmez)
             }
@@ -89,6 +90,7 @@ namespace Nightwatch.Managers
         {
             lock (_stateLock)
             {
+                buffer.Clear();
                 buffer.AddRange(_harvestables);      // Gerçek kaynaklar
                 buffer.AddRange(_debugHarvestables); // Simülatör kaynakları (Ezilmez)
             }
@@ -119,14 +121,6 @@ namespace Nightwatch.Managers
                 _localPlayerLerpedInitialized = false;
             }
         }
-        /* Eski yöntem
-        public void UpdateLocalPlayer(Player p)
-        {
-            _localPlayer.PositionX = p.PositionX;
-            _localPlayer.PositionY = p.PositionY;
-            _localPlayer.CurrentLerpedX = p.PositionX;
-            _localPlayer.CurrentLerpedY = p.PositionY;
-        }*/
 
         public void UpdateLocalPlayer(Player p)
         {
@@ -299,11 +293,32 @@ namespace Nightwatch.Managers
         // --- FPS DOSTU HIZLI MESAFE HESAPLAMA (KAREKÖK İPTAL EDİLDİ) ---
 
 
-        public void Update()
+        public void Update(float deltaTime = 0.016f)
         {
             lock (_stateLock)
             {
                 if (_localPlayer == null) return;
+
+                // Frame-by-frame exponential lerp smoothing
+                float lerpFactor = 1f - (float)Math.Exp(-15f * Math.Max(0.001f, deltaTime));
+
+                // Smooth local player lerp coordinates
+                _localPlayer.CurrentLerpedX += (_localPlayer.PositionX - _localPlayer.CurrentLerpedX) * lerpFactor;
+                _localPlayer.CurrentLerpedY += (_localPlayer.PositionY - _localPlayer.CurrentLerpedY) * lerpFactor;
+
+                // Smooth other players lerp coordinates
+                foreach (var p in _otherPlayers)
+                {
+                    p.CurrentLerpedX += (p.PositionX - p.CurrentLerpedX) * lerpFactor;
+                    p.CurrentLerpedY += (p.PositionY - p.CurrentLerpedY) * lerpFactor;
+                }
+
+                // Smooth mobs lerp coordinates
+                foreach (var m in _mobs)
+                {
+                    m.CurrentLerpedX += (m.PositionX - m.CurrentLerpedX) * lerpFactor;
+                    m.CurrentLerpedY += (m.PositionY - m.CurrentLerpedY) * lerpFactor;
+                }
 
                 float px = _localPlayer.PositionX;
                 float py = _localPlayer.PositionY;
@@ -367,6 +382,7 @@ namespace Nightwatch.Managers
                     PositionX = _localPlayer.PositionX,
                     PositionY = _localPlayer.PositionY,
                     CurrentLerpedX = _localPlayer.CurrentLerpedX,
+                    CurrentLerpedY = _localPlayer.CurrentLerpedY,
                     CurrentHealth = _localPlayer.CurrentHealth,
                     MaxHealth = _localPlayer.MaxHealth,
                     Equipment = _localPlayer.Equipment?.ToArray() ?? Array.Empty<int>()
@@ -413,68 +429,6 @@ namespace Nightwatch.Managers
             {
                 buffer.Clear();
                 buffer.AddRange(_otherPlayers);
-            }
-        }
-
-        public void RunComprehensiveDiagnosticTest()
-        {
-            lock (_stateLock)
-            {
-                _mobs.Clear();
-                _harvestables.Clear();
-                _otherPlayers.Clear();
-                _dungeons.Clear();
-                _debugMobs.Clear();
-                _debugHarvestables.Clear();
-
-                Random rnd = new Random();
-                float bx = _localPlayer.PositionX;
-                float by = _localPlayer.PositionY;
-                int idCounter = -1000;
-
-                // 1. Mobs (Bosses, Aspects, Mists, Normal, Drones)
-                int[] testMobTypes = { 1, 2, 3, 4, 18, 59, 102, 103, 104, 888, 889, 795, 2637, 2638 };
-                foreach (int t in testMobTypes)
-                {
-                    for (int e = 0; e <= 4; e++) // Enchants
-                    {
-                        float angle = (float)(rnd.NextDouble() * Math.PI * 2);
-                        float dist = 10f + (float)(rnd.NextDouble() * 30f);
-                        _debugMobs.Add(new Mob { Id = idCounter--, TypeId = t, EnchantmentLevel = e, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, CurrentLerpedX = bx + (float)Math.Cos(angle) * dist, CurrentLerpedY = by + (float)Math.Sin(angle) * dist, Name = $"Test Mob {t}.{e}" });
-                    }
-                }
-
-                // 2. Harvestables (T1-T8, Enchants 0-4, Hidden Chests)
-                int[] testResTypes = { 0, 1, 2, 3, 4, 5, 795, 798, 800 };
-                foreach (int t in testResTypes)
-                {
-                    for (int tier = 1; tier <= 8; tier++)
-                    {
-                        for (int e = 0; e <= 4; e++)
-                        {
-                            float angle = (float)(rnd.NextDouble() * Math.PI * 2);
-                            float dist = 10f + (float)(rnd.NextDouble() * 40f);
-                            _debugHarvestables.Add(new Harvestable { Id = idCounter--, Type = t, Tier = tier, EnchantmentLevel = e, Count = 5, Capacity = 5, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, CurrentLerpedX = bx + (float)Math.Cos(angle) * dist, CurrentLerpedY = by + (float)Math.Sin(angle) * dist });
-                        }
-                    }
-                }
-
-                // 3. Players
-                for (int i = 0; i < 20; i++)
-                {
-                    float angle = (float)(rnd.NextDouble() * Math.PI * 2);
-                    float dist = 5f + (float)(rnd.NextDouble() * 45f);
-                    _otherPlayers.Add(new Player { Id = idCounter--, Name = $"Player {i}", Guild = i % 2 == 0 ? "TestGuild" : "", Alliance = i % 4 == 0 ? "TEST" : "", CurrentHealth = rnd.Next(100, 2000), MaxHealth = 2000, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, CurrentLerpedX = bx + (float)Math.Cos(angle) * dist, CurrentLerpedY = by + (float)Math.Sin(angle) * dist, Equipment = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 } });
-                }
-
-                // 4. Dungeons
-                string[] dTypes = { "Solo", "Group", "Corrupted", "Hellgate", "Avalon" };
-                foreach (string dt in dTypes)
-                {
-                    float angle = (float)(rnd.NextDouble() * Math.PI * 2);
-                    float dist = 15f + (float)(rnd.NextDouble() * 50f);
-                    _dungeons.Add(new Dungeon { Id = idCounter--, Type = dt, PositionX = bx + (float)Math.Cos(angle) * dist, PositionY = by + (float)Math.Sin(angle) * dist, EnchantmentLevel = (byte)rnd.Next(0, 4) });
-                }
             }
         }
     }

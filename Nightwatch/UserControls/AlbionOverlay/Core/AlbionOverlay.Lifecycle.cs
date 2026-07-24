@@ -39,8 +39,11 @@ namespace Nightwatch
                 float fontSize = 16.0f;
 
                 // Eski font hafızasını serbest bırak (Memory Leak önleme)
-                if (_trRangesHandle.IsAllocated)
+                if (GCHandle.ToIntPtr(_trRangesHandle) != IntPtr.Zero && _trRangesHandle.IsAllocated)
+                {
                     _trRangesHandle.Free();
+                    _trRangesHandle = default;
+                }
 
                 switch (langCode)
                 {
@@ -107,8 +110,11 @@ namespace Nightwatch
 
             if (disposing)
             {
-                if (_trRangesHandle.IsAllocated)
+                if (GCHandle.ToIntPtr(_trRangesHandle) != IntPtr.Zero && _trRangesHandle.IsAllocated)
+                {
                     _trRangesHandle.Free();
+                    _trRangesHandle = default;
+                }
 
                 _trayContextMenu?.Dispose();
                 _trayIcon?.Dispose();

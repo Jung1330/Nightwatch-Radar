@@ -51,6 +51,7 @@ namespace Nightwatch
         public float TrackerLaserEndOffsetY { get; set; } = 0f;
 
         public bool EnableSoundAlerts { get; set; } = false;
+        public bool EnableToastAlerts { get; set; } = true;
         public bool StreamModuleEnabled { get; set; } = false;
 
         public List<int> CrownBlacklist { get; set; } = new List<int>();
@@ -100,7 +101,7 @@ namespace Nightwatch
         public bool ShowMobNames { get; set; } = true;
         public bool DebugConsoleLog { get; set; } = false;
 
-        public bool ShowPlayerList { get; set; } = true;
+        public bool ShowPlayerList { get; set; } = false;
         public bool PlayerListMoveable { get; set; } = false;
         public float PlayerListX { get; set; } = 300f;
         public float PlayerListY { get; set; } = 600f;
@@ -113,6 +114,7 @@ namespace Nightwatch
         public float WatermarkY { get; set; } = 100f;
         public bool ShowDangerCompass { get; set; } = true;
         public bool ShowEquipmentCards { get; set; } = true;
+        public bool DetailInfo { get; set; } = false;
         public bool ResourceTrackerOnlyMode { get; set; } = false;
         public bool ResourceShowOnlyEnchanted { get; set; } = false;
         public bool EquipmentCardsMoveable { get; set; } = false;
@@ -129,7 +131,7 @@ namespace Nightwatch
         public bool RadarMoveable { get; set; } = false;
         public float RadarSize { get; set; } = 400f;
 
-        public float Zoom { get; set; } = 1.0f;
+        public float Zoom { get; set; } = 2.50f;
         public float GlobalIconSize { get; set; } = 28.0f;
         public float BossIconSize { get; set; } = 36.0f;
         public float RenderDistance { get; set; } = 70.0f;

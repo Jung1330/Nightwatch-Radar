@@ -69,7 +69,7 @@ namespace Nightwatch
             }
 
             if (!_isSizeFixed) FixLayoutWait();
-            else if ((DateTime.UtcNow - _lastResolutionCheckTime).TotalSeconds >= 2)
+            else if ((DateTime.UtcNow - _lastResolutionCheckTime).TotalMilliseconds >= 250)
             {
                 _lastResolutionCheckTime = DateTime.UtcNow;
                 if (_cachedPrimaryScreenW != GetSystemMetrics(0) || _cachedPrimaryScreenH != GetSystemMetrics(1)) // SM_CXSCREEN = 0, SM_CYSCREEN = 1
@@ -100,7 +100,6 @@ namespace Nightwatch
 
 
                     // --- HARİTA TEMİZLEME (GHOST MOB FIX) ---
-                    _playerTrails.Clear();
                     _prevPlayerPos.Clear();
                     ClearImageCache();
                 }
@@ -199,7 +198,10 @@ namespace Nightwatch
 
                     var typeInfo = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
                     string un = (typeInfo?.UniqueName ?? m.Name ?? "").ToUpperInvariant();
-                    bool isBoss = (un.Contains("BOSS") || un.Contains("ASPECT") || un.Contains("TITAN") || un.Contains("GUARDIAN") || un.Contains("OLD_WHITE"))
+                    bool isBoss = (m.TypeId != 51900 && m.TypeId != 51800 && m.TypeId != 53000) && (
+                                      un.Contains("_BOSS") || un.EndsWith("BOSS") || un.StartsWith("BOSS_") || un.Contains("ASPECT") || un.Contains("TITAN") || un.Contains("GUARDIAN") || un.Contains("OLD_WHITE") 
+                                      || un.Contains("DREAD LORD") || un.Contains("OVERLORD") || un.Contains("DEMON PRINCE") 
+                                      || m.Rarity >= 3)
                                   && !_crownBlacklist.Contains(m.TypeId) && !un.Contains("TITANYUM");
                     if (isBoss) bossCount++;
                 }
@@ -239,7 +241,7 @@ namespace Nightwatch
                 }
             }
             // Toast: Yeni düşman görüldüğünde bildirim ekle
-            if (enemyCount > previousEnemyCount)
+            if (enemyCount > previousEnemyCount && _enableToastAlerts)
             {
                 int newOnes = enemyCount - previousEnemyCount;
                 string mapId = _gameStateManager.CurrentMapId ?? "0000";
@@ -304,7 +306,7 @@ namespace Nightwatch
             {
                 const float toastW = 320f, toastH = 45f, spacing = 10f, duration = 4.0f;
                 _toasts.RemoveAll(t => (DateTime.Now - t.time).TotalSeconds > duration);
-                if (_toasts.Count > 0)
+                if (_toasts.Count > 0 && !_hideAllMenus)
                 {
                     var fgDl = ImGui.GetForegroundDrawList();
                     for (int ti = 0; ti < _toasts.Count; ti++)
@@ -345,28 +347,6 @@ namespace Nightwatch
                     }
                 }
             }
-
-            // --- YAKLASAN DUSMAN YON GOSTERGESI (DANGER COMPASS) ---
-            // Yorum satırına alındı - Gereksiz çizim engellendi.
-            /*
-            if (_showDangerCompass && mainPlayer != null)
-            {
-                if (_cachedPrimaryScreenW == 0) _cachedPrimaryScreenW = GetSystemMetrics(SM_CXSCREEN);
-                if (_cachedPrimaryScreenH == 0) _cachedPrimaryScreenH = GetSystemMetrics(SM_CYSCREEN);
-                float scrW = _cachedPrimaryScreenW, scrH = _cachedPrimaryScreenH;
-                float dangerDistanceSq = (_renderDistance * 1.5f) * (_renderDistance * 1.5f);
-                float pulse = 0.70f + 0.30f * (float)Math.Sin(ImGui.GetTime() * 6.0);
-                var fgDl = ImGui.GetForegroundDrawList();
-                lock (_dataLock)
-                {
-                    foreach (var p in _playersBuffer)
-                    {
-                        // Konumlar XOR ile şifrelendiği için yaklaşma/ok çizimi iptal edildi.
-                        continue;
-                    }
-                }
-            }
-            */
 
             // 2. PLAYER LIST
             if (_showPlayerList && !_hideAllMenus && _playersBuffer.Count > 0)

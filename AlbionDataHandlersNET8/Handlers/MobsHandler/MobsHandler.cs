@@ -30,11 +30,14 @@ public class MobsHandler : IEventHandler
             case (int)EventCodes.MobChangeState:
                 HandleMobChangeState(parameters);
                 break;
-            case 525:
             case 530:
             case 532: // GÜNCELLEME: Yeni kafes / smuggler event kodu!
                 HandleWispCage(parameters);
                 break;
+            case 526: // CagedObjectStateUpdated (opened cages are removed)
+                HandleLeave(parameters);
+                break;
+            case 551: // NewHuntTrack (Güncel iz sürme)
             case 556:
             case 558: // GÜNCELLEME: Gerçek iz sürme (Track) paketleri bu kodla geliyor!
                 HandleHuntTrack(parameters);
@@ -45,8 +48,18 @@ public class MobsHandler : IEventHandler
             case 529:
                 HandleChestRarity(parameters);
                 break;
+            case 387: // NewLootChest (Güncel sandık)
+            case 388: // UpdateLootChest
             case 391:
+            case 393:
                 HandleLootChestSpawn(parameters);
+                break;
+            case 389: // LootChestOpened (Açılan sandıkları siliyoruz)
+                HandleLeave(parameters);
+                break;
+            case 394: // NewMistDungeonRoomMobSoul (Güncel Abbey heykelleri)
+            case 400:
+                HandleAbbeyStatueSpawn(parameters);
                 break;
         }
     }
@@ -324,8 +337,14 @@ public class MobsHandler : IEventHandler
             if (id == 0) return;
 
             string name = EventHandlerUtils.ExtractValue<string>(parameters, 4) ?? "Caged Object";
+            string uName = name.ToUpperInvariant();
+            if (name != "Caged Object" && !uName.Contains("CAGE") && !uName.Contains("WISP") && !uName.Contains("SMUGGLER"))
+                return;
             float[] pos = null;
-            if (parameters.TryGetValue(2, out var posObj))
+            if (!parameters.TryGetValue(2, out var posObj))
+                parameters.TryGetValue(1, out posObj);
+
+            if (posObj != null)
             {
                 if (posObj is float[] fArr) pos = fArr;
                 else if (posObj is IList<float> list) pos = new float[] { list[0], list[1] };
@@ -490,7 +509,6 @@ public class MobsHandler : IEventHandler
                 if (existingMob != null)
                 {
                     existingMob.Rarity = rarity;
-                    existingMob.TypeId = 51800;
                     if (unlockTicks > 0)
                     {
                         existingMob.UnlockTicks = unlockTicks;
@@ -550,15 +568,49 @@ public class MobsHandler : IEventHandler
                 }
             }
 
-            int rarity = 1;
+            long unlockTicks = 0;
+            if (parameters.TryGetValue(7, out var ticksObj))
+            {
+                if (ticksObj is long l) unlockTicks = l;
+                else if (ticksObj is IConvertible ic) unlockTicks = Convert.ToInt64(ic);
+            }
+
+            int rarity = 0;
+            if (parameters.TryGetValue(19, out var p19) && p19 != null)
+            {
+                int rVal = GetIntSafe(p19);
+                if (rVal >= 1 && rVal <= 4) rarity = rVal;
+            }
+
             if (chestName != null)
             {
                 string lower = chestName.ToLowerInvariant();
-                if (lower.Contains("legendary") || lower.Contains("yellow")) rarity = 4;
-                else if (lower.Contains("rare") || lower.Contains("purple")) rarity = 3;
-                else if (lower.Contains("uncommon") || lower.Contains("blue")) rarity = 2;
-                else if (lower.Contains("standard") || lower.Contains("green")) rarity = 1;
-                else rarity = 0;
+                int parsedRarity = -1;
+
+                // Sadece GERÇEK nadirlik kelimelerine bak (01/02 camp numaraları veya yeşil harita isimleri aldanmasın!)
+                if (lower.Contains("legendary")) parsedRarity = 4;
+                else if (lower.Contains("epic")) parsedRarity = 3;
+                else if (lower.Contains("rare") && !lower.Contains("treasure")) parsedRarity = 2;
+                else if (lower.Contains("uncommon")) parsedRarity = 1;
+                else if (lower.Contains("standard") || lower.Contains("common")) parsedRarity = 0;
+
+                if (parsedRarity != -1)
+                {
+                    rarity = parsedRarity;
+                }
+                else if (rarity == 0)
+                {
+                    if (parameters.TryGetValue(31, out var p31Obj) && p31Obj != null)
+                    {
+                        int p31 = GetIntSafe(p31Obj);
+                        if (p31 >= 1 && p31 <= 4) rarity = p31;
+                    }
+                    else if (parameters.TryGetValue(5, out var p5Obj) && p5Obj != null)
+                    {
+                        int p5 = GetIntSafe(p5Obj);
+                        if (p5 >= 1 && p5 <= 4) rarity = p5;
+                    }
+                }
             }
 
             lock (_lockObject)
@@ -573,6 +625,10 @@ public class MobsHandler : IEventHandler
                     existingMob.TypeId = 51900;
                     existingMob.Name = chestName;
                     existingMob.Rarity = rarity;
+                    if (unlockTicks > 0)
+                    {
+                        existingMob.UnlockTicks = unlockTicks;
+                    }
                 }
                 else
                 {
@@ -588,6 +644,64 @@ public class MobsHandler : IEventHandler
                         EnchantmentLevel = 0,
                         NetworkTier = 0,
                         Rarity = rarity,
+                        UnlockTicks = unlockTicks
+                    };
+                    _mobs.Add(mob);
+                }
+                Mobs.OnNext(_mobs);
+            }
+        }
+        catch { }
+    }
+
+    private void HandleAbbeyStatueSpawn(Dictionary<byte, object> parameters)
+    {
+        try
+        {
+            if (!parameters.TryGetValue(0, out var idObj)) return;
+            int id = GetIntSafe(idObj);
+            if (id == 0) return;
+
+            int statueTypeId = EventHandlerUtils.ExtractValue<int>(parameters, 4, 0);
+
+            float[] pos = null;
+            if (parameters.TryGetValue(2, out var posObj))
+            {
+                if (posObj is float[] fArr) pos = fArr;
+                else if (posObj is IList<float> list) pos = new float[] { list[0], list[1] };
+                else if (posObj is System.Collections.IList list2) pos = new float[] { Convert.ToSingle(list2[0]), Convert.ToSingle(list2[1]) };
+            }
+
+            if (pos == null || pos.Length < 2) return;
+
+            string statueName = $"Statue:{statueTypeId}";
+
+            lock (_lockObject)
+            {
+                var existingMob = _mobs.FirstOrDefault(m => m.Id == id);
+                if (existingMob != null)
+                {
+                    existingMob.PositionX = pos[0];
+                    existingMob.PositionY = pos[1];
+                    existingMob.CurrentLerpedX = pos[0];
+                    existingMob.CurrentLerpedY = pos[1];
+                    existingMob.TypeId = 52000;
+                    existingMob.Name = statueName;
+                }
+                else
+                {
+                    var mob = new Mob
+                    {
+                        Id = id,
+                        TypeId = 52000,
+                        Name = statueName,
+                        PositionX = pos[0],
+                        PositionY = pos[1],
+                        CurrentLerpedX = pos[0],
+                        CurrentLerpedY = pos[1],
+                        EnchantmentLevel = 0,
+                        NetworkTier = 0,
+                        Rarity = 0,
                         UnlockTicks = 0
                     };
                     _mobs.Add(mob);

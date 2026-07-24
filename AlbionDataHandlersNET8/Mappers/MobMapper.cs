@@ -10,22 +10,9 @@ public class MobMapper
     private static MobMapper? _instance;
     public static MobMapper Instance => _instance ??= new MobMapper(GetDefaultLanguagePath());
 
-    // Sistem dilini kullanarak doğru JSON dosyasını seç
     private static string GetDefaultLanguagePath()
     {
-        // Sistem dilini al (kısaltması)
-        string cultureName = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToUpperInvariant();
-
-        // Desteklenen diller: TR, EN, RU, ZH
-        string lang = cultureName switch
-        {
-            "TR" => "TR",
-            "RU" => "RU",
-            "ZH" => "ZH",
-            _ => "EN"  // Varsayılan: İngilizce
-        };
-
-        return $"Assets/Helper/mobs_{lang}_min.json";
+        return "Assets/Helper/mobs_EN_min.json";
     }
 
     private Dictionary<int, MobTypeInfo> TypeMap { get; set; } = new Dictionary<int, MobTypeInfo>();

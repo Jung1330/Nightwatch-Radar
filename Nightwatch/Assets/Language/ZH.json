@@ -117,6 +117,7 @@
     "Settings_EnableLog": "将游戏数据保存到日志",
     "Settings_SoundTitle": "声音与警报设置",
     "Settings_EnableSound": "遇敌播放声音（早期预警）",
+    "Settings_EnableToasts": "启用气泡通知 (Toast)",
     "Settings_HotkeyTitle": "快捷键设置",
     "Settings_HotkeyMenu": "显示/隐藏菜单：{0}",
     "Settings_HotkeyWait": "按一个键...（按 ESC 取消）",

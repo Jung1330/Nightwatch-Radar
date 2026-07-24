@@ -68,6 +68,7 @@ namespace Nightwatch
             MentalityTheme.GradientSeparator();
             // MentalityTheme.AnimatedToggle(Lang.Get("Settings_DangerAlarm") ?? "Danger Compass", ref _showDangerCompass);
             MentalityTheme.AnimatedToggle(Lang.Get("Settings_EnableSound") ?? "Enable Sound Alerts", ref _enableSoundAlerts);
+            MentalityTheme.AnimatedToggle(Lang.Get("Settings_EnableToasts") ?? "Enable Toast Alerts", ref _enableToastAlerts);
             
             MentalityTheme.EndCard();
 
@@ -87,7 +88,7 @@ namespace Nightwatch
             int prevLangIdx = _selectedLangIndex;
             if (ImGui.Combo("##LangSettings", ref _selectedLangIndex, _languages, _languages.Length))
             {
-                string newLang = _selectedLangIndex switch { 0 => "TR", 1 => "EN", 2 => "RU", 3 => "ZH", _ => "TR" };
+                string newLang = _selectedLangIndex switch { 0 => "TR", 1 => "EN", 2 => "RU", 3 => "ZH", _ => "EN" };
 
                 Lang.LoadLanguage(newLang);
                 ApplyLanguageFont(newLang);

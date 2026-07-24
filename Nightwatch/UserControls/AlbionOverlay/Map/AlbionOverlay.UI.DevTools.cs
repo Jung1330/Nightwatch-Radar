@@ -21,8 +21,6 @@ namespace Nightwatch
 {
     public partial class AlbionOverlay
     {
-        private int _devHighlightEntityId = -1;
-
         private void RenderDevToolsTab()
         {
                     if (ImGui.BeginTabBar("DevToolsTabs"))
@@ -297,6 +295,7 @@ namespace Nightwatch
                         {
                             if (ImGui.BeginTabItem("Developer"))
                             {
+                                ImGui.Checkbox("DetailInfo", ref _detailInfo);
                                 ImGui.Spacing();
                                 if (ImGui.TreeNodeEx("Development & Debugging", ImGuiTreeNodeFlags.None))
                                 {
@@ -1800,7 +1799,7 @@ namespace Nightwatch
         {
             string upper = mobName.ToUpperInvariant();
 
-            if (upper.Contains("CRYSTAL") || upper.Contains("SPIDER") || upper.Contains("KRİSTAL") || upper.Contains("KRISTAL") || upper.Contains("ÖRÜMCEK"))
+            if (upper.Contains("CRYSTAL") || upper.Contains("SPIDER") || upper.Contains("KR\u0130STAL") || upper.Contains("KRISTAL") || upper.Contains("\u00d6R\u00dcMCEK") || upper.Contains("ORUMCEK"))
                 return "Crystals";
             if (upper.Contains("DRONE") || upper.Contains("SNIFFER") ||
                 upper.Contains("GRIFFIN") || upper.Contains("FEY") || upper.Contains("FAIRY") ||
@@ -1815,6 +1814,3 @@ namespace Nightwatch
         }
     }
 }
-
-
-

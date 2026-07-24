@@ -19,4 +19,26 @@ public class Mob : InterpolatableEntity
     public TierLevels Tier { get; set; }
     public MobTypes Type { get; set; }
     public long UnlockTicks { get; set; }
+
+    private string _cleanDisplayName = string.Empty;
+    public string CleanDisplayName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_cleanDisplayName))
+            {
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    _cleanDisplayName = Name.Replace("Mob ", "").Replace("Enemy ", "").Trim();
+                    if (string.IsNullOrEmpty(_cleanDisplayName)) _cleanDisplayName = "Unknown";
+                }
+                else
+                {
+                    _cleanDisplayName = $"TypeId:{TypeId}";
+                }
+            }
+            return _cleanDisplayName;
+        }
+        set => _cleanDisplayName = value;
+    }
 }

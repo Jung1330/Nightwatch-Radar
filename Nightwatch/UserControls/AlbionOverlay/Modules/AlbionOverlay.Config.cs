@@ -53,7 +53,7 @@ namespace Nightwatch
                 {
                     LastMapIDConfig = _gameStateManager.CurrentMapId ?? "0000",
 
-                    Language = _selectedLangIndex switch { 0 => "TR", 1 => "EN", 2 => "RU", 3 => "ZH", _ => "TR" },
+                    Language = _selectedLangIndex switch { 0 => "TR", 1 => "EN", 2 => "RU", 3 => "ZH", _ => "EN" },
 
                     ShowMapBackground = _showMapBackground,
                     MapOpacity = _mapOpacity,
@@ -62,6 +62,7 @@ namespace Nightwatch
                     SelectedTheme = _selectedTheme,
 
                     EnableSoundAlerts = _enableSoundAlerts,
+                    EnableToastAlerts = _enableToastAlerts,
                     StreamModuleEnabled = _streamModuleEnabled,
 
                     TrackerEnableResources = _trackerEnableResources,
@@ -118,6 +119,7 @@ namespace Nightwatch
                     ShowNormalMobs = _showNormalMobs,
                     ShowBosses = _showBosses,
                     ShowHiddenChests = _showHiddenChests,
+                    ShowChestIds = _showChestIds,
                     ShowGuild = _showGuild,
                     ShowPlayerName = _showPlayerName,
                     ShowPlayerCount = _showPlayerCount,
@@ -150,6 +152,7 @@ namespace Nightwatch
                     ShowItemIds = _showItemIds,
                     ShowDangerCompass = _showDangerCompass,
                     ShowEquipmentCards = _showEquipmentCards,
+                    DetailInfo = _detailInfo,
                     ResourceTrackerOnlyMode = _resourceTrackerOnlyMode,
                     ResourceShowOnlyEnchanted = _resourceShowOnlyEnchanted,
                     EquipmentCardsMoveable = _equipmentCardsMoveable,
@@ -223,6 +226,7 @@ namespace Nightwatch
                 _showEnemyMobs = cfg.ShowEnemyMobs; 
                 _showBosses = cfg.ShowBosses;
                 _showHiddenChests = cfg.ShowHiddenChests;
+                _showChestIds = cfg.ShowChestIds;
                 _showResources = cfg.ShowResources;
                 _showMists = cfg.ShowMists;
                 _showBetaTracks = cfg.ShowBetaTracks;
@@ -285,7 +289,8 @@ namespace Nightwatch
                     CheckAndLoadDatabase();
                 }
                 _showPlayerList = cfg.ShowPlayerList; _playerListMoveable = cfg.PlayerListMoveable; _playerListX = cfg.PlayerListX; _playerListY = cfg.PlayerListY;
-                _streamModuleEnabled = cfg.StreamModuleEnabled; _showDangerCompass = cfg.ShowDangerCompass; _showEquipmentCards = cfg.ShowEquipmentCards;
+                _streamModuleEnabled = cfg.StreamModuleEnabled; _showDangerCompass = cfg.ShowDangerCompass; _showEquipmentCards = cfg.ShowEquipmentCards; _detailInfo = cfg.DetailInfo;
+                _enableToastAlerts = cfg.EnableToastAlerts;
                 _resourceTrackerOnlyMode = cfg.ResourceTrackerOnlyMode;
                 _resourceShowOnlyEnchanted = cfg.ResourceShowOnlyEnchanted;
                 _equipmentCardsMoveable = cfg.EquipmentCardsMoveable;

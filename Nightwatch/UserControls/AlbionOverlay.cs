@@ -78,6 +78,10 @@ namespace Nightwatch
                     string startupLang = File.ReadAllText(langPath).Trim().ToUpper();
                     Lang.LoadLanguage(startupLang);
                 }
+                else
+                {
+                    Lang.LoadLanguage("EN");
+                }
             }
             catch (Exception ex) { Log($"[HATA] Dil yüklenemedi: {ex.Message}", Nightwatch.LogLevel.Error); }
 
@@ -115,6 +119,7 @@ namespace Nightwatch
 
             #region Asset Resim Yolları
             _crownImagePath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "crown.png");
+            _cageImagePath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "cage.png");
             _spiderImagePath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "CRYSTALSPIDER.png");
             _aspectBossIconPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "boss_icon.png");
             _feyDragonPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "FAIRYDRAGON.png");

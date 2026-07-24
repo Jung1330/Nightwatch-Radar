@@ -13,13 +13,14 @@ namespace AlbionDataHandlers.Handlers.DungeonHandler
 
         public void OnEvent(EventCodes eventCode, Dictionary<byte, object> parameters)
         {
-            if (eventCode == EventCodes.NewRandomDungeonExit || eventCode == EventCodes.NewMistsDungeonExit || eventCode == EventCodes.RandomDungeonPositionInfo || (int)eventCode == 325)
+            int code = (int)eventCode;
+            if (eventCode == EventCodes.NewRandomDungeonExit || eventCode == EventCodes.NewMistsDungeonExit || eventCode == EventCodes.RandomDungeonPositionInfo || code == 323 || code == 325 || code == 515 || code == 520 || code == 525 || code == 535)
             {
                 HandleDungeon(parameters, eventCode);
             }
-            else if ((int)eventCode == 521 || (int)eventCode == 522)
+            else if (code == 521 || code == 522)
             {
-                HandleExitPortal(parameters, (int)eventCode);
+                HandleExitPortal(parameters, code);
             }
             else if (eventCode == EventCodes.Leave)
             {
@@ -52,18 +53,50 @@ namespace AlbionDataHandlers.Handlers.DungeonHandler
                 }
                 string rawType = parameters.ContainsKey(3) ? parameters[3].ToString().ToUpper() : "";
                 string prefab = parameters.ContainsKey(5) ? parameters[5].ToString() : "";
+                string tag15 = parameters.ContainsKey(15) ? parameters[15].ToString().ToUpper() : "";
                 byte enchant = parameters.ContainsKey(8) ? Convert.ToByte(parameters[8]) : (byte)0;
                 int groupSize = parameters.ContainsKey(17) ? Convert.ToInt32(parameters[17]) : 1;
 
-                string type = "1";
-                if (rawType.Contains("BOSSROOM_SOLO") || rawType.Contains("BOSSLAIR_SOLO")) type = "5";
-                else if (rawType.Contains("BOSSROOM") || rawType.Contains("BOSSLAIR")) type = "6";
-                else if (rawType.Contains("MIST_DUNGEON_ENTRANCE") || rawType.Contains("ABBEY") || prefab.Contains("MIST") || prefab.Contains("WISP")) type = "7";
-                else if (rawType.Contains("CORRUPT")) type = "3";
-                else if (rawType.Contains("HELLGATE")) type = "4";
-                else if (prefab.Contains("ELITE") || prefab.Contains("AVALON")) type = "8";
-                else if (rawType.Contains("SOLO")) type = "1";
-                else type = "2";
+                string prefabUpper = prefab.ToUpper();
+                string type = "";
+
+                if (rawType.Contains("MIST_DUNGEON_ENTRANCE") || rawType.Contains("ABBEY") || prefabUpper.Contains("ABBEY") || prefabUpper.Contains("MIST") || prefabUpper.Contains("WISP") || tag15.Contains("MIST") || tag15.Contains("ABBEY"))
+                {
+                    type = "7";
+                }
+                else if (rawType.Contains("BOSSROOM_SOLO") || rawType.Contains("BOSSLAIR_SOLO"))
+                {
+                    type = "5";
+                }
+                else if (rawType.Contains("BOSSROOM") || rawType.Contains("BOSSLAIR"))
+                {
+                    type = "6";
+                }
+                else if (rawType.Contains("CORRUPT") || prefabUpper.Contains("CORRUPT"))
+                {
+                    type = "3";
+                }
+                else if (rawType.Contains("HELLGATE") || prefabUpper.Contains("HELLGATE"))
+                {
+                    type = "4";
+                }
+                else if (prefabUpper.Contains("ELITE") || prefabUpper.Contains("AVALON") || rawType.Contains("AVALON"))
+                {
+                    type = "8";
+                }
+                else if (rawType.Contains("SOLO") || prefabUpper.Contains("SOLO"))
+                {
+                    type = "1";
+                }
+                else if (rawType.Contains("GROUP") || prefabUpper.Contains("GROUP") || rawType.Contains("EXPEDITION") || (rawType.Contains("DUNGEON") && !rawType.Contains("MIST")))
+                {
+                    type = "2";
+                }
+                else
+                {
+                    // Ağaç, taş ve çevre objelerini kesinlikle zindan sanıp çizme!
+                    return;
+                }
 
                 if (id != 0 && pos != null && pos.Length >= 2)
                 {

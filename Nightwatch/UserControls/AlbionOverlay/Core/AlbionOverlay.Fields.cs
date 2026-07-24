@@ -123,6 +123,7 @@ namespace Nightwatch
         private int _selectedTheme = 0;
         //Resource Label
         public bool _showResourceLabels = true;
+        private bool _detailInfo = false;
         //Raw
         private static bool _autoRawDump = false;
         private DateTime _lastAutoRawDumpTime = DateTime.MinValue;
@@ -140,9 +141,6 @@ namespace Nightwatch
 
         // Oyuncu hareket yönü takibi: playerId -> (prevX, prevY, prevDistToLocal)
         private readonly Dictionary<int, (float x, float y, float dist)> _prevPlayerPos = new();
-        // Hareket izi: playerId -> son N pozisyon (dünya koordinatları)
-        private const int TrailMaxPoints = 10;
-        private readonly Dictionary<int, Queue<(float x, float y)>> _playerTrails = new();
         // Waypoint sistemi: null = işaret yok
         private (float x, float y)? _waypoint = null;
 
@@ -177,26 +175,6 @@ namespace Nightwatch
         private int _parserMobRenameTargetId = -1;
         private string _parserMobRenameInput = "";
 
-        private sealed class PointerCandidateStat
-        {
-            public int Hits { get; set; }
-            public float BestDistance { get; set; } = float.MaxValue;
-            public float LastDistance { get; set; }
-            public float LastX { get; set; }
-            public float LastY { get; set; }
-            public DateTime LastSeen { get; set; } = DateTime.MinValue;
-            public string LastSource { get; set; } = "";
-        }
-
-        private bool _pointerScannerEnabled = false;
-        private float _pointerScannerMaxDistance = 40f;
-        private int _pointerScannerMaxOffset = 24;
-        private float _pointerScannerIntervalMs = 250f;
-        private DateTime _pointerScannerLastRun = DateTime.MinValue;
-        private bool _pointerScannerUseManualTarget = false;
-        private float _pointerScannerManualTargetX = 0f;
-        private float _pointerScannerManualTargetY = 0f;
-        private readonly Dictionary<string, PointerCandidateStat> _pointerScannerCandidates = new();
         private int _manualTargetUdpPortInput = 5056;
         private string _lastParserDumpPath = string.Empty;
 
@@ -206,7 +184,7 @@ namespace Nightwatch
         private string _lastTabLanguage = null; // Performans: _tabs'ı sadece dil değişince yeniler
         private volatile bool _hideSettingsWindow = false;
         public Action OnLoginSuccess;
-        private int _selectedLangIndex = 0; // 0 = TR, 1 = EN, 2 = RU, 3 = ZH
+        private int _selectedLangIndex = 1; // 0 = TR, 1 = EN, 2 = RU, 3 = ZH
         private string[] _languages = { "Türkçe (TR)", "English (EN)", "Russian (RU)", "Chinese (ZH)" };
 
         // Device (Adaptör) Sekmesi Değişkenleri
@@ -309,19 +287,29 @@ namespace Nightwatch
         private bool _showNormalMobs = true;
         private bool _showBosses = true;
         private bool _showHiddenChests = true;
+        private bool _showChestIds = false;
+        private static readonly HashSet<int> _hiddenChestIds = new HashSet<int> { 795, 798, 800, 2637 };
         private bool _showGuild = true;
+
+        private bool IsWhitelisted(Player p, Player mainPlayer)
+        {
+            if (p == null) return false;
+            if (mainPlayer != null && p.Id == mainPlayer.Id) return true;
+            return _whitelist.Contains(p.Name);
+        }
         private bool _showPlayerName = true;
         private bool _showPlayerCount = true;
         private bool _showMobNames = true;
-        private int _developer = 1;  // Developer tabs: 0 = hidden, 1 = visible
+        private int _developer = 0;  // Developer tabs: 0 = hidden, 1 = visible
         private bool _debugConsoleLog = false;
         private bool _debugMobs = false;
         private bool _debugStaticResources = false;
         private bool _enableLogging = false;
 
         private bool _enableSoundAlerts = true;
+        private bool _enableToastAlerts = true;
 
-        // StreamModule Ã¢â‚¬â€ OBS / ekran yakalamadan gizleme
+        // StreamModule OBS / ekran yakalamadan gizleme
         private bool _streamModuleEnabled = false;
 
         private bool _showWatermark = true;
@@ -335,7 +323,7 @@ namespace Nightwatch
         private float _radarWinY = 300f;
         private float _radarSize = 400f;
 
-        private float _zoom = 1.0f;
+        private float _zoom = 2.50f;
         private float _radarOffsetX = 0.0f;
         private float _radarOffsetY = 0.0f;
         private float _globalIconSize = 28.0f;
@@ -347,7 +335,7 @@ namespace Nightwatch
         private bool _swapXY = true;
         private float _radarRotation = -45.0f;
 
-        private bool _showPlayerList = true;
+        private bool _showPlayerList = false;
         private bool _playerListMoveable = false;
         private float _playerListX = 300f;
         private float _playerListY = 600f;
@@ -388,7 +376,7 @@ namespace Nightwatch
 
         // Assets
         private string _crownImagePath;
-        private string _crystalSpiderImagePath;
+        private string _cageImagePath;
         private string _aspectBossIconPath;
         private string _spiderImagePath;
         private string[] _mistImagePaths = new string[5];

@@ -22,7 +22,7 @@ namespace Nightwatch
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        // Main metodunun EN BAÞINA, her þeyden önce
+        // Main metodunun EN BAï¿½INA, her ï¿½eyden ï¿½nce
         [DllImport("SDL3.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern bool SDL_SetHint(string name, string value);
 
@@ -44,11 +44,11 @@ namespace Nightwatch
             ErrorCodeSink.Install();
 
 
-            // Sonra Main içinde ilk satýr olarak:
+            // Sonra Main iï¿½inde ilk satï¿½r olarak:
             TrySetSdlHint("SDL_WINDOW_UTILITY", "0");
             TrySetSdlHint("SDL_HINT_WINDOW_NO_TASKBAR", "0");
             // En basta sadece temel dili Ingilizce veya TR olarak yukle (Login ekrani icin)
-            Lang.LoadLanguage("TR");
+            Lang.LoadLanguage("EN");
             bool isRunningAsAdmin = IsAdministrator();
 
             try { SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2); }
@@ -65,7 +65,7 @@ namespace Nightwatch
                 // ========================================================
                 RenkliYaz("KeyAuth Sunucusuna Baglaniliyor...", ConsoleColor.Yellow);
                 KeyAuthManager.Init();
-                RenkliYaz("Giriþ bekleniyor...", ConsoleColor.Cyan);
+                RenkliYaz("Giriï¿½ bekleniyor...", ConsoleColor.Cyan);
 
                 // ========================================================
                 // --- SINYAL BEKLEYICI: LOGIN BASARILI OLUNCA CALISACAK KISIM ---
@@ -166,11 +166,11 @@ namespace Nightwatch
             }
             catch (DllNotFoundException)
             {
-                // SDL yüklenmeden önce hint set edilmek istenirse sessiz geç.
+                // SDL yï¿½klenmeden ï¿½nce hint set edilmek istenirse sessiz geï¿½.
             }
             catch (EntryPointNotFoundException)
             {
-                // SDL sürümü ilgili hint API'sini desteklemiyorsa sessiz geç.
+                // SDL sï¿½rï¿½mï¿½ ilgili hint API'sini desteklemiyorsa sessiz geï¿½.
             }
         }
 
