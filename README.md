@@ -11,7 +11,7 @@
 [![Windows](https://img.shields.io/badge/Windows_10%2F11-0a0a0a?style=for-the-badge&logo=windows11&logoColor=6C5CE7)](https://github.com/Jung1330/Nightwatch-Radar)
 [![C#](https://img.shields.io/badge/C%23_.NET4/.NET_8-0a0a0a?style=for-the-badge&logo=dotnet&logoColor=A29BFE)](https://dotnet.microsoft.com)
 [![ImGui](https://img.shields.io/badge/Dear_ImGui-0a0a0a?style=for-the-badge&logo=imgui&logoColor=00CEC9)](https://github.com/ocornut/imgui)
-[![Version](https://img.shields.io/badge/v1.5.2-0a0a0a?style=for-the-badge&logoColor=white)](#)
+[![Version](https://img.shields.io/badge/v1.5.4-0a0a0a?style=for-the-badge&logoColor=white)](#)
 [![License](https://img.shields.io/badge/MIT-0a0a0a?style=for-the-badge)](#)
 
 <br/>
