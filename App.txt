@@ -1,12 +1,17 @@
-Version Check [V1.5.4] - 24.07.2026 :
+What's New in v1.5.5
 
-DEV Report : Please Check Github Issues for Known Issues.
+New Features:
+Avalon Maps: Roads of Avalon maps are now fully integrated and visible on the radar.
+Compass Directions: Added compass directions to the overlay interface for better navigation (#26).
 
-+ Whole problems are solved,
-+ "Disable Toast" settings active,
-+ You can view the chests at the moment (the rarity level of chests, coffins, etc. is not displayed.)
+Bug Fixes & Refinements:
+Mob Classification: Fixed a parsing error where the "Chestnut Spirit" mob was incorrectly identified and displayed as a "Chest".
+Mist Cages: Resolved detection and display issues related to Mist Cages.
+Tracker UI: Fixed a rendering bug that caused Trackers to mistakenly draw a Crown icon on the overlay. 
 
-TIP: If you find any bug, please report them on Github Issues.
-Dev : Please give feedback for UI Design
+Work in Progress (To-Do)
+Packet-Based Mob Death Tracking: Currently developing a system to pinpoint a mob's exact death location based on incoming packet data. The goal is to successfully track mob health and death events even when player packets are out of range.(#23)
 
-DEV Report : Please Check Github Issues for Known Issues.  
+> Developer Feedback Request*
+> We would love to get your feedback on the new Avalon Maps and Compass features!
+> If you encounter any bugs, please report them on GitHub Issues page
