@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jung1330.github.io/Nightwatch-Radar/sitemap.xml
