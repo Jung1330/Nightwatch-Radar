@@ -1,0 +1,13 @@
+v1.5.5 Yenilikleri
+
++ Avalon Yolları (Roads of Avalon) haritaları tamamen entegre edildi ve radarda görünüyor.
++ Arayüze pusula yönleri eklendi (#26).
++ Oyundan çıkarılan 106 yeni harita eklendi: adalar, arenalar, Crystal Realm, Conqueror's Hall.
++ 51 harita daha yüksek çözünürlüğe (1024x1024) yükseltildi.
++ Mists zindanı (Knightfall Abbey) artık gerçek haritasıyla gösteriliyor.
+~ "Chestnut Spirit" mob'u yanlışlıkla "Chest" olarak görünüyordu, düzeltildi.
+~ Mist kafeslerinin (Mist Cages) tespit ve görünüm sorunları giderildi.
+~ Tracker'ların yanlışlıkla Crown (taç) ikonu çizmesi düzeltildi.
+> Avalon haritaları ve pusula hakkındaki geri bildirimlerinizi GitHub Issues üzerinden bekliyoruz.
+
+Hataları GitHub Issues üzerinden bildirebilirsiniz. Geri bildiriminiz için teşekkürler!
