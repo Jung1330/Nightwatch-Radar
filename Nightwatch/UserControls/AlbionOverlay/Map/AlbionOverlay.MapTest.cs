@@ -22,8 +22,7 @@ namespace Nightwatch
         private bool _invertMapV = false;         // V eksenini ters çevir (test amaçlı)
 
         /// <summary>
-        /// zones.json'dan bounds verisini okuyarak _mapSizesV2 ve _mapCentersV2'yi doldurur.
-        /// OpenRadar'ın ZonesDatabase.js mantığıyla birebir aynı hesap:
+        /// zones.json'dan bounds verisini okuyarak _mapSizesV2 ve _mapCentersV2'yi doldurur
         ///   extent = Math.max(bounds.max[0] - bounds.min[0], bounds.max[1] - bounds.min[1])
         ///   center = { x: (bounds.min[0] + bounds.max[0]) / 2, y: (bounds.min[1] + bounds.max[1]) / 2 }
         /// </summary>
