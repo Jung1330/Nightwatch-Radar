@@ -238,5 +238,17 @@
     "Rarity_Uncommon": "Необычный",
     "Rarity_Rare": "Редкий",
     "Rarity_Epic": "Эпический",
-    "Rarity_Legendary": "Легендарный"
+    "Rarity_Legendary": "Легендарный",
+  "Device_UpdatesInfo": "Обновления и текущая информация",
+  "Device_AnnouncementLoading": "Пожалуйста, подождите...",
+  "Device_AnnouncementError": "Проверьте подключение к сети",
+  "Settings_MapTestTitle": "--- Ğ¢Ğ•Ğ¡Ğ¢ ĞšĞĞ Ğ¢ V2 ---",
+  "Settings_MapSystemV2": "Ğ¡Ğ¸ÑÑ‚ĞµĞ¼Ğ° ĞºĞ°Ñ€Ñ‚ V2 (Ğ³Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹)",
+  "Settings_InvertMapV": "Ğ˜Ğ½Ğ²ĞµÑ€ÑĞ¸Ñ Ğ¾ÑĞ¸ V",
+  "Settings_MapSystemStatus": "Ğ¡Ğ¸ÑÑ‚ĞµĞ¼Ğ°: {0} | Ğ˜Ğ½Ğ²ĞµÑ€ÑĞ¸Ñ V: {1}",
+  "Settings_MapSystemV2Value": "V2 (Ğ³Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹)",
+  "Settings_MapSystemV1Value": "V1 (ÑÑ‚Ğ°Ñ€Ğ°Ñ)",
+  "Common_Yes": "Ğ”Ğ°",
+  "Common_No": "ĞĞµÑ‚",
+  "AllLogInfo": "AllLogInfo (записывать все логи в файлы)"
 }

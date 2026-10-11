@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -139,13 +139,6 @@ public static class PlayerParserTraceStore
             [1] = "CurrentPos",
             [3] = "TargetPos",
             [253] = "OperationCode(Expanded)"
-        },
-        [RequestCodes.MoveAlt] = new Dictionary<byte, string>
-        {
-            [0] = "EntityId(Optional)",
-            [1] = "CurrentPos",
-            [3] = "TargetPos",
-            [253] = "OperationCode(Expanded)"
         }
     };
 
@@ -238,6 +231,7 @@ public static class PlayerParserTraceStore
 
     public static void CaptureEvent(EventCodes eventCode, Dictionary<byte, object> parameters)
     {
+        if (!PacketLogSettings.AllLogInfo) return;
         if (parameters == null || parameters.Count == 0)
             return;
 
@@ -271,6 +265,7 @@ public static class PlayerParserTraceStore
 
     public static void CaptureRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
     {
+        if (!PacketLogSettings.AllLogInfo) return;
         if (parameters == null) return;
 
         DateTime now = DateTime.UtcNow;
@@ -303,6 +298,7 @@ public static class PlayerParserTraceStore
 
     public static void CaptureResponse(ResponseCodes responseCode, Dictionary<byte, object> parameters)
     {
+        if (!PacketLogSettings.AllLogInfo) return;
         if (parameters == null) return;
 
         DateTime now = DateTime.UtcNow;

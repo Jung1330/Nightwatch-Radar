@@ -1,4 +1,4 @@
-﻿#region Kütüphaneler (Using Directives)
+#region Kütüphaneler (Using Directives)
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -167,8 +167,10 @@ namespace Nightwatch
         /// </summary>
         private string GetEquipInternalName(Player p, int idx)
         {
-            if (p?.Equipment == null || p.Equipment.Length <= idx) return null;
-            int id = p.Equipment[idx];
+            // A4: diziyi TEK kez oku (okuma ile indeksleme arasında değişirse IndexOutOfRange olur)
+            var eqArr = p?.Equipment;
+            if (eqArr == null || idx < 0 || eqArr.Length <= idx) return null;
+            int id = eqArr[idx];
             if (id <= 0) return null;
             if (_itemDatabase.TryGetValue(id, out ItemInfo info) && !string.IsNullOrEmpty(info.InternalName))
                 return info.InternalName;

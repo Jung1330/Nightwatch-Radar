@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 
@@ -75,7 +75,7 @@ namespace Nightwatch
 
                     Nightwatch.UIConsole.Log(line, Nightwatch.LogLevel.Error);
                 }
-                catch (Exception ex) { Nightwatch.UIConsole.Log("$Error in ErrorCodeSink: {ex.Message}", Nightwatch.LogLevel.Error); }
+                catch (Exception ex) { Nightwatch.UIConsole.Log($"[HATA] ErrorCodeSink yazamadi: {ex.Message}", Nightwatch.LogLevel.Error); }
             }
         }
     }

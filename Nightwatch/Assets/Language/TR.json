@@ -238,5 +238,17 @@
     "Rarity_Uncommon": "Sıradışı",
     "Rarity_Rare": "Nadir",
     "Rarity_Epic": "Destansı",
-    "Rarity_Legendary": "Efsanevi"
+    "Rarity_Legendary": "Efsanevi",
+  "Device_UpdatesInfo": "Güncellemeler ve Güncel Bilgi",
+  "Device_AnnouncementLoading": "Lütfen Bekleyin...",
+  "Device_AnnouncementError": "Lütfen Ağ Bağlantınızı Kontrol Edin",
+  "Settings_MapTestTitle": "--- V2 HARÄ°TA TESTÄ° ---",
+  "Settings_MapSystemV2": "V2 Harita Sistemi (SÄ±nÄ±rlar)",
+  "Settings_InvertMapV": "V Eksenini Ters Ã‡evir",
+  "Settings_MapSystemStatus": "Sistem: {0} | V-Ters: {1}",
+  "Settings_MapSystemV2Value": "V2 (SÄ±nÄ±rlar)",
+  "Settings_MapSystemV1Value": "V1 (Eski)",
+  "Common_Yes": "Evet",
+  "Common_No": "HayÄ±r",
+  "AllLogInfo": "AllLogInfo (tüm logları dosyaya yaz)"
 }

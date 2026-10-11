@@ -361,6 +361,10 @@ namespace Nightwatch
                                     ImGui.Checkbox("Resource Density Heatmap", ref _enableBetaHeatmap);
                                     ImGui.Checkbox(Lang.Get("Beta_Tracks") ?? "Tracks (556)", ref _showBetaTracks);
                                     ImGui.Checkbox(Lang.Get("Beta_Wisps") ?? "Wisps/Caged (530)", ref _showBetaWisps);
+
+                                    // Tum tani loglarini dosyaya yaz (varsayilan KAPALI)
+                                    if (ImGui.Checkbox(Lang.Get("AllLogInfo") ?? "AllLogInfo (write all logs to files)", ref _allLogInfo))
+                                        AlbionDataHandlers.Utils.PacketLogSettings.AllLogInfo = _allLogInfo;
                                     ImGui.Checkbox(Lang.Get("Beta_Indicators") ?? "Spell Indicators (542)", ref _showBetaIndicators);
                                     ImGui.Checkbox(Lang.Get("Beta_Structures") ?? "Fortifications (583/584)", ref _showBetaStructures);
                                     ImGui.Checkbox("Locked Mists Portals (518/529)", ref _showBetaChests);
@@ -1772,6 +1776,14 @@ namespace Nightwatch
                             // 3. KONSOLU SADECE 1 KERE ÇİZ
                             UIConsole.DrawConsoleWindow();
 
+                            ImGui.EndTabItem();
+                        }
+                        #endregion
+
+                        #region Sekme: Packet Inspector
+                        if (ImGui.BeginTabItem("Packet Inspector"))
+                        {
+                            RenderPacketInspectorTab();
                             ImGui.EndTabItem();
                         }
                         #endregion

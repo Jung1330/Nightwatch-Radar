@@ -211,6 +211,7 @@ namespace Nightwatch.Managers
         {
             lock (_stateLock)
             {
+                buffer.Clear(); // A12: diğer Get* metotlarıyla tutarlı (çağıran unutursa liste şişmesin)
                 buffer.AddRange(_dungeons);
             }
         }

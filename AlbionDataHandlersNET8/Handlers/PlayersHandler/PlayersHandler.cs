@@ -16,9 +16,14 @@ namespace AlbionDataHandlers.Handlers
         private static readonly bool SelfOnlyTestMode = false;
         private static readonly bool AllowEventBasedLocalFallback = false;
 
+        // Konum çözümü için gereken oturum anahtarı
+        public static byte[] LatestXorKey { get; set; } = new byte[0];
+        private static bool _hasLoggedMoveSinceMapChange = false;
+
         // --- PLAYER MOVE DECODE SWITCHES ---
-        public static bool DecodePath06_Int1e7_9_13 { get; set; } = true;
-        public static bool DecodePath16_Float_9_17 { get; set; } = true;
+        public static bool DecodePath06_Int1e7_9_13 { get; set; } = false;
+        public static bool DecodePath16_Float_9_17 { get; set; } = false;
+        public static bool DecodePath10_Float_9_13 { get; set; } = true;
 
         public event Action<Player>? LocalPlayerPosition;
         public event Action<IEnumerable<Player>>? OtherPlayersDetected;
@@ -34,7 +39,7 @@ namespace AlbionDataHandlers.Handlers
         private static readonly TimeSpan HealthGracePeriod = TimeSpan.FromMilliseconds(1500);
         private static readonly TimeSpan GhostPlayerTimeout = TimeSpan.FromSeconds(15);
 
-        // EFSANE GERİ DÖNDÜ: KUSURSUZ ORIGIN VE SPAWN MERKEZLERİ
+        // EFSANE GERÄ° DÃ–NDÃœ: KUSURSUZ ORIGIN VE SPAWN MERKEZLERÄ°
         private readonly Dictionary<int, (float x, float y)> _spawnWorldById = new Dictionary<int, (float x, float y)>();
         private readonly Dictionary<int, (float ox, float oy)> _originById = new Dictionary<int, (float ox, float oy)>();
         private readonly object _syncLock = new object();
@@ -45,12 +50,38 @@ namespace AlbionDataHandlers.Handlers
             TryLearnLocalEntityId(eventCode, parameters);
             SweepExpiredPendingLeaves();
 
-            if (eventCode == EventCodes.NewCharacter) HandleNewCharacter(parameters);
+            if (eventCode == EventCodes.KeySync)
+            {
+                if (parameters.TryGetValue(0, out var rawKey) && rawKey is byte[] keyBytes)
+                {
+                    LatestXorKey = keyBytes;
+                    _hasLoggedMoveSinceMapChange = false;
+                }
+            }
+            else if (eventCode == EventCodes.NewCharacter) HandleNewCharacter(parameters);
             else if (eventCode == EventCodes.Move) HandleMove(parameters);
             else if (eventCode == EventCodes.Leave) HandleLeave(parameters);
             else if (eventCode == EventCodes.HealthUpdate) HandleHealthUpdate(parameters);
             else if (eventCode == EventCodes.HealthUpdates) HandleHealthUpdates(parameters);
             else if (eventCode == EventCodes.CharacterEquipmentChanged) HandleEquipmentChanged(parameters);
+            else if (eventCode == EventCodes.FactionEnlistmentChanged) HandleFactionChanged(parameters);
+        }
+
+        private void HandleFactionChanged(Dictionary<byte, object> parameters)
+        {
+            if (!parameters.TryGetValue(0, out var idObj)) return;
+            int id = Convert.ToInt32(idObj);
+            int faction = parameters.TryGetValue(1, out var fObj) ? Convert.ToInt32(fObj) : 0;
+
+            lock (_syncLock)
+            {
+                var player = _otherPlayersList.FirstOrDefault(p => p.Id == id);
+                if (player != null)
+                {
+                    player.Faction = faction;
+                    OtherPlayersDetected?.Invoke(_otherPlayersList.ToList());
+                }
+            }
         }
 
         private void HandleNewCharacter(Dictionary<byte, object> parameters)
@@ -74,10 +105,13 @@ namespace AlbionDataHandlers.Handlers
                 }
 
                 float spawnX = 0f; float spawnY = 0f;
-                if (parameters.TryGetValue(19, out var p19) && parameters.TryGetValue(25, out var p25))
+                if (!parameters.TryGetValue(19, out var pX)) parameters.TryGetValue(10, out pX);
+                if (!parameters.TryGetValue(25, out var pY)) parameters.TryGetValue(11, out pY);
+                
+                if (pX != null && pY != null)
                 {
-                    spawnX = GetFloatSafe(p19);
-                    spawnY = GetFloatSafe(p25);
+                    spawnX = GetFloatSafe(pX);
+                    spawnY = GetFloatSafe(pY);
                     if (Math.Abs(spawnX) > 0.1f && Math.Abs(spawnY) > 0.1f)
                     {
                         lock (_syncLock)
@@ -122,7 +156,8 @@ namespace AlbionDataHandlers.Handlers
                         CurrentLerpedY = initialY,
                         CurrentHealth = initCurrentHealth,
                         MaxHealth = initMaxHealth,
-                        Equipment = equipIds
+                        Equipment = equipIds,
+                        ItemPower = CalculateItemPower(equipIds)
                     };
 
                     _otherPlayersList.Add(newPlayer);
@@ -170,7 +205,7 @@ namespace AlbionDataHandlers.Handlers
                 }
                 else
                 {
-                    // DİĞER OYUNCULARIN ANLIK KONUM TAKİBİ (LIVE PLAYER MOVEMENT)
+                    // DÄ°ÄER OYUNCULARIN ANLIK KONUM TAKÄ°BÄ° (LIVE PLAYER MOVEMENT)
                     bool hasRaw = TryGetMoveRaw(parameters, 1, out var rawX, out var rawY)
                         || TryGetMoveRaw(parameters, 3, out rawX, out rawY);
 
@@ -217,6 +252,7 @@ namespace AlbionDataHandlers.Handlers
             return Math.Abs(x) > 0.1f || Math.Abs(y) > 0.1f;
         }
 
+        // KULLANICI KARARI (9): silinmesin, dursun (paket bilgisi tasimasa da el altinda kalsin).
         private static float DistanceSquared(float x1, float y1, float x2, float y2)
         {
             float dx = x1 - x2;
@@ -237,7 +273,7 @@ namespace AlbionDataHandlers.Handlers
                     _originById.Remove(id);
                     _lastSeenById.Remove(id);
 
-                    // Open world Leave paketleri dalgalı gelebiliyor. Anlık silme yerine grace period uygula.
+                    // Open world Leave paketleri dalgalÄ± gelebiliyor. AnlÄ±k silme yerine grace period uygula.
                     _pendingLeaveById[id] = DateTime.UtcNow;
                 }
             }
@@ -269,7 +305,7 @@ namespace AlbionDataHandlers.Handlers
                     changed = true;
                 }
 
-                // --- HAYALET OYUNCU (GHOST PLAYER) TIMEOUT TEMİZLİĞİ ---
+                // --- HAYALET OYUNCU (GHOST PLAYER) TIMEOUT TEMÄ°ZLÄ°ÄÄ° ---
                 var timeoutIds = _otherPlayersList
                     .Where(p => _lastSeenById.TryGetValue(p.Id, out var lastSeen) && (now - lastSeen) >= GhostPlayerTimeout)
                     .Select(p => p.Id)
@@ -338,6 +374,20 @@ namespace AlbionDataHandlers.Handlers
             if (bytes == null || bytes.Length < 13)
                 return false;
 
+            // --- YENİ YAMA ŞİFRE ÇÖZÜCÜ (XOR DECRYPT) ---
+            // Eğer elimizde bir şifre anahtarı varsa ve paket yeterince büyükse şifreyi çöz!
+            if (LatestXorKey != null && LatestXorKey.Length == 16 && bytes.Length > 1)
+            {
+                byte[] decoded = new byte[bytes.Length];
+                decoded[0] = bytes[0]; // 0. bayt (Subtype) genelde şifrelenmez
+                for (int i = 1; i < bytes.Length; i++)
+                {
+                    decoded[i] = (byte)(bytes[i] ^ LatestXorKey[(i - 1) % 16]);
+                }
+                bytes = decoded; // Artık float okuyuculara şifresi çözülmüş temiz baytlar gidecek!
+            }
+
+
             byte subtype = bytes[0];
             if (subtype != 1 && subtype != 3)
                 return false;
@@ -349,10 +399,18 @@ namespace AlbionDataHandlers.Handlers
                 if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
             }
 
-            if (bytes.Length >= 21 && DecodePath16_Float_9_17)
+            if (bytes.Length >= 17 && DecodePath10_Float_9_13)
             {
                 float x = BitConverter.ToSingle(bytes, 9);
-                float y = BitConverter.ToSingle(bytes, 17);
+                float y = BitConverter.ToSingle(bytes, 13);
+                if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
+            }
+
+            if (bytes.Length >= 21 && DecodePath16_Float_9_17)
+            {
+                // [YENİ YAMA GÜNCELLEMESİ] X ve Y'nin hem yeri kaydırılmış hem de ters çevrilmiş!
+                float x = BitConverter.ToSingle(bytes, 18);
+                float y = BitConverter.ToSingle(bytes, 11);
                 if (IsValidWorldPosition(x, y)) { rawX = x; rawY = y; return true; }
             }
 
@@ -361,8 +419,8 @@ namespace AlbionDataHandlers.Handlers
 
         private static bool IsLikelyPlayerId(int id)
         {
-            // Tutorial/şehirde oyuncu idleri genelde küçük, mob idleri daha yüksek kümelerde.
-            // Çok sert filtrelemiyoruz; sadece bariz negatif/0 ve aşırı büyük değerleri eliyoruz.
+            // Tutorial/ÅŸehirde oyuncu idleri genelde kÃ¼Ã§Ã¼k, mob idleri daha yÃ¼ksek kÃ¼melerde.
+            // Ã‡ok sert filtrelemiyoruz; sadece bariz negatif/0 ve aÅŸÄ±rÄ± bÃ¼yÃ¼k deÄŸerleri eliyoruz.
             return id > 0 && id < 1_000_000;
         }
 
@@ -378,6 +436,12 @@ namespace AlbionDataHandlers.Handlers
                 float x = GetFloatSafe(p19); float y = GetFloatSafe(p25);
                 if (Math.Abs(x) > 0.1f && Math.Abs(y) > 0.1f) return new float[] { x, y };
             }
+            // ALBION YENİ YAMA - Yeni oyuncular X=10 ve Y=11 kullanıyor
+            if (parameters.TryGetValue(10, out var p10) && parameters.TryGetValue(11, out var p11))
+            {
+                float x = GetFloatSafe(p10); float y = GetFloatSafe(p11);
+                if (Math.Abs(x) > 0.1f && Math.Abs(y) > 0.1f) return new float[] { x, y };
+            }
             if (!preferMovePayload && parameters.TryGetValue(4, out var p4) && parameters.TryGetValue(5, out var p5))
             {
                 float x = GetFloatSafe(p4); float y = GetFloatSafe(p5);
@@ -389,15 +453,15 @@ namespace AlbionDataHandlers.Handlers
         public void OnRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
         {
             int reqCode = (int)requestCode;
-            if (reqCode != (int)RequestCodes.Move && reqCode != (int)RequestCodes.MoveAlt) return;
+            if (reqCode != (int)RequestCodes.Move ) return;
 
             try
             {
                 int localId = LocalPlayerId > 0 ? LocalPlayerId : _localEntityId;
 
-                // Sadece Fallback: düz float/list payload (bazı paket varyantları)
+                // Sadece Fallback: dÃ¼z float/list payload (bazÄ± paket varyantlarÄ±)
 
-                // Fallback: düz float/list payload (bazı paket varyantları)
+                // Fallback: dÃ¼z float/list payload (bazÄ± paket varyantlarÄ±)
                 if (TryGetLocalXYFromRequest(parameters, 1, out float x1, out float y1))
                 {
                     LocalPlayerPosition?.Invoke(new Player { Id = localId, PositionX = x1, PositionY = y1, CurrentLerpedX = x1, CurrentLerpedY = y1 });
@@ -439,14 +503,16 @@ namespace AlbionDataHandlers.Handlers
             return false;
         }
 
+        // KULLANICI KARARI (9): paket PARAMETRELERINI (id alani) okudugu icin GERI KONULDU.
+        // (Su an cagrilmiyor; Move paketinin id'sinin yerel oyuncuya ait olup olmadigini anlamak icin arac.)
         private bool IsLocalPacketById(Dictionary<byte, object> parameters)
         {
             int localId = LocalPlayerId > 0 ? LocalPlayerId : _localEntityId;
             if (localId <= 0)
                 return true;
 
-            // Move request paketlerinin çoğunda id (param[0]) bulunmayabilir.
-            // Request zaten local client tarafından üretildiği için id yoksa local kabul ediyoruz.
+            // Move request paketlerinin cogunda id (param[0]) bulunmayabilir.
+            // Request zaten local client tarafindan uretildigi icin id yoksa local kabul ediyoruz.
             if (!parameters.TryGetValue(0, out var idObj))
                 return true;
 
@@ -460,7 +526,7 @@ namespace AlbionDataHandlers.Handlers
             {
                 if (!parameters.TryGetValue(1, out var p1)) return;
 
-                // Parser'dan direkt ham move payload (AOSniffer mantığı)
+                // Parser'dan direkt ham move payload (AOSniffer mantÄ±ÄŸÄ±)
                 if (p1 is byte[] raw && raw.Length >= 17)
                 {
                     float fx = BitConverter.ToSingle(raw, 9);
@@ -533,7 +599,7 @@ namespace AlbionDataHandlers.Handlers
 
         public void OnResponse(ResponseCodes responseCode, Dictionary<byte, object> parameters)
         {
-            if ((int)responseCode == 2)
+            if (responseCode == ResponseCodes.PlayerJoiningMap)
             {
                 if (parameters.TryGetValue(0, out var idObj))
                 {
@@ -544,9 +610,15 @@ namespace AlbionDataHandlers.Handlers
                         _localEntityId = localId;
                     }
                 }
+
+                // Haritaya giris: oturum anahtari (konum cozumu icin)
+                if (parameters.TryGetValue(51, out var p51) && p51 is byte[] key51 && key51.Length == 16)
+                {
+                    LatestXorKey = key51;
+                }
             }
 
-            if ((int)responseCode == 2 || (int)responseCode == 35)
+            if (responseCode == ResponseCodes.PlayerJoiningMap || responseCode == ResponseCodes.PlayerChangeCluster)
             {
                 lock (_syncLock)
                 {
@@ -554,7 +626,7 @@ namespace AlbionDataHandlers.Handlers
                     _pendingLeaveById.Clear();
                     _localIdScores.Clear();
                     _localEntityId = LocalPlayerId;
-                    if ((int)responseCode == 35)
+                    if (responseCode == ResponseCodes.PlayerChangeCluster)
                     {
                         LocalPlayerId = 0;
                         _localEntityId = 0;
@@ -576,11 +648,16 @@ namespace AlbionDataHandlers.Handlers
             int weight = 0;
             int code = (int)eventCode;
 
-            // Local oyuncuda sık görülen aksiyon/event kodları
-            if (code == 19 || code == 211 || code == 353 || code == 357 || code == 358 || code == 359)
+            // Local oyuncuda sÄ±k gÃ¶rÃ¼len aksiyon/event kodlarÄ±
+            if (eventCode == EventCodes.CastSpell || 
+                eventCode == EventCodes.Mounted || 
+                eventCode == EventCodes.FishingStart || 
+                eventCode == EventCodes.FishingCancel || 
+                eventCode == EventCodes.NewFloatObject || 
+                eventCode == EventCodes.NewFishingZoneObject)
                 weight += 4;
 
-            // 0 ve 1 aynı id ise (örn: CastSpell) güçlü self sinyali
+            // 0 ve 1 aynÄ± id ise (Ã¶rn: CastSpell) gÃ¼Ã§lÃ¼ self sinyali
             if (parameters.TryGetValue(1, out var p1))
             {
                 int id1 = GetIntSafe(p1);
@@ -682,6 +759,7 @@ namespace AlbionDataHandlers.Handlers
                     if (player != null)
                     {
                         player.Equipment = equipIds;
+                        player.ItemPower = CalculateItemPower(equipIds);
                     }
                 }
             }
@@ -803,7 +881,24 @@ namespace AlbionDataHandlers.Handlers
             // Ensure current health never exceeds max
             if (current > max && max > 0f) current = max;
         }
+        
+
+        private int CalculateItemPower(int[] equipIds)
+        {
+            if (equipIds == null || equipIds.Length == 0) return 0;
+            int totalIp = 0;
+            int count = 0;
+            foreach (var id in equipIds)
+            {
+                if (id <= 0) continue;
+                int tier = 4;
+                int val = id;
+                while (val > 10) { if (val >= 4 && val <= 8) { tier = val; break; } val /= 10; }
+                int baseIp = 300 + (tier * 100);
+                totalIp += baseIp;
+                count++;
+            }
+            return count > 0 ? (totalIp / count) * 2 : 0;
+        }
     }
 }
-
-

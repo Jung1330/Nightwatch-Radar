@@ -66,6 +66,7 @@ namespace Nightwatch
             #endregion
 
             #region Base Directory ve Whitelist Yolu
+
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             _whitelistPath = System.IO.Path.Combine(baseDir, "Assets", "Helper", "whitelist.txt");
 
@@ -93,6 +94,7 @@ namespace Nightwatch
             
             CheckAndLoadDatabase();
             LoadZonesDatabase();
+            LoadZonesDatabaseV2(); // V2 Test: bounds-tabanlı harita verisi
             LoadItemDatabaseTXT();
             #endregion
 
@@ -121,7 +123,7 @@ namespace Nightwatch
             _crownImagePath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "crown.png");
             _cageImagePath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "cage.png");
             _spiderImagePath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "CRYSTALSPIDER.png");
-            _aspectBossIconPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "boss_icon.png");
+            // A13: boss_icon.png ataması kaldırıldı; aspect ikonu "main" olarak kullanılıyor.
             _feyDragonPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "FAIRYDRAGON.png");
             _griffinPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "GRIFFIN.png");
             _veilWeaverPath = System.IO.Path.Combine(baseDir, "Assets", "Resources", "VEILWEAVER.png");

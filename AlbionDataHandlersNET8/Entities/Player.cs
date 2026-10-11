@@ -7,12 +7,13 @@ namespace AlbionDataHandlers.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Guild { get; set; }
-        public string Alliance { get; set; } // Ýttifak
+        public string Alliance { get; set; } // ï¿½ttifak
         public int Faction { get; set; } // 0=Passive, 255=Hostile
 
-        // --- PVP ANALÝZÝ ÝÇÝN EKÝPMAN ---
+        // --- PVP ANALï¿½Zï¿½ ï¿½ï¿½ï¿½N EKï¿½PMAN ---
         // [0]=MainHand, [1]=OffHand, [2]=Head, [3]=Armor, [4]=Shoes, [5]=Bag, [6]=Cape
         public int[] Equipment { get; set; }
+        public int ItemPower { get; set; }
 
         public float CurrentHealth { get; set; }
         public float MaxHealth { get; set; }
@@ -20,7 +21,7 @@ namespace AlbionDataHandlers.Entities
         public float PositionX { get; set; }
         public float PositionY { get; set; }
 
-        // Hareket yumuþatma için
+        // Hareket yumuï¿½atma iï¿½in
         public float CurrentLerpedX { get; set; }
         public float CurrentLerpedY { get; set; }
 

@@ -30,6 +30,9 @@ namespace Nightwatch
         // --- YENİ EKLENEN HARİTA CONFIG AYARLARI ---
         public bool ShowMapBackground { get; set; } = true;
         public float MapOpacity { get; set; } = 0.8f;
+        public float MapScale { get; set; } = 1.0f;
+        public float MapGlobalOffsetX { get; set; } = 0f;
+        public float MapGlobalOffsetY { get; set; } = 0f;
         public bool EnableBetaHeatmap { get; set; } = false;
 
         public string LastMapIDConfig { get; set; }
@@ -90,6 +93,7 @@ namespace Nightwatch
         public bool TrackImp { get; set; } = true;
         public bool TrackGolem { get; set; } = true;
         public bool TrackWerewolf { get; set; } = true;
+        public bool TrackDawnbird { get; set; } = true;
         public bool ShowAvalonianDungeons { get; set; } = true;
         public bool[] ShowAvalonianTiers { get; set; } = new bool[9] { true, true, true, true, true, true, true, true, true };
         public bool ShowNormalMobs { get; set; } = true;

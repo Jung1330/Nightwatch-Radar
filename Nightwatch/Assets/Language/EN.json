@@ -238,5 +238,17 @@
     "Rarity_Uncommon": "Uncommon",
     "Rarity_Rare": "Rare",
     "Rarity_Epic": "Epic",
-    "Rarity_Legendary": "Legendary"
+    "Rarity_Legendary": "Legendary",
+  "Device_UpdatesInfo": "Updates & Current Info",
+  "Device_AnnouncementLoading": "Please Wait...",
+  "Device_AnnouncementError": "Please Check Network Connection",
+  "Settings_MapTestTitle": "--- V2 MAP TEST ---",
+  "Settings_MapSystemV2": "V2 Map System (Bounds)",
+  "Settings_InvertMapV": "Invert V Axis",
+  "Settings_MapSystemStatus": "System: {0} | Invert V: {1}",
+  "Settings_MapSystemV2Value": "V2 (Bounds)",
+  "Settings_MapSystemV1Value": "V1 (Legacy)",
+  "Common_Yes": "Yes",
+  "Common_No": "No",
+  "AllLogInfo": "AllLogInfo (write all logs to files)"
 }

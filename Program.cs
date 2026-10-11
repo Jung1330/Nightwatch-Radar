@@ -61,18 +61,10 @@ namespace Nightwatch
                 var radar = new AlbionOverlay(manager, isRunningAsAdmin);
 
                 // ========================================================
-                // --- KEYAUTH SUNUCUSUNA ON BAGLANTIYI KUR ---
-                // ========================================================
-                RenkliYaz("KeyAuth Sunucusuna Baglaniliyor...", ConsoleColor.Yellow);
-                KeyAuthManager.Init();
-                RenkliYaz("Giri� bekleniyor...", ConsoleColor.Cyan);
-
-                // ========================================================
                 // --- SINYAL BEKLEYICI: LOGIN BASARILI OLUNCA CALISACAK KISIM ---
                 // ========================================================
                 radar.OnLoginSuccess = () =>
                 {
-                    // Bu kodlar sadece KeyAuth onay verirse calisir!
                     DrawLogo();
                     RenkliYaz(Lang.Get("SysLoading"), ConsoleColor.Cyan);
 

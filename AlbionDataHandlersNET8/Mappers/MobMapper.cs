@@ -15,7 +15,14 @@ public class MobMapper
         return "Assets/Helper/mobs_EN_min.json";
     }
 
+    // typeId → MobTypeInfo
     private Dictionary<int, MobTypeInfo> TypeMap { get; set; } = new Dictionary<int, MobTypeInfo>();
+
+    // "@MOB_..." ham lok. key → MobTypeInfo (parser'dan gelen @MOB_ key ile arama için)
+    private Dictionary<string, MobTypeInfo> LocKeyMap { get; set; } = new Dictionary<string, MobTypeInfo>(StringComparer.OrdinalIgnoreCase);
+
+    // uniquename → MobTypeInfo (opsiyonel yedek arama)
+    private Dictionary<string, MobTypeInfo> UniqueNameMap { get; set; } = new Dictionary<string, MobTypeInfo>(StringComparer.OrdinalIgnoreCase);
 
     public MobMapper(string filePath)
     {
@@ -24,7 +31,6 @@ public class MobMapper
 
     public void Reload(string filePath)
     {
-        // Dosya yolunu mutlak yol yap, hata riskini sıfırla
         string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
 
         if (!File.Exists(fullPath))
@@ -35,40 +41,59 @@ public class MobMapper
 
         try
         {
-            // Dosyayı UTF8 ile oku
             string json = File.ReadAllText(fullPath, System.Text.Encoding.UTF8);
             JsonNode? jsonNode = JsonNode.Parse(json);
 
             if (jsonNode is JsonArray mobArray)
             {
-                lock (TypeMap) // Kilitlemeyi TypeMap üzerinden yap
+                var newTypeMap      = new Dictionary<int, MobTypeInfo>();
+                var newLocKeyMap    = new Dictionary<string, MobTypeInfo>(StringComparer.OrdinalIgnoreCase);
+                var newUniqueNameMap = new Dictionary<string, MobTypeInfo>(StringComparer.OrdinalIgnoreCase);
+
+                for (int i = 0; i < mobArray.Count; i++)
                 {
-                    TypeMap.Clear(); // ÖNEMLİ: Eski veriyi tamamen sil!
-                    for (int i = 0; i < mobArray.Count; i++)
+                    var item = mobArray[i];
+                    if (item is not JsonObject obj) continue;
+
+                    int typeId  = obj.ContainsKey("id") ? obj["id"]!.GetValue<int>() : (i + 16);
+                    int mobTier = obj.ContainsKey("t")  ? obj["t"]!.GetValue<int>()  : 1;
+
+                    if (!Enum.IsDefined(typeof(TierLevels), mobTier))
+                        mobTier = 1;
+
+                    string locKey     = obj["k"]?.GetValue<string>() ?? "";
+                    string uniqueName = obj["u"]?.GetValue<string>() ?? "";
+                    string name       = obj["n"]?.GetValue<string>() ?? "";
+
+                    var mobTypeInfo = new MobTypeInfo
                     {
-                        var item = mobArray[i];
-                        if (item is JsonObject obj)
-                        {
-                            int typeId = obj.ContainsKey("id") ? obj["id"]!.GetValue<int>() : (i + 16);
-                            int mobTier = obj.ContainsKey("t") ? obj["t"]!.GetValue<int>() : 1;
+                        TypeId     = typeId,
+                        Name       = name,
+                        UniqueName = uniqueName,
+                        LocKey     = locKey,
+                        Tier       = (TierLevels)mobTier,
+                        LootTier   = obj.ContainsKey("lt") ? obj["lt"]!.GetValue<int>() : 0
+                    };
 
-                            // Safe cast: tier'in valid TierLevels value'su olduğunu kontrol et
-                            if (!Enum.IsDefined(typeof(TierLevels), mobTier))
-                                mobTier = 1; // Invalid tier ise default 1
+                    newTypeMap[typeId] = mobTypeInfo;
 
-                            var mobTypeInfo = new MobTypeInfo
-                            {
-                                TypeId = typeId,
-                                Name = obj["n"]?.GetValue<string>() ?? "",
-                                UniqueName = obj["u"]?.GetValue<string>() ?? "",
-                                Tier = (TierLevels)mobTier,
-                                LootTier = obj.ContainsKey("lt") ? obj["lt"]!.GetValue<int>() : 0
-                            };
-                            TypeMap[typeId] = mobTypeInfo;
-                        }
-                    }
+                    // LocKey haritası: "@MOB_..." ile ara
+                    if (!string.IsNullOrEmpty(locKey))
+                        newLocKeyMap[locKey] = mobTypeInfo;
+
+                    // UniqueName haritası: "T5_MOB_..." ile ara (@ olmadan da çalışsın)
+                    if (!string.IsNullOrEmpty(uniqueName))
+                        newUniqueNameMap[uniqueName] = mobTypeInfo;
                 }
-                Console.WriteLine($"[MobMapper] Başarılı: {filePath} yüklendi.");
+
+                lock (TypeMap)
+                {
+                    TypeMap      = newTypeMap;
+                    LocKeyMap    = newLocKeyMap;
+                    UniqueNameMap = newUniqueNameMap;
+                }
+
+                Console.WriteLine($"[MobMapper] Yüklendi: {filePath} ({mobArray.Count} mob, {newLocKeyMap.Count} locKey)");
             }
         }
         catch (Exception ex)
@@ -77,8 +102,40 @@ public class MobMapper
         }
     }
 
+    /// <summary>TypeId ile arama (ana yöntem)</summary>
     public MobTypeInfo? GetMobInfo(int typeId)
     {
-        return TypeMap.TryGetValue(typeId, out var mobInfo) ? mobInfo : null;
+        return TypeMap.TryGetValue(typeId, out var info) ? info : null;
+    }
+
+    /// <summary>Ham lokalizasyon key ile arama: "@MOB_T5_MOB_..." veya "MOB_T5_MOB_..." her ikisi de çalışır</summary>
+    public MobTypeInfo? GetMobInfoByLocKey(string locKey)
+    {
+        if (string.IsNullOrEmpty(locKey)) return null;
+
+        // Direkt arama
+        if (LocKeyMap.TryGetValue(locKey, out var info)) return info;
+
+        // @ eklenerek dene
+        if (!locKey.StartsWith("@") && LocKeyMap.TryGetValue("@" + locKey, out info)) return info;
+
+        // @ çıkarılarak dene
+        if (locKey.StartsWith("@") && LocKeyMap.TryGetValue(locKey.Substring(1), out info)) return info;
+
+        // UniqueName üzerinden son çare
+        // @MOB_T5_MOB_... → T5_MOB_... (başındaki @MOB_ kısmını at)
+        string stripped = locKey.TrimStart('@');
+        if (stripped.StartsWith("MOB_", StringComparison.OrdinalIgnoreCase))
+            stripped = stripped.Substring(4); // "MOB_" at
+        if (UniqueNameMap.TryGetValue(stripped, out info)) return info;
+
+        return null;
+    }
+
+    /// <summary>UniqueName ile arama: "T5_MOB_ROAMING_..." </summary>
+    public MobTypeInfo? GetMobInfoByUniqueName(string uniqueName)
+    {
+        if (string.IsNullOrEmpty(uniqueName)) return null;
+        return UniqueNameMap.TryGetValue(uniqueName, out var info) ? info : null;
     }
 }

@@ -117,6 +117,7 @@ namespace Nightwatch
                     MentalityTheme.AnimatedToggle("Imp (İblis)", ref _trackImp);
                     MentalityTheme.AnimatedToggle("Golem", ref _trackGolem);
                     MentalityTheme.AnimatedToggle("Werewolf (Kurt Adam)", ref _trackWerewolf);
+                    MentalityTheme.AnimatedToggle("Dawnbird (Şafak Kuşu)", ref _trackDawnbird);
                     ImGui.Unindent();
                 }
                 ImGui.TreePop();

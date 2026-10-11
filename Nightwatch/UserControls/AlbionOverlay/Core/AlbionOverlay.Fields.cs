@@ -28,7 +28,7 @@ namespace Nightwatch
         private System.Windows.Forms.NotifyIcon _trayIcon;
         private System.Windows.Forms.ContextMenuStrip _trayContextMenu;
 
-        // GDI ikon handle'ları Ã¢â‚¬â€ Dispose'da serbest bırakılacak
+        // GDI ikon handle'ları Ã¢â‚¬â€  Dispose'da serbest bırakılacak
         private IntPtr _hIconBig = IntPtr.Zero;
         private IntPtr _hIconSmall = IntPtr.Zero;
 
@@ -66,8 +66,8 @@ namespace Nightwatch
         private Vector4 _trackerLaserColorResources = new Vector4(0.8f, 0.0f, 1.0f, 0.8f);
         private float _trackerScreenOffsetX = 0f;
         private float _trackerScreenOffsetY = -96f; // Varsayılan olarak biraz yukarı aldık
-        private float _trackerScaleX = 7.0f;          // Piksel/birim Ã¢â‚¬â€ Dünya X ekseni (sağ/sol)
-        private float _trackerScaleY = 7.0f;          // Piksel/birim Ã¢â‚¬â€ Dünya Y ekseni (ileri/geri)
+        private float _trackerScaleX = 7.0f;          // Piksel/birim Ã¢â‚¬â€  Dünya X ekseni (sağ/sol)
+        private float _trackerScaleY = 7.0f;          // Piksel/birim Ã¢â‚¬â€  Dünya Y ekseni (ileri/geri)
         private float _trackerAngleOffset = 0f;       // Açı ince ayarı (derece, -45 Ã¢â€ â€™ +45)
         private float _trackerLaserEndOffsetX = 0f;   // Lazer ucu yatay ince ayar
         private float _trackerLaserEndOffsetY = 0f;   // Lazer ucu dikey ince ayar
@@ -79,10 +79,14 @@ namespace Nightwatch
 
         //--- Map için lazımdı
         private Dictionary<string, float> _mapSizes = new Dictionary<string, float>();
+        private Dictionary<string, Vector2> _mapCenters = new Dictionary<string, Vector2>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, string> _mapFiles = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        // Map ID -> display name (zones.json'dan)
+        private static readonly Dictionary<string, string> _mapDisplayNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         // TypeId bazlı living-resource eşlemesi (deterministik kategori/tier)
         private readonly Dictionary<int, (HarvestableCategory category, int tier)> _livingResourceTypeMap = new();
 
-        // --- HARİTA ARKA PLAN DEÃ„zİÃ…zKENLERİ ---
+        // --- HARİTA ARKA PLAN DEĞİŞKENLERİ ---
         private bool _showMapBackground = true;
         private float _mapOpacity = 0.8f;
         private float _mapScale = 1.0f;
@@ -91,6 +95,10 @@ namespace Nightwatch
         private Dictionary<string, float> _zoneScales = new Dictionary<string, float>();
         private readonly Dictionary<string, string> _mapImagePathCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> _failedMapPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        // --- PERFORMANS MODU ---
+        /// <summary>True ise tüm görsel efektler (particle, glow, animasyon) devre dışı — FPS için</summary>
+        private bool _performanceMode = false;
 
         // RESİM ÖNBELLEKLEME (FPS DROP ÇÖZÜMÜ)
         private Dictionary<string, bool> _imageCache = new Dictionary<string, bool>();
@@ -154,6 +162,15 @@ namespace Nightwatch
 
         // Takip listesi (ConfigMobs) için önbellek
         private List<int> _cachedTrackedResults = new();
+
+        // --- PERFORMANS OPTIMIZASYONU DEĞİŞKENLERİ ---
+        private DateTime _lastBossCountTime = DateTime.MinValue;
+        private int _lastBossCount = 0;
+        private readonly List<int> _expiredIdsBuf = new();
+        private readonly HashSet<int> _aliveIdsSetBuf = new();
+        private readonly List<Player> _newEnemiesBuf = new();
+        private bool _npcapChecked = false;
+        private bool _npcapInstalled = false;
 
         // Parser Tab (kişi bazlı ham parser verisi)
         private int _parserSelectedTab = 0; // 0=Player, 1=Mob/Resource, 2=Dungeon
@@ -250,7 +267,7 @@ namespace Nightwatch
         private bool _showPlayers = true;
         private bool _showEnemyMobs = true;
         private bool _showResources = true;
-        private bool _showMists = false;
+        private bool _showMists = true;
         private bool _showBetaTracks = false;
         private bool _showBetaWisps = false;
         private bool _showBetaIndicators = false;
@@ -258,6 +275,7 @@ namespace Nightwatch
         private bool _showBetaChests = false;
         private bool _showExits = true;
         private bool _showWispCages = true;
+        private bool _allLogInfo = false;          // DevTools: tum tani loglarini dosyaya yaz (varsayilan KAPALI)
         private bool _showSmugglers = true;
         private bool _showTrackers = true;
         private bool _trackBear = true;
@@ -269,6 +287,7 @@ namespace Nightwatch
         private bool _trackImp = true;
         private bool _trackGolem = true;
         private bool _trackWerewolf = true;
+        private bool _trackDawnbird = true;
         private bool _showAvalonianDungeons = true;
         private bool[] _showAvalonianTiers = { true, true, true, true, true, true, true, true, true };
         
@@ -288,7 +307,6 @@ namespace Nightwatch
         private bool _showBosses = true;
         private bool _showHiddenChests = true;
         private bool _showChestIds = false;
-        private static readonly HashSet<int> _hiddenChestIds = new HashSet<int> { 795, 798, 800, 2637 };
         private bool _showGuild = true;
 
         private bool IsWhitelisted(Player p, Player mainPlayer)
@@ -300,7 +318,7 @@ namespace Nightwatch
         private bool _showPlayerName = true;
         private bool _showPlayerCount = true;
         private bool _showMobNames = true;
-        private int _developer = 0;  // Developer tabs: 0 = hidden, 1 = visible
+        private int _developer = 1;  // Developer tabs: 0 = hidden, 1 = visible
         private bool _debugConsoleLog = false;
         private bool _debugMobs = false;
         private bool _debugStaticResources = false;
@@ -403,16 +421,9 @@ namespace Nightwatch
         // Performans: Random sınıf seviyesinde bir kez oluşturulur
         private static readonly Random _rng = new Random();
 
-        // Performans: GetSystemMetrics çağrıları cache'lenir (her frame sistem çaÄrısı yapılmaz)
+        // Performans: GetSystemMetrics çağrıları cache'lenir (her frame sistem çağrısı yapılmaz)
         private int _cachedPrimaryScreenW = 0;
         private int _cachedPrimaryScreenH = 0;
         #endregion
     }
 }
-
-
-
-
-
-
-

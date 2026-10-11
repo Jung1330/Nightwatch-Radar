@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
@@ -23,6 +23,10 @@ namespace Nightwatch
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        // WinExe olarak calisirken --replay ciktisini ebeveyn konsola baglamak icin
+        [DllImport("kernel32.dll")]
+        static extern bool AttachConsole(int dwProcessId);
+
         // Main metodunun EN BAŞINA, her şeyden önce
         [DllImport("SDL3.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern bool SDL_SetHint(string name, string value);
@@ -40,12 +44,35 @@ namespace Nightwatch
         public static string CurrentUpdateKey = "UpdateChecking";
         public static string UpdateStatusText => Lang.Get(CurrentUpdateKey);
         public static System.Numerics.Vector4 UpdateStatusColor = new System.Numerics.Vector4(0.6f, 0.6f, 0.6f, 1f); // Başlangıçta gri
+
+        // --- H2: SÜRÜM TEK KAYNAKTAN ---
+        // Sürüm koda YAZILMAZ; kök klasördeki Directory.Build.props -> <Version> değerinden gelir.
+        // Yayın adımları o dosyanın içinde yorum olarak yazılı (unutma diye).
+        /// <summary>Uygulamanın gerçek sürümü (derleme sürümü). Örn: 1.0.9.0</summary>
+        public static Version GetLocalVersion()
+            => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0, 0);
+
+        /// <summary>Arayüzde göstermek için kısa sürüm metni. Örn: v1.0.9</summary>
+        public static string VersionText
+        {
+            get
+            {
+                Version v = GetLocalVersion();
+                return $"v{v.Major}.{v.Minor}.{Math.Max(v.Build, 0)}";
+            }
+        }
         // --- ANA PROGRAM ---
         [STAThread]
         public static void Main(string[] args)
         {
-
-
+            // --- TEST HARNESS: kaydedilmis paketleri OYUNSUZ oynat ---
+            // Kullanim: Nightwatch.exe --replay log\packets_YYYYMMDD_HHMMSS.jsonl
+            if (args != null && args.Length >= 2 && args[0].Equals("--replay", StringComparison.OrdinalIgnoreCase))
+            {
+                try { AttachConsole(-1); } catch { }   // WinExe -> ebeveyn konsola baglan (cikti gorunsun)
+                Environment.ExitCode = Nightwatch.Managers.ReplayHarness.Run(args[1]);
+                return;
+            }
 
             ErrorCodeSink.Install();
 
@@ -73,41 +100,21 @@ namespace Nightwatch
                                                 DrawLogo();
                         RenkliYaz(Lang.Get("SysLoading"), ConsoleColor.Cyan);
 
-                        var parser = new AlbionDataParser();
-                        var mobsHandler = new MobsHandler();
-                        var playersHandler = new PlayersHandler();
-                        var harvestableHandler = new HarvestableHandler();
-                        var dungeonHandler = new AlbionDataHandlers.Handlers.DungeonHandler.DungeonHandler();
-                        var unknownPacketHandler = new AlbionDataHandlers.Handlers.UnknownPacketHandler.UnknownPacketHandler();
-
+                        // Parser + handler baglantisi TEK yerde (PacketPipeline).
+                        // Boylece --replay testi ile oyundaki kurulum AYNI olur.
                         PacketEngine engine = null;
-                        var mapHandler = new MapChangeHandler((yeniMapId) =>
-                        {
-                            RenkliYaz(string.Format(Lang.Get("MapLoaded"), yeniMapId), ConsoleColor.Magenta);
-                            engine?.PurgeQueue();
-                            manager.SetCurrentMap(yeniMapId);
-                        });
-
-                        parser.RegisterEventHandler(mobsHandler);
-                        parser.RegisterEventHandler(playersHandler);
-                        parser.RegisterEventHandler(harvestableHandler);
-                        parser.RegisterEventHandler(dungeonHandler);
-                        parser.RegisterEventHandler(unknownPacketHandler);
-                        parser.RegisterEventHandler(mapHandler);
+                        var pipeline = new PacketPipeline(manager,
+                            onMapChanged: (yeniMapId) =>
+                            {
+                                RenkliYaz(string.Format(Lang.Get("MapLoaded"), yeniMapId), ConsoleColor.Magenta);
+                                engine?.PurgeQueue();
+                            },
+                            onDungeonDebug: (msg) => RenkliYaz(msg, ConsoleColor.Cyan));
                         RenkliYaz(Lang.Get("HandlersOK"), ConsoleColor.Green);
-
-                        mobsHandler.Mobs.Subscribe(manager.UpdateMobsState);
-                        harvestableHandler.Harvestables += manager.UpdateHarvestablesState;
-                        playersHandler.LocalPlayerPosition += manager.UpdateLocalPlayer;
-                        playersHandler.OtherPlayersDetected += manager.UpdateOtherPlayers;
-                        playersHandler.PlayerLeft += manager.RemovePlayer;
-                        dungeonHandler.DungeonDetected += manager.UpdateDungeonsState;
-                        dungeonHandler.DungeonLeft += manager.RemoveDungeon;
-
                         RenkliYaz(Lang.Get("EventsOK"), ConsoleColor.Green);
 
                         RenkliYaz(Lang.Get("EngineStart"), ConsoleColor.Yellow);
-                        engine = new PacketEngine(parser, manager);
+                        engine = new PacketEngine(pipeline.Parser, manager);
 
                         // Capture baslangici bloklayici olabildigi icin UI thread'i kilitlemesin.
                         Task.Run(() =>
@@ -162,24 +169,42 @@ namespace Nightwatch
                 string url = $"https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App/version.txt?t={DateTime.Now.Ticks}";
 
                 string response = await client.GetStringAsync(url);
-                int currentVersion = 8; // Github 'tan kontrol et aynı ise güncel,değilse eski
 
-                if (int.TryParse(response.Trim(), out int latestVersion))
+                // --- H2: SÜRÜM KARŞILAŞTIRMASI ---
+                // Yerel sürüm koda yazılmaz; Directory.Build.props -> <Version> değerinden okunur.
+                // GitHub'daki version.txt SADECE tek satır sürüm numarası içerir. Örn:  1.0.10
+                //
+                // YENİ SÜRÜM YAYINLARKEN:
+                //   1) Directory.Build.props içindeki <Version> değerini artır  (1.0.9 -> 1.0.10)
+                //   2) dotnet publish -c Release ile yeni exe'yi derle
+                //   3) GitHub'daki App/version.txt dosyasına AYNI numarayı yaz (tek satır)
+                //   4) Yayınla -> kullanıcılar açılışta güncelleme uyarısını görür
+                Version localVersion = GetLocalVersion();
+                string remoteText = response.Trim().TrimStart('v', 'V').Trim();
+
+                if (Version.TryParse(remoteText, out Version remoteVersion))
                 {
-                    if (latestVersion > currentVersion)
+                    if (remoteVersion > localVersion)
                     {
                         // UI için Güncelleme Var durumunu ayarla (Kırmızı Renk)
                         CurrentUpdateKey = "UpdateAvailable";
                         UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.3f, 0.3f, 1f);
-                        RenkliYaz(Lang.Get("UpdateNotifyAvailable"), ConsoleColor.Cyan);
+                        RenkliYaz($"{Lang.Get("UpdateNotifyAvailable")} (v{localVersion} -> v{remoteVersion})", ConsoleColor.Cyan);
                     }
                     else
                     {
                         // UI için Güncel durumunu ayarla (Yeşil Renk)
                         CurrentUpdateKey = "Updated";
                         UpdateStatusColor = new System.Numerics.Vector4(0.2f, 1.0f, 0.2f, 1f);
-                        RenkliYaz(Lang.Get("UpdateNotifyUpdated"), ConsoleColor.DarkGray);
+                        RenkliYaz($"{Lang.Get("UpdateNotifyUpdated")} (v{localVersion})", ConsoleColor.DarkGray);
                     }
+                }
+                else
+                {
+                    // version.txt bozuk/okunamadı: sessizce "güncel" DEME, durumu bildir
+                    CurrentUpdateKey = "UpdateFailed";
+                    UpdateStatusColor = new System.Numerics.Vector4(1.0f, 0.8f, 0.2f, 1f);
+                    RenkliYaz($"{Lang.Get("UpdateNotifyFailed")} (version.txt: '{remoteText}')", ConsoleColor.DarkGray);
                 }
             }
             catch (Exception)

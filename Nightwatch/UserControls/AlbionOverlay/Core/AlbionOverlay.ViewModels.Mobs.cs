@@ -28,15 +28,14 @@ namespace Nightwatch
                     var typeInfo2 = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
                     string uniqueNameUpper = (info?.HarvestType ?? typeInfo2?.UniqueName ?? m.Name ?? "").ToUpperInvariant();
 
-                    // Check if hidden chest by ID or keyword matching
-                    bool isHiddenChest = _hiddenChestIds.Contains(m.TypeId) ||
-                        (uniqueNameUpper != null && 
+                    // Check if hidden chest by keyword matching
+                    bool isHiddenChest = uniqueNameUpper != null && 
                          (uniqueNameUpper.Contains("CHEST") || 
                           uniqueNameUpper.Contains("COFFER") || 
                           uniqueNameUpper.Contains("CACHE") || 
                           uniqueNameUpper.Contains("TREASURE")) && 
                          !uniqueNameUpper.Contains("MINION") && 
-                         !uniqueNameUpper.Contains("DRONE"));
+                         !uniqueNameUpper.Contains("DRONE");
 
                     string displayName = "";
                     if (m.TypeId == 51900)

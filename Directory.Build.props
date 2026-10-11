@@ -1,0 +1,42 @@
+<Project>
+
+  <!--
+    ============================================================
+    NIGHTWATCH VERSION CONTROL
+    ============================================================
+    Bu dosya, alt klasörlerdeki TÜM projelere otomatik uygulanır.
+    Uygulamanın sürümü SADECE buradan yönetilir; kod içinde sabit
+    sürüm numarası YOKTUR (Program.cs sürümü derlemenin kendisinden okur).
+
+    YENİ SÜRÜM YAYINLAMA ADIMLARI (unutma!):
+      1) Aşağıdaki <Version> değerini artır.        Örn: 1.0.9  ->  1.0.10
+      2) Yeni exe'yi derle.                          dotnet publish -c Release
+      3) GitHub'daki App/version.txt dosyasına AYNI numarayı yaz (tek satır):
+             1.0.10
+      4) Yayınla. Kullanıcıların uygulaması açılışta "güncelleme var" uyarısını görür.
+
+    NOT: Karşılaştırma "sürüm" mantığıyla yapılır; bu yüzden 1.0.10 > 1.0.9
+    doğru çalışır (eski int karşılaştırması bunu yapamıyordu).
+  -->
+  <PropertyGroup>
+    <Version>1.5.5</Version>
+  </PropertyGroup>
+
+  <!--
+    ============================================================
+    PARSER DLL'LERI (PhotonPackageParser / Protocol16 / Protocol18)
+    ============================================================
+    ONEMLI: Bu DLL'ler artik A\Libs\ klasorunde durur.
+    (Eskiden AOSnifferNET\PhotonPacketParser icindeydi; o proje arsive alindi.)
+
+    Tek yerden tanimlaniyor ki TUM projeler ayni klasore baksin:
+      AlbionDataHandlersNET8, Nightwatch
+    (AlbionPacketInspector kendi csproj'unda sabit yol yaziyor; arsive alinacak.)
+
+    DLL'leri guncellemen gerekirse SADECE A\Libs\ icini degistir.
+  -->
+  <PropertyGroup Condition="Exists('$(MSBuildThisFileDirectory)Libs\PhotonPackageParser.dll')">
+    <AOSnifferParserDir>$(MSBuildThisFileDirectory)Libs</AOSnifferParserDir>
+  </PropertyGroup>
+
+</Project>

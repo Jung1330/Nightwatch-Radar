@@ -1,0 +1,13 @@
+What's New in v1.5.5
+
++ Roads of Avalon maps are now fully integrated and visible on the radar.
++ Compass directions added to the overlay interface (#26).
++ 106 new maps extracted from the game client: islands, arenas, Crystal Realm, Conqueror's Hall.
++ 51 maps upgraded to higher resolution (1024x1024).
++ The Mists dungeon (Knightfall Abbey) now renders with its real map.
+~ The "Chestnut Spirit" mob was incorrectly identified as a "Chest" - fixed.
+~ Detection and display issues with Mist Cages have been resolved.
+~ Fixed a rendering bug where Trackers mistakenly drew a Crown icon.
+> We would love your feedback on the new Avalon maps and compass features.
+
+Report bugs on GitHub Issues. Thank you for your feedback!

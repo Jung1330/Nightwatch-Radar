@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -52,15 +52,17 @@ namespace Nightwatch
                     int pWeap = 0, pOff = 0, pCap = 0, pArm = 0, pShoe = 0, pCape = 0;
                     string wName = "-", oName = "-", hName = "-", aName = "-", sName = "-", cName = "-";
 
-                    if (p.Equipment != null)
+                    // A4: eşya dizisini TEK kez oku (paket thread'i arada değiştirirse IndexOutOfRange olur)
+                    var eqArr = p.Equipment;
+                    if (eqArr != null)
                     {
-                        vm.EquipmentRaw = p.Equipment;
-                        if (p.Equipment.Length > 0) { pWeap = GetItemPower(p.Equipment[0]); wName = GetItemName(p.Equipment[0]); }
-                        if (p.Equipment.Length > 1) { pOff = GetItemPower(p.Equipment[1]); oName = GetItemName(p.Equipment[1]); }
-                        if (p.Equipment.Length > 2) { pCap = GetItemPower(p.Equipment[2]); hName = GetItemName(p.Equipment[2]); }
-                        if (p.Equipment.Length > 3) { pArm = GetItemPower(p.Equipment[3]); aName = GetItemName(p.Equipment[3]); }
-                        if (p.Equipment.Length > 4) { pShoe = GetItemPower(p.Equipment[4]); sName = GetItemName(p.Equipment[4]); }
-                        if (p.Equipment.Length > 6) { pCape = GetItemPower(p.Equipment[6]); cName = GetItemName(p.Equipment[6]); }
+                        vm.EquipmentRaw = eqArr;
+                        if (eqArr.Length > 0) { pWeap = GetItemPower(eqArr[0]); wName = GetItemName(eqArr[0]); }
+                        if (eqArr.Length > 1) { pOff = GetItemPower(eqArr[1]); oName = GetItemName(eqArr[1]); }
+                        if (eqArr.Length > 2) { pCap = GetItemPower(eqArr[2]); hName = GetItemName(eqArr[2]); }
+                        if (eqArr.Length > 3) { pArm = GetItemPower(eqArr[3]); aName = GetItemName(eqArr[3]); }
+                        if (eqArr.Length > 4) { pShoe = GetItemPower(eqArr[4]); sName = GetItemName(eqArr[4]); }
+                        if (eqArr.Length > 6) { pCape = GetItemPower(eqArr[6]); cName = GetItemName(eqArr[6]); }
                     }
 
                     if (pWeap > 0 && pOff == 0) pOff = pWeap;

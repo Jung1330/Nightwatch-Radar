@@ -122,7 +122,7 @@ namespace Nightwatch
                 foreach (var path in _resourceCache.Values)
                 {
                     try { if (File.Exists(path)) File.Delete(path); }
-                    catch (Exception ex) { System.Console.WriteLine("$Failed to delete {path}: {ex.Message}"); }
+                    catch (Exception ex) { System.Console.WriteLine($"[TEMP] Silinemedi: {path} | {ex.Message}"); }
                 }
                 _resourceCache.Clear();
             }

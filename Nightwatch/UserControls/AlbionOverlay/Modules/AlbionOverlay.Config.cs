@@ -36,7 +36,15 @@ namespace Nightwatch
             return safe;
         }
 
-        private void RefreshConfigList() { if (Directory.Exists(_configFolder)) _availableConfigs = Directory.GetFiles(_configFolder, "*.json").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray(); }
+        // A6: liste yenilenince seçili index listede yoksa güvenli değere çek
+        private void RefreshConfigList()
+        {
+            if (Directory.Exists(_configFolder))
+                _availableConfigs = Directory.GetFiles(_configFolder, "*.json").Select(System.IO.Path.GetFileNameWithoutExtension).ToArray();
+
+            if (_selectedConfigIndex < 0 || _selectedConfigIndex >= _availableConfigs.Length)
+                _selectedConfigIndex = _availableConfigs.Length > 0 ? 0 : -1;
+        }
         private void SaveConfig(string name)
         {
             try
@@ -57,6 +65,9 @@ namespace Nightwatch
 
                     ShowMapBackground = _showMapBackground,
                     MapOpacity = _mapOpacity,
+                    MapScale = _mapScale,
+                    MapGlobalOffsetX = _mapGlobalOffsetX,
+                    MapGlobalOffsetY = _mapGlobalOffsetY,
                     EnableBetaHeatmap = _enableBetaHeatmap,
 
                     SelectedTheme = _selectedTheme,
@@ -114,6 +125,7 @@ namespace Nightwatch
                     TrackImp = _trackImp,
                     TrackGolem = _trackGolem,
                     TrackWerewolf = _trackWerewolf,
+                    TrackDawnbird = _trackDawnbird,
                     ShowAvalonianDungeons = _showAvalonianDungeons,
                     ShowAvalonianTiers = _showAvalonianTiers,
                     ShowNormalMobs = _showNormalMobs,
@@ -201,7 +213,10 @@ namespace Nightwatch
                 if (cfg.CrownBlacklist != null) _crownBlacklist = new List<int>(cfg.CrownBlacklist);
 
                 _showMapBackground = cfg.ShowMapBackground;
-                _mapOpacity = cfg.MapOpacity;               
+                _mapOpacity = cfg.MapOpacity;
+                if (cfg.MapScale > 0f) _mapScale = cfg.MapScale;
+                _mapGlobalOffsetX = cfg.MapGlobalOffsetX;
+                _mapGlobalOffsetY = cfg.MapGlobalOffsetY;               
                 _enableBetaHeatmap = cfg.EnableBetaHeatmap;
 
                 if (!string.IsNullOrEmpty(cfg.LastMapIDConfig) && _gameStateManager != null) { _gameStateManager.SetCurrentMap(cfg.LastMapIDConfig); }
@@ -247,6 +262,7 @@ namespace Nightwatch
                 _trackImp = cfg.TrackImp;
                 _trackGolem = cfg.TrackGolem;
                 _trackWerewolf = cfg.TrackWerewolf;
+                _trackDawnbird = cfg.TrackDawnbird;
                 _showAvalonianDungeons = cfg.ShowAvalonianDungeons;
 
                 if (cfg.ShowAvalonianTiers != null && cfg.ShowAvalonianTiers.Length >= 9) _showAvalonianTiers = cfg.ShowAvalonianTiers;
@@ -322,7 +338,14 @@ namespace Nightwatch
 
                 if (cfg.CustomPriorityMobs != null) _customPriorityMobs = new HashSet<int>(cfg.CustomPriorityMobs);
                 if (cfg.IgnoredMobIds != null) _ignoredMobIds = new HashSet<int>(cfg.IgnoredMobIds);
-                if (cfg.ResourceMasterToggles != null) _resourceMasterToggles = cfg.ResourceMasterToggles;
+                // --- A5: Sözlükleri KOMPLE DEĞİŞTİRME, varsayılanlarla BİRLEŞTİR ---
+                // Eski/paylaşılmış config dosyasında eksik kategori olsa bile çizim tarafı artık patlamaz.
+                if (cfg.ResourceMasterToggles != null)
+                {
+                    foreach (var kvp in cfg.ResourceMasterToggles)
+                        _resourceMasterToggles[kvp.Key] = kvp.Value;
+                }
+
                 if (cfg.ResourceFilters != null)
                 {
                     foreach (var kvp in cfg.ResourceFilters)
@@ -334,12 +357,28 @@ namespace Nightwatch
                             {
                                 for (int j = 0; j < 4; j++)
                                 {
-                                    if (i < kvp.Value.Length && kvp.Value[i] != null && j < kvp.Value[i].Length)
+                                    if (kvp.Value != null && i < kvp.Value.Length && kvp.Value[i] != null && j < kvp.Value[i].Length)
                                         matrix[i, j] = kvp.Value[i][j];
                                 }
                             }
                             _resourceFilters[cat] = matrix;
                         }
+                    }
+                }
+
+                // Config'te olmayan kategorileri varsayılanla tamamla (hepsi açık)
+                foreach (HarvestableCategory cat in Enum.GetValues(typeof(HarvestableCategory)))
+                {
+                    if (cat == HarvestableCategory.None) continue;
+
+                    if (!_resourceMasterToggles.ContainsKey(cat))
+                        _resourceMasterToggles[cat] = true;
+
+                    if (!_resourceFilters.ContainsKey(cat))
+                    {
+                        var def = new bool[8, 4];
+                        for (int i = 0; i < 8; i++) for (int j = 0; j < 4; j++) def[i, j] = true;
+                        _resourceFilters[cat] = def;
                     }
                 }
                 _configFileNameInput = safeName;

@@ -83,7 +83,11 @@ namespace Nightwatch
 
             if (MentalityTheme.Button(Lang.Get("Config_LoadBtn") ?? "Load Selected")) 
             {
-                if (_selectedConfigIndex >= 0) LoadConfig(_availableConfigs[_selectedConfigIndex]);
+                // A6: üst sınır kontrolü (liste dışarıdan silinirse index boşa düşmesin)
+                if (_selectedConfigIndex >= 0 && _selectedConfigIndex < _availableConfigs.Length)
+                    LoadConfig(_availableConfigs[_selectedConfigIndex]);
+                else
+                    Nightwatch.UIConsole.Log(Lang.Get("Error_InvalidConfig") ?? "[HATA] Gecersiz config secimi.", Nightwatch.LogLevel.Warning);
             }
             
             ImGui.SameLine();

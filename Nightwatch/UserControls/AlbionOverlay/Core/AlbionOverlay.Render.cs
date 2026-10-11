@@ -45,12 +45,17 @@ namespace Nightwatch
                 }
             }
         }
+        private bool _themeApplied = false;
 
         #region Arayüz Çizimi (UI Rendering)
         protected override void Render()
         {
             DrainUiActions();
-            ApplyModernStyle();
+            if (!_themeApplied)
+            {
+                ApplyModernStyle();
+                _themeApplied = true;
+            }
 
             string currentLang = Lang.CurrentLanguage ?? "";
             if (_lastTabLanguage != currentLang)
@@ -136,7 +141,7 @@ namespace Nightwatch
                 mainPlayer.CurrentLerpedY = _smoothPlayerY;
             }
 
-            // --- SMOOTH ENTITY POSITIONS (mob/kaynak lazer çizgilerini akÃâ€Â±cÃâ€Â± yapar) ---
+            // --- SMOOTH ENTITY POSITIONS (mob/kaynak lazer çizgilerini akıcı yapar) ---
             {
                 float dtEnt = Math.Min(ImGui.GetIO().DeltaTime, 0.1f);
                 float lerpTEnt = 1f - (float)Math.Exp(-20f * dtEnt);
@@ -186,26 +191,40 @@ namespace Nightwatch
 
             int previousEnemyCount = _lastEnemyCount;
             int enemyCount = mainPlayer != null ? CalculateEnemyCount(mainPlayer) : 0;
-            int bossCount = 0;
-            lock (_dataLock)
-            {
-                foreach (var m in _mobBuffer)
-                {
-                    if (_ignoredMobIds.Contains(m.TypeId)) continue;
-                    _mobDatabase.TryGetValue(m.TypeId, out MobInfo info);
-                    string dn = info?.Name ?? (string.IsNullOrEmpty(m.Name) ? "" : CleanName(m.Name));
-                    if (string.IsNullOrEmpty(dn)) continue;
 
-                    var typeInfo = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
-                    string un = (typeInfo?.UniqueName ?? m.Name ?? "").ToUpperInvariant();
-                    bool isBoss = (m.TypeId != 51900 && m.TypeId != 51800 && m.TypeId != 53000) && (
-                                      un.Contains("_BOSS") || un.EndsWith("BOSS") || un.StartsWith("BOSS_") || un.Contains("ASPECT") || un.Contains("TITAN") || un.Contains("GUARDIAN") || un.Contains("OLD_WHITE") 
-                                      || un.Contains("DREAD LORD") || un.Contains("OVERLORD") || un.Contains("DEMON PRINCE") 
-                                      || m.Rarity >= 3)
-                                  && !_crownBlacklist.Contains(m.TypeId) && !un.Contains("TITANYUM");
-                    if (isBoss) bossCount++;
+            // PERF: Boss sayımı her frame yapilmaz, 250ms'de bir güncellenir.
+            if ((DateTime.UtcNow - _lastBossCountTime).TotalMilliseconds >= 250)
+            {
+                _lastBossCountTime = DateTime.UtcNow;
+                int bossCountCalc = 0;
+                lock (_dataLock)
+                {
+                    foreach (var m in _mobBuffer)
+                    {
+                        if (_ignoredMobIds.Contains(m.TypeId)) continue;
+                        // GetMobInfo cache'li (MobMapper içinden), string alloc sadece boss ise
+                        if (m.Rarity >= 3)
+                        {
+                            if (!_crownBlacklist.Contains(m.TypeId)) bossCountCalc++;
+                            continue;
+                        }
+                        var typeInfo2 = AlbionDataHandlers.Mappers.MobMapper.Instance.GetMobInfo(m.TypeId);
+                        if (typeInfo2 == null) continue;
+                        string un2 = typeInfo2.UniqueName ?? "";
+                        if (m.TypeId == 51900 || m.TypeId == 51800 || m.TypeId == 53000) continue;
+                        if (un2.Contains("_BOSS", StringComparison.OrdinalIgnoreCase)
+                            || un2.StartsWith("BOSS_", StringComparison.OrdinalIgnoreCase)
+                            || un2.Contains("ASPECT", StringComparison.OrdinalIgnoreCase)
+                            || un2.Contains("TITAN", StringComparison.OrdinalIgnoreCase)
+                            || un2.Contains("GUARDIAN", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (!_crownBlacklist.Contains(m.TypeId)) bossCountCalc++;
+                        }
+                    }
                 }
+                _lastBossCount = bossCountCalc;
             }
+            int bossCount = _lastBossCount;
             int resourceCount = CalculateResourceCount();
 
             // Ses Sistemi
@@ -287,8 +306,7 @@ namespace Nightwatch
                     ImGui.SameLine(0, 6); ImGui.TextColored(new Vector4(0.25f, 0.25f, 0.30f, 1), "|"); ImGui.SameLine(0, 6);
 
                     ImGui.TextColored(new Vector4(0.60f, 0.60f, 0.60f, 1), Lang.Get("Watermark_Resource") ?? "KAYNAK:"); ImGui.SameLine(0, 4);
-                    ImGui.TextColored(resourceCount > 0 ? new Vector4(1f, 0.28f, 0.28f, 1) : new Vector4(0.65f, 0.65f, 0.65f, 1), $"{resourceCount}");
-
+                    ImGui.TextColored(resourceCount > 0 ? new Vector4(0.28f, 0.9f, 0.28f, 1) : new Vector4(0.65f, 0.65f, 0.65f, 1), $"{resourceCount}");
                     if (_watermarkMoveable)
                     {
                         var pos = ImGui.GetWindowPos();
@@ -486,20 +504,21 @@ namespace Nightwatch
                         _enemyCardCache[px.Id] = ClonePlayerForCard(px);
                     }
 
-                    var expiredIds = _enemyLastSeenAt
-                        .Where(kv => (now - kv.Value).TotalSeconds > memorySeconds)
-                        .Select(kv => kv.Key)
-                        .ToList();
-
-                    foreach (var expiredId in expiredIds)
+                    // PERF: expiredIds için ToList() alloc yok — doğrudan Remove
+                    _expiredIdsBuf.Clear();
+                    foreach (var kv in _enemyLastSeenAt)
+                        if ((now - kv.Value).TotalSeconds > memorySeconds)
+                            _expiredIdsBuf.Add(kv.Key);
+                    foreach (var expiredId in _expiredIdsBuf)
                     {
                         _enemyLastSeenAt.Remove(expiredId);
                         _enemyCardCache.Remove(expiredId);
                     }
 
-                    var aliveIdsSet = new HashSet<int>();
+                    // PERF: new HashSet<int>() her frame yerine reusable
+                    _aliveIdsSetBuf.Clear();
                     foreach (var px in _playersBuffer)
-                        if (!IsWhitelisted(px, mainPlayer)) aliveIdsSet.Add(px.Id);
+                        if (!IsWhitelisted(px, mainPlayer)) _aliveIdsSetBuf.Add(px.Id);
 
                     for (int si = maxSlots; si < _equipCardSlots.Length; si++)
                         _equipCardSlots[si] = null;
@@ -508,7 +527,7 @@ namespace Nightwatch
                     {
                         if (!_equipCardSlots[si].HasValue) continue;
                         int cachedId = _equipCardSlots[si]!.Value;
-                        if (aliveIdsSet.Contains(cachedId)) continue;
+                        if (_aliveIdsSetBuf.Contains(cachedId)) continue;
 
                         if (!_enemyLastSeenAt.TryGetValue(cachedId, out var lastSeen) || (now - lastSeen).TotalSeconds > memorySeconds)
                             _equipCardSlots[si] = null;
@@ -525,14 +544,27 @@ namespace Nightwatch
                         }
                     }
 
-                    var newEnemies = _playersBuffer
-                        .Where(px => !IsWhitelisted(px, mainPlayer) && !Array.Exists(_equipCardSlots, s => s == px.Id))
-                        .OrderBy(px => Vector2.Distance(
-                            new Vector2(px.CurrentLerpedX, px.CurrentLerpedY),
-                            new Vector2(mainPlayer.CurrentLerpedX, mainPlayer.CurrentLerpedY)))
-                        .ToList();
+                    // PERF: Where+OrderBy+ToList yerine manuel döngü + reusable buffer
+                    _newEnemiesBuf.Clear();
+                    foreach (var px in _playersBuffer)
+                    {
+                        if (IsWhitelisted(px, mainPlayer)) continue;
+                        bool alreadySlotted = false;
+                        for (int si = 0; si < maxSlots; si++)
+                            if (_equipCardSlots[si] == px.Id) { alreadySlotted = true; break; }
+                        if (!alreadySlotted) _newEnemiesBuf.Add(px);
+                    }
+                    // Mesafeye göre sırala (in-place, alloc yok)
+                    _newEnemiesBuf.Sort((a, b) =>
+                    {
+                        float da = (a.CurrentLerpedX - mainPlayer.CurrentLerpedX) * (a.CurrentLerpedX - mainPlayer.CurrentLerpedX)
+                                 + (a.CurrentLerpedY - mainPlayer.CurrentLerpedY) * (a.CurrentLerpedY - mainPlayer.CurrentLerpedY);
+                        float db = (b.CurrentLerpedX - mainPlayer.CurrentLerpedX) * (b.CurrentLerpedX - mainPlayer.CurrentLerpedX)
+                                 + (b.CurrentLerpedY - mainPlayer.CurrentLerpedY) * (b.CurrentLerpedY - mainPlayer.CurrentLerpedY);
+                        return da.CompareTo(db);
+                    });
 
-                    foreach (var px in newEnemies)
+                    foreach (var px in _newEnemiesBuf)
                     {
                         for (int si = 0; si < maxSlots; si++)
                         {
@@ -553,7 +585,10 @@ namespace Nightwatch
                     Player? ep = null;
                     lock (_dataLock)
                     {
-                        ep = _playersBuffer.FirstOrDefault(px => px.Id == targetId);
+                    // PERF: FirstOrDefault yerine manuel döngü (alloc yok)
+                    ep = null;
+                    foreach (var px2 in _playersBuffer)
+                        if (px2.Id == targetId) { ep = px2; break; }
                         if (ep == null)
                         {
                             if (_enemyLastSeenAt.TryGetValue(targetId, out var lastSeen) && (now - lastSeen).TotalSeconds <= memorySeconds)
@@ -611,12 +646,14 @@ namespace Nightwatch
 
                         int[] slotIdx = { 0, 1, 2, 3, 4 };
 
-                        int eqWeap = GetItemPower(ep.Equipment?.Length > 0 ? ep.Equipment[0] : 0);
-                        int eqOff = GetItemPower(ep.Equipment?.Length > 1 ? ep.Equipment[1] : 0);
-                        int eqCap = GetItemPower(ep.Equipment?.Length > 2 ? ep.Equipment[2] : 0);
-                        int eqArm = GetItemPower(ep.Equipment?.Length > 3 ? ep.Equipment[3] : 0);
-                        int eqShoe = GetItemPower(ep.Equipment?.Length > 4 ? ep.Equipment[4] : 0);
-                        int eqCape = GetItemPower(ep.Equipment?.Length > 6 ? ep.Equipment[6] : 0);
+                        // A4: eşya dizisini TEK kez oku
+                        var eqArr = ep.Equipment;
+                        int eqWeap = GetItemPower(eqArr != null && eqArr.Length > 0 ? eqArr[0] : 0);
+                        int eqOff = GetItemPower(eqArr != null && eqArr.Length > 1 ? eqArr[1] : 0);
+                        int eqCap = GetItemPower(eqArr != null && eqArr.Length > 2 ? eqArr[2] : 0);
+                        int eqArm = GetItemPower(eqArr != null && eqArr.Length > 3 ? eqArr[3] : 0);
+                        int eqShoe = GetItemPower(eqArr != null && eqArr.Length > 4 ? eqArr[4] : 0);
+                        int eqCape = GetItemPower(eqArr != null && eqArr.Length > 6 ? eqArr[6] : 0);
 
                         if (eqWeap > 0 && eqOff == 0) eqOff = eqWeap;
                         int avgIP = (eqWeap + eqOff + eqCap + eqArm + eqShoe + eqCape) / 6;
@@ -633,7 +670,7 @@ namespace Nightwatch
 
                         for (int k = 0; k < slotIdx.Length; k++)
                         {
-                            int eqId = (ep.Equipment != null && ep.Equipment.Length > slotIdx[k]) ? ep.Equipment[slotIdx[k]] : 0;
+                            int eqId = (eqArr != null && eqArr.Length > slotIdx[k]) ? eqArr[slotIdx[k]] : 0;
                             string internalName = GetEquipInternalName(ep, slotIdx[k]);
                             string? diskPath = internalName != null ? GetItemRenderPath(internalName) : null;
 
@@ -692,9 +729,12 @@ namespace Nightwatch
                              ImGui.SameLine(0, 8);
                              ImGui.TextColored(hpCol, $"HP:{hpCurrent}/{hpMax}");
                          }*/
+                        // A14: guild yoksa "[]" çizilmez ve hizalama kaymaz
                         if (!string.IsNullOrEmpty(ep.Guild))
+                        {
                             ImGui.SameLine(0, 8);
-                        ImGui.TextColored(new Vector4(0.6f, 0.6f, 1f, 1), $"[{ep.Guild}]");
+                            ImGui.TextColored(new Vector4(0.6f, 0.6f, 1f, 1), $"[{ep.Guild}]");
+                        }
                         if (avgIP > 0)
                         {
                             ImGui.SameLine(0, 8);
@@ -850,13 +890,17 @@ namespace Nightwatch
                     }
                     ImGui.EndGroup();
                     
-                    // Npcap Status Indicator at bottom right
-                    bool npcapInstalled = System.IO.File.Exists(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "Npcap", "wpcap.dll")) || 
-                                          System.IO.File.Exists(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "wpcap.dll")); // Fallback to WinPcap/standard location
+                    // PERF: Npcap varlığı sadece bir kez kontrol edilir (cache)
+                    if (!_npcapChecked)
+                    {
+                        _npcapInstalled = System.IO.File.Exists(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "Npcap", "wpcap.dll"))
+                                       || System.IO.File.Exists(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "wpcap.dll"));
+                        _npcapChecked = true;
+                    }
                     string npcapText = "[Npcap]";
                     Vector2 textSize = ImGui.CalcTextSize(npcapText);
                     Vector2 textPos = new Vector2(winPos.X + winSize.X - textSize.X - 15, winPos.Y + winSize.Y - textSize.Y - 15);
-                    uint npcapColor = npcapInstalled ? ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1.0f, 0.2f, 1.0f)) : ImGui.ColorConvertFloat4ToU32(new Vector4(1.0f, 0.2f, 0.2f, 1.0f));
+                    uint npcapColor = _npcapInstalled ? ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1.0f, 0.2f, 1.0f)) : ImGui.ColorConvertFloat4ToU32(new Vector4(1.0f, 0.2f, 0.2f, 1.0f));
                     drawList.AddText(textPos, npcapColor, npcapText);
                 }
                 

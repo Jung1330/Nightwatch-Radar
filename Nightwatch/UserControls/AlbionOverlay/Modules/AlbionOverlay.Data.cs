@@ -255,6 +255,10 @@ namespace Nightwatch
                         // JSON içindeki "type" ve "name" alanlarını küçük harfle okumamız gerekiyor
                         string type = item["type"]?.ToString().ToUpperInvariant() ?? "";
                         string name = item["name"]?.ToString().ToUpperInvariant() ?? "";
+                        string fileStr = item["file"]?.ToString() ?? "";
+                        string displayName = item["displayName"]?.ToString() ?? item["name"]?.ToString() ?? "";
+                        if (!string.IsNullOrEmpty(fileStr)) _mapFiles[id] = fileStr;
+                        if (!string.IsNullOrEmpty(displayName)) _mapDisplayNames[id] = displayName;
 
                         float size = 825.0f; // Varsayılan Açık Dünya boyutu
 
@@ -263,7 +267,8 @@ namespace Nightwatch
                         else if (type.Contains("PORTAL") || name.Contains("PORTAL")) size = 800.0f;
                         else if (type.Contains("ISLAND") || name.Contains("ISLAND")) size = 500.0f;
                         else if (type.Contains("HIDEOUT") || name.Contains("HIDEOUT")) size = 400.0f;
-                        else if (type.Contains("DUNGEON") || name.Contains("DNG") || name.Contains("TUNNEL") || name.Contains("TNL") || name.Contains("PASSAGE") || name.Contains("PSG") || name.Contains("HALL")) size = 350.0f;
+                        else if (type.Contains("TUNNEL") || name.Contains("TUNNEL") || id.StartsWith("TNL", StringComparison.OrdinalIgnoreCase) || type.Contains("PASSAGE") || name.Contains("PASSAGE") || id.StartsWith("PSG", StringComparison.OrdinalIgnoreCase)) size = 825.0f;
+                        else if (type.Contains("DUNGEON") || name.Contains("DNG") || name.Contains("HALL")) size = 350.0f;
 
                         _mapSizes[id] = size;
                     }

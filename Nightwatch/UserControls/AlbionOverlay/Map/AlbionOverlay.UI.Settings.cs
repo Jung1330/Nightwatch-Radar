@@ -47,6 +47,75 @@ namespace Nightwatch
                 MentalityTheme.GradientSeparator();
                 ImGui.TextColored(MentalityTheme.Colors.TextSecondary, Lang.Get("Settings_MapOpacity") ?? "Map Opacity");
                 ImGui.SliderFloat("##MapOpacity", ref _mapOpacity, 0.1f, 1.0f, "%.2f");
+                MentalityTheme.GradientSeparator();
+                ImGui.TextColored(MentalityTheme.Colors.TextSecondary, "Harita Olcek (Scale)");
+                ImGui.SliderFloat("##MapScale", ref _mapScale, 0.2f, 3.0f, "%.2f");
+                ImGui.TextColored(MentalityTheme.Colors.TextSecondary, "Harita Hizalama (Offset X)");
+                ImGui.SliderFloat("##MapOffsetX", ref _mapGlobalOffsetX, -1000.0f, 1000.0f, "%.1f");
+                ImGui.TextColored(MentalityTheme.Colors.TextSecondary, "Harita Hizalama (Offset Y)");
+                ImGui.SliderFloat("##MapOffsetY", ref _mapGlobalOffsetY, -1000.0f, 1000.0f, "%.1f");
+                if (ImGui.Button("Hizalamayi Sifirla"))
+                {
+                    _mapScale = 1.0f;
+                    _mapGlobalOffsetX = 0f;
+                    _mapGlobalOffsetY = 0f;
+                }
+                MentalityTheme.GradientSeparator();
+                ImGui.TextColored(new Vector4(1.0f, 0.8f, 0.2f, 1.0f), Lang.Get("Settings_MapTestTitle") ?? "--- V2 MAP TEST ---");
+                MentalityTheme.AnimatedToggle(Lang.Get("Settings_MapSystemV2") ?? "V2 Map System (Bounds)", ref _useNewMapSystem);
+                MentalityTheme.AnimatedToggle(Lang.Get("Settings_InvertMapV") ?? "Invert V Axis", ref _invertMapV);
+
+                // Debug bilgisi: Aktif haritanın mapSize ve center offset değerleri
+                if (_gameStateManager != null)
+                {
+                    string dbgMapId = _gameStateManager.CurrentMapId ?? "?";
+                    var (dbgSize, dbgCenter) = GetMapParamsForCurrentSystem(dbgMapId);
+                    ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f),
+                        $"Map: {dbgMapId} | Size: {dbgSize:F0} | Center: ({dbgCenter.X:F0}, {dbgCenter.Y:F0})");
+                    ImGui.TextColored(new Vector4(0.5f, 1.0f, 0.5f, 1.0f),
+                        string.Format(Lang.Get("Settings_MapSystemStatus") ?? "System: {0} | Invert V: {1}", _useNewMapSystem ? (Lang.Get("Settings_MapSystemV2Value") ?? "V2 (Bounds)") : (Lang.Get("Settings_MapSystemV1Value") ?? "V1 (Legacy)"), _invertMapV ? (Lang.Get("Common_Yes") ?? "Yes") : (Lang.Get("Common_No") ?? "No")));
+                    
+                    // Dosya çözümleme debug bilgisi
+                    string dbgFileMapping = _mapFiles.TryGetValue(dbgMapId, out string mf) ? mf : "(yok)";
+                    string dbgResolved = ResolveMapImagePath(dbgMapId) ?? "(null)";
+                    bool dbgCached = _mapImagePathCache.TryGetValue(dbgMapId, out var cv);
+                    ImGui.TextColored(new Vector4(1.0f, 0.6f, 0.3f, 1.0f),
+                        $"File Map: {dbgFileMapping}");
+                    ImGui.TextColored(new Vector4(1.0f, 0.6f, 0.3f, 1.0f),
+                        $"Resolved: {System.IO.Path.GetFileName(dbgResolved)}");
+                    if (dbgCached)
+                    {
+                        ImGui.TextColored(new Vector4(1.0f, 0.4f, 0.4f, 1.0f),
+                            $"Cache: {(string.IsNullOrEmpty(cv) ? "EMPTY (bulunamadi)" : System.IO.Path.GetFileName(cv))}");
+                    }
+                    // TANI: doku gercekten yuklendi mi? + oyuncu konumu ve UV
+                    if (!string.IsNullOrEmpty(dbgResolved) && System.IO.File.Exists(dbgResolved))
+                    {
+                        try
+                        {
+                            AddOrGetImagePointer(dbgResolved, true, out IntPtr dbgTex, out uint dbgW, out uint dbgH);
+                            var dbgMp = _gameStateManager.GetPlayer();
+                            float dbgPx = dbgMp != null ? dbgMp.CurrentLerpedX : 0f;
+                            float dbgPy = dbgMp != null ? dbgMp.CurrentLerpedY : 0f;
+                            Vector2 dbgUv = _useNewMapSystem
+                                ? ScreenToWorldUV_V2(Vector2.Zero, Vector2.Zero, new Vector2(dbgPx, dbgPy), dbgSize, dbgCenter)
+                                : ScreenToWorldUV(Vector2.Zero, Vector2.Zero, new Vector2(dbgPx, dbgPy), dbgSize, dbgCenter);
+                            ImGui.TextColored(dbgTex != IntPtr.Zero ? new Vector4(0.4f, 1.0f, 0.4f, 1.0f) : new Vector4(1.0f, 0.3f, 0.3f, 1.0f),
+                                $"TANI  doku={(dbgTex != IntPtr.Zero ? "YUKLENDI" : "BASARISIZ(0)")} {dbgW}x{dbgH}  oyuncu=({dbgPx:F0},{dbgPy:F0})  UV=({dbgUv.X:F2},{dbgUv.Y:F2})");
+                        }
+                        catch (Exception dbgEx)
+                        {
+                            ImGui.TextColored(new Vector4(1.0f, 0.3f, 0.3f, 1.0f), $"TANI hata: {dbgEx.Message}");
+                        }
+                    }
+
+                    // Cache temizle butonu
+                    if (ImGui.SmallButton("Cache Temizle"))
+                    {
+                        _mapImagePathCache.Remove(dbgMapId);
+                        ClearImageCache();
+                    }
+                }
             }
             MentalityTheme.EndCard();
 
@@ -72,7 +141,18 @@ namespace Nightwatch
             
             MentalityTheme.EndCard();
 
+            MentalityTheme.SectionHeader(Lang.Get("Settings_PerformanceTitle") ?? "Performance", MentalityTheme.Colors.AccentSuccess);
+            MentalityTheme.BeginCard("PerformanceCard", 0);
+            MentalityTheme.AnimatedToggle(Lang.Get("Settings_PerformanceMode") ?? "Performance Mode (Disable Visual Effects)", ref _performanceMode);
+            if (_performanceMode)
+            {
+                ImGui.TextColored(new Vector4(1f, 0.8f, 0.2f, 1f),
+                    Lang.Get("Settings_PerformanceModeActive") ?? "⚡ Performance Mode Active — particle effects & animations disabled");
+            }
+            MentalityTheme.EndCard();
+
             MentalityTheme.SectionHeader("System & Application", MentalityTheme.Colors.AccentSuccess);
+
             MentalityTheme.BeginCard("SystemApp", 0);
 
             ImGui.TextColored(MentalityTheme.Colors.TextSecondary, Lang.Get("Settings_UITheme") ?? "UI Theme");

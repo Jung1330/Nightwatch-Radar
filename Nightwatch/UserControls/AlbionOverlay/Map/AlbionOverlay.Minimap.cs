@@ -34,18 +34,60 @@ namespace Nightwatch
             if (_mapImagePathCache.TryGetValue(mapId, out var cached))
                 return string.IsNullOrEmpty(cached) ? null : cached;
 
-            string basePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Maps", mapId + ".webp");
+            // MISTS ZINDANI (Knightfall Abbey): "@MISTSDUNGEON@<guid>" -> STATIK abbey haritasi.
+            // (Normalde MapChangeHandler bu id'yi zaten abbey zone'una cevirir; bu yalnizca guvenlik agi.)
+            if (mapId.StartsWith("@MISTSDUNGEON@", StringComparison.OrdinalIgnoreCase))
+                mapId = "DNG-MISTS-UND-WIP-01-01";
+
+            // MISTS INSTANCE (@MISTS@<guid>): bu haritalarin arka plan gorseli YOK (procedural uretiliyor).
+            // Kullanici istegi: boyle haritalarda arka plan gizlensin (yanlis tunel/zindan gorseli cizilmesin).
+            if (mapId.StartsWith("@MISTS@", StringComparison.OrdinalIgnoreCase))
+            {
+                _mapImagePathCache[mapId] = string.Empty;
+                return null;
+            }
+
+            string mapsDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Maps");
+
+            // 1. Direkt mapId.webp dene
+            string basePath = System.IO.Path.Combine(mapsDir, mapId + ".webp");
             if (IsImageExistsCached(basePath))
             {
                 _mapImagePathCache[mapId] = basePath;
                 return basePath;
             }
 
+            // 2. zones.json'daki "file" alanından gelen alternatif dosya adını dene
+            if (_mapFiles.TryGetValue(mapId, out string mappedFile) && !string.IsNullOrEmpty(mappedFile))
+            {
+                // Tam dosya adı (TNL-140_RDS_RO_AUTO_T4_AVA_AVA.webp)
+                string mappedPath = System.IO.Path.Combine(mapsDir, mappedFile + ".webp");
+                if (IsImageExistsCached(mappedPath))
+                {
+                    _mapImagePathCache[mapId] = mappedPath;
+                    return mappedPath;
+                }
+
+                // Kısa dosya adı (TNL-140.webp) -> `_` ye göre böl ve ilk kısmı al
+                int underscoreIdx = mappedFile.IndexOf('_');
+                if (underscoreIdx > 0)
+                {
+                    string shortMappedFile = mappedFile.Substring(0, underscoreIdx);
+                    string shortMappedPath = System.IO.Path.Combine(mapsDir, shortMappedFile + ".webp");
+                    if (IsImageExistsCached(shortMappedPath))
+                    {
+                        _mapImagePathCache[mapId] = shortMappedPath;
+                        return shortMappedPath;
+                    }
+                }
+            }
+
+            // 3. Prefix fallback (TNL-340 → TNL.webp)
             int splitIdx = mapId.IndexOf('-');
             if (splitIdx > 0)
             {
                 string prefix = mapId.Substring(0, splitIdx);
-                string fallbackPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Maps", prefix + ".webp");
+                string fallbackPath = System.IO.Path.Combine(mapsDir, prefix + ".webp");
                 if (IsImageExistsCached(fallbackPath))
                 {
                     _mapImagePathCache[mapId] = fallbackPath;
@@ -57,10 +99,9 @@ namespace Nightwatch
             return null;
         }
 
-        // EKRAN VE OYUN KOORDÄ°NATLARINI KUSURSUZ SENKRONÄ°ZE EDEN FONKSÄ°YONLAR
+        // EKRAN VE OYUN KOORDİNATLARINI KUSURSUZ SENKRONİZE EDEN FONKSİYONLAR
         private Vector2 WorldToScreen(Vector2 center, Vector2 worldPos, Vector2 playerPos)
         {
-            // ORÄ°JÄ°NAL KODUNDAKÄ° SIRA GERÄ° GETÄ°RÄ°LDÄ° (SÄ°LÄ°NEN/DEÄzÄ°ÅzTÄ°RÄ°LEN KISIM DÃœZELTÄ°LDÄ°)
             float dx = worldPos.X - playerPos.X;
             float dy = worldPos.Y - playerPos.Y;
 
@@ -94,7 +135,7 @@ namespace Nightwatch
             return new Vector2(dx + playerPos.X, dy + playerPos.Y);
         }
 
-        private Vector2 ScreenToWorldUV(Vector2 screenPos, Vector2 center, Vector2 playerPos, float mapSize)
+        private Vector2 ScreenToWorldUV(Vector2 screenPos, Vector2 center, Vector2 playerPos, float mapSize, Vector2 mapCenterOffset)
         {
             Vector2 rel = screenPos - center - new Vector2(_radarOffsetX, _radarOffsetY);
             rel /= _zoom;
@@ -116,11 +157,10 @@ namespace Nightwatch
             float worldX = dx + playerPos.X;
             float worldY = dy + playerPos.Y;
 
-            // HARÄ°TA BOYUTU ARTIK SABÄ°T 825 DEÄzÄ°L, DÄ°NAMÄ°K GELÄ°YOR
             float worldMapSize = mapSize / _mapScale;
 
-            float u = ((worldX - _mapGlobalOffsetX) / worldMapSize) + 0.5f;
-            float v = ((worldY - _mapGlobalOffsetY) / worldMapSize) + 0.5f;
+            float u = ((worldX - mapCenterOffset.X - _mapGlobalOffsetX) / worldMapSize) + 0.5f;
+            float v = ((worldY - mapCenterOffset.Y - _mapGlobalOffsetY) / worldMapSize) + 0.5f;
 
             return new Vector2(u, v);
         }
@@ -133,9 +173,7 @@ namespace Nightwatch
             Vector2 center = winPos + (winSize / 2.0f);
             float radiusLimit = (Math.Min(winSize.X, winSize.Y) / 2.0f) - 15.0f;
 
-            /*drawList.AddLine(new Vector2(center.X, winPos.Y), new Vector2(center.X, winPos.Y + winSize.Y), 0x22FFFFFF);
-            drawList.AddLine(new Vector2(winPos.X, center.Y), new Vector2(winPos.X + winSize.X, center.Y), 0x22FFFFFF);*/
-
+            // --- YENİ DİNAMİK TEMA ÇİZGİSİ ---
             // --- YENÄ° DÄ°NAMÄ°K TEMA Ã‡Ä°ZGÄ°SÄ° ---
             Vector4 circleThemeCol = _selectedTheme == 1
                 ? new Vector4(0.22f, 0.52f, 0.92f, 0.45f)  // Obsidian Blue
@@ -144,6 +182,38 @@ namespace Nightwatch
             // Ã‡emberi yeni rengiyle Ã§iziyoruz
             drawList.AddCircle(center, radiusLimit, ImGui.ColorConvertFloat4ToU32(circleThemeCol), 64, 2.0f);
             drawList.AddCircleFilled(center, radiusLimit, 0x09000000); // Çok hafif koyu zemin – oyun görünümü öncelikli
+            // --- NWES PUSULA YÖN GÖSTERGELERİ — DAİRENİN İÇİNDE ---
+            // Harita dokusunun ÜSTÜNDE kalması için ÖN PLAN listesine çizilir
+            // (arka plan listesine çizilirse harita sonradan çizilip üstünü kapatıyordu).
+            // Okunabilirlik için 1px koyu gölge eklenir.
+            uint compassCol = 0xFF00D7FF;
+            uint compassShadow = 0xC0000000;
+            float compassInnerOffset = radiusLimit - 18.0f; // Dairenin İÇİNDE kenara yakın
+            float fontScale = 1.0f;
+            ImDrawListPtr compassDraw = ImGui.GetForegroundDrawList();
+            System.Action<Vector2, string> pusulaYaz = (konum, harf) =>
+            {
+                compassDraw.AddText(ImGui.GetFont(), ImGui.GetFontSize() * fontScale,
+                    konum + new Vector2(1f, 1f), compassShadow, harf);
+                compassDraw.AddText(ImGui.GetFont(), ImGui.GetFontSize() * fontScale,
+                    konum, compassCol, harf);
+            };
+            ImGui.SetWindowFontScale(fontScale);
+            pusulaYaz(center + new Vector2(-8, -compassInnerOffset - 8), "N");
+            pusulaYaz(center + new Vector2(-4, compassInnerOffset - 8), "S");
+            pusulaYaz(center + new Vector2(compassInnerOffset - 8, -8), "E");
+            pusulaYaz(center + new Vector2(-compassInnerOffset - 6, -8), "W");
+            ImGui.SetWindowFontScale(1.0f); // Geri al
+
+
+
+            if (mainPlayer != null)
+            {
+                /* DEBUG: Harita üstü X,Y koordinat göstergesi — aktive etmek için bu satırı açın
+                drawList.AddText(winPos + new Vector2(8, 8), 0xDD00FFFF, $"X: {mainPlayer.CurrentLerpedX:F1} | Y: {mainPlayer.CurrentLerpedY:F1}");
+                */
+            }
+
 
             // --- YENÄ° VE OPTÄ°MÄ°ZE EDÄ°LMÄ°Åz HARÄ°TA Ã‡Ä°ZÄ°MÄ° (KESÄ°N Ã‡Ã–ZÃœM) ---
             if (_showMapBackground && _gameStateManager != null)
@@ -163,35 +233,27 @@ namespace Nightwatch
                             AddOrGetImagePointer(mapImagePath, true, out IntPtr textureId, out uint imgW, out uint imgH);
                             if (textureId != IntPtr.Zero)
                             {
-                                float currentMapSize = 825.0f; // Standart AÃ§Ä±k DÃ¼nya
-                                string upperMapId = currentMapId.ToUpperInvariant();
+                                // V1/V2 toggle'a göre mapSize ve mapCenter al
+                                var (currentMapSize, mapCenterOffset) = GetMapParamsForCurrentSystem(currentMapId);
 
-                                // 1. Ã–NCELÄ°K: EÄŸer bu haritanÄ±n boyutu zones.json'dan okunduysa direkt onu kullan!
-                                if (_mapSizes.TryGetValue(currentMapId, out float exactSize))
+                                // V1 fallback: V2 kapalıysa ve JSON'da yoksa eski tahmin sistemi
+                                if (!_useNewMapSystem && !_mapSizes.ContainsKey(currentMapId))
                                 {
-                                    currentMapSize = exactSize;
-                                }
-                                // 2. EÄzER JSON'DA YOKSA: Harita ismine bakarak tahmin et (Fallback - Ã‡Ã¶kme Ã–nleyici)
-                                else
-                                {
-                                    if (upperMapId.StartsWith("DNG") || upperMapId.StartsWith("TNL") || upperMapId.StartsWith("PSG") || upperMapId.Contains("HALL"))
-                                    {
-                                        currentMapSize = 350.0f; // Zindan ve tÃ¼neller dar kalmalÄ±
-                                    }
-                                    else if (upperMapId.StartsWith("HIDEOUT"))
-                                    {
-                                        currentMapSize = 400.0f; // SÄ±ÄŸÄ±naklar biraz daha geniÅŸ
-                                    }
-                                    else if (upperMapId.Contains("CITY") || upperMapId.Contains("PORTAL"))
-                                    {
-                                        currentMapSize = 800.0f; // Ä°ÅzTE SENÄ°N Ã‡Ã–ZÃœMÃœN: Åzehir ve Portallar bÃ¼yÃ¼k kalacak, haritadan dÄ±ÅŸarÄ± taÅŸmayacaksÄ±n!
-                                    }
+                                    string upperMapId = currentMapId.ToUpperInvariant();
+                                    if (upperMapId.StartsWith("TNL") || upperMapId.StartsWith("PSG")) { currentMapSize = 825.0f; }
+                                    else if (upperMapId.StartsWith("DNG") || upperMapId.Contains("HALL")) { currentMapSize = 350.0f; }
+                                    else if (upperMapId.StartsWith("HIDEOUT")) { currentMapSize = 400.0f; }
+                                    else if (upperMapId.Contains("CITY") || upperMapId.Contains("PORTAL")) { currentMapSize = 800.0f; }
                                 }
 
                                 Vector2 playerPos = new Vector2(mp.CurrentLerpedX, mp.CurrentLerpedY);
-                                Vector2 centerUV = ScreenToWorldUV(center, center, playerPos, currentMapSize);
 
-                                // Karakter haritanÄ±n iÃ§inde mi kontrolÃ¼
+                                // UV hesabı: V2 açıksa V2, kapalıysa eski
+                                Vector2 centerUV = _useNewMapSystem
+                                    ? ScreenToWorldUV_V2(center, center, playerPos, currentMapSize, mapCenterOffset)
+                                    : ScreenToWorldUV(center, center, playerPos, currentMapSize, mapCenterOffset);
+
+                                // Karakter haritanın içinde mi kontrolü
                                 bool isCenterInside = centerUV.X >= 0.0f && centerUV.X <= 1.0f && centerUV.Y >= 0.0f && centerUV.Y <= 1.0f;
 
                                 int num_segments = 64;
@@ -205,12 +267,16 @@ namespace Nightwatch
                                     Vector2 p1 = center + new Vector2((float)Math.Cos(a1) * radiusLimit, (float)Math.Sin(a1) * radiusLimit);
                                     Vector2 p2 = center + new Vector2((float)Math.Cos(a2) * radiusLimit, (float)Math.Sin(a2) * radiusLimit);
 
-                                    Vector2 uv1 = ScreenToWorldUV(p1, center, playerPos, currentMapSize);
-                                    Vector2 uv2 = ScreenToWorldUV(p2, center, playerPos, currentMapSize);
+                                    Vector2 uv1 = _useNewMapSystem
+                                        ? ScreenToWorldUV_V2(p1, center, playerPos, currentMapSize, mapCenterOffset)
+                                        : ScreenToWorldUV(p1, center, playerPos, currentMapSize, mapCenterOffset);
+                                    Vector2 uv2 = _useNewMapSystem
+                                        ? ScreenToWorldUV_V2(p2, center, playerPos, currentMapSize, mapCenterOffset)
+                                        : ScreenToWorldUV(p2, center, playerPos, currentMapSize, mapCenterOffset);
 
                                     if (isCenterInside)
                                     {
-                                        // HARÄ°TA DIÅzINA TAÅzMAYI VE Ã‡OÄzALMAYI Ã–NLEYEN KUSURSUZ KESÄ°M MATEMATÄ°ÄzÄ°
+                                        // HARİTA DIŞINA TAŞMAYI VE ÇOĞALMAYI ÖNLEYEN KUSURSUZ KESİM MATEMATİĞİ
                                         float t1 = 1.0f;
                                         float dx1 = uv1.X - centerUV.X; float dy1 = uv1.Y - centerUV.Y;
                                         if (dx1 > 0) t1 = Math.Min(t1, (1.0f - centerUV.X) / dx1);
@@ -234,13 +300,12 @@ namespace Nightwatch
                                         Vector2 clippedUV2 = centerUV + new Vector2(dx2 * t2, dy2 * t2);
 
                                         // --- PREMIUM SAYDAMLIK MOTORU ---
-                                        // RGB renkleri beyaz (1.0f) kalÄ±r, Alpha (SaydamlÄ±k) deÄŸeri Slider'dan gelir!
                                         uint dynamicMapColor = ImGui.ColorConvertFloat4ToU32(new Vector4(1.0f, 1.0f, 1.0f, _mapOpacity));
 
                                         drawList.AddImageQuad(textureId,
                                             center, clippedP1, clippedP2, clippedP2,
                                             centerUV, clippedUV1, clippedUV2, clippedUV2,
-                                            dynamicMapColor); // 0xFFFFFFFF yerine dynamicMapColor kullanÄ±ldÄ±
+                                            dynamicMapColor);
                                     }
                                 }
                             }
@@ -249,6 +314,46 @@ namespace Nightwatch
                         {
                             System.Console.WriteLine($"Error Code : 55 | {ex.Message}");
                             Log(string.Format(Lang.Get("Error_General") ?? "[HATA] {0}", ex.Message), LogLevel.Error);
+                        }
+                    }
+                    else
+                    {
+                        // Görev 2 FIX: Harita dosyası yoksa (TNL-340, Knightfall Mist gibi)
+                        // zones.json'dan alınan gerçek ismi göster, yoksa raw ID
+                        // Harita gorseli yoksa SADECE gercek bolge adi yazilir
+                        // (ham ID / @MISTS@... / @MISTSDUNGEON@... asla ekrana basilmaz)
+                        string fallbackLabel = null;
+                        if (!currentMapId.StartsWith("@", StringComparison.OrdinalIgnoreCase)
+                            && _mapDisplayNames.TryGetValue(currentMapId, out string zName)
+                            && !string.IsNullOrEmpty(zName))
+                        {
+                            fallbackLabel = zName;
+                        }
+
+                        // Koyu lacivert fallback arka plan + ince grid çiz
+                        uint fallbackBg = 0xCC1A1A2E;   // koyu lacivert
+                        uint gridCol   = 0x15FFFFFF;    // %8 opak beyaz grid
+                        drawList.AddCircleFilled(center, radiusLimit, fallbackBg);
+
+                        // Yatay ve dikey ince grid çizgileri
+                        int gridLines = 8;
+                        float step = (radiusLimit * 2f) / gridLines;
+                        for (int gi = 0; gi <= gridLines; gi++)
+                        {
+                            float offset = -radiusLimit + gi * step;
+                            Vector2 hA = new Vector2(center.X - radiusLimit, center.Y + offset);
+                            Vector2 hB = new Vector2(center.X + radiusLimit, center.Y + offset);
+                            drawList.AddLine(hA, hB, gridCol, 0.5f);
+                            Vector2 vA = new Vector2(center.X + offset, center.Y - radiusLimit);
+                            Vector2 vB = new Vector2(center.X + offset, center.Y + radiusLimit);
+                            drawList.AddLine(vA, vB, gridCol, 0.5f);
+                        }
+
+                        // Bolge adi varsa ortaya yaz; yoksa hicbir sey yazilmaz
+                        if (!string.IsNullOrEmpty(fallbackLabel))
+                        {
+                            float labelW = fallbackLabel.Length * 7f; // yaklaşık genişlik tahmini
+                            drawList.AddText(center + new Vector2(-labelW / 2f, -8), 0x88FFFFFF, fallbackLabel);
                         }
                     }
                 }
@@ -299,6 +404,7 @@ namespace Nightwatch
                             uint color = isFriend ? 0xFF00FF00 : ((p.Faction == 255) ? COL_PLAYER : 0xFFFFFFFF);
                             string label = _showPlayerName ? p.Name : "";
                             if (_showPlayerName && _showGuild && !string.IsNullOrEmpty(p.Guild)) label += $" [{p.Guild}]";
+                            if (p.ItemPower > 0) label += $" [{p.ItemPower} IP]";
 
                             DrawRadarDot(drawList, center, mainPlayer, p.CurrentLerpedX, p.CurrentLerpedY, color, label, radiusLimit, showOffScreenArrow: true);
 
@@ -361,11 +467,33 @@ namespace Nightwatch
                         // ----------------------------------------------
 
                         string upperName = displayName.ToUpperInvariant();
+                        
+                        // HOVER DETECT FOR MOB
+                        if (_detailInfo)
+                        {
+                            Vector2 screenPos = WorldToScreen(center, new Vector2(m.CurrentLerpedX, m.CurrentLerpedY), new Vector2(mainPlayer.CurrentLerpedX, mainPlayer.CurrentLerpedY));
+                            if (Vector2.Distance(ImGui.GetMousePos(), screenPos) <= 15.0f)
+                            {
+                                ImGui.BeginTooltip();
+                                ImGui.TextColored(new Vector4(1.0f, 0.4f, 0.4f, 1.0f), "=== [MOB DETAYI] ===");
+                                ImGui.Text($"Ad (Oyun): {displayName}");
+                                ImGui.Text($"ID: {m.Id}");
+                                ImGui.Text($"TypeId: {m.TypeId}");
+                                ImGui.Text($"Ad (Network): {m.Name}");
+                                ImGui.Text($"Ad (Metadata): {(info != null ? info.Name : "Bilinmiyor")}");
+                                ImGui.Text($"Seviye (Tier): {(info != null ? info.Tier : 0)} (Network: {m.NetworkTier}, LootTier: {(typeInfo != null ? typeInfo.LootTier : 0)})");
+                                ImGui.Text($"Parilti (Enchant): {m.EnchantmentLevel}");
+                                ImGui.Text($"Nadirlik (Rarity): {m.Rarity}");
+                                ImGui.Text($"Deneyim (Exp): {m.Experience}");
+                                ImGui.Text($"Dunya Pozisyonu: X: {m.PositionX:F2}, Y: {m.PositionY:F2}");
+                                ImGui.EndTooltip();
+                            }
+                        }
+
                         bool isAspectOrWorldBoss = uniqueNameUpper.Contains("ASPECT") 
                             || uniqueNameUpper.Contains("WORLD_BOSS") 
                             || uniqueNameUpper.Contains("WORLD BOSS") 
-                            || (uniqueNameUpper.Contains("TITAN") && !uniqueNameUpper.Contains("TITANIUM")) 
-                            || uniqueNameUpper.Contains("GUARDIAN");
+                            || (uniqueNameUpper.Contains("TITAN") && !uniqueNameUpper.Contains("TITANIUM"));
 
                         // ÖZEL İKONLAR (Sniffers, Bosses, Crystals, Drones)
                         string specificIcon = null;
@@ -480,41 +608,45 @@ namespace Nightwatch
                         if (!_trackElemental && (upperName.Contains("ELEMENTAL") || uniqueNameUpper.Contains("ELEMENTAL")))
                             continue;
 
-                        // KNIGHTFALL ABBEY & MIST PORTAL GATES (GEÇİTLER)
-                        bool isAbbeyGate = upperName.Contains("ABBEY") || upperName.Contains("KNIGHTFALL") || uniqueNameUpper.Contains("ABBEY") || upperName.Contains("MIST_DUNGEON");
-                        bool isMistPortalGate = m.TypeId == 51800 || m.TypeId == 51801 || isAbbeyGate || upperName.Contains("PORTAL_MIST") || upperName.Contains("MISTS_PORTAL") || upperName.Contains("MIST PORTAL");
+                        // KNIGHTFALL ABBEY & MIST PORTAL GATES (GEÇİTLER) - Eski basit kontrol
+                        bool isAbbeyGate = m.TypeId == 51800 || m.TypeId == 51801;
+                        bool isMistPortalGate = isAbbeyGate;
                         if (isMistPortalGate)
                         {
-                            string gateLabel = (isAbbeyGate || upperName.Contains("ABBEY") || upperName.Contains("KNIGHTFALL")) ? "Knightfall Abbey" : "Mist Portal";
-                            uint gateColor = (isAbbeyGate || upperName.Contains("ABBEY") || upperName.Contains("KNIGHTFALL")) ? 0xFFFF00FF : 0xFF00FFFF; // Abbey: Mor/Pembe (0xFFFF00FF), Portal: Turkuaz
-                            DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, gateColor, gateLabel, radiusLimit, true, 8.0f);
+                            DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFF00FFFF, $"Mist Portal[{m.TypeId}]", radiusLimit, true, 8.0f);
                             continue;
                         }
 
-                        // GİZLİ VE NORMAL SANDIK ÇİZİMİ (TypeId 51800 portal geçididir, sandık 51900'dür)
-                        bool isChestObj = (m.TypeId == 51900 || upperName.Contains("CHEST") || upperName.Contains("TREASURE") || upperName.Contains("LOOT") || upperName.Contains("COFFER") || _hiddenChestIds.Contains(m.TypeId)) && !isMistPortalGate;
+                        // GİZLİ VE NORMAL SANDIK ÇİZİMİ
+                        // FIX: "CHEST" keyword "CHESTNUT" gibi mob isimlerini de yakalıyordu, bunu dışladık.
+                        bool hasChestKeyword = upperName.Contains("CHEST") && !upperName.Contains("CHESTNUT") && !upperName.Contains("SILVERCOINS");
+                        bool isChestObj = (m.TypeId == 51900 || hasChestKeyword || upperName.Contains("TREASURE") || upperName.Contains("LOOTCHEST") || upperName.Contains("COFFER")) && !isMistPortalGate && !isLivingResource;
                         if (isChestObj && !upperName.Contains("MINION"))
                         {
-                            if (upperName.Contains("HIDDEN") || _hiddenChestIds.Contains(m.TypeId))
+                            // FIX: Hidden chest önce _showHiddenChests kontrolüne girmeli, yoksa hiç çizilmiyordu.
+                            bool isHiddenChest = upperName.Contains("HIDDEN");
+                            
+                            if (isHiddenChest && _showHiddenChests)
                             {
-                                uint chestColor = 0xFFFFFFFF;
+                                // Hidden chest (beyaz renk, özel etiket)
                                 string chestLabel = "Hidden Chest";
-                                float size = 5.0f;
-
-                                if (_showChestIds) chestLabel += $" [{m.TypeId}]";
-                                DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, chestColor, chestLabel, radiusLimit, true, size);
+                                chestLabel += $"[{m.TypeId}]"; 
+                                DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFFFFFFFF, chestLabel, radiusLimit, true, 6.0f);
                                 continue;
                             }
-                            else if (_showHiddenChests)
+                            else if (!isHiddenChest) // FIX: Removed _showHiddenChests requirement for normal chests
                             {
+                                // Normal sandık (nadirlere göre renkli)
+                                // NOT: canlı ölçümde [5] alanı 1, 2, 4 ve 6 değerlerini aldı.
+                                // 1-4 isimlendirilir; 5+ için ham değer gösterilir (yanlış isim uydurmamak için).
                                 int cRarity = m.Rarity;
-                                string rarityName = cRarity switch
+                                string chestLabel = cRarity switch
                                 {
-                                    1 => "Uncommon",
-                                    2 => "Rare",
-                                    3 => "Epic",
-                                    4 => "Legendary",
-                                    _ => "Chest"
+                                    1 => "Uncommon Chest",
+                                    2 => "Rare Chest",
+                                    3 => "Epic Chest",
+                                    4 => "Legendary Chest",
+                                    _ => cRarity > 4 ? $"Chest r{cRarity}" : "Chest"
                                 };
                                 uint chestColor = cRarity switch
                                 {
@@ -522,42 +654,121 @@ namespace Nightwatch
                                     2 => 0xFF00BFFF, // Mavi
                                     3 => 0xFFFF00FF, // Mor
                                     4 => 0xFF00D7FF, // Altın
+                                    5 => 0xFF00FFFF, // Sarı
+                                    6 => 0xFF0080FF, // Turuncu
                                     _ => 0xFFFFD700
                                 };
-                                string chestLabel = (cRarity <= 0 || rarityName == "Chest") ? "Chest" : $"{rarityName} Chest";
-                                if (_showChestIds) chestLabel += $" [{m.TypeId}]";
+                                chestLabel += $"[{m.TypeId}]"; 
                                 DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, chestColor, chestLabel, radiusLimit, true, 5.0f);
                                 continue;
                             }
                         }
 
-                        // MIST CAGES (SİS KAFESLERİ)
-                        bool isMistCage = m.TypeId == 53000 || upperName.Contains("CAGE") || upperName.Contains("CAGED");
-                        if (isMistCage)
+                        // HUNT TRACKS (MOB İZLERİ)
+                        bool isHuntTrack = m.TypeId == 55600;
+                        if (isHuntTrack)
                         {
-                            if (_showWispCages)
+                            bool shouldDrawTrack = false;
+                            string trackImageName = null;
+
+                            if (upperName.Contains("WOLF") && _trackWolf) { shouldDrawTrack = true; trackImageName = "track_wolf.png"; }
+                            else if (upperName.Contains("BEAR") && _trackBear) { shouldDrawTrack = true; trackImageName = "track_bear.png"; }
+                            else if (upperName.Contains("PANTHER") && _trackPanther) { shouldDrawTrack = true; trackImageName = "track_panther.png"; }
+                            else if (upperName.Contains("HUMANOID") && _trackHumanoid) { shouldDrawTrack = true; trackImageName = "track_humanoid.png"; }
+                            else if (upperName.Contains("ELEMENTAL") && _trackElemental) { shouldDrawTrack = true; trackImageName = "track_elemental.png"; }
+                            else if (upperName.Contains("ENT") && _trackEnt) { shouldDrawTrack = true; trackImageName = "track_ent.png"; }
+                            else if (upperName.Contains("IMP") && _trackImp) { shouldDrawTrack = true; trackImageName = "track_imp.png"; }
+                            else if (upperName.Contains("GOLEM") && _trackGolem) { shouldDrawTrack = true; trackImageName = "track_golem.png"; }
+                            else if (upperName.Contains("WEREWOLF") && _trackWerewolf) { shouldDrawTrack = true; trackImageName = "track_werewolf.png"; }
+                            else if (upperName.Contains("DAWNBIRD") && _trackDawnbird) { shouldDrawTrack = true; trackImageName = "track_dawnbird.png"; }
+                            
+                            if (shouldDrawTrack)
                             {
-                                string cageLabel = _showMobNames ? "Mist Cage" : null;
-                                float cageSize = _globalIconSize - 2f; // Varsayılan ikon boyutundan 2 piksel daha küçük (İstediğin gibi ayarlayabilirsin)
-                                if (IsImageExistsCached(_cageImagePath))
+                                string iconPath = null;
+                                if (trackImageName != null)
                                 {
-                                    DrawImageOrDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, _cageImagePath, 0xFF00E5FF, cageLabel, radiusLimit, cageSize);
+                                    iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources", trackImageName);
+                                    if (!IsImageExistsCached(iconPath)) iconPath = null;
+                                }
+
+                                if (iconPath != null)
+                                {
+                                    DrawImageOrDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, iconPath, 0xFFFFFFFF, _showMobNames ? m.Name : null, radiusLimit, _globalIconSize);
                                 }
                                 else
                                 {
-                                    DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFF00E5FF, cageLabel, radiusLimit, true, 5.0f);
+                                    DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFF00FF00, _showMobNames ? m.Name : "Track", radiusLimit, true, 5.0f);
                                 }
                             }
                             continue;
                         }
 
-                        // MIST
-                        if (!isLivingResource && (upperName.Contains("MIST") || upperName.Contains("WISP") || upperName.Contains("PORTAL")))
+                        // SMUGGLERS (KAÇAKÇILAR)
+                        // "_" içeren isimleri de yakalamak için normalize et: SMUGGLER_X → SMUGGLER X
+                        string upperNameNorm = upperName.Replace("_", " ");
+                        bool isSmuggler = upperName.Contains("SMUGGLER") || upperNameNorm.Contains("SMUGGLER");
+                        if (isSmuggler)
                         {
+                            if (_showSmugglers)
+                            {
+                                string smugglerLabel = _showMobNames ? "Smuggler" : null;
+                                string smugglerIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources", "smuggler.png");
+                                DrawImageOrDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, smugglerIcon, 0xFF32CD32, smugglerLabel, radiusLimit, _globalIconSize + 10, true, 0xFF32CD32, true, _trackerShowMobIcons);
+                            }
+                            continue;
+                        }
+
+                        // MIST CAGES - ARTIK DUNGEONHANDLER TARAFINDAN (Type 9) ÇİZİLİYOR
+                        // O yüzden mob loop'undan tamamen sildik.
+                        // ODUL HEYKELI (event 400/401/402 -> handler TypeId 52000 atar)
+                        // Etiket: "Statue <tipId>" (packet [4] = ruhun ait oldugu mob tipId'si, orn. Statue 1622)
+                        if (m.TypeId == 52000)
+                        {
+                            string statueLabel = !string.IsNullOrWhiteSpace(m.Name) ? m.Name : "Statue";
+                            DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFF00D7FF, statueLabel, radiusLimit, true, 6.0f);
+                            continue;
+                        }
+
+                        // "MOB STATUE" ve diger dekoratif heykeller (*_STATUE_* / *_MOBSOUL_*)
+                        // KULLANICI ISTEGI: radar'da HIC GORUNMEZ (ne ikon ne yazi)
+                        if (uniqueNameUpper.Contains("STATUE") || uniqueNameUpper.Contains("MOBSOUL")
+                            || upperName.Contains("STATUE") || upperName.Contains("MOBSOUL"))
+                        {
+                            continue;
+                        }
+
+                        // MIST (MOB olarak gelen Mist kapıları/portalleri)
+                        // "_" içeren isimleri de yakala: MISTS_PERSONAL_SMALL → MISTS PERSONAL SMALL
+                        string upperNameForMist = upperName.Replace("_", " ");
+                        // DİL BAĞIMSIZ: oyunun benzersiz (İngilizce) kodu; çevrilmiş isim TR/RU/ZH'de eşleşmez
+                        string uNameForMist = uniqueNameUpper.Replace("_", " ");
+                        bool isMistOrWisp = !isLivingResource && (
+                            upperName.Contains("WISP") || uniqueNameUpper.Contains("WISP") ||
+                            upperNameForMist.Contains("WISP") || uNameForMist.Contains("WISP") ||
+                            upperName.Contains("PORTAL") || uniqueNameUpper.Contains("PORTAL") ||
+                            upperName.Contains("CAGE") || uniqueNameUpper.Contains("CAGE") ||
+                            upperNameForMist.Contains("CAGE") || uNameForMist.Contains("CAGE")
+                        );
+                        if (isMistOrWisp)
+                        {
+                            // CAGE'leri _showWispCages toggle'ına bağla
+                            bool isCage = upperName.Contains("CAGE") || uniqueNameUpper.Contains("CAGE")
+                                      || upperNameForMist.Contains("CAGE") || uNameForMist.Contains("CAGE");
+                            if (isCage)
+                            {
+                                if (_showWispCages)
+                                {
+                                    string cageLabel = _showMobNames ? m.Name.Replace("_", " ") : "Wisp Cage";
+                                    DrawRadarDot(drawList, center, mainPlayer, m.CurrentLerpedX, m.CurrentLerpedY, 0xFFFFD700, cageLabel, radiusLimit, true, 6.0f);
+                                }
+                                continue;
+                            }
+
                             if (_showMists)
                             {
-                                int rarity = m.EnchantmentLevel; if (rarity > 4) rarity = 4; if (rarity < 0) rarity = 0;
-                                bool isDuo = upperName.Contains("DUO");
+                                int rarity = Math.Max(m.EnchantmentLevel, m.Rarity);
+                                if (rarity > 4) rarity = 4; if (rarity < 0) rarity = 0;
+                                bool isDuo = upperName.Contains("DUO") || upperNameForMist.Contains("DUO");
 
                                 string rarityLabel = rarity switch
                                 {
@@ -729,7 +940,6 @@ namespace Nightwatch
                             bool isBigBoss = !isChestObj && !isLivingResource && m.TypeId != 51800 && m.TypeId != 51900 && m.TypeId != 53000 && (
                                 upperName.Contains("_BOSS") || upperName.EndsWith("BOSS") || upperName.StartsWith("BOSS_") || upperName.Contains("ASPECT") || upperName.Contains("TITAN") || upperName.Contains("GUARDIAN") || upperName.Contains("OLD_WHITE") 
                                 || upperName.Contains("DREAD LORD") || upperName.Contains("OVERLORD") || upperName.Contains("DEMON PRINCE") 
-                                || m.Rarity >= 3
                                 || (typeInfo != null && (typeInfo.UniqueName.Contains("_BOSS") || typeInfo.UniqueName.EndsWith("BOSS") || typeInfo.UniqueName.StartsWith("BOSS_"))));
 
                             // --- YENÄ° KURAL: EÄŸer otomatik taÃ§ takÄ±lacaksa ama listede yasaklÄ±ysa, tacÄ± Ã§Ä±kar ---
@@ -761,28 +971,7 @@ namespace Nightwatch
                             }
                         }
 
-                        // HOVER DETECT FOR MOB
-                        if (_detailInfo)
-                        {
-                            Vector2 screenPos = WorldToScreen(center, new Vector2(m.CurrentLerpedX, m.CurrentLerpedY), new Vector2(mainPlayer.CurrentLerpedX, mainPlayer.CurrentLerpedY));
-                            if (Vector2.Distance(ImGui.GetMousePos(), screenPos) <= 15.0f)
-                            {
-                                ImGui.BeginTooltip();
-                                ImGui.TextColored(new Vector4(1.0f, 0.4f, 0.4f, 1.0f), "=== [MOB DETAYI] ===");
-                                ImGui.Text($"Ad (Oyun): {displayName}");
-                                ImGui.Text($"ID: {m.Id}");
-                                ImGui.Text($"TypeId: {m.TypeId}");
-                                ImGui.Text($"Ad (Network): {m.Name}");
-                                ImGui.Text($"Ad (Metadata): {(info != null ? info.Name : "Bilinmiyor")}");
-                                ImGui.Text($"Seviye (Tier): {(info != null ? info.Tier : 0)} (Network: {m.NetworkTier}, LootTier: {(typeInfo != null ? typeInfo.LootTier : 0)})");
-                                ImGui.Text($"Parilti (Enchant): {m.EnchantmentLevel}");
-                                ImGui.Text($"Nadirlik (Rarity): {m.Rarity}");
-                                ImGui.Text($"Deneyim (Exp): {m.Experience}");
-                                ImGui.Text($"Living Resource: {isLivingResource} (Kategori: {mobCategory})");
-                                ImGui.Text($"Dunya Pozisyonu: X: {m.PositionX:F2}, Y: {m.PositionY:F2}");
-                                ImGui.EndTooltip();
-                            }
-                        }
+
                     }
                 }
 
@@ -809,6 +998,25 @@ namespace Nightwatch
                             var cat = GetCategoryFromTypeId(h.Type);
                             int tier = h.Tier;
                             int enchant = h.EnchantmentLevel;
+
+                            // HOVER DETECT FOR HARVESTABLE
+                            if (_detailInfo)
+                            {
+                                Vector2 screenPos = WorldToScreen(center, new Vector2(h.CurrentLerpedX, h.CurrentLerpedY), new Vector2(mainPlayer.CurrentLerpedX, mainPlayer.CurrentLerpedY));
+                                if (Vector2.Distance(ImGui.GetMousePos(), screenPos) <= 12.0f)
+                                {
+                                    ImGui.BeginTooltip();
+                                    ImGui.TextColored(new Vector4(0.8f, 0.4f, 1.0f, 1.0f), "=== [KAYNAK DETAYI] ===");
+                                    ImGui.Text($"Kategori: {cat}");
+                                    ImGui.Text($"ID: {h.Id}");
+                                    ImGui.Text($"Tasarim ID (Type): {h.Type}");
+                                    ImGui.Text($"Seviye (Tier): T{h.Tier}");
+                                    ImGui.Text($"Parilti (Enchant): .{h.EnchantmentLevel}");
+                                    ImGui.Text($"Miktar (Count): {h.Count} / {h.Capacity}");
+                                    ImGui.Text($"Dunya Pozisyonu: X: {h.PositionX:F2}, Y: {h.PositionY:F2}");
+                                    ImGui.EndTooltip();
+                                }
+                            }
 
                             if (_resourceShowOnlyEnchanted && enchant <= 0) continue;
 
@@ -893,24 +1101,7 @@ namespace Nightwatch
                                 }
                             }
 
-                            // HOVER DETECT FOR HARVESTABLE
-                            if (_detailInfo)
-                            {
-                                Vector2 screenPos = WorldToScreen(center, new Vector2(h.CurrentLerpedX, h.CurrentLerpedY), new Vector2(mainPlayer.CurrentLerpedX, mainPlayer.CurrentLerpedY));
-                                if (Vector2.Distance(ImGui.GetMousePos(), screenPos) <= 12.0f)
-                                {
-                                    ImGui.BeginTooltip();
-                                    ImGui.TextColored(new Vector4(0.8f, 0.4f, 1.0f, 1.0f), "=== [KAYNAK DETAYI] ===");
-                                    ImGui.Text($"Kategori: {cat}");
-                                    ImGui.Text($"ID: {h.Id}");
-                                    ImGui.Text($"Tasarim ID (Type): {h.Type}");
-                                    ImGui.Text($"Seviye (Tier): T{h.Tier}");
-                                    ImGui.Text($"Parilti (Enchant): .{h.EnchantmentLevel}");
-                                    ImGui.Text($"Miktar (Count): {h.Count} / {h.Capacity}");
-                                    ImGui.Text($"Dunya Pozisyonu: X: {h.PositionX:F2}, Y: {h.PositionY:F2}");
-                                    ImGui.EndTooltip();
-                                }
-                            }
+                            // Hover taşındı
                         }
                     }
                 }
@@ -937,8 +1128,17 @@ namespace Nightwatch
                             if (d.Type == "3" && !_showCorruptedDungeons) continue;
                             if (d.Type == "4" && !_showHellgateDungeons) continue;
                             if (d.Type == "7" && !_showMists) continue;
+                            if (d.Type == "9" && !_showWispCages) continue;
                             if (d.Type == "8" && (!_showAvalonianDungeons || (d.Tier >= 0 && d.Tier <= 8 && !_showAvalonianTiers[d.Tier]))) continue;
                             if (d.Type == "Exit" && !_showExits) continue;
+                            // 526 (NewMistsWispSpawn) = Mists'in dekoratif wisp/bitki asseti.
+                            // Kullanici istegi: bu asset radar'da HIC GOSTERILMEZ (ne yazi ne ikon).
+                            // Ham veri (state) korunur; yalnizca CIZIM atlanir -> istenirse tek satirla geri alinir.
+                            if (d.Type == "14") continue;
+                            // 538/539 (Mists sinir/zindan cikislari): kullanici istegi -> "Mists Exit" isaretleri de gorunmesin.
+                            if (d.Type == "12") continue;
+                            // 523 (NewMistsStaticEntrance): kullanici istegi -> "Mists Entrance" isareti de gorunmesin.
+                            if (d.Type == "11") continue;
 
                             string typeName = d.Type switch
                             {
@@ -948,15 +1148,38 @@ namespace Nightwatch
                                 "6" => "Group Boss Lair",
                                 "3" => "Corrupted",
                                 "4" => "Hellgate",
-                                "7" => (d.Prefab?.ToUpperInvariant().Contains("ABBEY") == true || d.Name?.ToUpperInvariant().Contains("ABBEY") == true || d.Prefab?.ToUpperInvariant().Contains("MIST") == true) ? "Knightfall Abbey" : "Mist Portal",
+                                // WISP iceren portal -> "Mist Wisp"
+                                // DUNGEON iceren giris -> Knightfall Abbey (mists'in tek zindani;
+                                // prefab ornegi: SHARED_MIST_DUNGEON_ENTRANCE_SMALL)
+                                "7" => (d.Prefab?.ToUpperInvariant().Contains("WISP") == true
+                                        || d.Name?.ToUpperInvariant().Contains("WISP") == true)
+                                       ? "Mist Wisp"
+                                       : ((d.Prefab?.ToUpperInvariant().Contains("DUNGEON") == true
+                                           || d.Name?.ToUpperInvariant().Contains("DUNGEON") == true
+                                           || d.Prefab?.ToUpperInvariant().Contains("ABBEY") == true
+                                           || d.Name?.ToUpperInvariant().Contains("ABBEY") == true
+                                           || d.Name?.ToUpperInvariant().Contains("KNIGHTFALL") == true)
+                                          ? "Knightfall Abbey" : "Mist Portal"),
                                 "8" => d.Name ?? "Avalonian Dungeon",
+                                "9" => "Mist Cage",
+                                "10" => "Smuggler Stash",
+                                "11" => "Mists Entrance",
+                                "12" => "Mists Exit",
+                                "13" => "Tunnel Exit",
+                                "14" => "Wisp",   // 526 (NewMistsWispSpawn): mist DEGIL, Mists'in dekoratif wisp/bitki nesnesi
                                 "Exit" => "Exit",
                                 _ => "Dungeon"
                             };
 
                             uint dCol = d.Type switch
                             {
-                                "7" => 0xFFFF00FF, // Knightfall Abbey / Mist Portal: Parlak Mor/Pembe
+                                "7" => typeName == "Knightfall Abbey" ? 0xFFFF00FF : 0xFF00FFFF, // Abbey: Pembe/Mor, Portal: Turkuaz
+                                "9" => 0xFF00E5FF, // Mist Cage Turkuaz/Mavi
+                                "10" => 0xFF32CD32, // Smuggler Yeşili
+                                "11" => 0xFF00FFFF, // Mists Entrance: Turkuaz
+                                "12" => 0xFFFFA500, // Mists Exit: Turuncu
+                                "13" => 0xFF8080FF, // Tunnel Exit: Açık mor
+                                "14" => 0xFF7FD4FF, // Wisp: Açık mavi (mist etiketli portallardan ayrisir)
                                 "Exit" => 0xFFFFFF00,
                                 _ => d.EnchantmentLevel switch
                                 {
@@ -970,6 +1193,8 @@ namespace Nightwatch
 
                             string label = d.EnchantmentLevel > 0 ? $"{typeName} (.{d.EnchantmentLevel})" : typeName;
                             if (d.Type == "8") label = d.Tier > 0 ? $"T{d.Tier} {label}" : label;
+                            // Tip 9/10 (kafes/kacakci) ve 14 (Mists'in wisp/bitki nesneleri) icin YAZI cizilmez.
+                            if (d.Type == "9" || d.Type == "10" || d.Type == "14") label = "";
 
                             bool drawnWithIcon = false;
                             if (_showDungeonIcons)
@@ -978,7 +1203,11 @@ namespace Nightwatch
                                 string resDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Resources");
                                 if (d.Type == "3") imgPath = Path.Combine(resDir, "corrupt.png");
                                 else if (d.Type == "4") imgPath = Path.Combine(resDir, "hellgate.png");
-                                else if (d.Type == "7") imgPath = Path.Combine(resDir, "mist.png");
+                                // DUZELTME: kod "mist.png" istiyordu ama asset "mist_0..4.png" (enchant varyantlari)
+                                // -> dosya bulunamayinca ikon yerine sari kare ciziliyordu.
+                                else if (d.Type == "7" || d.Type == "11" || d.Type == "14") imgPath = Path.Combine(resDir, $"mist_{Math.Min((int)d.EnchantmentLevel, 4)}.png"); // Mist Portal / Mists Entrance / Wisp
+                                else if (d.Type == "9") imgPath = Path.Combine(resDir, "cage.png");
+                                else if (d.Type == "10") imgPath = Path.Combine(resDir, "smuggler.png");
                                 else if (d.Type == "1" || d.Type == "5") imgPath = Path.Combine(resDir, $"dungeon_{Math.Min((int)d.EnchantmentLevel, 4)}.png");
                                 else if (d.Type == "2" || d.Type == "6") imgPath = Path.Combine(resDir, $"group_{Math.Min((int)d.EnchantmentLevel, 4)}.png");
 
@@ -1073,7 +1302,29 @@ namespace Nightwatch
 
         private int CalculateResourceCount()
         {
-            lock (_dataLock) { return _harvestBuffer.Count(h => h.Count > 0); }
+            lock (_dataLock)
+            {
+                if (!_showResources) return 0;
+                int count = 0;
+                foreach (var h in _harvestBuffer)
+                {
+                    if (_ignoredMobIds.Contains(h.Type)) continue;
+                    if (h.Count <= 0) continue;
+                    var cat = GetCategoryFromTypeId(h.Type);
+                    if (cat == HarvestableCategory.None) continue;
+                    if (!_resourceMasterToggles.TryGetValue(cat, out bool masterOn) || !masterOn) continue;
+                    int tier = h.Tier;
+                    int enchant = h.EnchantmentLevel;
+                    if (_resourceShowOnlyEnchanted && enchant <= 0) continue;
+                    int tierIndex = Math.Max(0, Math.Min(tier - 1, 7));
+                    int enchantIndex = Math.Min(enchant, 3);
+                    if (_resourceFilters.TryGetValue(cat, out var filterMatrix) && filterMatrix[tierIndex, enchantIndex])
+                    {
+                        count++;
+                    }
+                }
+                return count;
+            }
         }
 
         private void DrawImageOrDot(ImDrawListPtr dl, Vector2 center, Player p, float tx, float ty, string imgPath, uint fallbackCol, string lbl, float lim, float size, bool edgeClamp = false, uint laserCol = 0, bool showOffScreenArrow = false, bool showTrackerIcon = true)
@@ -1369,8 +1620,9 @@ namespace Nightwatch
                     float textYOffset = iconDrawn ? (iconSize / 2f + 2f) : 6f;
                     Vector2 textAnchor = lineEnd + new Vector2(-ts.X / 2f, textYOffset);
 
-                    textAnchor.X = Math.Clamp(textAnchor.X, 8f, scrW - ts.X - 8f);
-                    textAnchor.Y = Math.Clamp(textAnchor.Y, 8f, scrH - ts.Y - 8f);
+                    // A7: etiket ekrandan genişse üst sınır alt sınırdan küçük olur ve Math.Clamp hata atar
+                    textAnchor.X = Math.Clamp(textAnchor.X, 8f, Math.Max(8f, scrW - ts.X - 8f));
+                    textAnchor.Y = Math.Clamp(textAnchor.Y, 8f, Math.Max(8f, scrH - ts.Y - 8f));
 
                     DrawLaserLabel(dl, textAnchor, lbl, accentCol);
                 }

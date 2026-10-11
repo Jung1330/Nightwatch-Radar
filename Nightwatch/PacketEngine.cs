@@ -16,6 +16,8 @@ using PacketDotNet;
 using SharpPcap;
 using Nightwatch.Managers;
 using Nightwatch.UserControls.Language;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Nightwatch
 {
@@ -148,6 +150,7 @@ namespace Nightwatch
 
             // İşçiyi başlat
             Task.Factory.StartNew(ProcessQueue, _cancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Task.Factory.StartNew(StartIpcListener, _cancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
         private static string GetLocalIPv4()
@@ -168,26 +171,13 @@ namespace Nightwatch
             return string.Empty;
         }
 
-        private bool TryOpenDevice(ICaptureDevice device, int timeoutMs = 1000)
+        private bool TryOpenDevice(ICaptureDevice device, int timeoutMs = 20)
         {
             try
             {
-                device.Open(DeviceModes.MaxResponsiveness, timeoutMs);
+                // FIX: MaxResponsiveness and Promiscuous modes cause Hypervisor_Error BSOD on Hyper-V enabled machines
+                device.Open(DeviceModes.None, timeoutMs);
                 return true;
-            }
-            catch (EntryPointNotFoundException)
-            {
-                try
-                {
-                    device.Open(DeviceModes.Promiscuous, timeoutMs);
-                    Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ? MaxResponsiveness desteklenmiyor, Promiscuous fallback kullanildi.");
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    Nightwatch.UIConsole.Log($"[HATA] Error Code: " + ex.Message, Nightwatch.LogLevel.Error);
-                    return false;
-                }
             }
             catch (Exception ex)
             {
@@ -229,6 +219,104 @@ namespace Nightwatch
                     }
                 }
             }
+        }
+
+        private void StartIpcListener()
+        {
+            try
+            {
+                var listener = new TcpListener(IPAddress.Loopback, 50599);
+                listener.Start();
+                Nightwatch.UIConsole.Log("[PacketEngine] Fake Server IPC Listener started on 127.0.0.1:50599", LogLevel.Info);
+
+                while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    if (listener.Pending())
+                    {
+                        var client = listener.AcceptTcpClient();
+                        Task.Run(() => HandleIpcClient(client));
+                    }
+                    else
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Nightwatch.UIConsole.Log($"[PacketEngine] IPC Listener Error: {ex.Message}", LogLevel.Error);
+            }
+        }
+
+        private void HandleIpcClient(TcpClient client)
+        {
+            try
+            {
+                using var reader = new StreamReader(client.GetStream());
+                string json = reader.ReadToEnd();
+                if (!string.IsNullOrWhiteSpace(json))
+                {
+                    var payload = JsonConvert.DeserializeObject<FakePacketPayload>(json);
+                    if (payload != null)
+                    {
+                        var parameters = ConvertJObjectToDictionary(payload.Parameters);
+                        
+                        if (payload.Type.Equals("Event", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _albionDataParser.InjectParsedEvent(payload.Code, parameters);
+                        }
+                        else if (payload.Type.Equals("Request", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _albionDataParser.InjectParsedRequest(payload.Code, parameters);
+                        }
+                        else if (payload.Type.Equals("Response", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _albionDataParser.InjectParsedResponse(payload.Code, parameters);
+                        }
+                        
+                        Nightwatch.UIConsole.Log($"[PacketEngine] Injected Fake {payload.Type} Code {payload.Code}", LogLevel.Info);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Nightwatch.UIConsole.Log($"[PacketEngine] Failed to parse injected packet: {ex.Message}", LogLevel.Error);
+            }
+            finally
+            {
+                client.Close();
+            }
+        }
+
+        private Dictionary<byte, object> ConvertJObjectToDictionary(JObject jObject)
+        {
+            var dict = new Dictionary<byte, object>();
+            if (jObject == null) return dict;
+
+            foreach (var kvp in jObject)
+            {
+                if (byte.TryParse(kvp.Key, out byte key))
+                {
+                    dict[key] = ParseJToken(kvp.Value);
+                }
+            }
+            return dict;
+        }
+
+        private object ParseJToken(JToken token)
+        {
+            if (token == null || token.Type == JTokenType.Null) return null;
+
+            return token.Type switch
+            {
+                JTokenType.Object => ConvertJObjectToDictionary((JObject)token),
+                JTokenType.Array => token.Select(ParseJToken).ToArray(),
+                JTokenType.Integer => token.ToObject<long>(),
+                JTokenType.Float => token.ToObject<float>(),
+                JTokenType.Boolean => token.ToObject<bool>(),
+                JTokenType.String => token.ToObject<string>(),
+                _ => token.ToString()
+            };
         }
 
         // --- YENİ: ADAPTÖR KARŞILAŞTIRMA ---
@@ -302,7 +390,7 @@ namespace Nightwatch
                         try
                         {
                             dev.OnPacketArrival += PacketHandler;
-                            dev.Open(DeviceModes.Promiscuous, 1);
+                            dev.Open(DeviceModes.None, 20);
                             dev.Filter = "udp";
                             dev.StartCapture();
                             _openedDevices.Add(dev);
@@ -328,7 +416,7 @@ namespace Nightwatch
                     try
                     {
                         dev.OnPacketArrival += PacketHandler;
-                        dev.Open(DeviceModes.Promiscuous, 1);
+                        dev.Open(DeviceModes.None, 20);
                         dev.Filter = "udp";
                         dev.StartCapture();
                         _openedDevices.Add(dev);
@@ -371,14 +459,16 @@ namespace Nightwatch
 
                 if (packet == null) return;
 
-                UdpPortInspector.ReportTraffic(packet.SourcePort, false, ((ICaptureDevice)sender).Description ?? string.Empty);
-                UdpPortInspector.ReportTraffic(packet.DestinationPort, false, ((ICaptureDevice)sender).Description ?? string.Empty);
+                string adapterName = ((ICaptureDevice)sender).Description ?? string.Empty;
+                bool photonLike = packet.SourcePort == 5056 || packet.DestinationPort == 5056;
 
-                if (packet.SourcePort == 5056 || packet.DestinationPort == 5056)
+                // A19: paket başına TEK rapor (eskiden sayaçlar iki kez artıyordu)
+                UdpPortInspector.ReportTraffic(packet.SourcePort, photonLike, adapterName);
+                if (packet.DestinationPort != packet.SourcePort)
+                    UdpPortInspector.ReportTraffic(packet.DestinationPort, photonLike, adapterName);
+
+                if (photonLike)
                 {
-                    UdpPortInspector.ReportTraffic(packet.SourcePort, true, ((ICaptureDevice)sender).Description ?? string.Empty);
-                    UdpPortInspector.ReportTraffic(packet.DestinationPort, true, ((ICaptureDevice)sender).Description ?? string.Empty);
-
                     _packetQueue.Add(packet.PayloadData);
                 }
             }
@@ -407,7 +497,7 @@ namespace Nightwatch
 
                     try
                     {
-                        dev.Open(DeviceModes.Promiscuous, 1);
+                        dev.Open(DeviceModes.None, 20);
                         // Sadece Albion'un kullandığı portları filtrele
                         dev.Filter = "udp port 5056 or udp port 5057 or udp port 5055";
 
@@ -477,6 +567,13 @@ namespace Nightwatch
 
             _openedDevices.Clear();
         }
+    }
+
+    public class FakePacketPayload
+    {
+        public string Type { get; set; } // "Event", "Request", "Response"
+        public byte Code { get; set; }
+        public JObject Parameters { get; set; }
     }
 }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -22,28 +22,59 @@ namespace Nightwatch
 {
     public partial class AlbionOverlay
     {
-        private string _announcementText = "Please Wait...";
+        private string _announcementText = "";
         private bool _announcementFetched = false;
-        // BURAYA GITHUB RAW LINKINI YAZACAKSIN
-        private readonly string _announcementUrl = "https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App.txt";
+        private string _announcementLang = "";
+        // Site kokundeki duyuru dosyalari: App.txt (yedek) + App_{DIL}.txt
+        private const string AnnouncementUrlBase = "https://raw.githubusercontent.com/Jung1330/Nightwatch-Radar/refs/heads/Website/App";
 
+        /// <summary>
+        /// "Updates &amp; Current Info" konsolunu SECILI DILE gore doldurur.
+        /// Kaynak sirasi: App_{DIL}.txt -> App.txt -> Assets\announcement_{DIL}.txt
+        /// -> Assets\announcement.txt -> yerel hata mesaji.
+        /// Dil degisirse kendini yeniler.
+        /// </summary>
         private void FetchAnnouncement()
         {
-            if (_announcementFetched) return;
+            string dil = (Lang.CurrentLang ?? "EN").ToUpperInvariant();
+            if (_announcementFetched && _announcementLang == dil) return;
             _announcementFetched = true;
+            _announcementLang = dil;
+            _announcementText = Lang.Get("Device_AnnouncementLoading") ?? "Please Wait...";
+
             System.Threading.Tasks.Task.Run(async () =>
             {
+                using var client = new System.Net.Http.HttpClient();
+                client.Timeout = TimeSpan.FromSeconds(10);
+
+                foreach (string url in new[] { $"{AnnouncementUrlBase}_{dil}.txt", $"{AnnouncementUrlBase}.txt" })
+                {
+                    try
+                    {
+                        string text = await client.GetStringAsync(url);
+                        if (!string.IsNullOrWhiteSpace(text))
+                        {
+                            _announcementText = text;
+                            return;
+                        }
+                    }
+                    catch (Exception) { /* sonraki kaynaga gec */ }
+                }
+
                 try
                 {
-                    using var client = new System.Net.Http.HttpClient();
-                    client.Timeout = TimeSpan.FromSeconds(10);
-                    var text = await client.GetStringAsync(_announcementUrl);
-                    _announcementText = text;
+                    string yerel = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", $"announcement_{dil}.txt");
+                    if (!File.Exists(yerel))
+                        yerel = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "announcement.txt");
+                    if (File.Exists(yerel))
+                    {
+                        _announcementText = File.ReadAllText(yerel);
+                        return;
+                    }
                 }
-                catch (Exception)
-                {
-                    _announcementText = "Please Check Network Connection";
-                }
+                catch (Exception) { }
+
+                _announcementText = Lang.Get("Device_AnnouncementError") ?? "Please Check Network Connection";
             });
         }
 
@@ -136,13 +167,15 @@ namespace Nightwatch
             
             MentalityTheme.EndCard();
 
-            MentalityTheme.SectionHeader("Updates & Current Info", MentalityTheme.Colors.AccentSuccess);
+            MentalityTheme.SectionHeader(Lang.Get("Device_UpdatesInfo") ?? "Updates & Current Info", MentalityTheme.Colors.AccentSuccess);
             MentalityTheme.BeginCard("ConsoleLog", 0);
 
-            if (!_announcementFetched)
-            {
-                FetchAnnouncement();
-            }
+            // H2: çalışan sürüm + güncelleme durumu (sürüm Directory.Build.props'ten gelir)
+            ImGui.TextColored(MentalityTheme.Colors.TextSecondary, $"Nightwatch {Nightwatch.Program.VersionText}");
+            ImGui.TextColored(Nightwatch.Program.UpdateStatusColor, Nightwatch.Program.UpdateStatusText);
+
+            // Dil degisirse FetchAnnouncement kendi kendine yeniler
+            FetchAnnouncement();
 
             ImGui.PushStyleColor(ImGuiCol.ChildBg, new Vector4(0.02f, 0.02f, 0.03f, 1.0f));
             

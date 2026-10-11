@@ -33,8 +33,11 @@ namespace AlbionDataHandlers.Handlers
             {
                 HandleLeave(parameters);
             }
-            // --- EKLENEN KISIM: KAYNAK BİTİŞ EVENTİ (45) ---
-            else if (eventCode == (EventCodes)45)
+            // --- KAYNAK BİTİŞ EVENTİ ---
+            // DÜZELTME (A9): Oyunun gerçek enum'unda 45 = NewBuilding'tir, "kaynak bitti" DEĞİLDİR.
+            // Doğrusu: HarvestFinished = 61  (HarvestStart = 59, HarvestCancel = 60)
+            // Kaynak: Extra\dump.cs -> "public enum EventCodes" (TypeDefIndex 15279)
+            else if (eventCode == EventCodes.HarvestFinished)
             {
                 HandleHarvestableFinished(parameters);
             }
@@ -45,12 +48,13 @@ namespace AlbionDataHandlers.Handlers
         {
             try
             {
-                // Parametre 0 genellikle biten kaynağın ID'sidir
-                if (parameters.TryGetValue(0, out object idObj))
-                {
-                    long rawId = Convert.ToInt64(idObj);
-                    RemoveHarvestable(unchecked((int)rawId));
-                }
+                // URETILEN PAKET MODELI (kod 61 = HarvestFinished): [0] = ResourceId
+                // (ExtractLong: int ve byte[8] bicimlerinin ikisini de okur.)
+                if (parameters == null || !parameters.ContainsKey(0)) return;
+                var finished = AlbionDataHandlers.Packets.Events.HarvestFinished.From(parameters);
+                if (finished == null) return;
+
+                RemoveHarvestable(unchecked((int)finished.ResourceId));
             }
             catch (System.Exception ex)
             {
@@ -60,17 +64,26 @@ namespace AlbionDataHandlers.Handlers
 
         private void HandleNewHarvestable(Dictionary<byte, object> parameters)
         {
-            long rawId = EventHandlerUtils.ExtractValue<long>(parameters, 0);
-            int id = unchecked((int)rawId);
-            byte type = EventHandlerUtils.ExtractValue<byte>(parameters, 5);
-            byte tier = EventHandlerUtils.ExtractValue<byte>(parameters, 7);
+            // URETILEN PAKET MODELI (kod 40 = NewHarvestableObject):
+            //   [0] ResourceId · [5] ResourceType · [7] Tier · [8] Position · [10] Size · [11] Enchant
+            var pkt = AlbionDataHandlers.Packets.Events.NewHarvestableObject.From(parameters);
+            if (pkt == null) return;
+
+            int id = unchecked((int)pkt.ResourceId);
+            byte type = pkt.ResourceType;
+            byte tier = pkt.Tier;
 
             float posX = 0, posY = 0;
-            if (parameters.TryGetValue(8, out object posObj) && TryParsePosition(posObj, out float x8, out float y8)) { posX = x8; posY = y8; }
+            if (pkt.Position != null && TryParsePosition(pkt.Position, out float x8, out float y8)) { posX = x8; posY = y8; }
+            // OLU YOL (bilerek korundu): tabloya gore [4] bir konum DEGIL (int) ve canli
+            // kayitta hic gelmiyor; eski kod buraya yedek olarak bakiyordu.
             else if (parameters.TryGetValue(4, out object posObj4) && TryParsePosition(posObj4, out float x4, out float y4)) { posX = x4; posY = y4; }
 
-            byte size = EventHandlerUtils.ExtractValue<byte>(parameters, 10);
-            byte enchant = EventHandlerUtils.ExtractValue<byte>(parameters, 11);
+            // ESKI DAVRANIS KORUNUR: [10] byte okunuyordu -> 0-255 disi deger okunamaz ve
+            // 0 kabul edilirdi (kaynak eklenmezdi). Model alani short gelir.
+            int size = pkt.Size;
+            if (size < 0 || size > byte.MaxValue) size = 0;
+            byte enchant = pkt.Enchant;
 /*
             try
             {
@@ -98,30 +111,38 @@ namespace AlbionDataHandlers.Handlers
         {
             try
             {
-                if (parameters.TryGetValue(0, out object idObj) && idObj is IList idList)
+                if (parameters.TryGetValue(0, out object idObj) && idObj is IList)
                 {
-                    var types = parameters[1] as IList;
-                    var tiers = parameters[2] as IList;
-                    var positions = parameters[3] as IList;
-                    var sizes = parameters.ContainsKey(4) ? parameters[4] as IList : null;
+                    // URETILEN PAKET MODELI (kod 39 = NewSimpleHarvestableObjectList):
+                    //   [0] ID dizisi · [1] tip dizisi · [2] tier dizisi
+                    //   [3] konum dizisi (x,y ciftleri) · [4] size dizisi
+                    // NOT: tel formatinda [0] short[]/byte[] gelebiliyor; model alanlari
+                    // esnek okuyucularla doldurulur (indeksler tek tabloda kalsin diye).
+                    var list = AlbionDataHandlers.Packets.Events.NewSimpleHarvestableObjectList.From(parameters);
+                    if (list == null) return;
 
-                    if (types == null || tiers == null || positions == null) return;
+                    long[] ids = list.F0;
+                    byte[] types = list.F1;
+                    byte[] tiers = list.F2;
+                    float[] positions = list.F3;
+                    short[] sizes = list.F4;
 
-                    int count = idList.Count;
+                    if (ids == null || types == null || tiers == null || positions == null) return;
+
+                    int count = ids.Length;
                     lock (_lockObject)
                     {
                         for (int i = 0; i < count; i++)
                         {
-                            long rawId = Convert.ToInt64(idList[i]);
-                            int id = unchecked((int)rawId);
-                            byte type = Convert.ToByte(types[i]);
-                            byte tier = Convert.ToByte(tiers[i]);
+                            int id = unchecked((int)ids[i]);
+                            byte type = types[i];
+                            byte tier = tiers[i];
 
-                            if ((i * 2 + 1) < positions.Count)
+                            if ((i * 2 + 1) < positions.Length)
                             {
-                                float posX = Convert.ToSingle(positions[i * 2]);
-                                float posY = Convert.ToSingle(positions[i * 2 + 1]);
-                                byte size = (sizes != null && i < sizes.Count) ? Convert.ToByte(sizes[i]) : (byte)0;
+                                float posX = positions[i * 2];
+                                float posY = positions[i * 2 + 1];
+                                byte size = (sizes != null && i < sizes.Length) ? (byte)sizes[i] : (byte)0;
 
                                 AddOrUpdateHarvestableInternal(id, type, tier, posX, posY, size, 0);
                             }
@@ -131,15 +152,22 @@ namespace AlbionDataHandlers.Handlers
                 }
                 else
                 {
-                    long rawId = Convert.ToInt64(idObj);
-                    int id = unchecked((int)rawId);
-                    byte type = EventHandlerUtils.ExtractValue<byte>(parameters, 1);
-                    byte tier = EventHandlerUtils.ExtractValue<byte>(parameters, 2);
+                    // URETILEN PAKET MODELI (kod 38 = NewSimpleHarvestableObject):
+                    //   [0] ID · [1] tip · [2] tier · [3] konum · [4] size
+                    var single = AlbionDataHandlers.Packets.Events.NewSimpleHarvestableObject.From(parameters);
+                    if (single == null) return;
+
+                    int id = unchecked((int)single.F0);
+                    byte type = single.F1;
+                    byte tier = single.F2;
 
                     float posX = 0, posY = 0;
-                    if (parameters.TryGetValue(3, out object posRaw) && TryParsePosition(posRaw, out float x, out float y)) { posX = x; posY = y; }
+                    if (single.F3 != null && TryParsePosition(single.F3, out float x, out float y)) { posX = x; posY = y; }
 
-                    byte size = EventHandlerUtils.ExtractValue<byte>(parameters, 4);
+                    // ESKI DAVRANIS KORUNUR: [4] byte okunuyordu (0-255 disi -> 0).
+                    int sizeRaw = single.F4;
+                    if (sizeRaw < 0 || sizeRaw > byte.MaxValue) sizeRaw = 0;
+                    byte size = (byte)sizeRaw;
 
                     lock (_lockObject)
                     {
@@ -156,17 +184,17 @@ namespace AlbionDataHandlers.Handlers
 
         private void HandleHarvestableChangeState(Dictionary<byte, object> parameters)
         {
-            long rawId = EventHandlerUtils.ExtractValue<long>(parameters, 0);
-            int id = unchecked((int)rawId);
+            // URETILEN PAKET MODELI (kod 46 = HarvestableChangeState):
+            //   [0] kaynak ID · [1] yeni miktar · [2] bayt
+            var state = AlbionDataHandlers.Packets.Events.HarvestableChangeState.From(parameters);
+            if (state == null) return;
+            int id = unchecked((int)state.F0);
 
-            // --- DÜZELTME BURADA ---
+            // --- DÜZELTME BURADA (aynen korundu) ---
             // Oyun, kaynak 0 olduğunda paketin içine boyut (1) parametresini koymaz.
             // Bu yüzden eğer parametre yoksa, kaynağın bittiğini anlıyor ve 0 kabul ediyoruz.
-            int newSize = 0;
-            if (parameters.TryGetValue(1, out object sizeObj))
-            {
-                newSize = int.Parse(sizeObj.ToString());
-            }
+            // Model alani da yoksa 0 doner -> ayni davranis.
+            int newSize = state.F1;
 
             lock (_lockObject)
             {
@@ -293,7 +321,7 @@ namespace AlbionDataHandlers.Handlers
 
         public void OnResponse(ResponseCodes responseCode, Dictionary<byte, object> parameters)
         {
-            if (responseCode == ResponseCodes.PlayerJoiningMap || (short)responseCode == 35)
+            if (responseCode == ResponseCodes.PlayerJoiningMap || responseCode == ResponseCodes.PlayerChangeCluster)
             {
                 lock (_lockObject)
                 {

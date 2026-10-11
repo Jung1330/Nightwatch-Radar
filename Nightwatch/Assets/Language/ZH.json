@@ -238,5 +238,17 @@
     "Rarity_Uncommon": "不凡",
     "Rarity_Rare": "珍稀",
     "Rarity_Epic": "史诗",
-    "Rarity_Legendary": "传说"
+    "Rarity_Legendary": "传说",
+  "Device_UpdatesInfo": "更新与当前信息",
+  "Device_AnnouncementLoading": "请稍候...",
+  "Device_AnnouncementError": "请检查网络连接",
+  "Settings_MapTestTitle": "--- V2 åœ°å›¾æµ‹è¯• ---",
+  "Settings_MapSystemV2": "V2 åœ°å›¾ç³»ç»Ÿï¼ˆè¾¹ç•Œï¼‰",
+  "Settings_InvertMapV": "åè½¬ V è½´",
+  "Settings_MapSystemStatus": "ç³»ç»Ÿï¼š{0} | åè½¬ Vï¼š{1}",
+  "Settings_MapSystemV2Value": "V2ï¼ˆè¾¹ç•Œï¼‰",
+  "Settings_MapSystemV1Value": "V1ï¼ˆæ—§ç‰ˆï¼‰",
+  "Common_Yes": "æ˜¯",
+  "Common_No": "å¦",
+  "AllLogInfo": "AllLogInfo（将所有日志写入文件）"
 }

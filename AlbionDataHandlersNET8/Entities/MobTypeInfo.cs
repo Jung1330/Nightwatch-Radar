@@ -1,4 +1,4 @@
-﻿using AlbionDataHandlers.Enums;
+using AlbionDataHandlers.Enums;
 
 namespace AlbionDataHandlers.Entities;
 
@@ -10,7 +10,8 @@ public class MobTypeInfo
         public string Name { get; set; }
         public int LootTier { get; set; }
         public string UniqueName { get; set; }
-
+        /// <summary>Ham lokalizasyon etiketi, örn: @MOB_T5_MOB_ROAMING_KEEPER_FANATIC_SPEAR_CHAMPION</summary>
+        public string LocKey { get; set; }
 }
 
 
